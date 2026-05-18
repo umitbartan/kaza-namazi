@@ -659,6 +659,140 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   margin-top: 10px;
 }
 
+/* ===== ZİKİR SAYACI ===== */
+.zikir-hero {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(212,175,55,0.25) 0%, transparent 60%),
+    linear-gradient(135deg, #1B4332 0%, #0F2E1F 100%);
+  color: white;
+  border-radius: 18px;
+  padding: 24px 22px;
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.zikir-arapca {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--altin-soft);
+  letter-spacing: -0.3px;
+}
+.zikir-anlam {
+  font-size: 11px;
+  opacity: 0.75;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+.zikir-rakam {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -2.5px;
+  line-height: 1;
+  color: var(--altin-soft);
+  font-feature-settings: "tnum";
+}
+.zikir-alt {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.zikir-progress-bolum { margin-top: 14px; }
+.zikir-progress {
+  height: 10px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.zikir-progress-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu) 0%, #E5C158 100%);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.zikir-progress-yazi {
+  font-size: 11px;
+  opacity: 0.9;
+  margin-top: 6px;
+  font-weight: 600;
+}
+.zikir-butonlar {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.zikir-btn {
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 800;
+  transition: all 0.15s;
+}
+.zikir-btn:active { transform: scale(0.95); }
+.zikir-btn-eksi {
+  background: #FFE6E6;
+  color: var(--kirmizi);
+  font-size: 14px;
+  padding: 14px 6px;
+}
+.zikir-btn-arti {
+  background: linear-gradient(135deg, var(--orta) 0%, var(--koyu) 100%);
+  color: white;
+  font-size: 17px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(15,46,31,0.25);
+}
+.zikir-btn-arti:hover { box-shadow: 0 8px 24px rgba(15,46,31,0.35); transform: translateY(-1px); }
+.zikir-btn-sifirla {
+  background: var(--bej);
+  color: var(--soft);
+  font-size: 12px;
+  padding: 14px 6px;
+}
+.zikir-btn-sifirla:hover { background: #FFE6E6; color: var(--kirmizi); }
+.zikir-hizli {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.zikir-hizli-btn {
+  background: white;
+  color: var(--orta);
+  border: 1px solid var(--orta);
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.zikir-hizli-btn:hover { background: var(--orta); color: white; }
+.zikir-motivasyon {
+  background: var(--altin-bg);
+  border-left: 4px solid var(--vurgu);
+  padding: 11px 13px;
+  border-radius: 0 10px 10px 0;
+  font-size: 12px;
+  color: var(--koyu);
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .zikir-arapca { font-size: 18px; }
+  .zikir-rakam { font-size: 44px; letter-spacing: -1.5px; }
+  .zikir-btn-arti { font-size: 15px; padding: 13px; }
+}
+
 /* ===== HIZ HESAPLAYICI ===== */
 .hesap-vakit-tabs {
   display: flex;
@@ -1059,12 +1193,58 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         <div class="bolum-baslik">🕌 Vakit Bazlı Borç <span class="badge" id="aktif-gun">Bugün —</span></div>
         <div class="vakit-liste" id="vakit-liste"></div>
 
-        <div class="aksiyon-satir">
-          <button class="aksiyon-btn" onclick="yedekIndir()">📥 JSON Yedek İndir</button>
-          <button class="aksiyon-btn" onclick="document.getElementById('import-file').click()">📤 Yedekten Yükle</button>
-          <input type="file" id="import-file" accept=".json" style="display:none" onchange="iceAktar(event)">
-          <button class="aksiyon-btn tehlikeli" onclick="tumunuSifirla()" style="margin-left:auto;">🔄 Tüm Verileri Sıfırla</button>
+      </div>
+
+      <div class="bolum">
+        <div class="bolum-baslik">📿 Lâ İlâhe İllallâh Zikri <span class="badge" id="zikir-rozet-durum">Hedef 70.000</span></div>
+        <div class="zikir-hero">
+          <div class="zikir-arapca">لَا إِلٰهَ إِلَّا اللّٰهُ</div>
+          <div class="zikir-anlam">"Allah'tan başka ilâh yoktur"</div>
+          <div class="zikir-rakam" id="zikir-rakam">0</div>
+          <div class="zikir-alt" id="zikir-alt">70.000 hedefe başla</div>
+          <div class="zikir-progress-bolum">
+            <div class="zikir-progress"><div class="zikir-progress-dolgu" id="zikir-progress" style="width:0%"></div></div>
+            <div class="zikir-progress-yazi" id="zikir-yuzde">%0,00</div>
+          </div>
         </div>
+        <div class="zikir-butonlar">
+          <button class="zikir-btn zikir-btn-eksi" onclick="zikirDegistir(-100)" title="100 azalt">−100</button>
+          <button class="zikir-btn zikir-btn-arti" onclick="zikirDegistir(100)">+100 Zikir Ekle</button>
+          <button class="zikir-btn zikir-btn-sifirla" onclick="zikirSifirla()" title="Sıfırla">🔄</button>
+        </div>
+        <div class="zikir-hizli">
+          <button class="zikir-hizli-btn" onclick="zikirDegistir(33)">+33</button>
+          <button class="zikir-hizli-btn" onclick="zikirDegistir(99)">+99</button>
+          <button class="zikir-hizli-btn" onclick="zikirDegistir(500)">+500</button>
+          <button class="zikir-hizli-btn" onclick="zikirDegistir(1000)">+1.000</button>
+        </div>
+        <div class="zikir-motivasyon" id="zikir-motivasyon">🌱 Zikre başla — gönlün huzur bulacak</div>
+      </div>
+
+      <div class="bolum">
+        <div class="bolum-baslik">✨ İhlas Suresi Zikri <span class="badge" id="ihlas-rozet-durum">Hedef 100.000</span></div>
+        <div class="zikir-hero">
+          <div class="zikir-arapca">قُلْ هُوَ اللّٰهُ اَحَدٌ</div>
+          <div class="zikir-anlam">"De ki: O Allah birdir" — İhlâs Sûresi (3 kez okumak 1 hatim sevabı)</div>
+          <div class="zikir-rakam" id="ihlas-rakam">0</div>
+          <div class="zikir-alt" id="ihlas-alt">100.000 hedefe başla</div>
+          <div class="zikir-progress-bolum">
+            <div class="zikir-progress"><div class="zikir-progress-dolgu" id="ihlas-progress" style="width:0%"></div></div>
+            <div class="zikir-progress-yazi" id="ihlas-yuzde">%0,00</div>
+          </div>
+        </div>
+        <div class="zikir-butonlar">
+          <button class="zikir-btn zikir-btn-eksi" onclick="ihlasDegistir(-100)" title="100 azalt">−100</button>
+          <button class="zikir-btn zikir-btn-arti" onclick="ihlasDegistir(100)">+100 İhlas Ekle</button>
+          <button class="zikir-btn zikir-btn-sifirla" onclick="ihlasSifirla()" title="Sıfırla">🔄</button>
+        </div>
+        <div class="zikir-hizli">
+          <button class="zikir-hizli-btn" onclick="ihlasDegistir(33)">+33</button>
+          <button class="zikir-hizli-btn" onclick="ihlasDegistir(99)">+99</button>
+          <button class="zikir-hizli-btn" onclick="ihlasDegistir(500)">+500</button>
+          <button class="zikir-hizli-btn" onclick="ihlasDegistir(1000)">+1.000</button>
+        </div>
+        <div class="zikir-motivasyon" id="ihlas-motivasyon">🌱 İhlas Suresi'ne başla — 3 kez okumak 1 hatim sevabıdır</div>
       </div>
 
       <div class="bolum">
@@ -1169,6 +1349,16 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     </div>
   </div>
 
+  <div class="bolum">
+    <div class="bolum-baslik">💾 Veri Yönetimi</div>
+    <div class="aksiyon-satir" style="margin-top:0; padding-top:0; border-top:none;">
+      <button class="aksiyon-btn" onclick="yedekIndir()">📥 JSON Yedek İndir</button>
+      <button class="aksiyon-btn" onclick="document.getElementById('import-file').click()">📤 Yedekten Yükle</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="iceAktar(event)">
+      <button class="aksiyon-btn tehlikeli" onclick="tumunuSifirla()" style="margin-left:auto;">🔄 Tüm Verileri Sıfırla</button>
+    </div>
+  </div>
+
   <div class="ayet">
     "Şüphesiz namaz, müminler üzerine vakitleri belli bir farzdır." — Nisâ, 103
   </div>
@@ -1209,7 +1399,9 @@ const ROZET_KATEGORILER = {
   ceyrek:  { ikon:'🗓️', ad:'Üç Aylık Performans', sira:5 },
   gun:     { ikon:'💪', ad:'Tek Gün Rekorları',   sira:6 },
   yuzde:   { ikon:'📈', ad:'İlerleme Yüzdesi',    sira:7 },
-  ozel:    { ikon:'🌟', ad:'Özel Başarılar',      sira:8 }
+  zikir:   { ikon:'📿', ad:'Lâ İlâhe İllallâh Zikri', sira:8 },
+  ihlas:   { ikon:'✨', ad:'İhlas Suresi Zikri',    sira:9 },
+  ozel:    { ikon:'🌟', ad:'Özel Başarılar',         sira:10 }
 };
 
 const ROZETLER = [
@@ -1270,6 +1462,23 @@ const ROZETLER = [
   { id:'p75',    ikon:'🏆', ad:'Üç Çeyrek',        kategori:'yuzde', aciklama:'%75 tamamla',         hedef:0.75,  tip:'yuzde' },
   { id:'p100',   ikon:'🎉', ad:'Tamam',            kategori:'yuzde', aciklama:'Tüm kazaları bitir',  hedef:1.00,  tip:'yuzde' },
 
+  // 📿 ZİKİR MERTEBELERİ (Lâ ilâhe illallâh)
+  { id:'z1k',    ikon:'🌱', ad:'1.000 Zikir',      kategori:'zikir', aciklama:'1.000 Lâ ilâhe illallâh',  hedef:1000,  tip:'zikir' },
+  { id:'z5k',    ikon:'🌿', ad:'5.000 Zikir',      kategori:'zikir', aciklama:'5.000 Lâ ilâhe illallâh',  hedef:5000,  tip:'zikir' },
+  { id:'z10k',   ikon:'🌳', ad:'10.000 Zikir',     kategori:'zikir', aciklama:'10.000 Lâ ilâhe illallâh', hedef:10000, tip:'zikir' },
+  { id:'z25k',   ikon:'🌟', ad:'25.000 Zikir',     kategori:'zikir', aciklama:'25.000 Lâ ilâhe illallâh', hedef:25000, tip:'zikir' },
+  { id:'z50k',   ikon:'⭐', ad:'50.000 Zikir',     kategori:'zikir', aciklama:'50.000 Lâ ilâhe illallâh', hedef:50000, tip:'zikir' },
+  { id:'z70k',   ikon:'👑', ad:'70 Bin Zikir',     kategori:'zikir', aciklama:'70.000 Lâ ilâhe illallâh — özel kademe!', hedef:70000, tip:'zikir', ozel:true },
+
+  // ✨ İHLAS SURESİ MERTEBELERİ
+  { id:'i1k',    ikon:'🌱', ad:'1.000 İhlas',      kategori:'ihlas', aciklama:'1.000 İhlas Sûresi (333 hatim)',   hedef:1000,   tip:'ihlas' },
+  { id:'i5k',    ikon:'🌿', ad:'5.000 İhlas',      kategori:'ihlas', aciklama:'5.000 İhlas Sûresi',                hedef:5000,   tip:'ihlas' },
+  { id:'i10k',   ikon:'🌳', ad:'10.000 İhlas',     kategori:'ihlas', aciklama:'10.000 İhlas Sûresi',               hedef:10000,  tip:'ihlas' },
+  { id:'i25k',   ikon:'🌟', ad:'25.000 İhlas',     kategori:'ihlas', aciklama:'25.000 İhlas Sûresi',               hedef:25000,  tip:'ihlas' },
+  { id:'i50k',   ikon:'⭐', ad:'50.000 İhlas',     kategori:'ihlas', aciklama:'50.000 İhlas Sûresi',               hedef:50000,  tip:'ihlas' },
+  { id:'i75k',   ikon:'🏅', ad:'75.000 İhlas',     kategori:'ihlas', aciklama:'75.000 İhlas Sûresi',               hedef:75000,  tip:'ihlas' },
+  { id:'i100k',  ikon:'👑', ad:'100 Bin İhlas',    kategori:'ihlas', aciklama:'100.000 İhlas Sûresi — özel kademe!', hedef:100000, tip:'ihlas', ozel:true },
+
   // 🌟 ÖZEL BAŞARILAR
   { id:'tum5',     ikon:'🕌', ad:'Tam Gün',         kategori:'ozel', aciklama:'Bir günde 5 vaktin de >0', hedef:1,  tip:'tum5gun' },
   { id:'tum5_7',   ikon:'🌙', ad:'Tam Hafta',       kategori:'ozel', aciklama:'7 gün ardışık 5 vakit',    hedef:7,  tip:'tum5ardisik' },
@@ -1281,16 +1490,24 @@ const ROZETLER = [
 
 const STORAGE_KEY = 'kn_kayitlar_v1';
 const ROZETLER_KEY = 'kn_rozetler_v1';
+const ZIKIR_KEY = 'kn_zikir_v1';
+const ZIKIR_HEDEF = 70000;
+const IHLAS_KEY = 'kn_ihlas_v1';
+const IHLAS_HEDEF = 100000;
 
 // =========================================================
 // VERİ YÜKLEMEKAYDETME
 // =========================================================
 let kayitlar = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 let kazanilanRozetler = new Set(JSON.parse(localStorage.getItem(ROZETLER_KEY) || '[]'));
+let zikirSayisi = parseInt(localStorage.getItem(ZIKIR_KEY) || '0');
+let ihlasSayisi = parseInt(localStorage.getItem(IHLAS_KEY) || '0');
 
 function kaydet() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(kayitlar));
   localStorage.setItem(ROZETLER_KEY, JSON.stringify([...kazanilanRozetler]));
+  localStorage.setItem(ZIKIR_KEY, zikirSayisi.toString());
+  localStorage.setItem(IHLAS_KEY, ihlasSayisi.toString());
 }
 
 // =========================================================
@@ -1419,6 +1636,8 @@ function rozetDurum(r) {
   else if (r.tip === 'tum5gun') { mevcut = tum5VakitGunSayisi(); }
   else if (r.tip === 'tum5ardisik') { mevcut = tum5VakitArdisikMax(); }
   else if (r.tip === 'aktifgun') { mevcut = aktifGunSayisi(); }
+  else if (r.tip === 'zikir') { mevcut = zikirSayisi; }
+  else if (r.tip === 'ihlas') { mevcut = ihlasSayisi; }
 
   return {
     kazanildi: kazanilanRozetler.has(r.id) || mevcut >= hedef,
@@ -1728,6 +1947,8 @@ function herseyGuncelle() {
   heatmapCizdir();
   grafikGuncelle();
   hesaplayiciGuncelle();
+  zikirGuncelle();
+  ihlasGuncelle();
   // İlk yüklemede zaten kazanılmış rozetleri sessizce işaretle (popup spam'ı önle)
   if (!ilkYuklemeBitti) {
     ROZETLER.forEach(r => {
@@ -1923,6 +2144,167 @@ document.querySelectorAll('.hb-btn').forEach(btn => {
 document.getElementById('ozel-slider').addEventListener('input', ozelSliderGuncelle);
 
 // =========================================================
+// ZİKİR SAYACI
+// =========================================================
+function zikirMotivasyon(sayi) {
+  const y = sayi / ZIKIR_HEDEF;
+  if (sayi === 0) return '🌱 Zikre başla — gönlün huzur bulacak.';
+  if (sayi < 100) return `🌿 Mâşaallah, ${sayi} zikir! "Lâ ilâhe illallâh" demeye devam.`;
+  if (y < 0.05) return `🌳 ${sayi.toLocaleString('tr-TR')} zikir — Allah'ın rahmeti seninle.`;
+  if (y < 0.15) return `⭐ ${sayi.toLocaleString('tr-TR')} zikir tamamlandı — kalbin nurlanıyor.`;
+  if (y < 0.30) return `🌟 ${sayi.toLocaleString('tr-TR')} zikir — Allah sabredenlerle beraberdir.`;
+  if (y < 0.50) return `🎖️ Çeyreği geçtin! ${sayi.toLocaleString('tr-TR')} / 70.000 — devam et.`;
+  if (y < 0.75) return `🏅 Yarıyı aştın! ${sayi.toLocaleString('tr-TR')} zikir tamam.`;
+  if (y < 1.00) return `🏆 Hedefe yaklaştın! Son ${(ZIKIR_HEDEF - sayi).toLocaleString('tr-TR')} zikir kaldı.`;
+  return '👑 MAŞAALLAH! 70 bin zikre ulaştın — özel rozet kazandın. Allah kabul etsin.';
+}
+
+function zikirGuncelle() {
+  document.getElementById('zikir-rakam').textContent = zikirSayisi.toLocaleString('tr-TR');
+  const yuzde = Math.min(100, (zikirSayisi / ZIKIR_HEDEF) * 100);
+  document.getElementById('zikir-progress').style.width = yuzde + '%';
+  document.getElementById('zikir-yuzde').textContent = `%${yuzde.toFixed(2).replace('.', ',')}`;
+
+  const kalan = Math.max(0, ZIKIR_HEDEF - zikirSayisi);
+  document.getElementById('zikir-alt').textContent =
+    zikirSayisi >= ZIKIR_HEDEF
+      ? '🎉 70.000 hedefine ulaştın!'
+      : `Hedefe ${kalan.toLocaleString('tr-TR')} zikir kaldı (70.000)`;
+
+  document.getElementById('zikir-motivasyon').textContent = zikirMotivasyon(zikirSayisi);
+
+  // Rozet durum badge
+  const rozetBadge = document.getElementById('zikir-rozet-durum');
+  if (zikirSayisi >= ZIKIR_HEDEF) {
+    rozetBadge.textContent = '👑 Tamamlandı';
+    rozetBadge.style.background = 'var(--vurgu)';
+    rozetBadge.style.color = 'white';
+  } else {
+    rozetBadge.textContent = `Hedef ${ZIKIR_HEDEF.toLocaleString('tr-TR')}`;
+  }
+}
+
+function zikirDegistir(miktar) {
+  const eski = zikirSayisi;
+  zikirSayisi = Math.max(0, zikirSayisi + miktar);
+  kaydet();
+  if (miktar > 0) {
+    toast('📿', `+${miktar.toLocaleString('tr-TR')} zikir — Toplam: ${zikirSayisi.toLocaleString('tr-TR')}`, 'basari');
+  } else {
+    toast('📿', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
+  }
+  zikirGuncelle();
+  // Rozet kontrolü (sadece yeni hedef geçildiyse popup açar)
+  if (miktar > 0) {
+    rozetKontrol();
+    // 70.000 özel kutlama
+    if (eski < ZIKIR_HEDEF && zikirSayisi >= ZIKIR_HEDEF) {
+      setTimeout(() => konfeti70Bin(), 800);
+    }
+  }
+  rozetleriCizdir();
+}
+
+function zikirSifirla() {
+  if (!confirm(`Zikir sayacı sıfırlanacak (mevcut: ${zikirSayisi.toLocaleString('tr-TR')}). Emin misin?`)) return;
+  zikirSayisi = 0;
+  kaydet();
+  toast('🔄', 'Zikir sayacı sıfırlandı');
+  zikirGuncelle();
+  rozetleriCizdir();
+}
+
+function konfeti70Bin() {
+  // 70.000'e ulaşınca büyük kutlama popup'ı
+  document.getElementById('popup-ikon').textContent = '👑';
+  document.getElementById('popup-baslik').textContent = '70 BİN ZİKİR TAMAMLANDI!';
+  document.getElementById('popup-aciklama').innerHTML =
+    'Mâşaallah! 70.000 kez "Lâ ilâhe illallâh" dedin.<br><br>' +
+    'Bu ulvi zikir, tövbeye vesile olan en büyük zikir mertebelerinden biridir.<br><br>' +
+    '<strong>👑 Yetmiş Bin Zikir rozeti</strong> sana verildi. Allah kabul etsin.';
+  document.getElementById('rozet-popup').classList.add('acik');
+}
+
+// =========================================================
+// İHLAS SURESİ SAYACI
+// =========================================================
+function ihlasMotivasyon(sayi) {
+  const y = sayi / IHLAS_HEDEF;
+  const hatim = Math.floor(sayi / 3);
+  if (sayi === 0) return '🌱 İhlas Suresi\'ne başla — 3 kez okumak 1 hatim sevabıdır.';
+  if (sayi < 100) return `🌿 ${sayi} İhlas okudun, mâşaallah! Bu yaklaşık ${hatim} hatim sevabıdır.`;
+  if (y < 0.05) return `🌳 ${sayi.toLocaleString('tr-TR')} İhlas — yaklaşık ${hatim.toLocaleString('tr-TR')} hatim sevabı.`;
+  if (y < 0.15) return `⭐ ${sayi.toLocaleString('tr-TR')} İhlas (~${hatim.toLocaleString('tr-TR')} hatim) — Allah kabul etsin.`;
+  if (y < 0.30) return `🌟 ${sayi.toLocaleString('tr-TR')} İhlas tamamlandı — kalbin nurlanıyor.`;
+  if (y < 0.50) return `🎖️ Çeyreği geçtin! ${sayi.toLocaleString('tr-TR')} / 100.000 (~${hatim.toLocaleString('tr-TR')} hatim).`;
+  if (y < 0.75) return `🏅 Yarıyı aştın! ${sayi.toLocaleString('tr-TR')} İhlas tamam.`;
+  if (y < 1.00) return `🏆 Hedefe yaklaştın! Son ${(IHLAS_HEDEF - sayi).toLocaleString('tr-TR')} İhlas kaldı.`;
+  return '👑 MAŞAALLAH! 100 bin İhlas Suresi okudun — özel rozet kazandın. Allah kabul etsin.';
+}
+
+function ihlasGuncelle() {
+  document.getElementById('ihlas-rakam').textContent = ihlasSayisi.toLocaleString('tr-TR');
+  const yuzde = Math.min(100, (ihlasSayisi / IHLAS_HEDEF) * 100);
+  document.getElementById('ihlas-progress').style.width = yuzde + '%';
+  document.getElementById('ihlas-yuzde').textContent = `%${yuzde.toFixed(2).replace('.', ',')}`;
+
+  const kalan = Math.max(0, IHLAS_HEDEF - ihlasSayisi);
+  document.getElementById('ihlas-alt').textContent =
+    ihlasSayisi >= IHLAS_HEDEF
+      ? '🎉 100.000 hedefine ulaştın!'
+      : `Hedefe ${kalan.toLocaleString('tr-TR')} İhlas kaldı (100.000)`;
+
+  document.getElementById('ihlas-motivasyon').textContent = ihlasMotivasyon(ihlasSayisi);
+
+  const rozetBadge = document.getElementById('ihlas-rozet-durum');
+  if (ihlasSayisi >= IHLAS_HEDEF) {
+    rozetBadge.textContent = '👑 Tamamlandı';
+    rozetBadge.style.background = 'var(--vurgu)';
+    rozetBadge.style.color = 'white';
+  } else {
+    rozetBadge.textContent = `Hedef ${IHLAS_HEDEF.toLocaleString('tr-TR')}`;
+  }
+}
+
+function ihlasDegistir(miktar) {
+  const eski = ihlasSayisi;
+  ihlasSayisi = Math.max(0, ihlasSayisi + miktar);
+  kaydet();
+  if (miktar > 0) {
+    toast('✨', `+${miktar.toLocaleString('tr-TR')} İhlas — Toplam: ${ihlasSayisi.toLocaleString('tr-TR')}`, 'basari');
+  } else {
+    toast('✨', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
+  }
+  ihlasGuncelle();
+  if (miktar > 0) {
+    rozetKontrol();
+    if (eski < IHLAS_HEDEF && ihlasSayisi >= IHLAS_HEDEF) {
+      setTimeout(() => konfeti100Bin(), 800);
+    }
+  }
+  rozetleriCizdir();
+}
+
+function ihlasSifirla() {
+  if (!confirm(`İhlas sayacı sıfırlanacak (mevcut: ${ihlasSayisi.toLocaleString('tr-TR')}). Emin misin?`)) return;
+  ihlasSayisi = 0;
+  kaydet();
+  toast('🔄', 'İhlas sayacı sıfırlandı');
+  ihlasGuncelle();
+  rozetleriCizdir();
+}
+
+function konfeti100Bin() {
+  document.getElementById('popup-ikon').textContent = '👑';
+  document.getElementById('popup-baslik').textContent = '100 BİN İHLAS TAMAMLANDI!';
+  document.getElementById('popup-aciklama').innerHTML =
+    'Mâşaallah! 100.000 kez İhlas Suresi okudun.<br><br>' +
+    'Bu yaklaşık <strong>33.333 hatim</strong> sevabına denktir (3 İhlas = 1 hatim).<br><br>' +
+    '<strong>👑 Yüz Bin İhlas rozeti</strong> sana verildi. Allah kabul etsin.';
+  document.getElementById('rozet-popup').classList.add('acik');
+}
+
+// =========================================================
 // AKSİYONLAR
 // =========================================================
 function degistir(vakit, miktar) {
@@ -1947,10 +2329,12 @@ function degistir(vakit, miktar) {
 function yedekIndir() {
   const veri = {
     olusturma: new Date().toISOString(),
-    versiyon: 'masaustu_v1',
+    versiyon: 'masaustu_v2',
     borclar: Object.fromEntries(VAKITLER.map(v => [v.id, v.borc])),
     kayitlar: kayitlar,
-    rozetler: [...kazanilanRozetler]
+    rozetler: [...kazanilanRozetler],
+    zikir: zikirSayisi,
+    ihlas: ihlasSayisi
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -1976,6 +2360,8 @@ function iceAktar(event) {
       }
       kayitlar = v.kayitlar;
       kazanilanRozetler = new Set(v.rozetler || []);
+      if (typeof v.zikir === 'number') zikirSayisi = v.zikir;
+      if (typeof v.ihlas === 'number') ihlasSayisi = v.ihlas;
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
@@ -1988,10 +2374,12 @@ function iceAktar(event) {
 }
 
 function tumunuSifirla() {
-  if (!confirm('TÜM kayıtlar ve rozetler silinecek. Devam edilsin mi?')) return;
+  if (!confirm('TÜM kayıtlar, rozetler, zikir ve İhlas sayaçları silinecek. Devam edilsin mi?')) return;
   if (!confirm('Emin misin? Bu işlem geri alınamaz.')) return;
   kayitlar = {};
   kazanilanRozetler = new Set();
+  zikirSayisi = 0;
+  ihlasSayisi = 0;
   kaydet();
   toast('🔄', 'Her şey sıfırlandı');
   herseyGuncelle();
