@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Kaza Takip">
+<meta name="apple-mobile-web-app-title" content="İhyâ">
 <meta name="theme-color" content="#1B4332">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231B4332'/%3E%3Ctext y='62' x='50' text-anchor='middle' font-size='52'%3E🕌%3C/text%3E%3C/svg%3E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231B4332'/%3E%3Ctext y='62' x='50' text-anchor='middle' font-size='52'%3E🕌%3C/text%3E%3C/svg%3E">
-<title>Kaza Namazı Takip</title>
+<title>İhyâ — Manevi Yolculuk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -659,6 +659,689 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   margin-top: 10px;
 }
 
+/* ===== AÇILIR-KAPANIR BÖLÜM ===== */
+.bolum.acilir > .bolum-baslik {
+  cursor: pointer;
+  margin-bottom: 0;
+  user-select: none;
+  position: relative;
+  padding-right: 26px;
+}
+.bolum.acilir > .bolum-baslik::after {
+  content: '▼';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--orta);
+  font-size: 11px;
+  transition: transform 0.3s;
+}
+.bolum.acilir.acik > .bolum-baslik::after { transform: translateY(-50%) rotate(180deg); }
+.bolum.acilir > .bolum-icerik {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.bolum.acilir.acik > .bolum-icerik {
+  max-height: 12000px;
+  margin-top: 16px;
+}
+
+/* ===== KOMPAKT BANNER ===== */
+.banner.kompakt {
+  padding: 18px 22px;
+  margin-bottom: 14px;
+}
+.banner.kompakt .banner-ust { margin-bottom: 0; }
+.banner.kompakt .banner-ad { font-size: 22px; }
+.banner.kompakt .banner-alt { font-size: 11px; opacity: 0.8; line-height: 1.4; }
+.banner.kompakt .banner-ikon { width: 50px; height: 50px; font-size: 30px; }
+
+/* ===== NAMAZ VAKİTLERİ KARTI ===== */
+.namaz-vakit-kart {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(212,175,55,0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #0F2E1F 0%, #1B4332 100%);
+  color: white;
+  padding: 22px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 10px 30px rgba(15,46,31,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.nv-ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nv-konum {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.nv-konum-ikon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.nv-tarih { font-size: 11px; opacity: 0.85; text-align: right; }
+.nv-tarih-hicri { font-size: 10px; opacity: 0.7; margin-top: 2px; }
+
+.nv-aktif-kart {
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.nv-aktif-baslik {
+  font-size: 10px;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.nv-aktif-ad {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--altin-soft);
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.nv-geri-sayim {
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  color: white;
+  line-height: 1.1;
+}
+.nv-geri-sayim-alt {
+  font-size: 11px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.nv-vakit-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.nv-vakit {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.nv-vakit.aktif {
+  background: rgba(212,175,55,0.25);
+  border-color: rgba(212,175,55,0.5);
+}
+.nv-vakit.gecti { opacity: 0.45; }
+.nv-vakit-ad {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  opacity: 0.85;
+  margin-bottom: 3px;
+}
+.nv-vakit-saat {
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.nv-kerahat {
+  background: rgba(231,76,60,0.15);
+  border: 1px solid rgba(231,76,60,0.35);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.nv-kerahat-baslik {
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFB6A3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nv-kerahat-liste { font-size: 10px; opacity: 0.9; }
+.nv-kerahat-liste div { padding: 3px 0; }
+.nv-kerahat-aktif {
+  background: rgba(231,76,60,0.3);
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-top: 6px;
+  font-weight: 700;
+  color: #FFB6A3;
+}
+
+.nv-sehir-secim {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  align-items: center;
+}
+.nv-sehir-input {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+}
+.nv-sehir-input::placeholder { color: rgba(255,255,255,0.5); }
+.nv-sehir-btn {
+  background: rgba(212,175,55,0.3);
+  border: 1px solid rgba(212,175,55,0.5);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nv-sehir-btn:hover { background: rgba(212,175,55,0.45); }
+
+.nv-yukleniyor {
+  text-align: center;
+  padding: 30px 20px;
+  opacity: 0.7;
+  font-style: italic;
+  font-size: 13px;
+}
+.nv-hata {
+  background: rgba(231,76,60,0.2);
+  border: 1px solid rgba(231,76,60,0.4);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ===== KAZA ÖZET (kompakt) ===== */
+.kaza-ozet-satir {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  background: var(--bej);
+  border-radius: 12px;
+  border-left: 4px solid var(--vurgu);
+}
+.kaza-ozet-rakam {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--orta);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+.kaza-ozet-alt {
+  font-size: 11px;
+  color: var(--soft);
+  font-weight: 600;
+}
+
+/* ===== ESMÂÜ'L-HÜSNÂ ===== */
+.esma-arama {
+  position: relative;
+  margin-bottom: 12px;
+}
+.esma-arama input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--kart);
+  color: var(--metin);
+  font-family: inherit;
+  font-size: 13px;
+}
+.esma-arama::before {
+  content: '🔍';
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+}
+.esma-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.esma-karti {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.esma-karti:hover {
+  border-color: var(--vurgu);
+  background: var(--altin-bg);
+  transform: translateY(-2px);
+}
+.esma-no {
+  display: inline-block;
+  background: var(--bej);
+  color: var(--orta);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+.esma-ad-tr {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--orta);
+  letter-spacing: -0.2px;
+  margin-bottom: 3px;
+}
+.esma-anlam-kisa {
+  font-size: 10px;
+  color: var(--soft);
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.esma-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.75);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 16px;
+}
+.esma-modal.acik { display: flex; animation: rozetFade 0.3s; }
+.esma-modal-icerik {
+  background: white;
+  border-radius: 22px;
+  padding: 30px 26px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  max-height: 88vh;
+  overflow-y: auto;
+  animation: rozetPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.esma-modal-no {
+  display: inline-block;
+  background: var(--bej);
+  color: var(--orta);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.esma-modal-ad {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--orta);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+.esma-modal-anlam {
+  font-size: 14px;
+  color: var(--soft);
+  font-style: italic;
+  padding: 14px;
+  background: var(--bej);
+  border-radius: 10px;
+  margin: 14px 0;
+  line-height: 1.6;
+}
+.esma-modal-fazilet {
+  font-size: 13px;
+  color: var(--metin);
+  padding: 14px;
+  background: var(--altin-bg);
+  border-radius: 10px;
+  line-height: 1.7;
+  border-left: 3px solid var(--vurgu);
+  text-align: left;
+}
+.esma-modal-kapat {
+  background: linear-gradient(135deg, var(--orta) 0%, var(--koyu) 100%);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 14px;
+}
+
+@media (max-width: 768px) {
+  .nv-vakit-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+  .nv-vakit { padding: 8px 3px; }
+  .nv-vakit-ad { font-size: 8px; }
+  .nv-vakit-saat { font-size: 12px; }
+  .nv-aktif-ad { font-size: 18px; }
+  .nv-geri-sayim { font-size: 24px; }
+  .namaz-vakit-kart { padding: 18px 16px; }
+  .esma-grid { grid-template-columns: repeat(2, 1fr); }
+  .esma-modal-ad { font-size: 22px; }
+  .kaza-ozet-rakam { font-size: 20px; }
+}
+
+
+.banner-alt-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(245,230,168,0.85);
+  margin-top: 2px;
+}
+.banner.kompakt .banner-ad {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #F5E6A8;
+  background: linear-gradient(135deg, #F5E6A8 0%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.banner.kompakt .banner-alt {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.55;
+  opacity: 0.88;
+  font-style: italic;
+  max-width: 600px;
+}
+
+/* ===== NAMAZ VAKİTLERİ — YENİDEN TASARIM ===== */
+.namaz-vakit-kart {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(212,175,55,0.22) 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(45,106,79,0.35) 0%, transparent 45%),
+    linear-gradient(135deg, #0A1F15 0%, #163528 45%, #0F2E1F 100%);
+  color: white;
+  padding: 16px 14px;
+  border-radius: 22px;
+  margin-bottom: 16px;
+  box-shadow:
+    0 14px 40px rgba(15,46,31,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+.namaz-vakit-kart::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.nv-ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+.nv-konum {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.nv-konum-ikon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+#nv-sehir {
+  font-size: 13px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.2px;
+}
+.nv-tarih {
+  font-size: 11px;
+  opacity: 0.78;
+  text-align: right;
+  font-weight: 500;
+}
+.nv-tarih-hicri {
+  font-size: 10px;
+  opacity: 0.55;
+  margin-top: 3px;
+  letter-spacing: 0.2px;
+}
+
+.nv-aktif-kart {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(212,175,55,0.22) 0%, transparent 70%),
+    rgba(0,0,0,0.18);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 14px;
+  padding: 14px 12px;
+  margin-bottom: 12px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.nv-aktif-baslik {
+  font-size: 9px;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #F5E6A8;
+}
+.nv-aktif-ad {
+  font-size: 18px;
+  font-weight: 800;
+  color: #F5E6A8;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #F5E6A8 0%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nv-geri-sayim {
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 2px 24px rgba(212,175,55,0.3);
+}
+.nv-geri-sayim-alt {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 4px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.nv-vakit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.nv-vakit {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 9px 6px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+}
+.nv-vakit-ikon {
+  font-size: 14px;
+  margin-bottom: 3px;
+  display: block;
+  opacity: 0.75;
+  filter: grayscale(0.3);
+}
+.nv-vakit-ad {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+.nv-vakit-saat {
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.2px;
+  color: white;
+}
+.nv-vakit.aktif {
+  background:
+    radial-gradient(circle at 50% 100%, rgba(212,175,55,0.32) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.06));
+  border-color: rgba(212,175,55,0.5);
+  box-shadow:
+    0 6px 24px rgba(212,175,55,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.nv-vakit.aktif .nv-vakit-ikon { opacity: 1; filter: none; }
+.nv-vakit.aktif .nv-vakit-ad { color: #F5E6A8; opacity: 1; }
+.nv-vakit.aktif .nv-vakit-saat { color: #F5E6A8; }
+.nv-vakit.gecti { opacity: 0.42; }
+
+.nv-kerahat {
+  background:
+    radial-gradient(circle at 0% 50%, rgba(231,76,60,0.18) 0%, transparent 50%),
+    rgba(231,76,60,0.06);
+  border: 1px solid rgba(231,76,60,0.28);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 11px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+.nv-kerahat-baslik {
+  font-size: 9px;
+  font-weight: 800;
+  color: #FFB6A3;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nv-kerahat-liste { font-size: 10px; opacity: 0.85; }
+.nv-kerahat-liste div { padding: 3px 0; }
+.nv-kerahat-aktif {
+  background: rgba(231,76,60,0.35);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-top: 8px;
+  font-weight: 700;
+  color: #FFB6A3;
+  font-size: 12px;
+  border-left: 3px solid #E74C3C;
+}
+
+.nv-sehir-secim {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.nv-sehir-input {
+  flex: 1;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.2px;
+}
+.nv-sehir-input::placeholder { color: rgba(255,255,255,0.4); }
+.nv-sehir-input:focus { outline: none; border-color: rgba(212,175,55,0.5); }
+.nv-sehir-btn {
+  background: linear-gradient(135deg, rgba(212,175,55,0.4), rgba(212,175,55,0.25));
+  border: 1px solid rgba(212,175,55,0.55);
+  color: white;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition: all 0.2s;
+}
+.nv-sehir-btn:hover {
+  background: linear-gradient(135deg, rgba(212,175,55,0.55), rgba(212,175,55,0.35));
+  transform: translateY(-1px);
+}
+
+@media (min-width: 600px) {
+  .nv-vakit-grid { grid-template-columns: repeat(6, 1fr); }
+}
+@media (max-width: 480px) {
+  .nv-aktif-ad { font-size: 22px; }
+  .nv-geri-sayim { font-size: 36px; letter-spacing: -1.5px; }
+  .nv-vakit-ad { font-size: 9px; }
+  .nv-vakit-saat { font-size: 14px; }
+}
+
 /* ===== ZİKİR SAYACI ===== */
 .zikir-hero {
   background:
@@ -791,6 +1474,377 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .zikir-arapca { font-size: 18px; }
   .zikir-rakam { font-size: 44px; letter-spacing: -1.5px; }
   .zikir-btn-arti { font-size: 15px; padding: 13px; }
+}
+
+/* ===== MİNİMAL ZİKİR SAYAÇLARI ===== */
+.zm-konteyner { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.zm-kart {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 12px;
+  border-left: 3px solid var(--vurgu);
+}
+.zm-kart.zm-yesil { border-left-color: var(--orta); }
+.zm-ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+.zm-ad {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--koyu);
+  letter-spacing: -0.2px;
+}
+.zm-sayi {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--soft);
+  font-variant-numeric: tabular-nums;
+}
+.zm-progress {
+  background: var(--bej);
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.zm-progress-dolgu {
+  background: var(--vurgu);
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.zm-kart.zm-yesil .zm-progress-dolgu { background: var(--orta); }
+.zm-butonlar { display: flex; gap: 6px; }
+.zm-btn {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.zm-btn-eksi {
+  background: transparent;
+  color: var(--soft);
+  border: 1px solid var(--border);
+}
+.zm-btn-eksi:hover { background: #FFE6E6; color: var(--kirmizi); border-color: var(--kirmizi); }
+.zm-btn-arti {
+  background: var(--vurgu);
+  color: var(--koyu);
+}
+.zm-btn-arti:hover { background: #C49A28; }
+.zm-kart.zm-yesil .zm-btn-arti { background: var(--orta); color: white; }
+.zm-kart.zm-yesil .zm-btn-arti:hover { background: var(--koyu); }
+.zm-btn:active { transform: scale(0.96); }
+
+/* ===== ESMÂ ZİKİR MODÜLÜ ===== */
+.ez-bolum {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FAF3DD 100%);
+  border: 1px solid var(--vurgu);
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 4px;
+}
+.ez-baslik {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(212,175,55,0.3);
+}
+.ez-baslik-ikon { font-size: 18px; }
+.ez-baslik-ad {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--koyu);
+  flex: 1;
+  letter-spacing: -0.3px;
+}
+.ez-baslik-sayi {
+  background: var(--vurgu);
+  color: var(--koyu);
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.ez-aktif {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ez-aktif-info { flex: 1; min-width: 0; }
+.ez-aktif-no {
+  font-size: 9px;
+  color: var(--soft);
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.ez-aktif-ad {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--koyu);
+  margin: 2px 0;
+  letter-spacing: -0.3px;
+}
+.ez-aktif-anlam {
+  font-size: 11px;
+  color: var(--soft);
+  font-style: italic;
+  line-height: 1.4;
+}
+.ez-degistir {
+  background: white;
+  border: 1px solid var(--vurgu);
+  color: var(--koyu);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ez-degistir:hover { background: var(--vurgu); color: var(--koyu); }
+.ez-sayac {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.ez-rakam {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--vurgu);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1.5px;
+}
+.ez-hedef {
+  font-size: 11px;
+  color: var(--soft);
+  font-weight: 600;
+  margin-top: 4px;
+}
+.ez-progress {
+  background: var(--bej);
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.ez-progress-dolgu {
+  background: var(--vurgu);
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.ez-butonlar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.ez-btn {
+  border: none;
+  border-radius: 9px;
+  padding: 9px 0;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.ez-btn-eksi {
+  flex: 1;
+  background: transparent;
+  color: var(--soft);
+  border: 1px solid var(--border);
+}
+.ez-btn-eksi:hover { background: #FFE6E6; color: var(--kirmizi); border-color: var(--kirmizi); }
+.ez-btn-tap {
+  flex: 2;
+  background: var(--vurgu);
+  color: var(--koyu);
+  font-size: 14px;
+}
+.ez-btn-tap:hover { background: #C49A28; box-shadow: 0 4px 12px rgba(212,175,55,0.4); }
+.ez-btn-arti {
+  flex: 1;
+  background: var(--vurgu);
+  color: var(--koyu);
+}
+.ez-btn-arti:hover { background: #C49A28; }
+.ez-btn:active { transform: scale(0.96); }
+.ez-altbtn { display: flex; gap: 6px; }
+.ez-mini-btn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--soft);
+  padding: 7px 0;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.ez-mini-btn:hover { background: var(--bej); }
+.ez-tamamla-btn { color: var(--orta); border-color: var(--orta); }
+.ez-tamamla-btn:hover { background: var(--orta); color: white; }
+.ez-son {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.ez-son-baslik {
+  font-size: 9px;
+  color: var(--soft);
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.ez-son-liste { display: flex; flex-direction: column; gap: 4px; }
+.ez-son-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ez-son-item:hover { background: var(--altin-bg); }
+.ez-son-ad { font-weight: 700; color: var(--vurgu); }
+.ez-son-bilgi { color: var(--soft); font-size: 11px; font-weight: 600; }
+
+/* ===== ESMÂ SEÇİCİ SHEET ===== */
+.ez-sheet {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.7);
+  z-index: 1100;
+  align-items: flex-end;
+  justify-content: center;
+  animation: rozetFade 0.3s;
+}
+.ez-sheet.acik { display: flex; }
+.ez-sheet-icerik {
+  background: var(--kart);
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  border-radius: 20px 20px 0 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  animation: sheetSlide 0.3s ease;
+}
+@keyframes sheetSlide {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.ez-sheet-baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--koyu);
+  margin-bottom: 12px;
+}
+.ez-sheet-kapat {
+  background: var(--bej);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--soft);
+}
+.ez-sheet-arama {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: inherit;
+  margin-bottom: 10px;
+  background: var(--bej);
+}
+.ez-sheet-liste {
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ez-sheet-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.ez-sheet-item:hover { background: var(--bej); }
+.ez-sheet-item.aktif {
+  background: var(--altin-bg);
+  border-color: var(--vurgu);
+}
+.ez-sheet-item-sol { display: flex; align-items: center; gap: 10px; }
+.ez-sheet-item-no {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--vurgu);
+  color: var(--koyu);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+.ez-sheet-item-ad {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--koyu);
+}
+.ez-sheet-item-anlam {
+  font-size: 11px;
+  color: var(--soft);
+  margin-top: 1px;
+}
+.ez-sheet-item-sayi {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* ===== HIZ HESAPLAYICI ===== */
@@ -1030,6 +2084,174 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   font-weight: 800;
 }
 
+/* ===== DUALAR VE SURELER ===== */
+.dua-liste { display: flex; flex-direction: column; gap: 8px; }
+.dua-karti {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.dua-karti.acik {
+  border-color: var(--vurgu);
+  box-shadow: 0 4px 14px rgba(212,175,55,0.12);
+}
+.dua-baslik {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.dua-baslik:hover { background: var(--bej); }
+.dua-karti.acik .dua-baslik { background: var(--altin-bg); }
+.dua-ikon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--bej);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.dua-karti.acik .dua-ikon { background: var(--vurgu); color: white; }
+.dua-bilgi { flex: 1; min-width: 0; }
+.dua-ad {
+  font-weight: 700;
+  color: var(--orta);
+  font-size: 15px;
+  letter-spacing: -0.2px;
+}
+.dua-alt {
+  font-size: 11px;
+  color: var(--soft);
+  margin-top: 2px;
+}
+.dua-ok {
+  color: var(--orta);
+  font-size: 14px;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.dua-karti.acik .dua-ok { transform: rotate(180deg); color: var(--vurgu); }
+
+.dua-icerik {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.dua-karti.acik .dua-icerik { max-height: 8000px; }
+.dua-icerik-ic {
+  padding: 4px 16px 18px;
+}
+.dua-bismillah {
+  font-size: 13px;
+  font-weight: 700;
+  color: #B8941F;
+  text-align: center;
+  padding: 8px;
+  background: var(--altin-bg);
+  border-radius: 8px;
+  margin: 8px 0 12px;
+  letter-spacing: 0.3px;
+}
+.dua-okunus {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--metin);
+  white-space: pre-line;
+  padding: 6px 0;
+}
+.dua-okunus-ayet {
+  display: block;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.dua-okunus-ayet:last-child { border-bottom: none; }
+.dua-okunus-ayet b {
+  display: inline-block;
+  background: var(--bej);
+  color: var(--orta);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.dua-anlam {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--bej);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--metin);
+  font-style: italic;
+  line-height: 1.7;
+}
+.dua-anlam strong { color: var(--orta); font-style: normal; }
+.dua-fazilet {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--soft);
+  padding: 10px 12px;
+  background: var(--altin-bg);
+  border-radius: 8px;
+  border-left: 3px solid var(--vurgu);
+  line-height: 1.6;
+}
+
+.dua-arama {
+  position: relative;
+  margin-bottom: 12px;
+}
+.dua-arama input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--kart);
+  color: var(--metin);
+  font-family: inherit;
+  font-size: 13px;
+}
+.dua-arama::before {
+  content: '🔍';
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+}
+
+.dua-aksiyon-satir {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.dua-mini-btn {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: var(--kart);
+  color: var(--orta);
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.dua-mini-btn:hover { background: var(--bej); }
+.dua-mini-btn.aktif { background: var(--orta); color: white; border-color: var(--orta); }
+
+@media (max-width: 768px) {
+  .dua-baslik { padding: 12px 14px; gap: 10px; }
+  .dua-ikon { width: 32px; height: 32px; font-size: 16px; }
+  .dua-ad { font-size: 14px; }
+  .dua-okunus { font-size: 14px; line-height: 1.85; }
+  .dua-icerik-ic { padding: 4px 12px 16px; }
+}
+
 /* ===== AYET ===== */
 .ayet {
   text-align: center;
@@ -1152,37 +2374,537 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 @media (display-mode: standalone) {
   body { padding-top: max(20px, env(safe-area-inset-top)); }
 }
+
+/* ===== YAŞAYAN UYGULAMA: Günlük Görev, Streak Banner, Mübarek Günler, Hedef ===== */
+
+/* Mübarek günler bandı */
+.mb-bandi {
+  background: linear-gradient(135deg, var(--orta) 0%, var(--koyu) 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--vurgu);
+  box-shadow: 0 4px 12px rgba(15,46,31,0.15);
+}
+.mb-bandi-ikon { font-size: 22px; }
+.mb-bandi-icerik { flex: 1; min-width: 0; }
+.mb-bandi-baslik {
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  font-weight: 800;
+  color: var(--vurgu);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.mb-bandi-ad {
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.2px;
+}
+.mb-bandi-kalan {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 1px;
+}
+.mb-bandi.cuma {
+  background: linear-gradient(135deg, #7B2CBF 0%, #5A189A 100%);
+  border-color: #C77DFF;
+}
+.mb-bandi.cuma .mb-bandi-baslik { color: #E0AAFF; }
+.mb-bandi.eyyam {
+  background: linear-gradient(135deg, #B07D2A 0%, #855817 100%);
+  border-color: #FFD166;
+}
+.mb-bandi.eyyam .mb-bandi-baslik { color: #FFE7A0; }
+.mb-bandi.kandil {
+  background: linear-gradient(135deg, #1B4332 0%, #081C15 100%);
+  animation: kandilGlow 3s ease-in-out infinite;
+}
+@keyframes kandilGlow {
+  0%, 100% { box-shadow: 0 4px 12px rgba(212,175,55,0.2); }
+  50% { box-shadow: 0 4px 24px rgba(212,175,55,0.5); }
+}
+
+/* Streak göstergesi (banner altında) */
+.streak-kart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--vurgu);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+.streak-kart.tehlike { border-left-color: var(--kirmizi); background: #FFF5F5; }
+.streak-kart.cano { border-left-color: var(--orta); }
+.streak-sol { display: flex; align-items: center; gap: 10px; }
+.streak-ates {
+  font-size: 26px;
+  animation: ateşSallan 2s ease-in-out infinite;
+}
+@keyframes ateşSallan {
+  0%, 100% { transform: rotate(-3deg) scale(1); }
+  50% { transform: rotate(3deg) scale(1.05); }
+}
+.streak-info-baslik {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--soft);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.streak-info-rakam {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: -0.4px;
+}
+.streak-info-alt {
+  font-size: 10px;
+  color: var(--soft);
+  margin-top: 1px;
+}
+.streak-rekor {
+  background: var(--altin-bg);
+  color: var(--koyu);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid var(--vurgu);
+}
+.streak-rekor-rakam { font-size: 14px; font-weight: 800; color: var(--vurgu); display: block; }
+
+/* Günlük Görev kartı */
+.gg-kart {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FCEFC8 100%);
+  border: 1.5px solid var(--vurgu);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.gg-kart.tamam {
+  background: linear-gradient(135deg, #D7F4DC 0%, #B7E4C7 100%);
+  border-color: var(--orta);
+}
+.gg-kart::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.gg-baslik {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.gg-baslik-ikon { font-size: 18px; }
+.gg-baslik-ad {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--vurgu);
+  text-transform: uppercase;
+  flex: 1;
+}
+.gg-baslik-tarih { font-size: 10px; color: var(--soft); font-weight: 600; }
+.gg-aciklama {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--koyu);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.gg-ilerleme {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gg-bar {
+  flex: 1;
+  height: 5px;
+  background: rgba(15,46,31,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.gg-bar-dolgu {
+  height: 100%;
+  background: var(--vurgu);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.gg-kart.tamam .gg-bar-dolgu { background: var(--orta); }
+.gg-yuzde {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--koyu);
+  min-width: 50px;
+  text-align: right;
+}
+.gg-tamam-bilgi {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--orta);
+  margin-top: 6px;
+  letter-spacing: -0.2px;
+}
+
+/* Hedef belirleme */
+.hedef-kart {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.hedef-baslik {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--soft);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hedef-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.hedef-bolme {
+  background: var(--bej);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.hedef-bolme:hover { background: var(--altin-bg); }
+.hedef-bolme-ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.hedef-bolme-etiket {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--koyu);
+}
+.hedef-bolme-hedef {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--vurgu);
+}
+.hedef-bolme-progress {
+  height: 4px;
+  background: rgba(15,46,31,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.hedef-bolme-dolgu {
+  height: 100%;
+  background: var(--vurgu);
+  border-radius: 2px;
+  transition: width 0.5s;
+}
+.hedef-bolme-dolgu.tamam { background: var(--orta); }
+.hedef-bolme-mevcut {
+  font-size: 10px;
+  color: var(--soft);
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+/* Karşılaştırma okları */
+.karsilastirma-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 6px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.karsilastirma-ok.artis { background: #E8F5E9; color: var(--orta); }
+.karsilastirma-ok.azalis { background: #FFE6E6; color: var(--kirmizi); }
+.karsilastirma-ok.ayni { background: var(--bej); color: var(--soft); }
+
+/* Ay/hafta sonu özet popup */
+.ozet-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  z-index: 1200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: rozetFade 0.4s;
+}
+.ozet-popup.acik { display: flex; }
+.ozet-popup-icerik {
+  background: var(--kart);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: center;
+  border: 2px solid var(--vurgu);
+}
+.ozet-baslik-ikon { font-size: 60px; }
+.ozet-baslik {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--koyu);
+  margin: 10px 0 4px;
+  letter-spacing: -0.4px;
+}
+.ozet-alt {
+  font-size: 12px;
+  color: var(--soft);
+  font-weight: 600;
+}
+.ozet-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 16px 0;
+}
+.ozet-stat {
+  background: var(--bej);
+  border-radius: 10px;
+  padding: 10px;
+}
+.ozet-stat-rakam {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.5px;
+}
+.ozet-stat-etiket {
+  font-size: 9px;
+  color: var(--soft);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.ozet-mesaj {
+  background: var(--altin-bg);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 0 10px 10px 0;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--koyu);
+  text-align: left;
+  margin: 12px 0;
+  line-height: 1.5;
+  font-style: italic;
+}
+.ozet-kapat {
+  width: 100%;
+  background: var(--orta);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Aktif vakit pulse animasyonu */
+.nv-vakit.aktif {
+  position: relative;
+}
+.nv-vakit.aktif::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--vurgu);
+  border-radius: 12px;
+  animation: vakitPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes vakitPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+/* Vakit kaçırma uyarısı */
+.uyari-kart {
+  background: linear-gradient(135deg, #FFE6E6 0%, #FFD0D0 100%);
+  border-left: 4px solid var(--kirmizi);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.uyari-kart-ikon { font-size: 22px; }
+.uyari-kart-metin {
+  font-size: 12px;
+  color: #861019;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Yıldönümü kutlaması */
+.yildonumu-kart {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: center;
+  color: var(--koyu);
+  border: 2px solid white;
+  box-shadow: 0 4px 16px rgba(255,165,0,0.3);
+}
+.yildonumu-baslik { font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; }
+.yildonumu-rakam { font-size: 32px; font-weight: 800; letter-spacing: -1px; margin: 4px 0; }
+.yildonumu-alt { font-size: 12px; font-weight: 600; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .mb-bandi-ad { font-size: 13px; }
+  .mb-bandi-ikon { font-size: 20px; }
+  .gg-aciklama { font-size: 12px; }
+  .streak-info-rakam { font-size: 16px; }
+  .ozet-baslik { font-size: 18px; }
+  .ozet-stat-rakam { font-size: 18px; }
+}
+
 </style>
 </head>
 <body>
 
 <div class="konteyner">
 
-  <div class="banner">
+  <div class="banner kompakt">
     <div class="banner-ust">
       <div class="banner-marka">
         <div class="banner-ikon">🕌</div>
         <div>
-          <div class="banner-ad">Kaza Namazı Takip</div>
-          <div class="banner-alt">« Ne kadar geç olursa olsun, Allah'a dönüş için her an bir tövbedir »</div>
+          <div class="banner-ad" id="banner-ad">İhyâ</div>
+          <div class="banner-alt-title">Manevi Yolculuk</div>
+          <div class="banner-alt" id="banner-ayet">« Ne kadar geç olursa olsun, Allah'a dönüş için her an bir tövbedir »</div>
         </div>
       </div>
       <div class="banner-tarih">
         <div class="banner-tarih-buyuk" id="banner-tarih">—</div>
-        <div id="banner-saat">—</div>
       </div>
     </div>
+  </div>
 
-    <div class="hero-rakam-bolum">
-      <div class="hero-rakam-sol">
-        <div class="hero-rakam-baslik">Toplam Kalan Borç</div>
-        <div class="hero-rakam" id="hero-rakam">65.615</div>
-        <div class="hero-rakam-alt"><span id="hero-kildi">0</span> kıldı / <span id="hero-borc">65.615</span> toplam</div>
+  
+  <!-- Mübarek günler bandı (varsa görünür) -->
+  <div id="mb-bandi-konteyner"></div>
+
+  <!-- Streak göstergesi -->
+  <div class="streak-kart" id="streak-kart" style="display:none;">
+    <div class="streak-sol">
+      <div class="streak-ates">🔥</div>
+      <div>
+        <div class="streak-info-baslik">SÜREKLİLİK</div>
+        <div class="streak-info-rakam" id="streak-rakam">0 gün</div>
+        <div class="streak-info-alt" id="streak-alt">—</div>
       </div>
-      <div class="hero-progress-bolum">
-        <div class="hero-yuzde" id="hero-yuzde">0,00%</div>
-        <div class="hero-progress"><div class="hero-progress-dolgu" id="hero-progress" style="width:0%"></div></div>
-        <div class="hero-progress-alt" id="hero-motivasyon">Yolculuğa başla — Allah niyetlerine bakar</div>
+    </div>
+    <div class="streak-rekor" id="streak-rekor-konteyner">
+      <span class="streak-rekor-rakam" id="streak-rekor-rakam">0</span>
+      <span>en uzun</span>
+    </div>
+  </div>
+
+  <!-- Vakit kaçırma uyarısı -->
+  <div class="uyari-kart" id="uyari-kart" style="display:none;">
+    <div class="uyari-kart-ikon">⚠️</div>
+    <div class="uyari-kart-metin" id="uyari-kart-metin">—</div>
+  </div>
+
+  <!-- Yıldönümü kartı (özel günlerde) -->
+  <div class="yildonumu-kart" id="yildonumu-kart" style="display:none;">
+    <div class="yildonumu-baslik" id="yildonumu-baslik">YILDÖNÜMÜ</div>
+    <div class="yildonumu-rakam" id="yildonumu-rakam">—</div>
+    <div class="yildonumu-alt" id="yildonumu-alt">—</div>
+  </div>
+
+  <!-- Günün Görevi -->
+  <div class="gg-kart" id="gg-kart" style="display:none;">
+    <div class="gg-baslik">
+      <div class="gg-baslik-ikon">🎯</div>
+      <div class="gg-baslik-ad">GÜNÜN GÖREVİ</div>
+      <div class="gg-baslik-tarih" id="gg-tarih">—</div>
+    </div>
+    <div class="gg-aciklama" id="gg-aciklama">—</div>
+    <div class="gg-ilerleme">
+      <div class="gg-bar"><div class="gg-bar-dolgu" id="gg-bar-dolgu" style="width:0%"></div></div>
+      <div class="gg-yuzde" id="gg-yuzde">0/0</div>
+    </div>
+    <div class="gg-tamam-bilgi" id="gg-tamam-bilgi" style="display:none;">✓ Tamamlandı — yarın yeni görev</div>
+  </div>
+
+<!-- NAMAZ VAKİTLERİ KARTI (en üstte) -->
+  <div class="namaz-vakit-kart" id="namaz-vakit-kart">
+    <div class="nv-yukleniyor" id="nv-yukleniyor">Vakit bilgisi yükleniyor...</div>
+    <div id="nv-icerik" style="display:none;">
+      <div class="nv-ust">
+        <div class="nv-konum">
+          <div class="nv-konum-ikon">📍</div>
+          <div>
+            <div id="nv-sehir">İstanbul</div>
+            <div style="font-size:10px; opacity:0.7;">Diyanet (Türkiye)</div>
+          </div>
+        </div>
+        <div class="nv-tarih">
+          <div id="nv-tarih-tr">—</div>
+          <div class="nv-tarih-hicri" id="nv-tarih-hicri">—</div>
+        </div>
+      </div>
+
+      <div class="nv-aktif-kart">
+        <div class="nv-aktif-baslik">Sonraki Vakit</div>
+        <div class="nv-aktif-ad" id="nv-sonraki-ad">—</div>
+        <div class="nv-geri-sayim" id="nv-geri-sayim">00:00:00</div>
+        <div class="nv-geri-sayim-alt" id="nv-sonraki-saat">—</div>
+      </div>
+
+      <div class="nv-vakit-grid" id="nv-vakit-grid"></div>
+
+      <div class="nv-kerahat" id="nv-kerahat">
+        <div class="nv-kerahat-baslik">⚠️ Kerahat (Mekruh) Vakitleri</div>
+        <div class="nv-kerahat-liste">
+          <div>• <strong>Sabahtan sonra</strong>: Güneş doğuşundan ~45 dk sonrasına kadar</div>
+          <div>• <strong>Öğle öncesi</strong>: Öğle vaktinden ~10 dk önce (zeval)</div>
+          <div>• <strong>İkindi sonrası</strong>: Güneşin batmasına yakın zaman</div>
+        </div>
+        <div class="nv-kerahat-aktif" id="nv-kerahat-aktif" style="display:none;"></div>
+      </div>
+
+      <div class="nv-sehir-secim">
+        <input type="text" class="nv-sehir-input" id="nv-sehir-input" placeholder="Şehir değiştir (örn. Ankara)">
+        <button class="nv-sehir-btn" onclick="vakitSehirDegistir()">Değiştir</button>
       </div>
     </div>
   </div>
@@ -1191,60 +2913,123 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     <div>
       <div class="bolum">
         <div class="bolum-baslik">🕌 Vakit Bazlı Borç <span class="badge" id="aktif-gun">Bugün —</span></div>
+
+        <div class="kaza-ozet-satir">
+          <div>
+            <div style="font-size:9px; color:var(--soft); font-weight:700; letter-spacing:0.5px; text-transform:uppercase;">Toplam Kalan</div>
+            <div class="kaza-ozet-rakam" id="hero-rakam">65.615</div>
+            <div class="kaza-ozet-alt"><span id="hero-kildi">0</span> kıldı / <span id="hero-borc">65.615</span> • <span id="hero-yuzde">0,00%</span></div>
+          </div>
+          <div style="flex:1; min-width:120px;">
+            <div style="height:8px; background:#F0EBE0; border-radius:8px; overflow:hidden;"><div id="hero-progress" style="height:100%; width:0%; background:linear-gradient(90deg, var(--vurgu) 0%, #E5C158 100%); border-radius:8px; transition:width 0.6s;"></div></div>
+            <div style="font-size:10px; color:var(--soft); margin-top:4px; font-weight:600;" id="hero-motivasyon">Yolculuğa başla</div>
+          </div>
+        </div>
+
         <div class="vakit-liste" id="vakit-liste"></div>
-
       </div>
 
-      <div class="bolum">
-        <div class="bolum-baslik">📿 Lâ İlâhe İllallâh Zikri <span class="badge" id="zikir-rozet-durum">Hedef 70.000</span></div>
-        <div class="zikir-hero">
-          <div class="zikir-arapca">لَا إِلٰهَ إِلَّا اللّٰهُ</div>
-          <div class="zikir-anlam">"Allah'tan başka ilâh yoktur"</div>
-          <div class="zikir-rakam" id="zikir-rakam">0</div>
-          <div class="zikir-alt" id="zikir-alt">70.000 hedefe başla</div>
-          <div class="zikir-progress-bolum">
-            <div class="zikir-progress"><div class="zikir-progress-dolgu" id="zikir-progress" style="width:0%"></div></div>
-            <div class="zikir-progress-yazi" id="zikir-yuzde">%0,00</div>
+      <div class="bolum acilir" id="bolum-zikirler">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-zikirler')">📿 Zikirler <span class="badge" id="zikir-toplam-badge">Hatırla, kalbin huzur bulur</span></div>
+        <div class="bolum-icerik">
+
+        <div class="zm-konteyner">
+          <div class="zm-kart" id="zm-laila">
+            <div class="zm-ust">
+              <div class="zm-ad">Lâ İlâhe İllallâh</div>
+              <div class="zm-sayi" id="zm-laila-sayi">0 / 70.000</div>
+            </div>
+            <div class="zm-progress"><div class="zm-progress-dolgu" id="zm-laila-dolgu" style="width:0%"></div></div>
+            <div class="zm-butonlar">
+              <button class="zm-btn zm-btn-eksi" onclick="zikirDegistir(-10)" title="10 azalt">−10</button>
+              <button class="zm-btn zm-btn-arti" onclick="zikirDegistir(10)">+10</button>
+              <button class="zm-btn zm-btn-arti" onclick="zikirDegistir(33)">+33</button>
+              <button class="zm-btn zm-btn-arti" onclick="zikirDegistir(100)">+100</button>
+            </div>
+          </div>
+
+          <div class="zm-kart zm-yesil" id="zm-ihlas">
+            <div class="zm-ust">
+              <div class="zm-ad">İhlâs Sûresi</div>
+              <div class="zm-sayi" id="zm-ihlas-sayi">0 / 100.000</div>
+            </div>
+            <div class="zm-progress"><div class="zm-progress-dolgu" id="zm-ihlas-dolgu" style="width:0%"></div></div>
+            <div class="zm-butonlar">
+              <button class="zm-btn zm-btn-eksi" onclick="ihlasDegistir(-10)" title="10 azalt">−10</button>
+              <button class="zm-btn zm-btn-arti" onclick="ihlasDegistir(10)">+10</button>
+              <button class="zm-btn zm-btn-arti" onclick="ihlasDegistir(33)">+33</button>
+              <button class="zm-btn zm-btn-arti" onclick="ihlasDegistir(100)">+100</button>
+            </div>
           </div>
         </div>
-        <div class="zikir-butonlar">
-          <button class="zikir-btn zikir-btn-eksi" onclick="zikirDegistir(-100)" title="100 azalt">−100</button>
-          <button class="zikir-btn zikir-btn-arti" onclick="zikirDegistir(100)">+100 Zikir Ekle</button>
-          <button class="zikir-btn zikir-btn-sifirla" onclick="zikirSifirla()" title="Sıfırla">🔄</button>
+
+        <div class="ez-bolum">
+          <div class="ez-baslik">
+            <span class="ez-baslik-ikon">✨</span>
+            <span class="ez-baslik-ad">Esmâü'l-Hüsnâ Zikri</span>
+            <span class="ez-baslik-sayi" id="ez-tamamlanan-badge">0 / 99</span>
+          </div>
+
+          <div class="ez-aktif">
+            <div class="ez-aktif-info">
+              <div class="ez-aktif-no" id="ez-aktif-no">17. isim</div>
+              <div class="ez-aktif-ad" id="ez-aktif-ad">Er-Rezzâk</div>
+              <div class="ez-aktif-anlam" id="ez-aktif-anlam">Bütün varlıkların rızkını veren</div>
+            </div>
+            <button class="ez-degistir" onclick="ezSheetAc()">Değiştir ▾</button>
+          </div>
+
+          <div class="ez-sayac">
+            <div class="ez-rakam" id="ez-rakam">0</div>
+            <div class="ez-hedef" id="ez-hedef">Hedef: 308 (ebced)</div>
+            <div class="ez-progress"><div class="ez-progress-dolgu" id="ez-progress-dolgu" style="width:0%"></div></div>
+          </div>
+
+          <div class="ez-butonlar">
+            <button class="ez-btn ez-btn-eksi" onclick="esmaZikirDegistir(-1)">−1</button>
+            <button class="ez-btn ez-btn-tap" onclick="esmaZikirDegistir(1)">+1 ✋</button>
+            <button class="ez-btn ez-btn-arti" onclick="esmaZikirDegistir(10)">+10</button>
+            <button class="ez-btn ez-btn-arti" onclick="esmaZikirDegistir(33)">+33</button>
+          </div>
+
+          <div class="ez-altbtn">
+            <button class="ez-mini-btn" onclick="esmaZikirSifirla()">🔄 Sıfırla</button>
+            <button class="ez-mini-btn ez-tamamla-btn" onclick="esmaZikirTamamla()">✓ Tamamla</button>
+          </div>
+
+          <div class="ez-son" id="ez-son-konteyner" style="display:none;">
+            <div class="ez-son-baslik">Son Zikirler (en çoktan en aza)</div>
+            <div class="ez-son-liste" id="ez-son-liste"></div>
+          </div>
         </div>
-        <div class="zikir-hizli">
-          <button class="zikir-hizli-btn" onclick="zikirDegistir(33)">+33</button>
-          <button class="zikir-hizli-btn" onclick="zikirDegistir(99)">+99</button>
-          <button class="zikir-hizli-btn" onclick="zikirDegistir(500)">+500</button>
-          <button class="zikir-hizli-btn" onclick="zikirDegistir(1000)">+1.000</button>
         </div>
-        <div class="zikir-motivasyon" id="zikir-motivasyon">🌱 Zikre başla — gönlün huzur bulacak</div>
       </div>
 
-      <div class="bolum">
-        <div class="bolum-baslik">✨ İhlas Suresi Zikri <span class="badge" id="ihlas-rozet-durum">Hedef 100.000</span></div>
-        <div class="zikir-hero">
-          <div class="zikir-arapca">قُلْ هُوَ اللّٰهُ اَحَدٌ</div>
-          <div class="zikir-anlam">"De ki: O Allah birdir" — İhlâs Sûresi (3 kez okumak 1 hatim sevabı)</div>
-          <div class="zikir-rakam" id="ihlas-rakam">0</div>
-          <div class="zikir-alt" id="ihlas-alt">100.000 hedefe başla</div>
-          <div class="zikir-progress-bolum">
-            <div class="zikir-progress"><div class="zikir-progress-dolgu" id="ihlas-progress" style="width:0%"></div></div>
-            <div class="zikir-progress-yazi" id="ihlas-yuzde">%0,00</div>
+      <div class="bolum acilir" id="bolum-dualar">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-dualar')">📖 Dualar ve Sureler <span class="badge" id="dua-sayim">12 dua</span></div>
+        <div class="bolum-icerik">
+          <div class="dua-arama">
+            <input type="text" id="dua-arama-input" placeholder="Dua veya sure ara..." oninput="duaAra(this.value)">
           </div>
+          <div class="dua-aksiyon-satir">
+            <button class="dua-mini-btn" onclick="duaTumuAc()">Tümünü Aç</button>
+            <button class="dua-mini-btn" onclick="duaTumuKapat()">Tümünü Kapat</button>
+          </div>
+          <div class="dua-liste" id="dua-liste" style="margin-top:12px;"></div>
         </div>
-        <div class="zikir-butonlar">
-          <button class="zikir-btn zikir-btn-eksi" onclick="ihlasDegistir(-100)" title="100 azalt">−100</button>
-          <button class="zikir-btn zikir-btn-arti" onclick="ihlasDegistir(100)">+100 İhlas Ekle</button>
-          <button class="zikir-btn zikir-btn-sifirla" onclick="ihlasSifirla()" title="Sıfırla">🔄</button>
+      </div>
+
+      <div class="bolum acilir" id="bolum-esma">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-esma')">✨ Esmâü'l-Hüsnâ <span class="badge">Allah'ın 99 ismi</span></div>
+        <div class="bolum-icerik">
+          <div style="background:var(--altin-bg); padding:12px; border-radius:10px; font-size:12px; color:var(--metin); font-style:italic; margin-bottom:12px; line-height:1.6; border-left:3px solid var(--vurgu);">
+            "En güzel isimler Allah'ındır. O hâlde O'na o güzel isimlerle dua edin." — A'râf, 180
+          </div>
+          <div class="esma-arama">
+            <input type="text" id="esma-arama-input" placeholder="İsim ara (örn. Rahman, Kerim)" oninput="esmaAra(this.value)">
+          </div>
+          <div class="esma-grid" id="esma-grid"></div>
         </div>
-        <div class="zikir-hizli">
-          <button class="zikir-hizli-btn" onclick="ihlasDegistir(33)">+33</button>
-          <button class="zikir-hizli-btn" onclick="ihlasDegistir(99)">+99</button>
-          <button class="zikir-hizli-btn" onclick="ihlasDegistir(500)">+500</button>
-          <button class="zikir-hizli-btn" onclick="ihlasDegistir(1000)">+1.000</button>
-        </div>
-        <div class="zikir-motivasyon" id="ihlas-motivasyon">🌱 İhlas Suresi'ne başla — 3 kez okumak 1 hatim sevabıdır</div>
       </div>
 
       <div class="bolum">
@@ -1270,6 +3055,30 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     </div>
 
     <div>
+      
+      <!-- Hedef belirleme -->
+      <div class="hedef-kart">
+        <div class="hedef-baslik">🎯 Dönem Hedefleri (tıkla, değiştir)</div>
+        <div class="hedef-grid">
+          <div class="hedef-bolme" onclick="hedefDuzenle('hafta')">
+            <div class="hedef-bolme-ust">
+              <span class="hedef-bolme-etiket">Bu Hafta</span>
+              <span class="hedef-bolme-hedef" id="hedef-hafta-rakam">— / 50</span>
+            </div>
+            <div class="hedef-bolme-progress"><div class="hedef-bolme-dolgu" id="hedef-hafta-dolgu" style="width:0%"></div></div>
+            <div class="hedef-bolme-mevcut" id="hedef-hafta-alt">—</div>
+          </div>
+          <div class="hedef-bolme" onclick="hedefDuzenle('ay')">
+            <div class="hedef-bolme-ust">
+              <span class="hedef-bolme-etiket">Bu Ay</span>
+              <span class="hedef-bolme-hedef" id="hedef-ay-rakam">— / 200</span>
+            </div>
+            <div class="hedef-bolme-progress"><div class="hedef-bolme-dolgu" id="hedef-ay-dolgu" style="width:0%"></div></div>
+            <div class="hedef-bolme-mevcut" id="hedef-ay-alt">—</div>
+          </div>
+        </div>
+      </div>
+
       <div class="bolum">
         <div class="bolum-baslik">📊 İstatistik</div>
         <div class="istat-grid">
@@ -1305,9 +3114,11 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
 
-      <div class="bolum">
-        <div class="bolum-baslik">🥇 Kazanılan Rozetler <span class="badge" id="rozet-sayisi">0/12</span></div>
-        <div class="rozet-grid" id="rozet-grid"></div>
+      <div class="bolum acilir" id="bolum-rozetler">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-rozetler')">🥇 Kazanılan Rozetler <span class="badge" id="rozet-sayisi">0/12</span></div>
+        <div class="bolum-icerik">
+          <div class="rozet-grid" id="rozet-grid"></div>
+        </div>
       </div>
 
       <div class="bolum">
@@ -1318,34 +3129,35 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     </div>
   </div>
 
-  <div class="bolum">
-    <div class="bolum-baslik">🚀 Bitirme Süresi Hesaplayıcı <span class="badge">Hızı dene, ne kadar sürede biteceğini gör</span></div>
-
-    <div class="hesap-vakit-tabs" id="hvt-konteyner">
-      <button class="hvt-btn aktif" data-vakit="toplam"><span class="hvt-btn-ikon">🕌</span><span class="hvt-btn-ad">Toplam</span></button>
-      <button class="hvt-btn" data-vakit="imsak"><span class="hvt-btn-ikon">🌅</span><span class="hvt-btn-ad">Sabah</span></button>
-      <button class="hvt-btn" data-vakit="ogle"><span class="hvt-btn-ikon">☀️</span><span class="hvt-btn-ad">Öğle</span></button>
-      <button class="hvt-btn" data-vakit="ikindi"><span class="hvt-btn-ikon">🌇</span><span class="hvt-btn-ad">İkindi</span></button>
-      <button class="hvt-btn" data-vakit="aksam"><span class="hvt-btn-ikon">🌆</span><span class="hvt-btn-ad">Akşam</span></button>
-      <button class="hvt-btn" data-vakit="yatsi"><span class="hvt-btn-ikon">🌙</span><span class="hvt-btn-ad">Yatsı</span></button>
-    </div>
-
-    <div class="hesap-birim" id="hb-konteyner">
-      <button class="hb-btn aktif" data-birim="gun">Günlük Hız</button>
-      <button class="hb-btn" data-birim="ay">Aylık Hız</button>
-    </div>
-
-    <div class="hesap-bilgi" id="hesap-bilgi"></div>
-
-    <div class="hiz-grid" id="hiz-grid"></div>
-
-    <div class="ozel-hiz-kutu">
-      <div class="ozel-hiz-baslik">🎯 Kendi Hızını Dene</div>
-      <div class="ozel-slider-satir">
-        <input type="range" id="ozel-slider" min="1" max="100" value="10">
-        <div class="ozel-slider-deger" id="ozel-deger">10</div>
+  <div class="bolum acilir" id="bolum-hesap">
+    <div class="bolum-baslik" onclick="bolumToggle('bolum-hesap')">🚀 Bitirme Süresi Hesaplayıcı <span class="badge">Hızı dene</span></div>
+    <div class="bolum-icerik">
+      <div class="hesap-vakit-tabs" id="hvt-konteyner">
+        <button class="hvt-btn aktif" data-vakit="toplam"><span class="hvt-btn-ikon">🕌</span><span class="hvt-btn-ad">Toplam</span></button>
+        <button class="hvt-btn" data-vakit="imsak"><span class="hvt-btn-ikon">🌅</span><span class="hvt-btn-ad">Sabah</span></button>
+        <button class="hvt-btn" data-vakit="ogle"><span class="hvt-btn-ikon">☀️</span><span class="hvt-btn-ad">Öğle</span></button>
+        <button class="hvt-btn" data-vakit="ikindi"><span class="hvt-btn-ikon">🌇</span><span class="hvt-btn-ad">İkindi</span></button>
+        <button class="hvt-btn" data-vakit="aksam"><span class="hvt-btn-ikon">🌆</span><span class="hvt-btn-ad">Akşam</span></button>
+        <button class="hvt-btn" data-vakit="yatsi"><span class="hvt-btn-ikon">🌙</span><span class="hvt-btn-ad">Yatsı</span></button>
       </div>
-      <div class="ozel-sonuc" id="ozel-sonuc">Hesaplanıyor...</div>
+
+      <div class="hesap-birim" id="hb-konteyner">
+        <button class="hb-btn aktif" data-birim="gun">Günlük Hız</button>
+        <button class="hb-btn" data-birim="ay">Aylık Hız</button>
+      </div>
+
+      <div class="hesap-bilgi" id="hesap-bilgi"></div>
+
+      <div class="hiz-grid" id="hiz-grid"></div>
+
+      <div class="ozel-hiz-kutu">
+        <div class="ozel-hiz-baslik">🎯 Kendi Hızını Dene</div>
+        <div class="ozel-slider-satir">
+          <input type="range" id="ozel-slider" min="1" max="100" value="10">
+          <div class="ozel-slider-deger" id="ozel-deger">10</div>
+        </div>
+        <div class="ozel-sonuc" id="ozel-sonuc">Hesaplanıyor...</div>
+      </div>
     </div>
   </div>
 
@@ -1368,6 +3180,44 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 <div class="toast" id="toast">
   <span class="toast-ikon" id="toast-ikon">✅</span>
   <span id="toast-mesaj">Kaydedildi</span>
+</div>
+
+<div class="esma-modal" id="esma-modal" onclick="if(event.target.id==='esma-modal') esmaModalKapat()">
+  <div class="esma-modal-icerik">
+    <div class="esma-modal-no" id="esma-modal-no">1</div>
+    <div class="esma-modal-ad" id="esma-modal-ad">—</div>
+    <div class="esma-modal-anlam" id="esma-modal-anlam">—</div>
+    <div class="esma-modal-fazilet" id="esma-modal-fazilet">—</div>
+    <button class="esma-modal-kapat" onclick="esmaModalKapat()">Kapat</button>
+  </div>
+</div>
+
+<div class="ez-sheet" id="ez-sheet" onclick="if(event.target.id==='ez-sheet') ezSheetKapat()">
+  <div class="ez-sheet-icerik">
+    <div class="ez-sheet-baslik">
+      <div>Esmâ Seç (99 isim)</div>
+      <button class="ez-sheet-kapat" onclick="ezSheetKapat()" aria-label="Kapat">✕</button>
+    </div>
+    <input type="text" class="ez-sheet-arama" id="ez-sheet-arama" placeholder="İsim ara (örn. Latîf, Şâfî, Rezzâk)" oninput="ezSheetAra(this.value)">
+    <div class="ez-sheet-liste" id="ez-sheet-liste"></div>
+  </div>
+</div>
+
+
+<div class="ozet-popup" id="ozet-popup" onclick="if(event.target.id==='ozet-popup') ozetPopupKapat()">
+  <div class="ozet-popup-icerik">
+    <div class="ozet-baslik-ikon" id="ozet-baslik-ikon">📅</div>
+    <div class="ozet-baslik" id="ozet-baslik">—</div>
+    <div class="ozet-alt" id="ozet-alt">—</div>
+    <div class="ozet-stat-grid">
+      <div class="ozet-stat"><div class="ozet-stat-rakam" id="ozet-toplam">0</div><div class="ozet-stat-etiket">Toplam Namaz</div></div>
+      <div class="ozet-stat"><div class="ozet-stat-rakam" id="ozet-ortalama">0</div><div class="ozet-stat-etiket">Günlük Ort.</div></div>
+      <div class="ozet-stat"><div class="ozet-stat-rakam" id="ozet-rekor">0</div><div class="ozet-stat-etiket">En İyi Gün</div></div>
+      <div class="ozet-stat"><div class="ozet-stat-rakam" id="ozet-aktif">0</div><div class="ozet-stat-etiket">Aktif Gün</div></div>
+    </div>
+    <div class="ozet-mesaj" id="ozet-mesaj">—</div>
+    <button class="ozet-kapat" onclick="ozetPopupKapat()">Devam et</button>
+  </div>
 </div>
 
 <div class="rozet-popup" id="rozet-popup" onclick="if(event.target.id==='rozet-popup') document.getElementById('rozet-popup').classList.remove('acik')">
@@ -1401,7 +3251,8 @@ const ROZET_KATEGORILER = {
   yuzde:   { ikon:'📈', ad:'İlerleme Yüzdesi',    sira:7 },
   zikir:   { ikon:'📿', ad:'Lâ İlâhe İllallâh Zikri', sira:8 },
   ihlas:   { ikon:'✨', ad:'İhlas Suresi Zikri',    sira:9 },
-  ozel:    { ikon:'🌟', ad:'Özel Başarılar',         sira:10 }
+  esma:    { ikon:'🕊️', ad:'Esmâü\'l-Hüsnâ',          sira:10 },
+  ozel:    { ikon:'🌟', ad:'Özel Başarılar',         sira:11 }
 };
 
 const ROZETLER = [
@@ -1430,28 +3281,28 @@ const ROZETLER = [
   { id:'s365',   ikon:'🏅', ad:'1 Yıl Ardışık',    kategori:'streak', aciklama:'365 gün ardışık',      hedef:365,   tip:'streak' },
 
   // 📅 HAFTALIK PERFORMANS (son 7 gün toplamı)
-  { id:'h25',    ikon:'📅', ad:'Hafta 25',         kategori:'hafta', aciklama:'7 günde 25 namaz',     hedef:25,    tip:'son7' },
-  { id:'h50',    ikon:'📅', ad:'Hafta 50',         kategori:'hafta', aciklama:'7 günde 50 namaz',     hedef:50,    tip:'son7' },
-  { id:'h100',   ikon:'📅', ad:'Hafta 100',        kategori:'hafta', aciklama:'7 günde 100 namaz',    hedef:100,   tip:'son7' },
-  { id:'h200',   ikon:'📅', ad:'Hafta 200',        kategori:'hafta', aciklama:'7 günde 200 namaz',    hedef:200,   tip:'son7' },
+  { id:'h25',    ikon:'📅', ad:'Hafta 25',         kategori:'hafta', aciklama:'Bu hafta 25 namaz',     hedef:25,    tip:'son7' },
+  { id:'h50',    ikon:'📅', ad:'Hafta 50',         kategori:'hafta', aciklama:'Bu hafta 50 namaz',     hedef:50,    tip:'son7' },
+  { id:'h100',   ikon:'📅', ad:'Hafta 100',        kategori:'hafta', aciklama:'Bu hafta 100 namaz',    hedef:100,   tip:'son7' },
+  { id:'h200',   ikon:'📅', ad:'Hafta 200',        kategori:'hafta', aciklama:'Bu hafta 200 namaz',    hedef:200,   tip:'son7' },
 
   // 📆 AYLIK PERFORMANS (son 30 gün toplamı)
-  { id:'ay100',  ikon:'📆', ad:'Ay 100',           kategori:'ay', aciklama:'30 günde 100 namaz',     hedef:100,   tip:'son30' },
-  { id:'ay250',  ikon:'📆', ad:'Ay 250',           kategori:'ay', aciklama:'30 günde 250 namaz',     hedef:250,   tip:'son30' },
-  { id:'ay500',  ikon:'📆', ad:'Ay 500',           kategori:'ay', aciklama:'30 günde 500 namaz',     hedef:500,   tip:'son30' },
-  { id:'ay1k',   ikon:'📆', ad:'Ay 1000',          kategori:'ay', aciklama:'30 günde 1000 namaz',    hedef:1000,  tip:'son30' },
+  { id:'ay100',  ikon:'📆', ad:'Ay 100',           kategori:'ay', aciklama:'Bu ay 100 namaz',     hedef:100,   tip:'son30' },
+  { id:'ay250',  ikon:'📆', ad:'Ay 250',           kategori:'ay', aciklama:'Bu ay 250 namaz',     hedef:250,   tip:'son30' },
+  { id:'ay500',  ikon:'📆', ad:'Ay 500',           kategori:'ay', aciklama:'Bu ay 500 namaz',     hedef:500,   tip:'son30' },
+  { id:'ay1k',   ikon:'📆', ad:'Ay 1000',          kategori:'ay', aciklama:'Bu ay 1.000 namaz',    hedef:1000,  tip:'son30' },
 
   // 🗓️ 3 AYLIK PERFORMANS (son 90 gün toplamı)
-  { id:'q500',   ikon:'🗓️', ad:'3 Ay 500',         kategori:'ceyrek', aciklama:'90 günde 500 namaz', hedef:500,   tip:'son90' },
-  { id:'q1500',  ikon:'🗓️', ad:'3 Ay 1500',        kategori:'ceyrek', aciklama:'90 günde 1500 namaz',hedef:1500,  tip:'son90' },
-  { id:'q3k',    ikon:'🗓️', ad:'3 Ay 3000',        kategori:'ceyrek', aciklama:'90 günde 3000 namaz',hedef:3000,  tip:'son90' },
-  { id:'q5k',    ikon:'🗓️', ad:'3 Ay 5000',        kategori:'ceyrek', aciklama:'90 günde 5000 namaz',hedef:5000,  tip:'son90' },
+  { id:'q500',   ikon:'🗓️', ad:'3 Ay 500',         kategori:'ceyrek', aciklama:'Bu çeyrek 500 namaz', hedef:500,   tip:'son90' },
+  { id:'q1500',  ikon:'🗓️', ad:'3 Ay 1500',        kategori:'ceyrek', aciklama:'Bu çeyrek 1.500 namaz',hedef:1500,  tip:'son90' },
+  { id:'q3k',    ikon:'🗓️', ad:'3 Ay 3000',        kategori:'ceyrek', aciklama:'Bu çeyrek 3.000 namaz',hedef:3000,  tip:'son90' },
+  { id:'q5k',    ikon:'🗓️', ad:'3 Ay 5000',        kategori:'ceyrek', aciklama:'Bu çeyrek 5.000 namaz',hedef:5000,  tip:'son90' },
 
   // 💪 TEK GÜN REKORU
-  { id:'g10',    ikon:'💪', ad:'Üretken Gün',      kategori:'gun', aciklama:'Bir günde 10+ namaz',  hedef:10,    tip:'maxgun' },
-  { id:'g20',    ikon:'🚀', ad:'Süper Gün',        kategori:'gun', aciklama:'Bir günde 20+ namaz',  hedef:20,    tip:'maxgun' },
-  { id:'g30',    ikon:'⚡', ad:'Mucize Gün',       kategori:'gun', aciklama:'Bir günde 30+ namaz',  hedef:30,    tip:'maxgun' },
-  { id:'g50',    ikon:'🔥', ad:'Efsane Gün',       kategori:'gun', aciklama:'Bir günde 50+ namaz',  hedef:50,    tip:'maxgun' },
+  { id:'g10',    ikon:'💪', ad:'Üretken Gün',      kategori:'gun', aciklama:'Bugün 10+ namaz',  hedef:10,    tip:'maxgun' },
+  { id:'g20',    ikon:'🚀', ad:'Süper Gün',        kategori:'gun', aciklama:'Bugün 20+ namaz',  hedef:20,    tip:'maxgun' },
+  { id:'g30',    ikon:'⚡', ad:'Mucize Gün',       kategori:'gun', aciklama:'Bugün 30+ namaz',  hedef:30,    tip:'maxgun' },
+  { id:'g50',    ikon:'🔥', ad:'Efsane Gün',       kategori:'gun', aciklama:'Bugün 50+ namaz',  hedef:50,    tip:'maxgun' },
 
   // 📈 İLERLEME YÜZDESİ
   { id:'p1',     ikon:'🎀', ad:'%1',               kategori:'yuzde', aciklama:'Borcun %1\'ini kıl',  hedef:0.01,  tip:'yuzde' },
@@ -1478,6 +3329,22 @@ const ROZETLER = [
   { id:'i50k',   ikon:'⭐', ad:'50.000 İhlas',     kategori:'ihlas', aciklama:'50.000 İhlas Sûresi',               hedef:50000,  tip:'ihlas' },
   { id:'i75k',   ikon:'🏅', ad:'75.000 İhlas',     kategori:'ihlas', aciklama:'75.000 İhlas Sûresi',               hedef:75000,  tip:'ihlas' },
   { id:'i100k',  ikon:'👑', ad:'100 Bin İhlas',    kategori:'ihlas', aciklama:'100.000 İhlas Sûresi — özel kademe!', hedef:100000, tip:'ihlas', ozel:true },
+  { id:'i200k',  ikon:'💎', ad:'200 Bin İhlas',    kategori:'ihlas', aciklama:'200.000 İhlas — çift hatim seviyesi',  hedef:200000, tip:'ihlas', ozel:true },
+
+  // 🕊️ ESMÂÜ'L-HÜSNÂ — Tamamlanan isim sayısı
+  { id:'es1',    ikon:'🌱', ad:'İlk Esmâ',         kategori:'esma', aciklama:'1 Esmâ tamamla (ebced sayısına ulaş)', hedef:1,  tip:'esmaTamam' },
+  { id:'es5',    ikon:'🌿', ad:'5 Esmâ',           kategori:'esma', aciklama:'5 Esmâ tamamla',                       hedef:5,  tip:'esmaTamam' },
+  { id:'es10',   ikon:'🌳', ad:'10 Esmâ',          kategori:'esma', aciklama:'10 Esmâ tamamla',                      hedef:10, tip:'esmaTamam' },
+  { id:'es25',   ikon:'🌟', ad:'25 Esmâ',          kategori:'esma', aciklama:'25 Esmâ tamamla — yolun çeyreği',       hedef:25, tip:'esmaTamam' },
+  { id:'es33',   ikon:'⭐', ad:'33 Esmâ',          kategori:'esma', aciklama:'33 Esmâ tamamla — üçte bir',           hedef:33, tip:'esmaTamam' },
+  { id:'es50',   ikon:'🏅', ad:'Yarı Yol',         kategori:'esma', aciklama:'50 Esmâ tamamla — yarıyı geçtin',       hedef:50, tip:'esmaTamam' },
+  { id:'es75',   ikon:'🏆', ad:'75 Esmâ',          kategori:'esma', aciklama:'75 Esmâ tamamla',                      hedef:75, tip:'esmaTamam' },
+  { id:'es99',   ikon:'👑', ad:'Esmâ Hatmi',       kategori:'esma', aciklama:'99 Esmâ\'yı tamamla — özel kademe!',    hedef:99, tip:'esmaTamam', ozel:true },
+  // Esmâ toplam zikir
+  { id:'ez500',  ikon:'🕊️', ad:'500 Esmâ Zikri',  kategori:'esma', aciklama:'Toplam 500 Esmâ zikri',                hedef:500,   tip:'esmaToplam' },
+  { id:'ez2k',   ikon:'🕊️', ad:'2.000 Esmâ Zikri',kategori:'esma', aciklama:'Toplam 2.000 Esmâ zikri',              hedef:2000,  tip:'esmaToplam' },
+  { id:'ez10k',  ikon:'🕊️', ad:'10.000 Esmâ Zikri',kategori:'esma',aciklama:'Toplam 10.000 Esmâ zikri',             hedef:10000, tip:'esmaToplam' },
+  { id:'ez33k',  ikon:'💎', ad:'33.333 Esmâ Zikri',kategori:'esma',aciklama:'Toplam 33.333 Esmâ zikri — özel!',     hedef:33333, tip:'esmaToplam', ozel:true },
 
   // 🌟 ÖZEL BAŞARILAR
   { id:'tum5',     ikon:'🕌', ad:'Tam Gün',         kategori:'ozel', aciklama:'Bir günde 5 vaktin de >0', hedef:1,  tip:'tum5gun' },
@@ -1485,7 +3352,16 @@ const ROZETLER = [
   { id:'tum5_30',  ikon:'☪️', ad:'Tam Ay',          kategori:'ozel', aciklama:'30 gün ardışık 5 vakit',   hedef:30, tip:'tum5ardisik' },
   { id:'aktif30',  ikon:'📊', ad:'Disiplinli',      kategori:'ozel', aciklama:'30 farklı günde namaz',    hedef:30, tip:'aktifgun' },
   { id:'aktif100', ikon:'🏵️', ad:'Sebatkâr',        kategori:'ozel', aciklama:'100 farklı günde namaz',   hedef:100,tip:'aktifgun' },
-  { id:'aktif365', ikon:'👑', ad:'Adanmış',         kategori:'ozel', aciklama:'365 farklı günde namaz',   hedef:365,tip:'aktifgun' }
+  { id:'aktif365', ikon:'👑', ad:'Adanmış',         kategori:'ozel', aciklama:'365 farklı günde namaz',   hedef:365,tip:'aktifgun' },
+  { id:'aktif730', ikon:'🌠', ad:'2 Yıl Aktif',     kategori:'ozel', aciklama:'730 farklı günde namaz',   hedef:730,tip:'aktifgun', ozel:true },
+  { id:'g100',     ikon:'⚡', ad:'Olağanüstü Gün',  kategori:'ozel', aciklama:'Bugün 100+ namaz',     hedef:100,tip:'maxgun', ozel:true },
+  { id:'gorev1',   ikon:'🎯', ad:'İlk Görev',       kategori:'ozel', aciklama:'1 Günlük Görev tamamla',   hedef:1,   tip:'gorevTamam' },
+  { id:'gorev10',  ikon:'🎯', ad:'10 Görev',        kategori:'ozel', aciklama:'10 Günlük Görev tamamla',  hedef:10,  tip:'gorevTamam' },
+  { id:'gorev30',  ikon:'🎯', ad:'30 Görev',        kategori:'ozel', aciklama:'30 Günlük Görev tamamla',  hedef:30,  tip:'gorevTamam' },
+  { id:'gorev100', ikon:'🏆', ad:'100 Görev',       kategori:'ozel', aciklama:'100 Günlük Görev tamamla — özel!', hedef:100, tip:'gorevTamam', ozel:true },
+  { id:'rekor7',   ikon:'🔥', ad:'1 Hafta Rekoru',  kategori:'streak', aciklama:'En uzun streak 7+ gün',    hedef:7,   tip:'streakRekor' },
+  { id:'rekor30',  ikon:'💎', ad:'1 Ay Rekoru',     kategori:'streak', aciklama:'En uzun streak 30+ gün',   hedef:30,  tip:'streakRekor' },
+  { id:'rekor100', ikon:'👑', ad:'100 Gün Rekoru',  kategori:'streak', aciklama:'En uzun streak 100+ gün — özel!', hedef:100, tip:'streakRekor', ozel:true }
 ];
 
 const STORAGE_KEY = 'kn_kayitlar_v1';
@@ -1494,6 +3370,23 @@ const ZIKIR_KEY = 'kn_zikir_v1';
 const ZIKIR_HEDEF = 70000;
 const IHLAS_KEY = 'kn_ihlas_v1';
 const IHLAS_HEDEF = 100000;
+const ESMA_ZIKIR_KEY = 'kn_esma_zikir_v1';
+const ESMA_AKTIF_KEY = 'kn_esma_aktif_v1';
+const ESMA_TAMAMLANAN_KEY = 'kn_esma_tamamlanan_v1';
+
+// Esmâü'l-Hüsnâ ebced (sayısal) değerleri — geleneksel zikir hedefi
+const ESMA_EBCED = {
+  1:298, 2:258, 3:90, 4:170, 5:131, 6:136, 7:145, 8:94, 9:206, 10:662,
+  11:731, 12:213, 13:336, 14:1281, 15:306, 16:14, 17:308, 18:489, 19:150, 20:903,
+  21:72, 22:1481, 23:351, 24:117, 25:770, 26:180, 27:302, 28:68, 29:104, 30:129,
+  31:812, 32:88, 33:1020, 34:1286, 35:526, 36:110, 37:232, 38:998, 39:550, 40:80,
+  41:73, 42:270, 43:312, 44:55, 45:137, 46:78, 47:20, 48:57, 49:573, 50:319,
+  51:108, 52:66, 53:116, 54:500, 55:46, 56:62, 57:148, 58:56, 59:124, 60:68,
+  61:490, 62:18, 63:156, 64:14, 65:48, 66:19, 67:13, 68:134, 69:305, 70:744,
+  71:184, 72:846, 73:37, 74:801, 75:1106, 76:62, 77:47, 78:551, 79:202, 80:409,
+  81:630, 82:156, 83:286, 84:212, 85:1100, 86:209, 87:114, 88:1060, 89:1100, 90:161,
+  91:1001, 92:201, 93:256, 94:20, 95:86, 96:113, 97:707, 98:514, 99:298
+};
 
 // =========================================================
 // VERİ YÜKLEMEKAYDETME
@@ -1502,12 +3395,22 @@ let kayitlar = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 let kazanilanRozetler = new Set(JSON.parse(localStorage.getItem(ROZETLER_KEY) || '[]'));
 let zikirSayisi = parseInt(localStorage.getItem(ZIKIR_KEY) || '0');
 let ihlasSayisi = parseInt(localStorage.getItem(IHLAS_KEY) || '0');
+let esmaZikirleri = JSON.parse(localStorage.getItem(ESMA_ZIKIR_KEY) || '{}');
+let aktifEsmaNo = parseInt(localStorage.getItem(ESMA_AKTIF_KEY) || '17');
+let esmaTamamlananlar = new Set(JSON.parse(localStorage.getItem(ESMA_TAMAMLANAN_KEY) || '[]'));
+
+// Yaşayan uygulama değişkenleri (rozetDurum içinde kullanıldığı için erken tanımlanmalı — TDZ önlenir)
+let streakRekoru = parseInt(localStorage.getItem('kn_streak_rekor_v1') || '0');
+let gorevTamamlama = parseInt(localStorage.getItem('kn_gorev_tamamlama_v1') || '0');
 
 function kaydet() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(kayitlar));
   localStorage.setItem(ROZETLER_KEY, JSON.stringify([...kazanilanRozetler]));
   localStorage.setItem(ZIKIR_KEY, zikirSayisi.toString());
   localStorage.setItem(IHLAS_KEY, ihlasSayisi.toString());
+  localStorage.setItem(ESMA_ZIKIR_KEY, JSON.stringify(esmaZikirleri));
+  localStorage.setItem(ESMA_AKTIF_KEY, aktifEsmaNo.toString());
+  localStorage.setItem(ESMA_TAMAMLANAN_KEY, JSON.stringify([...esmaTamamlananlar]));
 }
 
 // =========================================================
@@ -1580,6 +3483,63 @@ function sonNGunToplam(n) {
   for (let i = 0; i < n; i++) toplam += gunToplam(nDays(bugun, -i));
   return toplam;
 }
+
+function buHaftaToplam() {
+  // Pazartesi-Pazar takvim haftası
+  const bugun = new Date();
+  const gun = bugun.getDay(); // 0=Pazar, 1=Pazartesi, ..., 6=Cumartesi
+  const offset = gun === 0 ? -6 : 1 - gun; // Pazartesi'ye geri git
+  const haftaBasi = new Date(bugun);
+  haftaBasi.setDate(haftaBasi.getDate() + offset);
+  haftaBasi.setHours(0,0,0,0);
+  const haftaSonu = new Date(haftaBasi);
+  haftaSonu.setDate(haftaSonu.getDate() + 6);
+  const fmt = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const basS = fmt(haftaBasi);
+  const sonS = fmt(haftaSonu);
+  let t = 0;
+  Object.keys(kayitlar).forEach(d => {
+    if (d >= basS && d <= sonS) t += gunToplam(d);
+  });
+  return t;
+}
+
+function buAyToplam() {
+  const d = new Date();
+  const yil = d.getFullYear();
+  const ay = d.getMonth() + 1;
+  const sonGun = new Date(yil, ay, 0).getDate();
+  const ayPad = String(ay).padStart(2,'0');
+  const basS = `${yil}-${ayPad}-01`;
+  const sonS = `${yil}-${ayPad}-${String(sonGun).padStart(2,'0')}`;
+  let t = 0;
+  Object.keys(kayitlar).forEach(dt => {
+    if (dt >= basS && dt <= sonS) t += gunToplam(dt);
+  });
+  return t;
+}
+
+function buCeyrekToplam() {
+  // Takvim çeyreği: Q1=Ocak-Mart, Q2=Nisan-Haziran, Q3=Temmuz-Eylül, Q4=Ekim-Aralık
+  const d = new Date();
+  const yil = d.getFullYear();
+  const ay = d.getMonth(); // 0-11
+  const ceyrekBasAy = Math.floor(ay/3) * 3; // 0, 3, 6, 9
+  const ceyrekSonAy = ceyrekBasAy + 2;
+  const sonGun = new Date(yil, ceyrekSonAy+1, 0).getDate();
+  const basS = `${yil}-${String(ceyrekBasAy+1).padStart(2,'0')}-01`;
+  const sonS = `${yil}-${String(ceyrekSonAy+1).padStart(2,'0')}-${String(sonGun).padStart(2,'0')}`;
+  let t = 0;
+  Object.keys(kayitlar).forEach(dt => {
+    if (dt >= basS && dt <= sonS) t += gunToplam(dt);
+  });
+  return t;
+}
+
+function bugunToplamCount() {
+  return gunToplam(bugunTarih());
+}
+
 function tekGunMax() {
   let maks = 0;
   Object.keys(kayitlar).forEach(t => {
@@ -1629,15 +3589,19 @@ function rozetDurum(r) {
   if (r.tip === 'toplam') { mevcut = toplam; }
   else if (r.tip === 'yuzde') { mevcut = yuzde; format = (n) => (n*100).toFixed(1) + '%'; }
   else if (r.tip === 'streak') { mevcut = streak; }
-  else if (r.tip === 'son7') { mevcut = sonNGunToplam(7); }
-  else if (r.tip === 'son30') { mevcut = sonNGunToplam(30); }
-  else if (r.tip === 'son90') { mevcut = sonNGunToplam(90); }
-  else if (r.tip === 'maxgun') { mevcut = tekGunMax(); }
+  else if (r.tip === 'son7') { mevcut = buHaftaToplam(); }
+  else if (r.tip === 'son30') { mevcut = buAyToplam(); }
+  else if (r.tip === 'son90') { mevcut = buCeyrekToplam(); }
+  else if (r.tip === 'maxgun') { mevcut = bugunToplamCount(); }
   else if (r.tip === 'tum5gun') { mevcut = tum5VakitGunSayisi(); }
   else if (r.tip === 'tum5ardisik') { mevcut = tum5VakitArdisikMax(); }
   else if (r.tip === 'aktifgun') { mevcut = aktifGunSayisi(); }
   else if (r.tip === 'zikir') { mevcut = zikirSayisi; }
   else if (r.tip === 'ihlas') { mevcut = ihlasSayisi; }
+  else if (r.tip === 'esmaTamam') { mevcut = esmaTamamlananlar.size; }
+  else if (r.tip === 'esmaToplam') { mevcut = esmaToplamZikir(); }
+  else if (r.tip === 'gorevTamam') { mevcut = gorevTamamlama; }
+  else if (r.tip === 'streakRekor') { mevcut = streakRekoru; }
 
   return {
     kazanildi: kazanilanRozetler.has(r.id) || mevcut >= hedef,
@@ -1833,18 +3797,13 @@ function rozetleriCizdir() {
 }
 
 function motivasyonMesaji(toplam, borc, streak) {
-  const y = toplam / borc;
+  // Streak ve özel durumlar
   if (streak >= 7) return `🔥 ${streak} gün üst üste namaz kıldın! İstikrar başarının anahtarıdır.`;
   if (toplam === 0) return '🌱 Başlangıç en zor adımdır. Bugün ilk namazını kıl — Allah niyetlerine bakar.';
-  if (y < 0.005) return `🌿 Güzel bir başlangıç! ${toplam} namaz kıldın. Damlaya damlaya göl olur.`;
-  if (y < 0.02) return `🌳 Tempo tutturuyorsun! ${toplam} namaz tamamlandı. Allah sabredenleri sever.`;
-  if (y < 0.05) return `⭐ Süper gidiyorsun! %${(y*100).toFixed(2)} tamamlandı. Devam et!`;
-  if (y < 0.15) return `🌟 Harika bir ilerleme! %${(y*100).toFixed(1)} tamamlandı. Hedefe yaklaşıyorsun.`;
-  if (y < 0.30) return `💪 Çok iyi! %${(y*100).toFixed(1)} bitti. Tempo seni hedefe götürecek.`;
-  if (y < 0.50) return `🎖️ Çeyreği geçtin! %${(y*100).toFixed(1)} tamamlandı. Allah kabul etsin.`;
-  if (y < 0.75) return `🏆 Yarıyı aştın! %${(y*100).toFixed(1)} tamamlandı. Pes etme!`;
-  if (y < 1.00) return `🌟 Son düzlüktesin! %${(y*100).toFixed(1)} tamamlandı.`;
-  return '🎉 MAŞAALLAH! Tüm kazaları tamamladın. Allah kabul etsin.';
+  const y = toplam / borc;
+  if (y >= 1.00) return '🎉 MAŞAALLAH! Tüm kazaları tamamladın. Allah kabul etsin.';
+  // Her gün değişen motivasyon mesajı
+  return GUNLUK_MOTIVASYON[gunIndeksi(GUNLUK_MOTIVASYON.length)];
 }
 
 function bitisHesapla() {
@@ -1949,6 +3908,7 @@ function herseyGuncelle() {
   hesaplayiciGuncelle();
   zikirGuncelle();
   ihlasGuncelle();
+  esmaZikirGuncelle();
   // İlk yüklemede zaten kazanılmış rozetleri sessizce işaretle (popup spam'ı önle)
   if (!ilkYuklemeBitti) {
     ROZETLER.forEach(r => {
@@ -2160,28 +4120,11 @@ function zikirMotivasyon(sayi) {
 }
 
 function zikirGuncelle() {
-  document.getElementById('zikir-rakam').textContent = zikirSayisi.toLocaleString('tr-TR');
   const yuzde = Math.min(100, (zikirSayisi / ZIKIR_HEDEF) * 100);
-  document.getElementById('zikir-progress').style.width = yuzde + '%';
-  document.getElementById('zikir-yuzde').textContent = `%${yuzde.toFixed(2).replace('.', ',')}`;
-
-  const kalan = Math.max(0, ZIKIR_HEDEF - zikirSayisi);
-  document.getElementById('zikir-alt').textContent =
-    zikirSayisi >= ZIKIR_HEDEF
-      ? '🎉 70.000 hedefine ulaştın!'
-      : `Hedefe ${kalan.toLocaleString('tr-TR')} zikir kaldı (70.000)`;
-
-  document.getElementById('zikir-motivasyon').textContent = zikirMotivasyon(zikirSayisi);
-
-  // Rozet durum badge
-  const rozetBadge = document.getElementById('zikir-rozet-durum');
-  if (zikirSayisi >= ZIKIR_HEDEF) {
-    rozetBadge.textContent = '👑 Tamamlandı';
-    rozetBadge.style.background = 'var(--vurgu)';
-    rozetBadge.style.color = 'white';
-  } else {
-    rozetBadge.textContent = `Hedef ${ZIKIR_HEDEF.toLocaleString('tr-TR')}`;
-  }
+  const sayiEl = document.getElementById('zm-laila-sayi');
+  const dolguEl = document.getElementById('zm-laila-dolgu');
+  if (sayiEl) sayiEl.textContent = `${zikirSayisi.toLocaleString('tr-TR')} / 70.000`;
+  if (dolguEl) dolguEl.style.width = yuzde + '%';
 }
 
 function zikirDegistir(miktar) {
@@ -2214,73 +4157,56 @@ function zikirSifirla() {
   rozetleriCizdir();
 }
 
-function konfeti70Bin() {
-  // 70.000'e ulaşınca büyük kutlama popup'ı
-  document.getElementById('popup-ikon').textContent = '👑';
-  document.getElementById('popup-baslik').textContent = '70 BİN ZİKİR TAMAMLANDI!';
-  document.getElementById('popup-aciklama').innerHTML =
-    'Mâşaallah! 70.000 kez "Lâ ilâhe illallâh" dedin.<br><br>' +
-    'Bu ulvi zikir, tövbeye vesile olan en büyük zikir mertebelerinden biridir.<br><br>' +
-    '<strong>👑 Yetmiş Bin Zikir rozeti</strong> sana verildi. Allah kabul etsin.';
-  document.getElementById('rozet-popup').classList.add('acik');
-}
-
 // =========================================================
-// İHLAS SURESİ SAYACI
+// NAMAZ DEĞİŞTİR (vakit +/- bugüne)
 // =========================================================
-function ihlasMotivasyon(sayi) {
-  const y = sayi / IHLAS_HEDEF;
-  const hatim = Math.floor(sayi / 3);
-  if (sayi === 0) return '🌱 İhlas Suresi\'ne başla — 3 kez okumak 1 hatim sevabıdır.';
-  if (sayi < 100) return `🌿 ${sayi} İhlas okudun, mâşaallah! Bu yaklaşık ${hatim} hatim sevabıdır.`;
-  if (y < 0.05) return `🌳 ${sayi.toLocaleString('tr-TR')} İhlas — yaklaşık ${hatim.toLocaleString('tr-TR')} hatim sevabı.`;
-  if (y < 0.15) return `⭐ ${sayi.toLocaleString('tr-TR')} İhlas (~${hatim.toLocaleString('tr-TR')} hatim) — Allah kabul etsin.`;
-  if (y < 0.30) return `🌟 ${sayi.toLocaleString('tr-TR')} İhlas tamamlandı — kalbin nurlanıyor.`;
-  if (y < 0.50) return `🎖️ Çeyreği geçtin! ${sayi.toLocaleString('tr-TR')} / 100.000 (~${hatim.toLocaleString('tr-TR')} hatim).`;
-  if (y < 0.75) return `🏅 Yarıyı aştın! ${sayi.toLocaleString('tr-TR')} İhlas tamam.`;
-  if (y < 1.00) return `🏆 Hedefe yaklaştın! Son ${(IHLAS_HEDEF - sayi).toLocaleString('tr-TR')} İhlas kaldı.`;
-  return '👑 MAŞAALLAH! 100 bin İhlas Suresi okudun — özel rozet kazandın. Allah kabul etsin.';
-}
-
-function ihlasGuncelle() {
-  document.getElementById('ihlas-rakam').textContent = ihlasSayisi.toLocaleString('tr-TR');
-  const yuzde = Math.min(100, (ihlasSayisi / IHLAS_HEDEF) * 100);
-  document.getElementById('ihlas-progress').style.width = yuzde + '%';
-  document.getElementById('ihlas-yuzde').textContent = `%${yuzde.toFixed(2).replace('.', ',')}`;
-
-  const kalan = Math.max(0, IHLAS_HEDEF - ihlasSayisi);
-  document.getElementById('ihlas-alt').textContent =
-    ihlasSayisi >= IHLAS_HEDEF
-      ? '🎉 100.000 hedefine ulaştın!'
-      : `Hedefe ${kalan.toLocaleString('tr-TR')} İhlas kaldı (100.000)`;
-
-  document.getElementById('ihlas-motivasyon').textContent = ihlasMotivasyon(ihlasSayisi);
-
-  const rozetBadge = document.getElementById('ihlas-rozet-durum');
-  if (ihlasSayisi >= IHLAS_HEDEF) {
-    rozetBadge.textContent = '👑 Tamamlandı';
-    rozetBadge.style.background = 'var(--vurgu)';
-    rozetBadge.style.color = 'white';
-  } else {
-    rozetBadge.textContent = `Hedef ${IHLAS_HEDEF.toLocaleString('tr-TR')}`;
+function degistir(vakitId, miktar) {
+  const bugun = bugunTarih();
+  if (!kayitlar[bugun]) {
+    kayitlar[bugun] = { imsak:0, ogle:0, ikindi:0, aksam:0, yatsi:0, vitir:0 };
   }
+  const mevcut = parseInt(kayitlar[bugun][vakitId]) || 0;
+  const yeni = Math.max(0, mevcut + miktar);
+  const vakit = VAKITLER.find(v => v.id === vakitId);
+  if (vakit && miktar > 0) {
+    const toplamKildi = vakitToplamKildi(vakitId) - mevcut + yeni;
+    if (toplamKildi > vakit.borc) {
+      toast('⚠️', `${vakit.isim} borç sınırına ulaştın`, 'hata');
+      return;
+    }
+  }
+  kayitlar[bugun][vakitId] = yeni;
+  kaydet();
+  if (miktar > 0) {
+    toast(vakit ? vakit.ikon : '🕌', `${vakit ? vakit.isim : vakitId}: +${miktar} (bugün ${yeni})`, 'basari');
+  } else {
+    toast(vakit ? vakit.ikon : '🕌', `${vakit ? vakit.isim : vakitId}: ${miktar} (bugün ${yeni})`);
+  }
+  herseyGuncelle();
+  if (miktar > 0) rozetKontrol();
+}
+
+// =========================================================
+// İHLAS SAYACI
+// =========================================================
+function ihlasGuncelle() {
+  const yuzde = Math.min(100, (ihlasSayisi / IHLAS_HEDEF) * 100);
+  const sayiEl = document.getElementById('zm-ihlas-sayi');
+  const dolguEl = document.getElementById('zm-ihlas-dolgu');
+  if (sayiEl) sayiEl.textContent = `${ihlasSayisi.toLocaleString('tr-TR')} / 100.000`;
+  if (dolguEl) dolguEl.style.width = yuzde + '%';
 }
 
 function ihlasDegistir(miktar) {
   const eski = ihlasSayisi;
   ihlasSayisi = Math.max(0, ihlasSayisi + miktar);
   kaydet();
-  if (miktar > 0) {
-    toast('✨', `+${miktar.toLocaleString('tr-TR')} İhlas — Toplam: ${ihlasSayisi.toLocaleString('tr-TR')}`, 'basari');
-  } else {
-    toast('✨', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
-  }
+  if (miktar > 0) toast('✨', `+${miktar.toLocaleString('tr-TR')} İhlas — Toplam: ${ihlasSayisi.toLocaleString('tr-TR')}`, 'basari');
+  else toast('✨', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
   ihlasGuncelle();
   if (miktar > 0) {
     rozetKontrol();
-    if (eski < IHLAS_HEDEF && ihlasSayisi >= IHLAS_HEDEF) {
-      setTimeout(() => konfeti100Bin(), 800);
-    }
+    if (eski < IHLAS_HEDEF && ihlasSayisi >= IHLAS_HEDEF) setTimeout(() => konfeti100Bin(), 800);
   }
   rozetleriCizdir();
 }
@@ -2299,42 +4225,1242 @@ function konfeti100Bin() {
   document.getElementById('popup-baslik').textContent = '100 BİN İHLAS TAMAMLANDI!';
   document.getElementById('popup-aciklama').innerHTML =
     'Mâşaallah! 100.000 kez İhlas Suresi okudun.<br><br>' +
-    'Bu yaklaşık <strong>33.333 hatim</strong> sevabına denktir (3 İhlas = 1 hatim).<br><br>' +
+    'Bu yaklaşık <strong>33.333 hatim</strong> sevabına denktir.<br><br>' +
     '<strong>👑 Yüz Bin İhlas rozeti</strong> sana verildi. Allah kabul etsin.';
   document.getElementById('rozet-popup').classList.add('acik');
 }
 
 // =========================================================
-// AKSİYONLAR
+// ESMÂ ZİKİR
 // =========================================================
-function degistir(vakit, miktar) {
-  const t = bugunTarih();
-  if (!kayitlar[t]) kayitlar[t] = { imsak:0, ogle:0, ikindi:0, aksam:0, yatsi:0, vitir:0 };
-  const eski = kayitlar[t][vakit] || 0;
-  if (miktar < 0 && eski <= 0) {
-    toast('⚠️', 'Bugün için kayıt yok', 'hata');
-    return;
-  }
-  kayitlar[t][vakit] = Math.max(0, eski + miktar);
-  if (kayitlar[t][vakit] === 0 && Object.values(kayitlar[t]).every(x => x === 0)) {
-    delete kayitlar[t];
-  }
-  kaydet();
-  const v = VAKITLER.find(x => x.id === vakit);
-  toast(v.ikon, miktar > 0 ? `+1 ${v.isim} kaydedildi` : `−1 ${v.isim}`, miktar > 0 ? 'basari' : '');
-  herseyGuncelle();
-  if (miktar > 0) rozetKontrol();
+function esmaToplamZikir() {
+  let t = 0;
+  for (const k in esmaZikirleri) t += parseInt(esmaZikirleri[k]) || 0;
+  return t;
 }
 
+function esmaZikirGuncelle() {
+  const aktif = (typeof ESMA !== 'undefined') ? ESMA.find(e => e.no === aktifEsmaNo) : null;
+  if (!aktif) return;
+  const sayi = esmaZikirleri[aktif.no] || 0;
+  const hedef = ESMA_EBCED[aktif.no] || 99;
+
+  const noEl = document.getElementById('ez-aktif-no');
+  const adEl = document.getElementById('ez-aktif-ad');
+  const anlamEl = document.getElementById('ez-aktif-anlam');
+  const rakamEl = document.getElementById('ez-rakam');
+  const hedefEl = document.getElementById('ez-hedef');
+  const dolguEl = document.getElementById('ez-progress-dolgu');
+  const badgeEl = document.getElementById('ez-tamamlanan-badge');
+
+  if (noEl) noEl.textContent = `${aktif.no}. isim`;
+  if (adEl) adEl.textContent = aktif.ad;
+  if (anlamEl) anlamEl.textContent = aktif.anlam;
+  if (rakamEl) rakamEl.textContent = sayi.toLocaleString('tr-TR');
+  if (hedefEl) hedefEl.textContent = `Hedef: ${hedef.toLocaleString('tr-TR')} (ebced)`;
+  const yuzde = Math.min(100, (sayi / hedef) * 100);
+  if (dolguEl) dolguEl.style.width = yuzde + '%';
+  if (badgeEl) badgeEl.textContent = `${esmaTamamlananlar.size} / 99`;
+
+  ezSonGuncelle();
+}
+
+function esmaZikirDegistir(miktar) {
+  if (typeof ESMA === 'undefined') return;
+  const no = aktifEsmaNo;
+  const aktif = ESMA.find(e => e.no === no);
+  if (!aktif) return;
+  const eski = esmaZikirleri[no] || 0;
+  const hedef = ESMA_EBCED[no] || 99;
+  esmaZikirleri[no] = Math.max(0, eski + miktar);
+
+  // Otomatik tamamlama
+  let yeniTamam = false;
+  if (eski < hedef && esmaZikirleri[no] >= hedef && !esmaTamamlananlar.has(no)) {
+    esmaTamamlananlar.add(no);
+    yeniTamam = true;
+  }
+
+  kaydet();
+  if (miktar > 0) {
+    toast('✨', `${aktif.ad} +${miktar} — ${esmaZikirleri[no].toLocaleString('tr-TR')}/${hedef}`, 'basari');
+  } else if (miktar < 0) {
+    toast('✨', `${aktif.ad} ${miktar} (geri alındı)`);
+  }
+  esmaZikirGuncelle();
+  if (yeniTamam) {
+    setTimeout(() => {
+      toast('🌟', `Mâşaallah! ${aktif.ad} ebced sayısına ulaştın`, 'basari');
+      rozetKontrol();
+    }, 400);
+  } else if (miktar > 0) {
+    rozetKontrol();
+  }
+  rozetleriCizdir();
+}
+
+function esmaZikirSifirla() {
+  if (typeof ESMA === 'undefined') return;
+  const aktif = ESMA.find(e => e.no === aktifEsmaNo);
+  if (!aktif) return;
+  const mevcut = esmaZikirleri[aktif.no] || 0;
+  if (mevcut === 0) {
+    toast('ℹ️', 'Sayaç zaten 0');
+    return;
+  }
+  if (!confirm(`${aktif.ad} sayacı sıfırlanacak (${mevcut.toLocaleString('tr-TR')}). Emin misin?`)) return;
+  esmaZikirleri[aktif.no] = 0;
+  kaydet();
+  toast('🔄', `${aktif.ad} sıfırlandı`);
+  esmaZikirGuncelle();
+  rozetleriCizdir();
+}
+
+function esmaZikirTamamla() {
+  if (typeof ESMA === 'undefined') return;
+  const aktif = ESMA.find(e => e.no === aktifEsmaNo);
+  if (!aktif) return;
+  if (esmaTamamlananlar.has(aktif.no)) {
+    if (!confirm(`${aktif.ad} zaten tamamlanmış. Tamamlanmış işaretini kaldırmak ister misin?`)) return;
+    esmaTamamlananlar.delete(aktif.no);
+    kaydet();
+    toast('↩️', `${aktif.ad} işareti kaldırıldı`);
+  } else {
+    esmaTamamlananlar.add(aktif.no);
+    kaydet();
+    toast('✓', `${aktif.ad} tamamlandı olarak işaretlendi`, 'basari');
+    rozetKontrol();
+  }
+  esmaZikirGuncelle();
+  rozetleriCizdir();
+}
+
+function esmaZikirSec(no) {
+  aktifEsmaNo = no;
+  kaydet();
+  esmaZikirGuncelle();
+  ezSheetKapat();
+  if (typeof ESMA !== 'undefined') {
+    const aktif = ESMA.find(e => e.no === no);
+    if (aktif) toast('✨', `${aktif.ad} seçildi`);
+  }
+}
+
+function ezSheetAc() {
+  ezSheetListeYukle('');
+  document.getElementById('ez-sheet').classList.add('acik');
+  const arama = document.getElementById('ez-sheet-arama');
+  if (arama) { arama.value = ''; setTimeout(() => arama.focus(), 100); }
+}
+
+function ezSheetKapat() {
+  document.getElementById('ez-sheet').classList.remove('acik');
+}
+
+function ezSheetListeYukle(filtre) {
+  if (typeof ESMA === 'undefined') return;
+  const liste = document.getElementById('ez-sheet-liste');
+  if (!liste) return;
+  liste.innerHTML = '';
+  const f = (filtre || '').toLowerCase().trim();
+  ESMA.forEach(e => {
+    if (f && !((e.ad + ' ' + e.anlam).toLowerCase().includes(f))) return;
+    const sayi = esmaZikirleri[e.no] || 0;
+    const hedef = ESMA_EBCED[e.no] || 99;
+    const tamam = esmaTamamlananlar.has(e.no);
+    const item = document.createElement('div');
+    item.className = 'ez-sheet-item' + (e.no === aktifEsmaNo ? ' aktif' : '');
+    item.onclick = () => esmaZikirSec(e.no);
+    item.innerHTML = `
+      <div class="ez-sheet-item-sol">
+        <div class="ez-sheet-item-no">${e.no}</div>
+        <div>
+          <div class="ez-sheet-item-ad">${e.ad}${tamam ? ' ✓' : ''}</div>
+          <div class="ez-sheet-item-anlam">${e.anlam}</div>
+        </div>
+      </div>
+      <div class="ez-sheet-item-sayi">${sayi.toLocaleString('tr-TR')}/${hedef}</div>
+    `;
+    liste.appendChild(item);
+  });
+  if (liste.innerHTML === '') {
+    liste.innerHTML = '<div style="text-align:center; padding:30px 10px; color:var(--soft); font-size:13px;">Eşleşen isim yok</div>';
+  }
+}
+
+function ezSheetAra(metin) {
+  ezSheetListeYukle(metin);
+}
+
+function ezSonGuncelle() {
+  const liste = document.getElementById('ez-son-liste');
+  const konteyner = document.getElementById('ez-son-konteyner');
+  if (!liste || !konteyner || typeof ESMA === 'undefined') return;
+  const son5 = Object.entries(esmaZikirleri)
+    .map(([no, s]) => [parseInt(no), parseInt(s)])
+    .filter(([no, s]) => s > 0)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0, 6);
+
+  konteyner.style.display = son5.length > 0 ? 'block' : 'none';
+  liste.innerHTML = '';
+  son5.forEach(([no, sayi]) => {
+    const e = ESMA.find(x => x.no === no);
+    if (!e) return;
+    const hedef = ESMA_EBCED[no] || 99;
+    const tamam = esmaTamamlananlar.has(no);
+    const item = document.createElement('div');
+    item.className = 'ez-son-item';
+    item.onclick = () => esmaZikirSec(no);
+    item.innerHTML = `
+      <div class="ez-son-ad">${e.ad}${tamam ? ' ✓' : ''}</div>
+      <div class="ez-son-bilgi">${sayi.toLocaleString('tr-TR')}/${hedef}</div>
+    `;
+    liste.appendChild(item);
+  });
+}
+
+function konfeti70Bin() {
+  // 70.000'e ulaşınca büyük kutlama popup'ı
+  document.getElementById('popup-ikon').textContent = '👑';
+  document.getElementById('popup-baslik').textContent = '70 BİN ZİKİR TAMAMLANDI!';
+  document.getElementById('popup-aciklama').innerHTML =
+    'Mâşaallah! 70.000 kez "Lâ ilâhe illallâh" dedin.<br><br>' +
+    'Bu ulvi zikir, tövbeye vesile olan en büyük zikir mertebelerinden biridir.<br><br>' +
+    '<strong>👑 Yetmiş Bin Zikir rozeti</strong> sana verildi. Allah kabul etsin.';
+  document.getElementById('rozet-popup').classList.add('acik');
+}
+
+// =========================================================
+// AÇILIR-KAPANIR BÖLÜM
+// =========================================================
+function bolumToggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('acik');
+}
+
+// =========================================================
+// NAMAZ VAKİTLERİ + KERAHAT + GERİ SAYIM
+// =========================================================
+const NV_KEY_SEHIR = 'kn_nv_sehir';
+let nvSehir = localStorage.getItem(NV_KEY_SEHIR) || 'Istanbul';
+let nvVakitler = null;
+let nvHicri = null;
+
+async function nvYukle(sehir) {
+  document.getElementById('nv-yukleniyor').style.display = 'block';
+  document.getElementById('nv-icerik').style.display = 'none';
+  try {
+    const r = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(sehir)}&country=Turkey&method=13`);
+    const data = await r.json();
+    if (data.code !== 200 || !data.data) throw new Error('Vakit alınamadı');
+    nvVakitler = data.data.timings;
+    nvHicri = data.data.date.hijri;
+    nvSehir = sehir;
+    localStorage.setItem(NV_KEY_SEHIR, sehir);
+    nvGoster();
+  } catch (e) {
+    document.getElementById('nv-yukleniyor').innerHTML =
+      `<div class="nv-hata">⚠️ Vakit bilgisi yüklenemedi. İnternet bağlantını kontrol et veya farklı şehir dene.</div>`;
+  }
+}
+
+function dakikaToSaat(dk) {
+  const s = Math.floor(dk / 60);
+  const d = dk % 60;
+  return `${String(s).padStart(2,'0')}:${String(d).padStart(2,'0')}`;
+}
+
+function saatToDakika(saatStr) {
+  // "05:23 (+03)" → 323
+  const tmp = saatStr.split(' ')[0].split(':');
+  return parseInt(tmp[0]) * 60 + parseInt(tmp[1]);
+}
+
+function nvGoster() {
+  if (!nvVakitler) return;
+  document.getElementById('nv-yukleniyor').style.display = 'none';
+  document.getElementById('nv-icerik').style.display = 'block';
+  document.getElementById('nv-sehir').textContent = nvSehir;
+
+  const bugun = new Date();
+  const aylar = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  const gunler = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+  document.getElementById('nv-tarih-tr').textContent =
+    `${bugun.getDate()} ${aylar[bugun.getMonth()]} ${bugun.getFullYear()}, ${gunler[bugun.getDay()]}`;
+  if (nvHicri) {
+    document.getElementById('nv-tarih-hicri').textContent =
+      `${nvHicri.day} ${hicriAyTR(nvHicri.month.en)} ${nvHicri.year}`;
+  }
+
+  const vakitListesi = [
+    { ad: 'İmsak',  key: 'Fajr',     ikon: '🌙' },
+    { ad: 'Güneş',  key: 'Sunrise',  ikon: '🌅' },
+    { ad: 'Öğle',   key: 'Dhuhr',    ikon: '☀️' },
+    { ad: 'İkindi', key: 'Asr',      ikon: '🌇' },
+    { ad: 'Akşam',  key: 'Maghrib',  ikon: '🌆' },
+    { ad: 'Yatsı',  key: 'Isha',     ikon: '🌃' }
+  ];
+
+  const simdiDk = bugun.getHours() * 60 + bugun.getMinutes();
+  let aktifIdx = -1, sonrakiIdx = -1;
+  vakitListesi.forEach((v, i) => {
+    const dk = saatToDakika(nvVakitler[v.key]);
+    if (dk <= simdiDk) aktifIdx = i;
+  });
+  sonrakiIdx = aktifIdx === -1 ? 0 : (aktifIdx + 1) % vakitListesi.length;
+  // Eğer son vakit de geçtiyse, ertesi sabah
+  if (aktifIdx === vakitListesi.length - 1) sonrakiIdx = 0;
+
+  // Grid çizimi
+  const grid = document.getElementById('nv-vakit-grid');
+  grid.innerHTML = '';
+  vakitListesi.forEach((v, i) => {
+    const dk = saatToDakika(nvVakitler[v.key]);
+    const div = document.createElement('div');
+    div.className = 'nv-vakit';
+    if (i === aktifIdx) div.classList.add('aktif');
+    if (i < aktifIdx) div.classList.add('gecti');
+    div.innerHTML = `
+      <span class="nv-vakit-ikon">${v.ikon}</span>
+      <div class="nv-vakit-ad">${v.ad}</div>
+      <div class="nv-vakit-saat">${dakikaToSaat(dk)}</div>
+    `;
+    grid.appendChild(div);
+  });
+
+  // Sonraki vakit + geri sayım
+  const sonraki = vakitListesi[sonrakiIdx];
+  document.getElementById('nv-sonraki-ad').textContent = sonraki.ad;
+  document.getElementById('nv-sonraki-saat').textContent = dakikaToSaat(saatToDakika(nvVakitler[sonraki.key]));
+
+  // Kerahat
+  nvKerahatGoster(vakitListesi, simdiDk);
+}
+
+function nvGeriSayim() {
+  if (!nvVakitler) return;
+  const vakitListesi = [
+    { ad: 'İmsak',  key: 'Fajr' },
+    { ad: 'Güneş',  key: 'Sunrise' },
+    { ad: 'Öğle',   key: 'Dhuhr' },
+    { ad: 'İkindi', key: 'Asr' },
+    { ad: 'Akşam',  key: 'Maghrib' },
+    { ad: 'Yatsı',  key: 'Isha' }
+  ];
+  const simdi = new Date();
+  const simdiDk = simdi.getHours() * 60 + simdi.getMinutes();
+  const simdiSn = simdi.getSeconds();
+
+  let sonrakiDk = null, sonrakiAd = '';
+  for (const v of vakitListesi) {
+    const dk = saatToDakika(nvVakitler[v.key]);
+    if (dk > simdiDk) { sonrakiDk = dk; sonrakiAd = v.ad; break; }
+  }
+  if (sonrakiDk === null) {
+    // Yatsı geçti, yarınki İmsak
+    sonrakiDk = saatToDakika(nvVakitler.Fajr) + 24 * 60;
+    sonrakiAd = 'İmsak';
+  }
+
+  const kalanDk = sonrakiDk - simdiDk;
+  const kalanSn = 60 - simdiSn;
+  const saat = Math.floor((kalanDk - 1) / 60);
+  const dakika = ((kalanDk - 1) % 60);
+  const saniye = kalanSn % 60;
+
+  document.getElementById('nv-geri-sayim').textContent =
+    `${String(saat).padStart(2,'0')}:${String(dakika).padStart(2,'0')}:${String(saniye).padStart(2,'0')}`;
+}
+
+function nvKerahatGoster(vakitListesi, simdiDk) {
+  const fajr = saatToDakika(nvVakitler.Fajr);
+  const sunrise = saatToDakika(nvVakitler.Sunrise);
+  const dhuhr = saatToDakika(nvVakitler.Dhuhr);
+  const asr = saatToDakika(nvVakitler.Asr);
+  const maghrib = saatToDakika(nvVakitler.Maghrib);
+
+  // 3 kerahat vakti
+  const k1Bas = sunrise; const k1Bit = sunrise + 45; // güneş doğuş + 45 dk
+  const k2Bas = dhuhr - 10; const k2Bit = dhuhr; // öğle öncesi 10 dk (zeval)
+  const k3Bas = maghrib - 45; const k3Bit = maghrib; // batıştan önce ~45 dk (güneş kızarması)
+
+  const kerahatAktif = document.getElementById('nv-kerahat-aktif');
+  if (simdiDk >= k1Bas && simdiDk < k1Bit) {
+    kerahatAktif.style.display = 'block';
+    kerahatAktif.innerHTML = `⚠️ ŞU AN KERAHAT VAKTİ — Güneş doğuş sonrası (${dakikaToSaat(k1Bit)}'ye kadar)`;
+  } else if (simdiDk >= k2Bas && simdiDk < k2Bit) {
+    kerahatAktif.style.display = 'block';
+    kerahatAktif.innerHTML = `⚠️ ŞU AN KERAHAT VAKTİ — Öğle vakti yakın (${dakikaToSaat(k2Bit)}'ye kadar)`;
+  } else if (simdiDk >= k3Bas && simdiDk < k3Bit) {
+    kerahatAktif.style.display = 'block';
+    kerahatAktif.innerHTML = `⚠️ ŞU AN KERAHAT VAKTİ — Akşam vakti yakın (${dakikaToSaat(k3Bit)}'ye kadar)`;
+  } else {
+    kerahatAktif.style.display = 'none';
+  }
+
+  // Liste güncelle
+  document.querySelector('.nv-kerahat .nv-kerahat-liste').innerHTML = `
+    <div>• <strong>Sabahtan sonra</strong>: ${dakikaToSaat(k1Bas)} — ${dakikaToSaat(k1Bit)}</div>
+    <div>• <strong>Öğle öncesi (zeval)</strong>: ${dakikaToSaat(k2Bas)} — ${dakikaToSaat(k2Bit)}</div>
+    <div>• <strong>İkindi sonrası</strong>: ${dakikaToSaat(k3Bas)} — ${dakikaToSaat(k3Bit)}</div>
+  `;
+}
+
+function vakitSehirDegistir() {
+  const yeni = document.getElementById('nv-sehir-input').value.trim();
+  if (yeni) {
+    document.getElementById('nv-sehir-input').value = '';
+    nvYukle(yeni);
+  }
+}
+
+
+// =========================================================
+// GÜNLÜK AYET / HADİS HAVUZU
+// =========================================================
+const GUNLUK_AYETLER = [
+  '« Ne kadar geç olursa olsun, Allah\'a dönüş için her an bir tövbedir »',
+  '« Şüphesiz Allah, tövbe edenleri ve temizlenenleri sever » — Bakara, 222',
+  '« Her zorlukla beraber bir kolaylık vardır » — İnşirâh, 6',
+  '« Allah, kullarına çok merhametlidir » — Şûrâ, 19',
+  '« Rabbinizin rahmetinden ümit kesmeyin » — Zümer, 53',
+  '« Allah hiç kimseye gücünün yeteceğinden fazlasını yüklemez » — Bakara, 286',
+  '« Sabır ile, namaz ile Allah\'tan yardım dileyin » — Bakara, 153',
+  '« Şüphesiz Allah sabredenlerle beraberdir » — Bakara, 153',
+  '« İyi bilin ki kalpler ancak Allah\'ın zikriyle huzur bulur » — Ra\'d, 28',
+  '« Beni anın ki ben de sizi anayım » — Bakara, 152',
+  '« Şüphesiz namaz, müminler üzerine vakitleri belli bir farzdır » — Nisâ, 103',
+  '« Allah, kullarına çok şefkatlidir » — Hac, 65',
+  '« Rabbiniz buyurdu ki: Dua edin, kabul edeyim » — Mü\'min, 60',
+  '« Allah\'ın rahmeti gazabını geçmiştir » — Hadis-i Kudsî',
+  '« Allah\'a bir karış yaklaşana O bir arşın yaklaşır » — Hadis',
+  '« Müslüman, dilinden ve elinden müslümanların selâmette olduğu kimsedir » — Buhârî',
+  '« Cennet, anaların ayakları altındadır » — Hadis',
+  '« Şüphesiz Allah, küçük büyük her şeyi bilir » — Tâhâ, 7',
+  '« Allah, sabredenleri sever » — Âl-i İmrân, 146',
+  '« Sözlerin en güzeli Allah\'ın kelâmıdır » — Hadis',
+  '« Çok şükredene Allah daha fazla verir » — İbrahim, 7',
+  '« İnsanların en hayırlısı insanlara faydalı olandır » — Hadis',
+  '« Müminler ancak kardeştir » — Hucurât, 10',
+  '« Rabbim, ilmimi artır » — Tâhâ, 114',
+  '« Allah, takvâ sahipleriyle beraberdir » — Bakara, 194',
+  '« Allah\'ın selâmı, rahmeti ve bereketi üzerimize olsun »',
+  '« Kim Allah\'a güvenirse, O ona yeter » — Talâk, 3',
+  '« Rabbim, sen affedicisin, affı seversin, beni de affet » — Hadis',
+  '« Allah\'ın izniyle hiçbir zorluk yoktur ki kolaylığı gelmesin »',
+  '« Tövbe kapısı, kıyamete kadar açıktır » — Hadis',
+  '« Allah, az amele çok mükâfat verendir » — Hadis',
+  '« Niyet halis olunca, küçük amel büyür » — Hadis',
+  '« Allah\'tan başka ilâh yoktur, O\'nun ortağı da yoktur » — Hadis',
+  '« Şüphesiz benim namazım, ibadetlerim, hayatım ve ölümüm âlemlerin Rabbi Allah içindir » — En\'âm, 162',
+  '« De ki: O Allah birdir » — İhlâs, 1',
+  '« Allah, Sameddir; hiçbir şeye muhtaç değildir » — İhlâs, 2',
+  '« O\'nun benzeri hiçbir şey yoktur » — Şûrâ, 11',
+  '« Allah, kendisinden başka ilâh olmayandır. Diridir, kayyûmdur » — Bakara, 255',
+  '« Göklerdeki her şey, yerdeki her şey Allah\'ındır » — Bakara, 284',
+  '« Şüphesiz Allah, her şeye gücü yetendir » — Bakara, 20',
+  '« Doğu da Batı da Allah\'ındır » — Bakara, 115',
+  '« Allah, her şeyin yaratıcısıdır » — Zümer, 62',
+  '« Hamd, âlemlerin Rabbi Allah\'a mahsustur » — Fâtiha, 2',
+  '« Allah, mülkün gerçek sahibidir » — Âl-i İmrân, 26',
+  '« Şüphesiz Allah, gizliyi de açığı da bilir » — Ra\'d, 9',
+  '« Hiçbir şey O\'nu bilmekten gizleyemez » — Sebe\', 3',
+  '« O her şeye kâdirdir » — Mülk, 1',
+  '« Bütün izzet Allah\'ındır » — Yûnus, 65',
+  '« Allah, gözleri ve gönüllerin sırrını bilir » — Mü\'min, 19',
+  '« Şüphesiz Rabbim, gönüllerdekini de bilir » — Mü\'minûn, 96',
+  '« Yer ve gökler O\'nun emrindedir » — A\'râf, 54',
+  '« Şüphesiz Allah, her şeyi kuşatandır » — Nisâ, 126',
+  '« O, ilk de O, sondur; açık da O, gizli de O\'dur » — Hadîd, 3',
+  '« Her şey helâk olur, O\'nun zatı hariç » — Kasas, 88',
+  '« Allah\'ın izni olmadan hiçbir yaprak düşmez » — En\'âm, 59',
+  '« Allah\'ın elinde her hayır vardır » — Âl-i İmrân, 26',
+  '« Mülkü dilediğine veren Allah\'tır » — Âl-i İmrân, 26',
+  '« Yeryüzünde her canlının rızkı Allah\'a aittir » — Hûd, 6',
+  '« Şüphesiz Rabbin geniş mağfiret sahibidir » — Necm, 32',
+  '« Allah\'tan başka sığınılacak yoktur » — Tevbe, 118',
+  '« O, başlangıçta yaratan, sonra yeniden yaratacak olandır » — Burûc, 13',
+  '« Allah, mü\'minlerin dostudur » — Bakara, 257',
+  '« Rabbim, beni bağışla, çünkü sen affedicisin » — Hadis-i Şerif',
+  '« Allah\'ı zikredin ki o da sizi ansın » — Bakara, 152',
+  '« Allah, mü\'minlerle birliktedir » — Enfâl, 19',
+  '« Şüphesiz Allah, her şeyi hakkıyla bilendir » — Bakara, 32',
+  '« Allah, hayrı ve şerri yaratandır » — Hadis',
+  '« Lâ ilâhe illallâh diyenin yeri cennettir » — Hadis',
+  '« Kulun en yakın olduğu an secde anıdır » — Müslim',
+  '« Allah, samimi tövbe ile dönen kullarını bağışlar » — Tahrîm, 8',
+  '« Tövbe edenler, iman edenler ve sâlih amel işleyenler kurtuluşa erer » — Furkân, 70',
+  '« Şüphesiz Allah, gece günahkâra elini uzatır gündüz tevbe etsin diye » — Hadis',
+  '« Allah\'ın rahmetinden yalnız kâfirler ümit keser » — Yûsuf, 87',
+  '« Ey kullarım! Allah\'ın rahmetinden ümit kesmeyin » — Zümer, 53',
+  '« Tövbe nasûhun (samimi tövbe) ile Allah\'a dönün » — Tahrîm, 8',
+  '« Rabbim, ben kendime zulmettim, beni bağışla » — Hadis',
+  '« Ben Rabbimi affediciliği geniş olarak buldum » — Hadis-i Kudsî',
+  '« Kim bir kötülük yapar veya kendine yazık ederse, sonra Allah\'tan af dilerse, Allah\'ı çok bağışlayıcı bulur » — Nisâ, 110',
+  '« Allah, kullarının tevbelerini kabul edicidir » — Şûrâ, 25',
+  '« Tövbenin en azı pişmanlıktır » — Hadis',
+  '« Tevbe eden, hiç günah işlememiş gibidir » — İbn Mâce',
+  '« Allah\'ım! Sen affedicisin, affı seversin, beni de affet » — Hadis (Kadir gecesi)',
+  '« Allah\'tan bağışlanma dilemek, en güzel zikirdir » — Hadis',
+  '« İstiğfâr edene Allah çıkış kapıları açar » — Ebû Dâvûd',
+  '« Bir kul tövbe ettiğinde Allah, melekleri onun günahlarına unutturur » — Hadis',
+  '« Rabbimiz, biz kendimize zulmettik. Bizi bağışlamazsan kaybedenlerden oluruz » — A\'râf, 23',
+  '« Şüphesiz iyilikler, kötülükleri giderir » — Hûd, 114',
+  '« Beş vakit namaz, iki cuma arası ve ramazan, aralarındaki günahlara kefarettir » — Müslim',
+  '« Allah, samimî tevbe ile dönen kulu için bayram günü açar » — Hadis',
+  '« Günahların en büyüğü, Allah\'ın rahmetinden ümit kesmektir » — Hadis',
+  '« Ben\'den isteyin, ben de bağışlayayım » — Hadis-i Kudsî',
+  '« Bir kul Allah\'a yaklaştıkça günahları üzerinden silinir » — Hadis',
+  '« Pişman olmak, bizatihi tövbedir » — Hadis',
+  '« Allah\'a sığının; O affedendir » — A\'râf, 153',
+  '« Kim tövbe edip iman ederse Allah onun kötülüklerini iyiliklere çevirir » — Furkân, 70',
+  '« Şüphesiz O, tevvâbdır; tövbeleri kabul edendir » — Bakara, 37',
+  '« Geceleri istiğfar edenler, Allah\'a yakındır » — Zâriyât, 18',
+  '« Affetmek Allah\'ın en sevdiği amellerdendir » — Hadis',
+  '« Allah\'ım! Beni temizleyen bir tövbe nasip et » — Hadis',
+  '« Tövbe, kötülüğü iyiliğe çeviren bir nimettir » — Hadis',
+  '« Sabret, çünkü Allah\'ın vaadi haktır » — Mü\'min, 55',
+  '« Sabredenler mükâfatlarını hesapsız alacaklardır » — Zümer, 10',
+  '« Şüphesiz biz sizi biraz korku, biraz açlık ile imtihan edeceğiz. Sabredenleri müjdele » — Bakara, 155',
+  '« Sabır, acı bir lokma gibidir ama sonu tatlıdır » — Hadis',
+  '« Sabırlı olun, sabırda yarışın » — Âl-i İmrân, 200',
+  '« Sabreden zafer kazanır » — Hadis',
+  '« Sabır, mü\'minin silahıdır » — Hadis',
+  '« Sabır, başa gelen ilk darbede gösterilir » — Buhârî',
+  '« Allah, sabredenlere üç şey verir: bağışlanma, rahmet ve hidayet » — Bakara, 157',
+  '« Sabret, sabrın güzel olsun » — Yûsuf, 18',
+  '« Allah, sabredenleri yükseltir » — Hadis',
+  '« Sabır, imanın yarısıdır » — Hadis',
+  '« Mü\'min, başına gelene sabreder ve rıza gösterir » — Hadis',
+  '« Sıkıntılar, kulu Allah\'a yaklaştırır » — Hadis',
+  '« Allah, sevdiği kulu sıkıntılarla terbiye eder » — Hadis',
+  '« Mü\'minin hâli ne kadar güzeldir: sevinirse şükreder, üzülürse sabreder » — Müslim',
+  '« Hayır ve şer Allah\'tan; her ikisinde de hayır vardır » — Hadis',
+  '« Sabır, kalbe huzur veren bir nurdur » — Hadis',
+  '« Üzüntü ve keder, mü\'minin günahlarına kefarettir » — Buhârî',
+  '« Hastalık, mü\'minin günahlarını dökülen yapraklar gibi döker » — Hadis',
+  '« Şüphesiz Allah, sıkıntıyla beraber genişlik verir » — Talâk, 7',
+  '« Sıkıntıdan sonra ferahlık vardır » — Hadis',
+  '« Allah\'a tevekkül edenler asla kaybetmez » — Talâk, 3',
+  '« Rabbim! Bana sabır ver, müslüman olarak öldür beni » — A\'râf, 126',
+  '« Namazı dosdoğru kılın, zekâtı verin » — Bakara, 43',
+  '« Namaz, dinin direğidir » — Hadis',
+  '« Kıyamet günü kulun ilk hesaba çekileceği şey namazdır » — Tirmizî',
+  '« Camide cemaatle kılınan namaz, tek başına kılınandan 27 kat üstündür » — Buhârî',
+  '« Secde anı, kulun Rabbine en yakın olduğu andır » — Müslim',
+  '« Cuma namazı, fakirin haccıdır » — Hadis',
+  '« Sabah namazını cemaatle kılan bütün gece namaz kılmış gibidir » — Müslim',
+  '« Şüphesiz namaz, hayasızlıktan ve kötülükten alıkoyar » — Ankebût, 45',
+  '« Namaz, kalbin nurudur » — Hadis',
+  '« Gece namazına devam edin: o salihlerin âdetidir » — Hadis',
+  '« Allah\'ım! Senden faydalı ilim, kabul olunan amel istiyorum » — Hadis',
+  '« Rabbim, beni ve neslimi namazı dosdoğru kılanlardan eyle » — İbrâhîm, 40',
+  '« Cennetin kapıları namazla açılır » — Hadis',
+  '« Kıldığın iki rekât namaz, dünyadan ve içindekilerden daha hayırlıdır » — Hadis',
+  '« Namaza durduğunda Allah\'ı görüyormuş gibi kıl » — Hadis (İhsan)',
+  '« Allah, kullarının küçük amellerini büyük görür » — Hadis',
+  '« Az ibadetin devamlısı, çoğundan hayırlıdır » — Buhârî',
+  '« Kim sabah ve ikindi namazlarını kılarsa cennete girer » — Müslim',
+  '« Camiye giden, her adımıyla bir derece yükselir » — Müslim',
+  '« Allah\'a en sevimli amel, vaktinde kılınan namazdır » — Buhârî',
+  '« Aşure günü oruç, geçmiş bir yılın günahlarına kefarettir » — Müslim',
+  '« Akşam namazından sonra yapılan dua makbuldür » — Hadis',
+  '« Sabah erken kalkmakta bereket vardır » — Hadis',
+  '« Namaz, ahlâkı düzelten en güçlü ibadettir » — Hadis',
+  '« Allah\'ın huzurunda durmak gibi bir nimet yoktur » — Hadis',
+  '« Dua edin, kabul edeyim » — Mü\'min, 60',
+  '« Bana dua edenin duasını kabul ederim » — Bakara, 186',
+  '« Allah\'ı çokça zikredin, belki kurtuluşa erersiniz » — Cum\'a, 10',
+  '« Şüphesiz dua, ibadetin özüdür » — Tirmizî',
+  '« Rabbim, kabul olunan amel ver, faydalı ilim ver, kabûl olan duâ ver » — Hadis',
+  '« Dua sıkıntıyı geri çeker » — Hadis',
+  '« Kazaya karşı dua, kalkana karşı kılıç gibidir » — Hadis',
+  '« Dua eden ihmâl edilmez » — Hadis',
+  '« Allah\'a yakın olanlar dua edenlerdir » — Hadis',
+  '« Geceleri kalkıp dua eden mü\'min, hayatın en zenginidir » — Tasavvuf',
+  '« Sübhânallâh diyenin ağzında bir cennet ağacı dikilir » — Hadis',
+  '« Lâ ilâhe illallâh, en faziletli zikirdir » — Tirmizî',
+  '« Allah\'ın isimlerini saymak, kalbi cilalar » — Hadis',
+  '« Allah\'a şükredene Allah daha fazla verir » — İbrahim, 7',
+  '« Rabbim, beni sana çok şükreden, çok zikreden eyle » — Hadis',
+  '« Yüz kere Sübhânallâhi ve bi-hamdihî diyenin günahları affedilir » — Buhârî',
+  '« Allah\'ın ismi anılan yere melekler iner » — Hadis',
+  '« Sabah-akşam dua edenler, kıyamette zafer kazananlardır » — Hadis',
+  '« Mü\'minin silahı duadır » — Hadis',
+  '« Allah\'tan iste; istemeyene gücenir » — Hadis',
+  '« Dua, başa gelen ve henüz gelmemiş belaya da kâfîdir » — Hadis',
+  '« Rabbim, dünyada da iyilik ahirette de iyilik ver » — Bakara, 201',
+  '« Sen bizim Mevlâmızsın; bize yardım et » — Bakara, 286',
+  '« Sizin en hayırlınız, ahlâkı en güzel olanınızdır » — Buhârî',
+  '« Kolaylaştırın, zorlaştırmayın; müjdeleyin, nefret ettirmeyin » — Buhârî',
+  '« Mü\'min, kardeşi için aynı şeyleri istemedikçe iman etmiş olmaz » — Buhârî',
+  '« Kendisi için sevdiğini kardeşi için de sevmedikçe iman etmiş olmaz » — Müslim',
+  '« Allah\'ın sevdiği ev, içinde yetimin yedirildiği evdir » — Hadis',
+  '« Komşusu açken tok yatan bizden değildir » — Hadis',
+  '« Bir kardeşine güler yüz göstermek bile sadakadır » — Tirmizî',
+  '« Hayâ imandandır » — Buhârî',
+  '« Sözün en hayırlısı doğrusudur » — Hadis',
+  '« Yalan, kalbi karartır » — Hadis',
+  '« Tatlı dil, sürekli bir sadakadır » — Hadis',
+  '« Sabah erkenden kalkın; bereket sabahtadır » — Hadis',
+  '« Allah, küçükten büyüğe her amelinizi görür » — Zilzâl, 7-8',
+  '« Bir kötülüğe iyilikle karşılık ver » — Fussılet, 34',
+  '« İyilik ile kötülük bir olmaz » — Fussılet, 34',
+  '« Anne-babanın rızâsı, Allah\'ın rızâsıdır » — Tirmizî',
+  '« Bir Müslümanı sevindirmek, Hac sevabıdır » — Hadis',
+  '« Hediyeleşin, kalpler kaynaşsın » — Hadis',
+  '« Komşunun hakkı senin üzerinde haktır » — Hadis',
+  '« Selam vermek ve almak, müslümanlık alâmetidir » — Hadis',
+  '« Misafire ikram et » — Hadis',
+  '« Müslümanın canı, malı ve namusu kardeşine haramdır » — Hadis',
+  '« Gıybet, ölü kardeşinin etini yemek gibidir » — Hucurât, 12',
+  '« Kötü söz, mü\'mine yakışmaz » — Hadis',
+  '« Affetmek, izzetinden alır götürmez bilakis artırır » — Müslim',
+  '« Sadaka belayı geri çevirir » — Tirmizî',
+  '« Faydalı söyle, faydasız ise sus » — Hadis',
+  '« Komşu komşusuna iyilik etsin » — Hadis',
+  '« Allah, mütevazı kulu sever » — Hadis',
+  '« Kibir, cehennemin elbisesidir » — Hadis',
+  '« Cömertlik, Allah\'ın sevdiği sıfattır » — Hadis',
+  '« Sözünde duran kişiyi Allah sever » — Hadis',
+  '« Adâletli olmak Allah\'ın sevdiği bir haldir » — Hadis',
+  '« Doğruluk, kişiyi cennete götürür » — Buhârî',
+  '« Edep, ilmin başıdır » — Tasavvuf',
+  '« Anne-baba senin cennet ya da cehennemindir » — Hadis',
+  '« Aileniz emanettir, onlara iyi davranın » — Hadis',
+  '« Sizin en hayırlınız, eşine en hayırlı olanınızdır » — Tirmizî',
+  '« Akrabalık bağını koparma; Allah onu koparanı koparır » — Buhârî',
+  '« Mü\'minlerin imanca en kâmili, ahlâkça en güzel olanıdır » — Tirmizî',
+  '« Çocuklara güzel isim verin » — Hadis',
+  '« Allah\'a ve âhirete iman eden ya hayır söylesin ya da sussun » — Buhârî',
+  '« Müslüman müslümana yardım eden bir bina gibidir » — Buhârî',
+  '« Bir kötülük gördüğünüzde, dilinizle, gücünüzle veya kalbinizle önleyin » — Müslim',
+  '« Çocuğun haklarından biri güzel terbiyedir » — Hadis',
+  '« Akrabalık bağlarını koruyun » — Hadis',
+  '« Anne ve baba duası, kabul olunan en kısa dualardandır » — Hadis',
+  '« Yaşlılarınıza saygı, çocuklarınıza şefkat gösterin » — Hadis',
+  '« Sılayı rahimi koruyana Allah ömrünü uzatır » — Buhârî',
+  '« Yetimin yanaklarını okşayan sonuçta cennete kavuşur » — Hadis',
+  '« Komşusu güvende olmayan, mü\'min olamaz » — Müslim',
+  '« Her can ölümü tadacaktır » — Âl-i İmrân, 185',
+  '« Şüphesiz Allah\'a döndürüleceksiniz » — Bakara, 281',
+  '« Dünya hayatı bir oyun ve eğlencedir » — Muhammed, 36',
+  '« Akıllı kişi, nefsini hesaba çekendir » — Tirmizî',
+  '« Hayır gördüğünde Allah\'a şükret, kötülük gördüğünde tövbe et » — Hadis',
+  '« Şüphesiz, ahiret yurdu daha hayırlıdır » — En\'âm, 32',
+  '« Mü\'min, kabir azabından korunur eğer salih amel işlerse » — Hadis',
+  '« Mahşer günü, hiçbir gölge yoktur, ancak Allah\'ın gölgelediği vardır » — Buhârî',
+  '« Hesap günü amel terazisi sorulur » — Hadis',
+  '« Cennete giriş, Allah\'ın rahmetiyle olur » — Buhârî',
+  '« Cehennem\'den uzak kalın, hurma kadarı bile olsa sadaka verin » — Buhârî',
+  '« Mü\'minin kabri cennet bahçelerinden bir bahçedir » — Hadis',
+  '« Ölünün, geride bıraktıkları için yaptıkları amel devam eder: ilim, sadaka, sâlih evlat » — Müslim',
+  '« Allah\'a kavuşmayı seven, Allah da onunla kavuşmayı sever » — Buhârî',
+  '« Yatağa yatarken Allah\'ı zikret, sabah huzur ile uyan » — Hadis',
+  '« Asıl yurt ahirettir » — Ankebût, 64',
+  '« Mü\'min, dünyada misafir gibi olmalıdır » — Tirmizî',
+  '« İbadet, ölüm için en güzel hazırlıktır » — Hadis',
+  '« Cehennemden korunmak için bir hurma yarısı bile sadaka olur » — Buhârî',
+  '« Ölünce mal kalmaz, ancak amel kalır » — Hadis',
+  '« Hesap günü hiç kimseye haksızlık edilmez » — Enbiyâ, 47',
+  '« Allah\'ın nimetlerini sayacak olsanız sayamazsınız » — İbrâhîm, 34',
+  '« Şükür, nimetin bekçisidir » — Hadis',
+  '« Allah\'a rıza, en yüksek mertebedir » — Tasavvuf',
+  '« Rabbim, beni sana şükreden bir kul kıl » — Hadis',
+  '« Az nimete şükreden, çoğuna lâyıktır » — Tasavvuf',
+  '« Sahip olduklarına şükret; o zaman çoğalır » — Hadis',
+  '« Allah\'a tevekkül edene Allah yeter » — Talâk, 3',
+  '« Allah\'ın taksimi, kuluna en hayırlısıdır » — Hadis',
+  '« Verdiklerimle yetinen, en zengindir » — Hadis',
+  '« Rıza, sabırdan üstündür » — Tasavvuf',
+  '« Allah\'a güvenen aslâ kaybetmez » — Hadis',
+  '« En hayırlı kazanç, kanaattir » — Hadis',
+  '« Cennet, Allah\'a iman edip salih amel işleyenlere vaadolundu » — Tâhâ, 75',
+  '« Cennette mü\'minler için göz görmez, kulak işitmez nimetler var » — Buhârî',
+  '« Allah, sabredenlere cenneti açar » — Hadis',
+  '« Cennet\'in anahtarı namazdır » — Hadis',
+  '« Mü\'min, cennette istediği her şeyi bulur » — Hadis',
+  '« Cennet\'e girmek için Lâ ilâhe illallâh demek yeterdir, samimi olunca » — Hadis',
+  '« Cennetin bir derecesi dünyanın milyon yıllık ömrü kadar değerlidir » — Hadis',
+  '« Cehennem\'in azabından Allah\'a sığınmalıdır » — Hadis',
+  '« Allah\'a iman eden kıyamet günü güvenle uyanır » — Hadis',
+  '« Cennet\'te en yüksek derece, Vesîle makamıdır » — Hadis',
+  '« Sıdk ile iman eden, cehennem ateşinden uzaklaşır » — Hadis',
+  '« Cennet, takvâ sahiplerine hazırlanmıştır » — Âl-i İmrân, 133',
+  '« Allah, samimî kullarına cennet kapılarını ardına kadar açar » — Hadis',
+  '« Cennet\'te en güzel nimet, Allah\'ın Cemâline bakmaktır » — Hadis',
+  '« İlim öğrenmek her müslümana farzdır » — Hadis',
+  '« Beşikten mezara kadar ilim öğrenin » — Hadis',
+  '« Allah, bir kuluna hayır murad ederse onu dinde fakîh yapar » — Buhârî',
+  '« Hiç bilenlerle bilmeyenler bir olur mu? » — Zümer, 9',
+  '« Alimin uykusu, cahilin ibadetinden hayırlıdır » — Hadis',
+  '« Sukût, hikmetin yarısıdır » — Hadis',
+  '« İlim, ameli için aranır; ilim amelin köküdür » — Hadis',
+  '« Hikmet, mü\'minin yitiğidir; nerede bulursa alır » — Tirmizî',
+  '« Kim Allah için ilim ararsa, Allah ona cennet yolunu kolaylaştırır » — Müslim',
+  '« İlim, mü\'min için tükenmez bir hazinedir » — Hadis',
+  '« Az amel ile çok sevap arıyorsan, niyetini düzelt » — Tasavvuf',
+  '« İlimle amel etmeyen, meyvesiz ağaç gibidir » — Tasavvuf',
+  '« İlim öğrenmek için yolculuğa çıkan, Allah yolundadır » — Hadis',
+  '« İnsan, niyetiyle Allah\'a yakın olur » — Hadis',
+  '« Bir saat tefekkür, bir yıl ibadetten hayırlıdır » — Hadis',
+  '« Bir hayrı yapana, onu yapan kadar sevap vardır » — Hadis',
+  '« Sadaka, malın bereketidir » — Hadis',
+  '« Sabah erkenden kalkıp hayır yapın » — Hadis',
+  '« İyilik, çabuk yapılırsa daha güzeldir » — Hadis',
+  '« Bir mü\'mini sevindirmek, en güzel amellerdendir » — Hadis',
+  '« Sadaka, kıyamet günü gölge olur » — Hadis',
+  '« Hayrı, halkın bilmediği yerden yapın » — Hadis',
+  '« Hayırlı evlat, kendisinden sonra duayla anılır » — Hadis',
+  '« Allah\'a en sevimli amel, devamlı olandır » — Buhârî',
+  '« Allah, kullarının iyilik etmesini sever » — Hac, 77',
+  '« Hayır yapın, çünkü Allah hayır yapanları sever » — Bakara, 195',
+  '« Bir köleyi azat eden, cehennemden kurtulur » — Buhârî',
+  '« Yetimin başını okşayan, cennete yaklaşır » — Hadis',
+  '« Allah, küçük amelinizi büyük görür » — Hadis',
+  '« Az sadaka, kabir azabından kurtarır » — Hadis',
+  '« İnsanın kâzası, sadaka ile hafifler » — Hadis',
+  '« Bir hurmanın yarısıyla bile cehennemden korun » — Buhârî',
+  '« Sadakalar, kıyamet günü serinlik olur » — Hadis',
+  '« Allah\'a en sevdiği insan, gizli sadaka verendir » — Hadis',
+  '« Helal kazançtan verilen sadaka, ateşi söndürür » — Tirmizî',
+  '« De ki: Eğer Allah\'ı seviyorsanız bana uyun, Allah da sizi sevsin » — Âl-i İmrân, 31',
+  '« Allah, kullarına en yakın olandır » — Bakara, 186',
+  '« Allah\'ın izniyle olur » — En\'âm, 65',
+  '« Şüphesiz Allah, mü\'minlere büyük müjdeler verir » — Yûnus, 64',
+  '« Şüphesiz mü\'min, mü\'minin aynasıdır » — Ebû Dâvûd',
+  '« Mü\'min, akrep gibi sokmaz; bal arısı gibi yarar » — Hadis',
+  '« Allah, kalbin sıdkına bakar » — Hadis',
+  '« Sevgi imandandır » — Hadis',
+  '« Müslüman, kardeşinin için bir nimet temenni eden insandır » — Hadis',
+  '« İslam\'ın güzelliği, malayaniyi terkedişindedir » — Tirmizî',
+  '« Allah\'ı görüyormuş gibi ibadet et » — Buhârî (İhsan)',
+  '« Sevgili kulum, bir adım atana bin adım yaklaşırım » — Hadis-i Kudsî',
+  '« Allah, çok zikredene cennet kapılarını açar » — Hadis',
+  '« Allah, ümit eden kulunu hayal kırıklığına uğratmaz » — Hadis',
+  '« Mü\'min, kendinden çok başkasını düşünür » — Tasavvuf',
+  '« Allah\'ın ipine sımsıkı sarılın » — Âl-i İmrân, 103',
+  '« Şüphesiz Allah, kullarına çok bağışlayıcıdır » — Hadis',
+  '« Allah, mü\'mine ısrarla dua ettiğinde sevgi besler » — Hadis',
+  '« Allah\'a hayrı çok temenni edene, çok verir » — Hadis',
+  '« Sözleriyle değil amelleriyle iman ettiğini göster » — Tasavvuf',
+  '« Mü\'min, bütün hayrı bir araya getirir: namaz, oruç, sadaka, sıla-i rahim » — Hadis',
+  '« Allah, iyiliği iki misli, kötülüğü tek misli yazar » — Hadis',
+  '« Bir kötülük gördüğünde, dilinle değil, kalbinle bile olsa karşı çık » — Müslim',
+  '« Allah\'ın ismi ile başlanmayan iş, neticesiz kalır » — Hadis',
+  '« Allah, bir kulu sevdiğinde önce belalarla terbiye eder » — Hadis',
+  '« Allah\'ın selâmı tüm mü\'minlerin üzerinedir »',
+  '« Sözün en güzeli Kur\'an\'dır, en güzel yol Hz. Muhammed\'in yoludur » — Hadis',
+  '« Niyetler amellerin temelidir » — Buhârî, Müslim',
+  '« Allah\'ın izniyle her şey kolaydır » — Hadis',
+  '« Mü\'min, daima hayır yolundadır » — Hadis',
+  '« Kim sabah-akşam Allah\'a hamd ederse, kalbi huzur bulur » — Hadis',
+  '« Allah\'a samimi olun, o size cennet vacip kılsın » — Hadis',
+  '« Geçen vakit geri gelmez; her vakit ganimet bil » — Hadis',
+  '« İslam, dilden değil, gönülden başlar » — Tasavvuf',
+  '« Bir günü diğerine eşit olan, ziyandadır » — Hadis',
+  '« Mü\'min, hep yenilenir; nefsini terbiye eder » — Hadis',
+  '« Allah\'ın sevgisini kazanmak en büyük hedeftir » — Tasavvuf',
+  '« Allah\'a tevekkül eden, denizin üstünde yürür » — Tasavvuf',
+  '« Müjdele kullarımı: Onlar dünyada güvende, ahirette mutludurlar » — Hadis-i Kudsî',
+  '« Allah\'a yaklaşmak için en kısa yol secdedir » — Hadis',
+  '« Hayırlı bir niyet, kötü bir amelden hayırlıdır » — Hadis',
+  '« Allah, kullarına çok yakındır; samimî olana daha da yakın » — Hadis',
+  '« Allah\'a sığınmak, en güçlü kalkandır » — Hadis',
+  '« Mü\'minin ferahlığı namazdadır » — Hadis',
+  '« Allah, kalbleri arayıp tarayandır » — Hadis',
+  '« İnsanın değeri niyetiyle ölçülür » — Hadis',
+  '« Allah\'ın selamı barış demektir; mü\'min barış getirir » — Hadis',
+  '« Allah\'tan ümit kesilmez; çabala, sonuç O\'ndan » — Tasavvuf',
+  '« Bir gönle giren Allah\'ın evi gibi olur » — Tasavvuf',
+  '« Allah\'ın huzurunda olduğunu bilen mahcup olmaz » — Tasavvuf',
+  '« Kalp Allah\'ın evidir; günahla kirletilmez » — Tasavvuf',
+  '« Allah\'ın muhabbeti, en güzel hediyedir » — Tasavvuf',
+  '« Bir mü\'min hiç mahzun kalmaz; çünkü Allah ona yeter » — Hadis',
+  '« Sırat-ı müstakim, kalbe doğru olan yoldur » — Tasavvuf',
+  '« Allah\'ın selamı, dostluğa açılan en güzel kapıdır » — Hadis',
+  '« Mü\'min her zaman umut ile yaşar » — Hadis',
+  '« Allah\'ın rahmeti sonsuzdur, ümitvâr ol » — Tasavvuf',
+  '« Allah, kullarına asla zulmetmez » — Yûnus, 44',
+  '« Allah\'a gelin, kalbiniz ferahlasın » — Hadis',
+  '« Bir vakit namazı geçirmek, dünyadan büyük bir kayıptır » — Hadis'
+];
+
+const GUNLUK_MOTIVASYON = [
+  '🌱 Bugün bir adım, yarın bir adım — Allah niyetlerine bakar.',
+  '🌿 Damlaya damlaya göl olur. Bir vakit bile değerlidir.',
+  '🌳 Geç değildir, Allah\'a dönüş her an mümkündür.',
+  '✨ Sabır, Allah\'ın sevdiği en güzel hasletlerdendir.',
+  '🤲 Her secde, Cennet\'e bir adım yaklaştırır.',
+  '💚 Kalp huzuru, namazın içindedir.',
+  '🌟 Bugün dünden daha iyi ol — Allah seni daha çok sevsin.',
+  '🕊️ Tövbe kapısı her zaman açıktır, yorulma.',
+  '⭐ Allah\'a giden yolda her adım kıymetlidir.',
+  '🌸 İstikrar küçük adımlardan doğar — devam et.',
+  '🌙 Gece kalkanlar Allah\'ın özel misafirleridir.',
+  '🔥 Bir hafta üst üste — bir aya, sonra ömre dönüşür.',
+  '💎 Niyetin halis olsun, gerisini Allah hallediyor.',
+  '🌺 Her zorlukla beraber bir kolaylık vardır — pes etme.',
+  '🌾 Allah, bir adım ata\'na bir kulaç yaklaşır.',
+  '🌈 Bugünü Allah\'ın bir lütfu olarak yaşa.',
+  '🌅 Yeni bir gün, yeni bir başlangıç. Bismillah de.',
+  '💫 Allah seni unutmadı — sen de O\'nu unutma.',
+  '🎯 Hedef değil, yolculuğun kendisi ibadettir.',
+  '🌹 İhsan: Allah\'ı görüyormuş gibi ibadet etmektir.',
+  '🍃 Küçük adımlar, büyük dönüşümler getirir.',
+  '⚡ Bir zikir, bin sıkıntıyı götürür — söyle: Lâ ilâhe illallâh.',
+  '🌊 Allah\'ın denizine bir damla yaklaş, deniz seni bekler.',
+  '🌻 Ümitsizlik şeytandandır — kalkıp bir vakit kıl.',
+  '🍯 Helâl rızık, helâl kazanç, helâl niyet — üçü birlik.',
+  '🕌 Camiyle gönlün arasındaki mesafe = niyet kadardır.',
+  '📿 Bir tesbih, bir nefes, bir adım — hepsi ibadet.',
+  '☀️ Sabahları kalkana güneş bile saygı duyar.',
+  '🌷 Kul, eksiğiyle Allah\'a yakındır.',
+  '🌟 Her gece bir cüz, bir ay sonra hatim eder.'
+];
+
+// Tarihe göre deterministik index
+function gunIndeksi(uzunluk) {
+  const d = new Date();
+  const tohum = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  return tohum % uzunluk;
+}
+
+function gunlukAyetGoster() {
+  const el = document.getElementById('banner-ayet');
+  if (el) el.textContent = GUNLUK_AYETLER[gunIndeksi(GUNLUK_AYETLER.length)];
+}
+
+gunlukAyetGoster();
+
+nvYukle(nvSehir);
+setInterval(() => { nvGeriSayim(); }, 1000);
+setInterval(() => { if (nvVakitler) nvGoster(); }, 60000); // Her dakika yenile (aktif vakit değişebilir)
+
+// =========================================================
+// ESMÂÜ'L-HÜSNÂ — Allah'ın 99 ismi
+// =========================================================
+const ESMA = [
+  { no:1, ad:'Er-Rahmân', anlam:'Esirgeyen, çok merhamet eden', fazilet:'Dünyada bütün yaratıklara merhamet eden Allah\'ın ismidir. Sabah-akşam okumak rızık genişlemesine vesile olur.' },
+  { no:2, ad:'Er-Rahîm', anlam:'Çok bağışlayan, ahirette mü\'minlere merhamet eden', fazilet:'Ahirette müminlere şefkat ve merhamet edecek olan. Kalp huzuru için okunur.' },
+  { no:3, ad:'El-Melik', anlam:'Mülkün gerçek sahibi, hâkim', fazilet:'Kâinatın gerçek sahibi. Maddi durum için okunur.' },
+  { no:4, ad:'El-Kuddûs', anlam:'Her türlü eksiklikten münezzeh, kutsal', fazilet:'Kalbin manen temizlenmesi için okunur.' },
+  { no:5, ad:'Es-Selâm', anlam:'Selâmet veren, kullarını esenliğe çıkaran', fazilet:'Hastalıklardan korunma ve şifa niyetiyle okunur.' },
+  { no:6, ad:'El-Mü\'min', anlam:'Güven veren, koruyan', fazilet:'Korkulardan ve şüphelerden korunmak için okunur.' },
+  { no:7, ad:'El-Müheymin', anlam:'Her şeyi gözetip koruyan', fazilet:'İşlerin yolunda gitmesi için okunur.' },
+  { no:8, ad:'El-Azîz', anlam:'Mağlup edilemeyen, mutlak galip', fazilet:'Zorluklara karşı güç kazanmak için okunur.' },
+  { no:9, ad:'El-Cebbâr', anlam:'Dilediğini yapan, eksikleri tamamlayan', fazilet:'Zulümden korunmak ve kırılan kalpleri tamir için okunur.' },
+  { no:10, ad:'El-Mütekebbir', anlam:'Büyüklük ve azamette eşi olmayan', fazilet:'Kibri kırmak ve nefse galip gelmek için okunur.' },
+  { no:11, ad:'El-Hâlik', anlam:'Yoktan yaratan', fazilet:'Yeni başlangıçlar için bereket niyetiyle okunur.' },
+  { no:12, ad:'El-Bâri\'', anlam:'Yarattıklarını uyumlu biçimde var eden', fazilet:'Sanat ve zanaat işleri için okunur.' },
+  { no:13, ad:'El-Musavvir', anlam:'Her şeye şekil veren', fazilet:'Güzellik ve estetik için, sanat ehlinin okuduğu isim.' },
+  { no:14, ad:'El-Ğaffâr', anlam:'Günahları çokça örten, bağışlayan', fazilet:'Tövbe niyetiyle 100 kere okunur, günahların bağışlanmasına vesile olur.' },
+  { no:15, ad:'El-Kahhâr', anlam:'Her şeye galip, dilediğini zelil eden', fazilet:'Zalimlerden korunmak için okunur.' },
+  { no:16, ad:'El-Vehhâb', anlam:'Karşılıksız çok veren, lütufkâr', fazilet:'Rızık ve ihsan için okunur (özellikle Çarşamba günü).' },
+  { no:17, ad:'Er-Rezzâk', anlam:'Bütün varlıkların rızkını veren', fazilet:'Rızık genişlemesi için sabah-akşam 10 kere okunur.' },
+  { no:18, ad:'El-Fettâh', anlam:'Kapalı işleri açan, hayır kapılarını açan', fazilet:'Kapalı işlerin açılması için sabahları okunur.' },
+  { no:19, ad:'El-Alîm', anlam:'Her şeyi bilen', fazilet:'İlim, hikmet ve bilgi artırmak için okunur.' },
+  { no:20, ad:'El-Kâbız', anlam:'Daraltan, ruhları alan', fazilet:'Sabır gerektiren konularda okunur.' },
+  { no:21, ad:'El-Bâsıt', anlam:'Genişleten, rızkı bollaştıran', fazilet:'Sıkıntı zamanlarında ferah için okunur.' },
+  { no:22, ad:'El-Hâfid', anlam:'Alçaltan, zalimleri rezil eden', fazilet:'Düşman şerrinden korunma için.' },
+  { no:23, ad:'Er-Râfi\'', anlam:'Yükselten, makam veren', fazilet:'Mertebe ve şeref için okunur.' },
+  { no:24, ad:'El-Muiz', anlam:'Dilediğini aziz kılan', fazilet:'İzzet ve şeref için.' },
+  { no:25, ad:'El-Müzill', anlam:'Dilediğini zelil eden', fazilet:'Zalimlere karşı.' },
+  { no:26, ad:'Es-Semî\'', anlam:'Her şeyi işiten', fazilet:'Dualarınızın kabul olması için okunur.' },
+  { no:27, ad:'El-Basîr', anlam:'Her şeyi gören', fazilet:'Basiret, ferâset için okunur.' },
+  { no:28, ad:'El-Hakem', anlam:'Hüküm veren, hakkı bâtıldan ayıran', fazilet:'Adâletli karar verme için.' },
+  { no:29, ad:'El-Adl', anlam:'Mutlak adâletli', fazilet:'Adâlet ile muamele için.' },
+  { no:30, ad:'El-Latîf', anlam:'En ince işleri bilen, lütufkâr', fazilet:'Zorluklarda kolaylık ve lütuf için 133 kere okunur.' },
+  { no:31, ad:'El-Habîr', anlam:'Her şeyden haberdar olan', fazilet:'Saklı şeyleri öğrenmek için.' },
+  { no:32, ad:'El-Halîm', anlam:'Acele etmeyen, yumuşak davranan', fazilet:'Öfke kontrolü için okunur.' },
+  { no:33, ad:'El-Azîm', anlam:'Çok büyük, azametli', fazilet:'Saygınlık ve kabul görme için.' },
+  { no:34, ad:'El-Ğafûr', anlam:'Çok bağışlayıcı', fazilet:'Günahların bağışlanması için.' },
+  { no:35, ad:'Eş-Şekûr', anlam:'Az amele çok mükâfat veren', fazilet:'Şükrün ziyadeleşmesi için.' },
+  { no:36, ad:'El-Aliyy', anlam:'Çok yüce', fazilet:'Yüksek makam ve şeref için.' },
+  { no:37, ad:'El-Kebîr', anlam:'Pek büyük', fazilet:'Saygınlık ve büyüklük için.' },
+  { no:38, ad:'El-Hafîz', anlam:'Koruyup gözeten', fazilet:'Her türlü tehlikeden korunma için.' },
+  { no:39, ad:'El-Mukît', anlam:'Bedenlere gıda, ruhlara feyz veren', fazilet:'Rızık ve sağlık için.' },
+  { no:40, ad:'El-Hasîb', anlam:'Hesabı görüp gözeten', fazilet:'Borçtan kurtulmak için.' },
+  { no:41, ad:'El-Celîl', anlam:'Azamet ve celâl sahibi', fazilet:'Saygınlık için.' },
+  { no:42, ad:'El-Kerîm', anlam:'Cömert, çok ikram eden', fazilet:'Cömert olmak ve cömert kişilerle karşılaşmak için.' },
+  { no:43, ad:'Er-Rakîb', anlam:'Her şeyi gözeten, kontrol eden', fazilet:'Kayıplardan korunma için.' },
+  { no:44, ad:'El-Mucîb', anlam:'Duaları kabul eden', fazilet:'Duaların kabul olması için.' },
+  { no:45, ad:'El-Vâsi\'', anlam:'İhsanı bol, rahmeti geniş', fazilet:'Rızık genişlemesi için.' },
+  { no:46, ad:'El-Hakîm', anlam:'Hikmet sahibi', fazilet:'Hikmet ve doğru karar için.' },
+  { no:47, ad:'El-Vedûd', anlam:'Çok seven, sevilen', fazilet:'Sevgi ve muhabbet için.' },
+  { no:48, ad:'El-Mecîd', anlam:'Şânı yüce, kerem sahibi', fazilet:'Şeref ve itibar için.' },
+  { no:49, ad:'El-Bâis', anlam:'Ölüleri dirilten, peygamberler gönderen', fazilet:'Manevi diriliş için.' },
+  { no:50, ad:'Eş-Şehîd', anlam:'Her şeye şahit', fazilet:'Hakikatin ortaya çıkması için.' },
+  { no:51, ad:'El-Hakk', anlam:'Mutlak hak, varlığı gerçek', fazilet:'Doğru ve hak yolda olmak için.' },
+  { no:52, ad:'El-Vekîl', anlam:'Kendisine tevekkül edileni koruyan', fazilet:'Tevekkül ve güven için, sıkıntılarda.' },
+  { no:53, ad:'El-Kaviyy', anlam:'Çok kuvvetli', fazilet:'Güç ve kuvvet için.' },
+  { no:54, ad:'El-Metîn', anlam:'Çok sağlam, dayanıklı', fazilet:'Metanet ve dayanıklılık için.' },
+  { no:55, ad:'El-Veliyy', anlam:'Mü\'minlerin dostu, yardımcısı', fazilet:'Allah\'ın dostluğunu kazanmak için.' },
+  { no:56, ad:'El-Hamîd', anlam:'Övgüye lâyık', fazilet:'Şükür ve hamd için.' },
+  { no:57, ad:'El-Muhsî', anlam:'Her şeyi bilen, sayan', fazilet:'Hesap ve dikkat için.' },
+  { no:58, ad:'El-Mübdi\'', anlam:'İlk defa yaratan', fazilet:'Yeni başlangıçlar için.' },
+  { no:59, ad:'El-Muîd', anlam:'Yarattıklarını öldürüp yeniden dirilten', fazilet:'Tekrar başlama, geri dönüş için.' },
+  { no:60, ad:'El-Muhyî', anlam:'Hayat veren', fazilet:'Sağlık, şifa ve canlılık için.' },
+  { no:61, ad:'El-Mümît', anlam:'Ölümü yaratan', fazilet:'Ahiret hatırlatması için.' },
+  { no:62, ad:'El-Hayy', anlam:'Ezelî ve ebedî diri', fazilet:'Uzun ömür ve sağlık için.' },
+  { no:63, ad:'El-Kayyûm', anlam:'Kâinatı her an ayakta tutan', fazilet:'Sıkıntılarda Allah\'a sığınma için.' },
+  { no:64, ad:'El-Vâcid', anlam:'Dilediğini istediği zaman bulan', fazilet:'Kaybedilen şeyleri bulmak için.' },
+  { no:65, ad:'El-Mâcid', anlam:'Şeref ve ihsan sahibi', fazilet:'Şan ve şeref için.' },
+  { no:66, ad:'El-Vâhid', anlam:'Zâtında tek, eşi-benzeri olmayan', fazilet:'Tevhid ve birlik için.' },
+  { no:67, ad:'El-Ehad', anlam:'Tek, eşsiz', fazilet:'Kalbin Allah\'a yönelmesi için.' },
+  { no:68, ad:'Es-Samed', anlam:'Hiçbir şeye muhtaç olmayan', fazilet:'İhtiyaçların giderilmesi için.' },
+  { no:69, ad:'El-Kâdir', anlam:'Her şeye kâdir', fazilet:'Güç ve kudret için.' },
+  { no:70, ad:'El-Muktedir', anlam:'Mutlak iktidar sahibi', fazilet:'Hâkimiyet ve güç için.' },
+  { no:71, ad:'El-Mukaddim', anlam:'Dilediğini öne geçiren', fazilet:'Hayırlı işlerde öne çıkmak için.' },
+  { no:72, ad:'El-Muahhir', anlam:'Dilediğini geri bırakan', fazilet:'Sabır ve teemmül için.' },
+  { no:73, ad:'El-Evvel', anlam:'Başlangıcı olmayan', fazilet:'İlk hareketleri için.' },
+  { no:74, ad:'El-Âhir', anlam:'Sonu olmayan', fazilet:'Hayırlı sonlar için.' },
+  { no:75, ad:'Ez-Zâhir', anlam:'Varlığı açık olan', fazilet:'Hakikatlerin açığa çıkması için.' },
+  { no:76, ad:'El-Bâtın', anlam:'Gizli, görünmeyen', fazilet:'Manevi sırlara erişmek için.' },
+  { no:77, ad:'El-Vâlî', anlam:'Kâinatı yöneten', fazilet:'Yöneticilik ve idare için.' },
+  { no:78, ad:'El-Müteâlî', anlam:'Aklın alabileceğinden yüce', fazilet:'Yüksek mertebeler için.' },
+  { no:79, ad:'El-Berr', anlam:'İyilik eden, ikram sahibi', fazilet:'İyilik ve hayır için.' },
+  { no:80, ad:'Et-Tevvâb', anlam:'Tövbeleri çok kabul eden', fazilet:'Tövbe niyetiyle 360 kere okunur.' },
+  { no:81, ad:'El-Müntakim', anlam:'Zalimlerden intikam alan', fazilet:'Adâletin yerini bulması için.' },
+  { no:82, ad:'El-Afüvv', anlam:'Çok affeden, affetmeyi seven', fazilet:'Affedilmek için, özellikle Kadir Gecesi.' },
+  { no:83, ad:'Er-Raûf', anlam:'Çok şefkatli, merhametli', fazilet:'Şefkat ve merhamet için.' },
+  { no:84, ad:'Mâlikü\'l-Mülk', anlam:'Mülkün gerçek sahibi', fazilet:'Mülk ve mal için.' },
+  { no:85, ad:'Zü\'l-Celâli ve\'l-İkrâm', anlam:'Celâl ve ikram sahibi', fazilet:'Şeref ve kerem için.' },
+  { no:86, ad:'El-Muksıt', anlam:'Adâleti yerine getiren', fazilet:'Adâlet için.' },
+  { no:87, ad:'El-Câmi\'', anlam:'Toplayan, bir araya getiren', fazilet:'Kayıplarla buluşmak için.' },
+  { no:88, ad:'El-Ğaniyy', anlam:'Hiçbir şeye muhtaç olmayan', fazilet:'Zenginlik ve istiğnâ için.' },
+  { no:89, ad:'El-Muğnî', anlam:'Zenginlik veren', fazilet:'Maddi sıkıntıların giderilmesi için.' },
+  { no:90, ad:'El-Mânî\'', anlam:'Engelleyen, kötülüklere mâni olan', fazilet:'Kötülüklerden korunma için.' },
+  { no:91, ad:'Ed-Dârr', anlam:'Hikmeti uyarınca zarar veren', fazilet:'Zararlardan korunma için.' },
+  { no:92, ad:'En-Nâfi\'', anlam:'Fayda veren', fazilet:'Hayır ve fayda için.' },
+  { no:93, ad:'En-Nûr', anlam:'Nur veren, aydınlatan', fazilet:'Kalbin aydınlanması için.' },
+  { no:94, ad:'El-Hâdî', anlam:'Hidayet veren', fazilet:'Doğru yolu bulmak için.' },
+  { no:95, ad:'El-Bedî\'', anlam:'Eşi olmayanı yaratan', fazilet:'Yaratıcılık ve yenilik için.' },
+  { no:96, ad:'El-Bâkî', anlam:'Varlığının sonu olmayan', fazilet:'Süreklilik ve kalıcılık için.' },
+  { no:97, ad:'El-Vâris', anlam:'Her şey kendisine dönen', fazilet:'Hayırlı varislere kavuşma için.' },
+  { no:98, ad:'Er-Reşîd', anlam:'Doğru yola eriştiren', fazilet:'Doğru karar ve isabet için.' },
+  { no:99, ad:'Es-Sabûr', anlam:'Çok sabırlı', fazilet:'Sabır ve dayanma gücü için.' }
+];
+
+function esmaCizdir() {
+  const grid = document.getElementById('esma-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  ESMA.forEach(e => {
+    const kart = document.createElement('div');
+    kart.className = 'esma-karti';
+    kart.dataset.arama = (e.ad + ' ' + e.anlam).toLowerCase();
+    kart.onclick = () => esmaModalAc(e);
+    kart.innerHTML = `
+      <div class="esma-no">${e.no}</div>
+      <div class="esma-ad-tr">${e.ad}</div>
+      <div class="esma-anlam-kisa">${e.anlam}</div>
+    `;
+    grid.appendChild(kart);
+  });
+}
+
+function esmaModalAc(e) {
+  document.getElementById('esma-modal-no').textContent = e.no + '. isim';
+  document.getElementById('esma-modal-ad').textContent = e.ad;
+  document.getElementById('esma-modal-anlam').textContent = e.anlam;
+  document.getElementById('esma-modal-fazilet').innerHTML = '<strong style="color:var(--orta)">✨ Fazileti:</strong><br>' + e.fazilet;
+  document.getElementById('esma-modal').classList.add('acik');
+}
+function esmaModalKapat() {
+  document.getElementById('esma-modal').classList.remove('acik');
+}
+
+function esmaAra(metin) {
+  const m = metin.toLowerCase().trim();
+  document.querySelectorAll('.esma-karti').forEach(k => {
+    const arama = k.dataset.arama || '';
+    k.style.display = (!m || arama.includes(m)) ? '' : 'none';
+  });
+}
+
+esmaCizdir();
+
+// =========================================================
+// DUALAR VE SURELER
+// =========================================================
+const DUALAR = [
+  {
+    id: 'ayetel-kursi',
+    ad: 'Âyetel Kürsî',
+    ikon: '👑',
+    alt: 'Bakara Sûresi, 255. ayet',
+    bismillah: true,
+    ayetler: [
+      'Allâhü lâ ilâhe illâ hüvel hayyül kayyûm.',
+      'Lâ te\'huzühû sinetün ve lâ nevm.',
+      'Lehû mâ fis-semâvâti vemâ fil-ard.',
+      'Men zellezî yeşfeu ındehû illâ bi-iznih.',
+      'Ya\'lemü mâ beyne eydîhim vemâ halfehüm.',
+      'Velâ yühîtûne bi-şey\'in min ılmihî illâ bi-mâ şâ\'.',
+      'Vesia kürsiyyühüs-semâvâti vel-ard, velâ yeûdühû hıfzuhümâ.',
+      've hüvel-aliyyül-azîm.'
+    ],
+    anlam: 'Allah, kendisinden başka hiçbir ilâh olmayandır. Diridir, kayyumdur. O\'nu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey O\'nundur. İzni olmaksızın O\'nun katında şefaatte bulunacak kimdir? O, kullarının önlerindekini ve arkalarındakini (yaptıklarını ve yapacaklarını) bilir. Onlar O\'nun ilminden, kendisinin dilediği kadarından başkasını kavrayamazlar. O\'nun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek O\'na güç gelmez. O, yücedir, büyüktür.',
+    fazilet: '✨ Her farz namazın ardından okunduğunda kişinin cennete girmesine engel kalmaz (Nesâî, Müslim). Uyumadan önce okuyana Allah\'tan bir koruyucu görevlendirilir.'
+  },
+  {
+    id: 'hasr-son',
+    ad: 'Haşr Sûresi (son 3 âyet)',
+    ikon: '🛡️',
+    alt: 'Haşr Sûresi, 22-24. ayetler',
+    bismillah: false,
+    ayetler: [
+      'Eûzü billâhi mineş-şeytânir-racîm.',
+      'Hüvallâhüllezî lâ ilâhe illâ hû. Âlimü\'l-gaybi veş-şehâdeti hüver-Rahmânür-Rahîm.',
+      'Hüvallâhüllezî lâ ilâhe illâ hû. El-Melikül-Kuddûsüs-Selâmül-Mü\'minül-Müheyminül-Azîzül-Cebbârül-Mütekebbir. Sübhânallâhi ammâ yüşrikûn.',
+      'Hüvallâhül-Hâlikul-Bâriül-Müsavviru lehül-esmâül-hüsnâ. Yüsebbihu lehû mâ fis-semâvâti vel-ard. Ve hüvel-Azîzül-Hakîm.'
+    ],
+    anlam: 'O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. Gaybı da, görünen âlemi de bilendir. O, Rahmân\'dır, Rahîm\'dir. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. O, mülkün gerçek sahibi, kutsal (her türlü eksiklikten uzak), barış ve esenliğin kaynağı, güvenlik veren, gözetip koruyan, mutlak güç sahibi, düzeltip ıslah eden ve dilediğini yaptıran ve büyüklükte eşsiz olan Allah\'tır. Allah, onların ortak koştuklarından uzaktır. O, yaratan, yoktan var eden, şekil veren Allah\'tır. Güzel isimler O\'nundur. Göklerdeki ve yerdeki her şey O\'nu tesbih eder. O, mutlak güç sahibidir, hüküm ve hikmet sahibidir.',
+    fazilet: '✨ Sabah ve akşam okuyana 70 bin melek dua eder. O gece veya ertesi gün ölürse şehit olarak ölür (Tirmizî, Dârimî).'
+  },
+  {
+    id: 'amenerrasulu',
+    ad: 'Âmenerrasûlü',
+    ikon: '🌟',
+    alt: 'Bakara Sûresi, 285-286. ayetler',
+    bismillah: false,
+    ayetler: [
+      'Âmenerrasûlü bimâ ünzile ileyhi min rabbihî vel-mü\'minûn. Küllün âmene billâhi ve melâ\'iketihî ve kütübihî ve rusulih. Lâ nüferriku beyne ehadin min rusulih, ve kâlû semi\'nâ ve eta\'nâ ğufrâneke rabbenâ ve ileyke\'l-masîr.',
+      'Lâ yükellifullâhü nefsen illâ vüs\'ahâ. Lehâ mâ kesebet ve aleyhâ mektesebet. Rabbenâ lâ tü\'âhıznâ in nesînâ ev ahta\'nâ. Rabbenâ velâ tahmil aleynâ ısran kemâ hameltehû alellezîne min kablinâ. Rabbenâ velâ tühammilnâ mâ lâ tâkate lenâ bih. Va\'fü annâ vağfir lenâ verhamnâ ente Mevlânâ fensurnâ ale\'l-kavmi\'l-kâfirîn.'
+    ],
+    anlam: 'Peygamber ve mü\'minler, Rabbi tarafından kendisine indirilene iman ettiler. Hepsi Allah\'a, meleklerine, kitaplarına ve peygamberlerine iman ettiler. "Onun peygamberlerinden hiçbirini diğerinden ayırt etmeyiz" dediler. Şöyle dediler: "İşittik, itaat ettik. Bağışlamanı dileriz Rabbimiz! Dönüş yalnız sanadır." Allah bir kimseyi ancak gücünün yettiği şeyle yükümlü kılar. Onun kazandığı iyilik kendi yararına, kötülük de kendi zararınadır. (Şöyle diyerek dua edin:) "Ey Rabbimiz! Unutur, ya da yanılırsak bizi sorumlu tutma! Ey Rabbimiz! Bize, bizden öncekilere yüklediğin gibi ağır yük yükleme. Ey Rabbimiz! Bize gücümüzün yetmediği şeyleri yükleme! Bizi affet, bizi bağışla, bize acı! Sen bizim Mevlâmızsın. Kâfirler topluluğuna karşı bize yardım et."',
+    fazilet: '✨ Yatmadan önce okuyana o gece için yeter (Buhârî, Müslim). Şeytanı evden uzaklaştırır.'
+  },
+  {
+    id: 'mulk',
+    ad: 'Mülk Sûresi (Tebâreke)',
+    ikon: '📜',
+    alt: '67. Sûre — 30 ayet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Tebârakellezî biyedihil-mülkü ve hüve alâ külli şey\'in kadîr.',
+      '<b>2</b> Ellezî halaka\'l-mevte vel-hayâte liyeblüveküm eyyüküm ahsenü amelâ. Ve hüvel-Azîzül-Ğafûr.',
+      '<b>3</b> Ellezî halaka seb\'a semâvâtin tıbâkâ. Mâ terâ fî halkır-Rahmâni min tefâvüt. Ferciıl-besara hel terâ min futûr.',
+      '<b>4</b> Sümmerciıl-besara kerrateyni yenkalib ileyke\'l-besaru hâsi\'en ve hüve hasîr.',
+      '<b>5</b> Ve lekad zeyyennes-semâed-dünyâ bi-mesâbîha ve cealnâhâ rucûmen liş-şeyâtîn ve a\'tednâ lehüm azâbes-saîr.',
+      '<b>6</b> Ve lillezîne keferû bi-rabbihim azâbü cehennem. Ve bi\'sel-masîr.',
+      '<b>7</b> İzâ ulkû fîhâ semiû lehâ şehîkan ve hiye tefûr.',
+      '<b>8</b> Tekâdü temeyyezü minel-ğayz. Küllemâ ulkıye fîhâ fevcün seelehüm hazenetühâ elem ye\'tiküm nezîr.',
+      '<b>9</b> Kâlû belâ kad câenâ nezîr. Fekezzebnâ ve kulnâ mâ nezzelallâhü min şey\'in in entüm illâ fî dalâlin kebîr.',
+      '<b>10</b> Ve kâlû lev künnâ nesmeu ev na\'kılü mâ künnâ fî ashâbis-saîr.',
+      '<b>11</b> Fa\'terafû bi-zenbihim. Fesuhkan li-ashâbis-saîr.',
+      '<b>12</b> İnnellezîne yahşevne rabbehüm bil-ğaybi lehüm mağfiratün ve ecrun kebîr.',
+      '<b>13</b> Ve esirrû kavleküm evicherû bih. İnnehû alîmün bi-zâtis-sudûr.',
+      '<b>14</b> Elâ ya\'lemü men halaka, ve hüvel-Latîfül-Habîr.',
+      '<b>15</b> Hüvellezî ceale lekümül-arda zelûlen femşû fî menâkibihâ ve külû min rızkıh. Ve ileyhin-nüşûr.',
+      '<b>16</b> Eemintüm men fis-semâi en yahsife bikümül-arda fe-izâ hiye temûr.',
+      '<b>17</b> Em emintüm men fis-semâi en yürsile aleyküm hâsıbâ. Feseta\'lemûne keyfe nezîr.',
+      '<b>18</b> Ve lekad kezzebellezîne min kablihim fekeyfe kâne nekîr.',
+      '<b>19</b> Evelem yerav ilet-tayri fevkahüm sâffâtin ve yakbidn. Mâ yümsikühünne illâr-Rahmân. İnnehû bi-külli şey\'in basîr.',
+      '<b>20</b> Em men hâzellezî hüve cündün leküm yensurüküm min dûnir-Rahmân. İnil-kâfirûne illâ fî ğurûr.',
+      '<b>21</b> Em men hâzellezî yerzükuküm in emseke rızkah. Bel leccû fî utüvvin ve nüfûr.',
+      '<b>22</b> Efemen yemşî mükibben alâ vechihî ehdâ emmen yemşî seviyyen alâ sırâtın müstakîm.',
+      '<b>23</b> Kul hüvellezî enşeeküm ve ceale lekümüs-sem\'a vel-ebsâre vel-ef\'ide. Kalîlen mâ teşkürûn.',
+      '<b>24</b> Kul hüvellezî zere\'eküm fil-ardı ve ileyhi tuhşerûn.',
+      '<b>25</b> Ve yekûlûne metâ hâzel-va\'dü in küntüm sâdikîn.',
+      '<b>26</b> Kul innemel-ılmü ındallâh ve innemâ ene nezîrun mübîn.',
+      '<b>27</b> Felemmâ raevhü zülfeten sîet vücûhüllezîne keferû ve kîle hâzellezî küntüm bihî teddeûn.',
+      '<b>28</b> Kul ereeytüm in ehlekeniyallâhü ve men maıye ev rahımenâ femen yücîrul-kâfirîne min azâbin elîm.',
+      '<b>29</b> Kul hüver-Rahmânü âmennâ bihî ve aleyhi tevekkelnâ. Feseta\'lemûne men hüve fî dalâlin mübîn.',
+      '<b>30</b> Kul eraeytüm in asbeha mâüküm ğavran femen ye\'tîküm bi-mâin maîn.'
+    ],
+    anlam: 'Mülk Sûresi (Tebâreke), Kur\'an\'ın 67. sûresidir. Allah\'ın hükümranlığını, yaratıcılığını ve kullarına lütfunu anlatır.',
+    fazilet: '✨ Her gece yatmadan önce okuyanı kabir azabından korur (Tirmizî, Nesâî). "Mülk Sûresi kabir azabını engelleyendir" buyurulmuştur.'
+  },
+  {
+    id: 'fatiha',
+    ad: 'Fâtiha Sûresi',
+    ikon: '📖',
+    alt: '1. Sûre — Kitabın açılışı',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Elhamdü lillâhi rabbil-âlemîn.',
+      '<b>2</b> Er-Rahmânir-Rahîm.',
+      '<b>3</b> Mâliki yevmid-dîn.',
+      '<b>4</b> İyyâke na\'büdü ve iyyâke nesteîn.',
+      '<b>5</b> İhdinas-sırâtal-müstakîm.',
+      '<b>6</b> Sırâtallezîne en\'amte aleyhim ğayril-mağdûbi aleyhim ve led-dâllîn. Âmîn.'
+    ],
+    anlam: 'Hamd, âlemlerin Rabbi olan Allah\'a mahsustur. O Rahmân ve Rahîm\'dir. Din gününün sahibidir. Yalnız sana ibadet eder, yalnız senden yardım dileriz. Bizi doğru yola ilet. Kendilerine nimet verdiklerinin yoluna, gazaba uğramışların ve sapmışların yoluna değil. Âmîn.',
+    fazilet: '✨ Her namazda okunan, "Kur\'an\'ın anası" olarak isimlendirilen sûre. Şifa için ve hacetin görülmesi için 7-41-100 kere okunur.'
+  },
+  {
+    id: 'ihlas',
+    ad: 'İhlâs Sûresi',
+    ikon: '✨',
+    alt: '112. Sûre — Tevhidin özü',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul hüvallâhü ehad.',
+      '<b>2</b> Allâhüs-samed.',
+      '<b>3</b> Lem yelid ve lem yûled.',
+      '<b>4</b> Ve lem yekün lehû küfüven ehad.'
+    ],
+    anlam: 'De ki: "O, Allah\'tır, tektir. Allah Samed\'dir (her şey ona muhtaçtır, O hiçbir şeye muhtaç değildir). Doğurmamış ve doğurulmamıştır. Hiçbir şey O\'na denk değildir."',
+    fazilet: '✨ Kur\'an\'ın üçte birine denktir (Buhârî, Müslim). 3 kez okumak 1 hatim sevabıdır. Her gün okuyanın günahları affedilir.'
+  },
+  {
+    id: 'kafirun',
+    ad: 'Kâfirûn Sûresi',
+    ikon: '🛡️',
+    alt: '109. Sûre — Berâat ilanı',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul yâ eyyühel-kâfirûn.',
+      '<b>2</b> Lâ a\'büdü mâ ta\'büdûn.',
+      '<b>3</b> Ve lâ entüm âbidûne mâ a\'büd.',
+      '<b>4</b> Ve lâ ene âbidün mâ abedtüm.',
+      '<b>5</b> Ve lâ entüm âbidûne mâ a\'büd.',
+      '<b>6</b> Leküm dînüküm veliye dîn.'
+    ],
+    anlam: 'De ki: "Ey kâfirler! Ben sizin kulluk ettiklerinize kulluk etmem. Sizin dininiz size, benim dinim de bana."',
+    fazilet: '✨ Yatmadan önce okuyan şirkten korunur (Tirmizî). Kur\'an\'ın dörtte birine denktir.'
+  },
+  {
+    id: 'felak',
+    ad: 'Felak Sûresi',
+    ikon: '🛡️',
+    alt: '113. Sûre — Muavvizeteynden',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul eûzü bi-rabbil-felak.',
+      '<b>2</b> Min şerri mâ halak.',
+      '<b>3</b> Ve min şerri ğâsikın izâ vekab.',
+      '<b>4</b> Ve min şerrin-neffâsâti fil-ukad.',
+      '<b>5</b> Ve min şerri hâsidin izâ hased.'
+    ],
+    anlam: 'De ki: "Sığınırım sabahın Rabbine, yarattığı şeylerin şerrinden, karanlık çöktüğü zaman gecenin şerrinden, düğümlere üfleyenlerin şerrinden ve haset eden hasetçinin şerrinden."',
+    fazilet: '✨ Nas Sûresi ile birlikte "Muavvizeteyn" — her türlü kötülükten korunma için sabah-akşam 3\'er kez okunur (Tirmizî).'
+  },
+  {
+    id: 'nas',
+    ad: 'Nâs Sûresi',
+    ikon: '🛡️',
+    alt: '114. Sûre — Son sûre',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul eûzü bi-rabbin-nâs.',
+      '<b>2</b> Melikin-nâs.',
+      '<b>3</b> İlâhin-nâs.',
+      '<b>4</b> Min şerril-vesvâsil-hannâs.',
+      '<b>5</b> Ellezî yüvesvisü fî sudûrin-nâs.',
+      '<b>6</b> Minel-cinneti ven-nâs.'
+    ],
+    anlam: 'De ki: "Sığınırım insanların Rabbine, insanların Melikine, insanların İlâhına; sinsi vesvesecinin şerrinden — insanların göğsüne vesvese verenin (şerrinden); cinlerden olsun, insanlardan olsun."',
+    fazilet: '✨ Felak ile birlikte Muavvizeteyn — vesveseden ve şer odaklarından koruyan iki sûre. Sabah-akşam 3 kere okunur.'
+  },
+  {
+    id: 'duha',
+    ad: 'Duhâ Sûresi',
+    ikon: '🌅',
+    alt: '93. Sûre — Kuşluk vakti',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Ved-duhâ.',
+      '<b>2</b> Vel-leyli izâ secâ.',
+      '<b>3</b> Mâ veddeake rabbüke ve mâ kalâ.',
+      '<b>4</b> Velel-âhiratü hayrun leke minel-ûlâ.',
+      '<b>5</b> Ve lesevfe yu\'tîke rabbüke feterdâ.',
+      '<b>6</b> Elem yecidke yetîmen feâvâ.',
+      '<b>7</b> Ve vecedeke dâllen fehedâ.',
+      '<b>8</b> Ve vecedeke âilen feağnâ.',
+      '<b>9</b> Femmel-yetîme felâ takhar.',
+      '<b>10</b> Ve emmes-sâile felâ tenher.',
+      '<b>11</b> Ve emmâ bi-niğmeti rabbike fehaddis.'
+    ],
+    anlam: 'Andolsun kuşluk vaktine ve sükûna erdiği zaman geceye ki: Rabbin seni terk etmedi ve sana darılmadı. Şüphesiz âhiret senin için dünyadan daha hayırlıdır. Rabbin sana verecek ve sen razı olacaksın. Seni yetim bulup barındırmadı mı? Seni şaşkın bulup yola iletmedi mi? Seni yoksul bulup zengin etmedi mi? Öyleyse yetimi sakın ezme; isteyeni de sakın azarlama. Rabbinin nimetini durmadan an.'
+    ,
+    fazilet: '✨ Kuşluk (Duha) namazından sonra okunması müstehab. Üzüntü ve hüzünden kurtulmak için, kayıp eşyanın bulunması için okunur.'
+  }
+];
+
+// =========================================================
+// DUALAR — Görsel oluşturma ve etkileşim
+// =========================================================
+function duaCizdir() {
+  const liste = document.getElementById('dua-liste');
+  if (!liste) return;
+  liste.innerHTML = '';
+  DUALAR.forEach(d => {
+    const kart = document.createElement('div');
+    kart.className = 'dua-karti';
+    kart.dataset.arama = (d.ad + ' ' + (d.alt || '')).toLowerCase();
+    const ayetlerHtml = (d.ayetler || []).map(a => `<div class="dua-ayet">${a}</div>`).join('');
+    kart.innerHTML = `
+      <div class="dua-baslik" onclick="duaToggle('dua-${d.id}')">
+        <span class="dua-ikon">${d.ikon || '📖'}</span>
+        <div class="dua-baslik-orta">
+          <div class="dua-ad">${d.ad}</div>
+          ${d.alt ? `<div class="dua-alt">${d.alt}</div>` : ''}
+        </div>
+        <span class="dua-ok">▾</span>
+      </div>
+      <div class="dua-icerik" id="dua-${d.id}">
+        ${d.bismillah ? '<div class="dua-bismillah">Bismillâhirrahmânirrahîm</div>' : ''}
+        <div class="dua-ayetler">${ayetlerHtml}</div>
+        ${d.anlam ? `<div class="dua-anlam"><strong>Anlamı:</strong><br>${d.anlam}</div>` : ''}
+        ${d.fazilet ? `<div class="dua-fazilet">${d.fazilet}</div>` : ''}
+      </div>`;
+    liste.appendChild(kart);
+  });
+  const sayim = document.getElementById('dua-sayim');
+  if (sayim) sayim.textContent = `${DUALAR.length} dua`;
+}
+
+function duaToggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('acik');
+}
+
+function duaTumuAc() {
+  DUALAR.forEach(d => {
+    const el = document.getElementById('dua-' + d.id);
+    if (el) el.classList.add('acik');
+  });
+}
+
+function duaTumuKapat() {
+  DUALAR.forEach(d => {
+    const el = document.getElementById('dua-' + d.id);
+    if (el) el.classList.remove('acik');
+  });
+}
+
+function duaAra(metin) {
+  const m = (metin || '').toLowerCase().trim();
+  document.querySelectorAll('.dua-karti').forEach(k => {
+    const arama = k.dataset.arama || '';
+    k.style.display = (!m || arama.includes(m)) ? '' : 'none';
+  });
+}
+
+// =========================================================
+// YEDEKLEME — JSON içe/dışa aktarım
+// =========================================================
 function yedekIndir() {
   const veri = {
     olusturma: new Date().toISOString(),
-    versiyon: 'masaustu_v2',
+    versiyon: 'masaustu_v4',
     borclar: Object.fromEntries(VAKITLER.map(v => [v.id, v.borc])),
     kayitlar: kayitlar,
     rozetler: [...kazanilanRozetler],
     zikir: zikirSayisi,
-    ihlas: ihlasSayisi
+    ihlas: ihlasSayisi,
+    esmaZikirleri: esmaZikirleri,
+    esmaAktif: aktifEsmaNo,
+    esmaTamamlananlar: [...esmaTamamlananlar],
+    ilkKullanim: ILK_KULLANIM,
+    streakRekoru: streakRekoru,
+    haftalikHedef: haftalikHedef,
+    aylikHedef: aylikHedef,
+    gorevTamamlama: gorevTamamlama
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -2362,6 +5488,14 @@ function iceAktar(event) {
       kazanilanRozetler = new Set(v.rozetler || []);
       if (typeof v.zikir === 'number') zikirSayisi = v.zikir;
       if (typeof v.ihlas === 'number') ihlasSayisi = v.ihlas;
+      if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
+      if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
+      if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
+      if (typeof v.streakRekoru === 'number') { streakRekoru = v.streakRekoru; localStorage.setItem(STREAK_REKOR_KEY, streakRekoru.toString()); }
+      if (typeof v.haftalikHedef === 'number') { haftalikHedef = v.haftalikHedef; localStorage.setItem(HAFTALIK_HEDEF_KEY, haftalikHedef.toString()); }
+      if (typeof v.aylikHedef === 'number') { aylikHedef = v.aylikHedef; localStorage.setItem(AYLIK_HEDEF_KEY, aylikHedef.toString()); }
+      if (typeof v.gorevTamamlama === 'number') { gorevTamamlama = v.gorevTamamlama; localStorage.setItem(GOREV_TAMAMLAMA_KEY, gorevTamamlama.toString()); }
+      if (typeof v.ilkKullanim === 'string') localStorage.setItem(ILK_KULLANIM_KEY, v.ilkKullanim);
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
@@ -2374,12 +5508,24 @@ function iceAktar(event) {
 }
 
 function tumunuSifirla() {
-  if (!confirm('TÜM kayıtlar, rozetler, zikir ve İhlas sayaçları silinecek. Devam edilsin mi?')) return;
+  if (!confirm('TÜM kayıtlar, rozetler, zikir, İhlas ve Esmâ sayaçları silinecek. Devam edilsin mi?')) return;
   if (!confirm('Emin misin? Bu işlem geri alınamaz.')) return;
   kayitlar = {};
   kazanilanRozetler = new Set();
   zikirSayisi = 0;
   ihlasSayisi = 0;
+  esmaZikirleri = {};
+  esmaTamamlananlar = new Set();
+  aktifEsmaNo = 17;
+  streakRekoru = 0;
+  gorevTamamlama = 0;
+  gunlukGorev = null;
+  localStorage.removeItem(STREAK_REKOR_KEY);
+  localStorage.removeItem(GUNLUK_GOREV_KEY);
+  localStorage.removeItem(GOREV_TAMAMLAMA_KEY);
+  localStorage.removeItem(SON_OZET_HAFTA_KEY);
+  localStorage.removeItem(SON_OZET_AY_KEY);
+  localStorage.removeItem(SON_YILDONUMU_KEY);
   kaydet();
   toast('🔄', 'Her şey sıfırlandı');
   herseyGuncelle();
@@ -2388,8 +5534,633 @@ function tumunuSifirla() {
 // =========================================================
 // BAŞLAT
 // =========================================================
+duaCizdir();
 herseyGuncelle();
-</script>
 
+
+
+// =========================================================
+// YAŞAYAN UYGULAMA — Veri yapıları ve sabitler
+// =========================================================
+const ILK_KULLANIM_KEY = 'kn_ilk_kullanim_v1';
+const STREAK_REKOR_KEY = 'kn_streak_rekor_v1';
+const HAFTALIK_HEDEF_KEY = 'kn_hedef_hafta_v1';
+const AYLIK_HEDEF_KEY = 'kn_hedef_ay_v1';
+const GUNLUK_GOREV_KEY = 'kn_gunluk_gorev_v1';
+const SON_OZET_HAFTA_KEY = 'kn_son_ozet_hafta_v1';
+const SON_OZET_AY_KEY = 'kn_son_ozet_ay_v1';
+const GOREV_TAMAMLAMA_KEY = 'kn_gorev_tamamlama_v1'; // sayım
+const SON_YILDONUMU_KEY = 'kn_son_yildonumu_v1';
+
+// İlk kullanım tarihi
+if (!localStorage.getItem(ILK_KULLANIM_KEY)) {
+  localStorage.setItem(ILK_KULLANIM_KEY, bugunTarih());
+}
+const ILK_KULLANIM = localStorage.getItem(ILK_KULLANIM_KEY);
+
+// streakRekoru ve gorevTamamlama yukarıda zaten tanımlı (TDZ önlemek için)
+let haftalikHedef = parseInt(localStorage.getItem(HAFTALIK_HEDEF_KEY) || '50');
+let aylikHedef = parseInt(localStorage.getItem(AYLIK_HEDEF_KEY) || '200');
+let gunlukGorev = JSON.parse(localStorage.getItem(GUNLUK_GOREV_KEY) || 'null');
+
+// =========================================================
+// MÜBAREK GÜNLER LİSTESİ (Türkiye Diyanet tahmini)
+// =========================================================
+const MUBAREK_GUNLER = [
+  // 2026
+  { tarih: '2026-05-26', ad: 'Arefe Günü', ikon: '🕌', tip: 'arefe' },
+  { tarih: '2026-05-27', ad: 'Kurban Bayramı (1. Gün)', ikon: '🕋', tip: 'bayram' },
+  { tarih: '2026-05-28', ad: 'Kurban Bayramı (2. Gün)', ikon: '🕋', tip: 'bayram' },
+  { tarih: '2026-05-29', ad: 'Kurban Bayramı (3. Gün)', ikon: '🕋', tip: 'bayram' },
+  { tarih: '2026-05-30', ad: 'Kurban Bayramı (4. Gün)', ikon: '🕋', tip: 'bayram' },
+  { tarih: '2026-06-16', ad: 'Hicri Yılbaşı (1447)', ikon: '🌙', tip: 'hicri' },
+  { tarih: '2026-06-25', ad: 'Aşure Günü', ikon: '💧', tip: 'asure' },
+  { tarih: '2026-09-25', ad: 'Mevlid Kandili', ikon: '🌟', tip: 'kandil' },
+  { tarih: '2026-12-19', ad: 'Üç Aylar Başlangıcı (Recep)', ikon: '🕌', tip: 'ucaylar' },
+  { tarih: '2026-12-25', ad: 'Regaib Kandili', ikon: '✨', tip: 'kandil' },
+  // 2027
+  { tarih: '2027-01-14', ad: 'Mirac Kandili', ikon: '🌠', tip: 'kandil' },
+  { tarih: '2027-02-05', ad: 'Berat Kandili', ikon: '🌕', tip: 'kandil' },
+  { tarih: '2027-02-17', ad: 'Ramazan Başlangıcı', ikon: '🌙', tip: 'ramazan' },
+  { tarih: '2027-03-14', ad: 'Kadir Gecesi', ikon: '🕊️', tip: 'kandil' },
+  { tarih: '2027-03-19', ad: 'Ramazan Bayramı (1. Gün)', ikon: '🎉', tip: 'bayram' },
+  { tarih: '2027-03-20', ad: 'Ramazan Bayramı (2. Gün)', ikon: '🎉', tip: 'bayram' },
+  { tarih: '2027-03-21', ad: 'Ramazan Bayramı (3. Gün)', ikon: '🎉', tip: 'bayram' },
+  { tarih: '2027-05-17', ad: 'Arefe Günü', ikon: '🕌', tip: 'arefe' },
+  { tarih: '2027-05-18', ad: 'Kurban Bayramı (1. Gün)', ikon: '🕋', tip: 'bayram' }
+];
+
+const HICRI_AY_TR = {
+  'Muḥarram': 'Muharrem', 'Muharram': 'Muharrem',
+  'Ṣafar': 'Safer', 'Safar': 'Safer',
+  'Rabī‘ al-Awwal': 'Rebîülevvel', 'Rabi al-Awwal': 'Rebîülevvel', 'Rabi\'-ul-Awwal': 'Rebîülevvel',
+  'Rabī‘ al-Thānī': 'Rebîülâhir', 'Rabi al-Thani': 'Rebîülâhir', 'Rabi\'-ul-Thani': 'Rebîülâhir',
+  'Jumādá al-Ūlá': 'Cemâziyelevvel', 'Jumada al-Awwal': 'Cemâziyelevvel',
+  'Jumādá al-Ākhirah': 'Cemâziyelâhir', 'Jumada al-Thani': 'Cemâziyelâhir', 'Jumada al-Thani' : 'Cemâziyelâhir',
+  'Rajab': 'Recep',
+  'Sha\'bān': 'Şâban', 'Sha`ban': 'Şâban', 'Shaban': 'Şâban',
+  'Ramaḍān': 'Ramazan', 'Ramadan': 'Ramazan',
+  'Shawwāl': 'Şevval', 'Shawwal': 'Şevval',
+  'Dhū al-Qa‘dah': 'Zilkâde', 'Dhu al-Qadah': 'Zilkâde', 'Dhul Qadah': 'Zilkâde',
+  'Dhū al-Ḥijjah': 'Zilhicce', 'Dhu al-Hijjah': 'Zilhicce', 'Dhul Hijjah': 'Zilhicce'
+};
+
+function hicriAyTR(en) {
+  if (!en) return '';
+  // Tam eşleşme
+  if (HICRI_AY_TR[en]) return HICRI_AY_TR[en];
+  // Numara eşleşmesi (1-12)
+  const aylar = ['Muharrem','Safer','Rebîülevvel','Rebîülâhir','Cemâziyelevvel','Cemâziyelâhir',
+                 'Recep','Şâban','Ramazan','Şevval','Zilkâde','Zilhicce'];
+  // Eğer ay numarası nvHicri.month.number'da varsa onu kullan
+  if (typeof nvHicri !== 'undefined' && nvHicri && nvHicri.month && nvHicri.month.number) {
+    const idx = parseInt(nvHicri.month.number) - 1;
+    if (idx >= 0 && idx < 12) return aylar[idx];
+  }
+  // Fallback - English kalsın
+  return en;
+}
+
+// MUBAREK_AYLAR_HICRI kaldırıldı — hicri ay bilgisi tarih kartında gösteriliyor
+
+// =========================================================
+// MÜBAREK GÜNLER — Hesaplama ve gösterim
+// =========================================================
+function yaklasanMubarek() {
+  const bugun = bugunTarih();
+  // 60 gün ileriye kadar bak
+  for (const mg of MUBAREK_GUNLER) {
+    if (mg.tarih >= bugun) {
+      const kalan = Math.floor((new Date(mg.tarih) - new Date(bugun)) / (1000*60*60*24));
+      if (kalan <= 60) return { ...mg, kalan };
+    }
+  }
+  return null;
+}
+
+function mubarekBandiGuncelle() {
+  const konteyner = document.getElementById('mb-bandi-konteyner');
+  if (!konteyner) return;
+  konteyner.innerHTML = '';
+
+  const bugun = new Date();
+  const bugunStr = bugunTarih();
+
+  // 1. Bugün özel mübarek gün mü?
+  const ozelGun = MUBAREK_GUNLER.find(m => m.tarih === bugunStr);
+  if (ozelGun) {
+    konteyner.innerHTML = `
+      <div class="mb-bandi kandil">
+        <div class="mb-bandi-ikon">${ozelGun.ikon}</div>
+        <div class="mb-bandi-icerik">
+          <div class="mb-bandi-baslik">BUGÜN MÜBAREK BİR GÜN</div>
+          <div class="mb-bandi-ad">${ozelGun.ad}</div>
+          <div class="mb-bandi-kalan">Allah kabul etsin — bol ibadet günü</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // 2. Cuma günü mü?
+  if (bugun.getDay() === 5) {
+    konteyner.innerHTML = `
+      <div class="mb-bandi cuma">
+        <div class="mb-bandi-ikon">🕌</div>
+        <div class="mb-bandi-icerik">
+          <div class="mb-bandi-baslik">CUMA MÜBAREK OLSUN</div>
+          <div class="mb-bandi-ad">Kehf Sûresi okuma günü</div>
+          <div class="mb-bandi-kalan">Salavat-ı şerife çoklukla — günahlara kefaret</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // 3. Hicri 13-14-15 (Eyyâm-ı Bîz) mı?
+  if (nvHicri && nvHicri.day) {
+    const hday = parseInt(nvHicri.day);
+    if (hday >= 13 && hday <= 15) {
+      konteyner.innerHTML = `
+        <div class="mb-bandi eyyam">
+          <div class="mb-bandi-ikon">🌕</div>
+          <div class="mb-bandi-icerik">
+            <div class="mb-bandi-baslik">EYYÂM-I BÎZ — SÜNNET ORUÇ</div>
+            <div class="mb-bandi-ad">Hicri ${hday} ${hicriAyTR(nvHicri.month?.en)}</div>
+            <div class="mb-bandi-kalan">Her ay 13-14-15 günleri tutulması müstehab</div>
+          </div>
+        </div>`;
+      return;
+    }
+  }
+
+  // (Mübarek ay bandı kaldırıldı — bilgi tarih kartının altında zaten var)
+
+  // 4. Yaklaşan mübarek gün
+  const yaklasan = yaklasanMubarek();
+  if (yaklasan) {
+    const kalanText = yaklasan.kalan === 0 ? 'Bugün!' :
+                      yaklasan.kalan === 1 ? 'Yarın' :
+                      `${yaklasan.kalan} gün kaldı`;
+    konteyner.innerHTML = `
+      <div class="mb-bandi">
+        <div class="mb-bandi-ikon">${yaklasan.ikon}</div>
+        <div class="mb-bandi-icerik">
+          <div class="mb-bandi-baslik">YAKLAŞAN MÜBAREK GÜN</div>
+          <div class="mb-bandi-ad">${yaklasan.ad}</div>
+          <div class="mb-bandi-kalan">${kalanText}</div>
+        </div>
+      </div>`;
+  }
+}
+
+// =========================================================
+// STREAK BANNER — Süreklilik göstergesi + rekor
+// =========================================================
+function streakGuncelle() {
+  const streak = streakHesapla();
+  // Rekoru güncelle
+  if (streak > streakRekoru) {
+    streakRekoru = streak;
+    localStorage.setItem(STREAK_REKOR_KEY, streakRekoru.toString());
+  }
+
+  const kart = document.getElementById('streak-kart');
+  const rakamEl = document.getElementById('streak-rakam');
+  const altEl = document.getElementById('streak-alt');
+  const rekorEl = document.getElementById('streak-rekor-rakam');
+  if (!kart) return;
+
+  // Bugün namaz kıldı mı?
+  const bugunSayi = gunToplam(bugunTarih());
+  const saat = new Date().getHours();
+
+  if (streak === 0 && bugunSayi === 0) {
+    // Streak yok ve bugün hiç kılmadı
+    kart.style.display = 'flex';
+    kart.classList.remove('tehlike','cano');
+    rakamEl.textContent = '0 gün';
+    altEl.textContent = '🌱 Bugün başlat — bir kaza kıl';
+  } else if (streak >= 1 && bugunSayi === 0 && saat >= 18) {
+    // Streak var ama bugün hiç kılmadı ve akşam yaklaşıyor
+    kart.style.display = 'flex';
+    kart.classList.add('tehlike');
+    kart.classList.remove('cano');
+    rakamEl.textContent = `${streak} gün`;
+    altEl.textContent = '⚠️ Serini kaybetme — bugün hâlâ kılabilirsin';
+  } else if (streak >= 1) {
+    kart.style.display = 'flex';
+    kart.classList.add('cano');
+    kart.classList.remove('tehlike');
+    rakamEl.textContent = `${streak} gün`;
+    if (streak >= 30) altEl.textContent = '🏆 Mucize bir disiplin';
+    else if (streak >= 14) altEl.textContent = '🔥 Harika gidiyorsun';
+    else if (streak >= 7) altEl.textContent = '✨ Bir hafta tamam';
+    else altEl.textContent = '💪 Devam et';
+  } else {
+    kart.style.display = 'none';
+  }
+
+  if (rekorEl) rekorEl.textContent = streakRekoru.toLocaleString('tr-TR');
+}
+
+// =========================================================
+// GÜNLÜK GÖREV — Random görev seçimi ve takibi
+// =========================================================
+const GOREV_HAVUZU = [
+  { id:'tum5', metin:'Bugün 5 vakitten her birinden en az 1 kaza kıl', hedef:5, tip:'tum5vakit' },
+  { id:'g10',  metin:'Bugün toplam 10 namaz kıl',                       hedef:10, tip:'bugunNamaz' },
+  { id:'g15',  metin:'Bugün toplam 15 namaz kıl',                       hedef:15, tip:'bugunNamaz' },
+  { id:'g20',  metin:'Bugün toplam 20 namaz kıl',                       hedef:20, tip:'bugunNamaz' },
+  { id:'z100', metin:'Bugün +100 Lâ İlâhe İllallâh zikri çek',          hedef:100, tip:'bugunZikir' },
+  { id:'z200', metin:'Bugün +200 Lâ İlâhe İllallâh zikri çek',          hedef:200, tip:'bugunZikir' },
+  { id:'i100', metin:'Bugün +100 İhlâs Sûresi oku',                     hedef:100, tip:'bugunIhlas' },
+  { id:'i50',  metin:'Bugün +50 İhlâs Sûresi oku',                      hedef:50, tip:'bugunIhlas' },
+  { id:'esma', metin:'Bugün bir Esmâü\'l-Hüsnâ tamamla',                hedef:1, tip:'bugunEsma' },
+  { id:'esmaz50',metin:'Bugün +50 Esmâ zikri çek (herhangi bir isim)',  hedef:50, tip:'bugunEsmaZ' },
+  { id:'sabah', metin:'Bugün 3 Sabah kazası kıl',                       hedef:3, tip:'bugunSabah' },
+  { id:'ogle',  metin:'Bugün 3 Öğle kazası kıl',                        hedef:3, tip:'bugunOgle' },
+  { id:'ikindi',metin:'Bugün 3 İkindi kazası kıl',                      hedef:3, tip:'bugunIkindi' },
+  { id:'aksam', metin:'Bugün 3 Akşam kazası kıl',                       hedef:3, tip:'bugunAksam' },
+  { id:'yatsi', metin:'Bugün 3 Yatsı kazası kıl',                       hedef:3, tip:'bugunYatsi' }
+];
+
+function gorevSnapshotAl() {
+  // Görev başlangıcında "snapshot" — daha sonra delta hesaplamak için
+  return {
+    zikir: zikirSayisi,
+    ihlas: ihlasSayisi,
+    esmaToplam: esmaToplamZikir(),
+    esmaTamamlanan: esmaTamamlananlar.size
+  };
+}
+
+function gorevSec() {
+  const bugun = bugunTarih();
+  if (gunlukGorev && gunlukGorev.tarih === bugun) return; // zaten var
+
+  // Random pick
+  const sayilarDizisi = bugun.split('-').reduce((acc, n) => acc + parseInt(n), 0);
+  const idx = sayilarDizisi % GOREV_HAVUZU.length;
+  const secilen = GOREV_HAVUZU[idx];
+  gunlukGorev = {
+    ...secilen,
+    tarih: bugun,
+    tamamlandi: false,
+    snapshot: gorevSnapshotAl()
+  };
+  localStorage.setItem(GUNLUK_GOREV_KEY, JSON.stringify(gunlukGorev));
+}
+
+function gorevIlerlemeHesapla() {
+  if (!gunlukGorev) return 0;
+  const t = gunlukGorev.tip;
+  const bugun = bugunTarih();
+  const k = gunKaydi(bugun);
+  if (t === 'tum5vakit') {
+    return VAKITLER.filter(v => (parseInt(k[v.id])||0) > 0).length;
+  }
+  if (t === 'bugunNamaz') return gunToplam(bugun);
+  if (t === 'bugunZikir') return Math.max(0, zikirSayisi - (gunlukGorev.snapshot?.zikir || 0));
+  if (t === 'bugunIhlas') return Math.max(0, ihlasSayisi - (gunlukGorev.snapshot?.ihlas || 0));
+  if (t === 'bugunEsma') return Math.max(0, esmaTamamlananlar.size - (gunlukGorev.snapshot?.esmaTamamlanan || 0));
+  if (t === 'bugunEsmaZ') return Math.max(0, esmaToplamZikir() - (gunlukGorev.snapshot?.esmaToplam || 0));
+  if (t === 'bugunSabah') return parseInt(k.imsak) || 0;
+  if (t === 'bugunOgle') return parseInt(k.ogle) || 0;
+  if (t === 'bugunIkindi') return parseInt(k.ikindi) || 0;
+  if (t === 'bugunAksam') return parseInt(k.aksam) || 0;
+  if (t === 'bugunYatsi') return parseInt(k.yatsi) || 0;
+  return 0;
+}
+
+function gorevGuncelle() {
+  gorevSec();
+  if (!gunlukGorev) return;
+  const kart = document.getElementById('gg-kart');
+  if (!kart) return;
+
+  const ilerleme = gorevIlerlemeHesapla();
+  const yuzde = Math.min(100, (ilerleme / gunlukGorev.hedef) * 100);
+
+  document.getElementById('gg-tarih').textContent = tarihFormat(gunlukGorev.tarih);
+  document.getElementById('gg-aciklama').textContent = gunlukGorev.metin;
+  document.getElementById('gg-bar-dolgu').style.width = yuzde + '%';
+  document.getElementById('gg-yuzde').textContent = `${ilerleme.toLocaleString('tr-TR')} / ${gunlukGorev.hedef}`;
+
+  if (ilerleme >= gunlukGorev.hedef) {
+    kart.classList.add('tamam');
+    document.getElementById('gg-tamam-bilgi').style.display = 'block';
+    if (!gunlukGorev.tamamlandi) {
+      gunlukGorev.tamamlandi = true;
+      gorevTamamlama++;
+      localStorage.setItem(GUNLUK_GOREV_KEY, JSON.stringify(gunlukGorev));
+      localStorage.setItem(GOREV_TAMAMLAMA_KEY, gorevTamamlama.toString());
+      toast('🎯', 'Günün Görevi tamamlandı! 🎉', 'basari');
+      rozetKontrol();
+    }
+  } else {
+    kart.classList.remove('tamam');
+    document.getElementById('gg-tamam-bilgi').style.display = 'none';
+  }
+  kart.style.display = 'block';
+}
+
+// =========================================================
+// HEDEF BELİRLEME
+// =========================================================
+function hedefDuzenle(donem) {
+  const mevcut = donem === 'hafta' ? haftalikHedef : aylikHedef;
+  const ad = donem === 'hafta' ? 'haftalık' : 'aylık';
+  const yeni = prompt(`Yeni ${ad} hedefin (namaz adedi):`, mevcut);
+  if (yeni === null) return;
+  const sayi = parseInt(yeni);
+  if (isNaN(sayi) || sayi < 1 || sayi > 100000) {
+    toast('⚠️', 'Geçersiz sayı (1-100000 arası olmalı)', 'hata');
+    return;
+  }
+  if (donem === 'hafta') {
+    haftalikHedef = sayi;
+    localStorage.setItem(HAFTALIK_HEDEF_KEY, sayi.toString());
+  } else {
+    aylikHedef = sayi;
+    localStorage.setItem(AYLIK_HEDEF_KEY, sayi.toString());
+  }
+  toast('🎯', `${ad.charAt(0).toUpperCase() + ad.slice(1)} hedef ${sayi} olarak ayarlandı`, 'basari');
+  hedefGuncelle();
+}
+
+function hedefGuncelle() {
+  const haftaT = buHaftaToplam();
+  const ayT = buAyToplam();
+
+  const haftaEl = document.getElementById('hedef-hafta-rakam');
+  const haftaDolgu = document.getElementById('hedef-hafta-dolgu');
+  const haftaAlt = document.getElementById('hedef-hafta-alt');
+  if (haftaEl) {
+    haftaEl.textContent = `${haftaT.toLocaleString('tr-TR')} / ${haftalikHedef.toLocaleString('tr-TR')}`;
+    const yuzde = Math.min(100, (haftaT / haftalikHedef) * 100);
+    if (haftaDolgu) {
+      haftaDolgu.style.width = yuzde + '%';
+      haftaDolgu.classList.toggle('tamam', haftaT >= haftalikHedef);
+    }
+    if (haftaAlt) {
+      if (haftaT >= haftalikHedef) haftaAlt.textContent = '✓ Hedef aşıldı, mâşaallah!';
+      else haftaAlt.textContent = `${(haftalikHedef - haftaT).toLocaleString('tr-TR')} kaldı`;
+    }
+  }
+
+  const ayEl = document.getElementById('hedef-ay-rakam');
+  const ayDolgu = document.getElementById('hedef-ay-dolgu');
+  const ayAlt = document.getElementById('hedef-ay-alt');
+  if (ayEl) {
+    ayEl.textContent = `${ayT.toLocaleString('tr-TR')} / ${aylikHedef.toLocaleString('tr-TR')}`;
+    const yuzde = Math.min(100, (ayT / aylikHedef) * 100);
+    if (ayDolgu) {
+      ayDolgu.style.width = yuzde + '%';
+      ayDolgu.classList.toggle('tamam', ayT >= aylikHedef);
+    }
+    if (ayAlt) {
+      if (ayT >= aylikHedef) ayAlt.textContent = '✓ Hedef aşıldı, mâşaallah!';
+      else ayAlt.textContent = `${(aylikHedef - ayT).toLocaleString('tr-TR')} kaldı`;
+    }
+  }
+}
+
+// =========================================================
+// HAFTA SONU / AY SONU ÖZET POPUP
+// =========================================================
+function haftaSonuKontrol() {
+  // Pazar günü ve 18:00 sonrası
+  const d = new Date();
+  if (d.getDay() !== 0 || d.getHours() < 18) return;
+  const bugun = bugunTarih();
+  if (localStorage.getItem(SON_OZET_HAFTA_KEY) === bugun) return;
+
+  // Bu haftanın özeti
+  const haftaT = buHaftaToplam();
+  if (haftaT === 0) return; // Hiç kayıt yoksa gösterme
+
+  // Detaylar
+  let rekor = 0;
+  let aktifGun = 0;
+  for (let i = 0; i < 7; i++) {
+    const t = nDays(bugun, -i);
+    const tot = gunToplam(t);
+    if (tot > 0) aktifGun++;
+    if (tot > rekor) rekor = tot;
+  }
+  const ortalama = aktifGun > 0 ? Math.round(haftaT / 7) : 0;
+
+  // Geçen hafta ile karşılaştırma
+  let oncekiHafta = 0;
+  for (let i = 7; i < 14; i++) oncekiHafta += gunToplam(nDays(bugun, -i));
+  const fark = haftaT - oncekiHafta;
+  const farkText = oncekiHafta === 0
+    ? '🌱 İlk haftan, bereketli olsun'
+    : (fark > 0
+        ? `📈 Geçen haftadan ${fark} namaz fazla — gelişim sürüyor!`
+        : (fark < 0
+            ? `📉 Geçen haftadan ${Math.abs(fark)} eksik — gelecek hafta toparlanırız`
+            : `📊 Geçen haftayla aynı`));
+
+  document.getElementById('ozet-baslik-ikon').textContent = '📅';
+  document.getElementById('ozet-baslik').textContent = 'Hafta Sonu Özeti';
+  document.getElementById('ozet-alt').textContent = 'Pazar akşamı — bu haftanı değerlendir';
+  document.getElementById('ozet-toplam').textContent = haftaT.toLocaleString('tr-TR');
+  document.getElementById('ozet-ortalama').textContent = ortalama.toLocaleString('tr-TR');
+  document.getElementById('ozet-rekor').textContent = rekor.toLocaleString('tr-TR');
+  document.getElementById('ozet-aktif').textContent = `${aktifGun}/7`;
+  document.getElementById('ozet-mesaj').innerHTML = farkText + '<br><br>Hadi yeni haftaya hedef koy ve devam et 💪';
+
+  localStorage.setItem(SON_OZET_HAFTA_KEY, bugun);
+  document.getElementById('ozet-popup').classList.add('acik');
+}
+
+function aySonuKontrol() {
+  const d = new Date();
+  // Ayın son günü
+  const sonGun = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+  if (d.getDate() !== sonGun || d.getHours() < 18) return;
+  const bugun = bugunTarih();
+  if (localStorage.getItem(SON_OZET_AY_KEY) === bugun) return;
+
+  const ayT = buAyToplam();
+  if (ayT === 0) return;
+
+  // Detaylar
+  let rekor = 0;
+  let aktifGun = 0;
+  const ayBas = bugun.substring(0,8) + '01';
+  Object.keys(kayitlar).forEach(t => {
+    if (t >= ayBas && t <= bugun) {
+      const tot = gunToplam(t);
+      if (tot > 0) aktifGun++;
+      if (tot > rekor) rekor = tot;
+    }
+  });
+  const ortalama = aktifGun > 0 ? Math.round(ayT / sonGun) : 0;
+
+  const aylar = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  const ayAd = aylar[d.getMonth()];
+
+  document.getElementById('ozet-baslik-ikon').textContent = '🏆';
+  document.getElementById('ozet-baslik').textContent = `${ayAd} Ayı Özeti`;
+  document.getElementById('ozet-alt').textContent = 'Ayı tamamladın — Allah kabul etsin';
+  document.getElementById('ozet-toplam').textContent = ayT.toLocaleString('tr-TR');
+  document.getElementById('ozet-ortalama').textContent = ortalama.toLocaleString('tr-TR');
+  document.getElementById('ozet-rekor').textContent = rekor.toLocaleString('tr-TR');
+  document.getElementById('ozet-aktif').textContent = `${aktifGun}/${sonGun}`;
+  document.getElementById('ozet-mesaj').innerHTML =
+    `Bu ay <strong>${ayT.toLocaleString('tr-TR')}</strong> namaz, <strong>${aktifGun}</strong> aktif gün. ` +
+    `Hedefin ${aylikHedef.toLocaleString('tr-TR')}'di ${ayT >= aylikHedef ? '— tuttu! 🎉' : ', biraz açık'}.<br><br>` +
+    `Yeni ay yeni başlangıç — hadi devam et 🌱`;
+
+  localStorage.setItem(SON_OZET_AY_KEY, bugun);
+  document.getElementById('ozet-popup').classList.add('acik');
+}
+
+function ozetPopupKapat() {
+  document.getElementById('ozet-popup').classList.remove('acik');
+}
+
+// =========================================================
+// KARŞILAŞTIRMALI PERFORMANS OKLARI
+// =========================================================
+function karsilastirmaHesapla(suanki, oncekiToplam) {
+  if (oncekiToplam === 0) {
+    return suanki > 0 ? '<span class="karsilastirma-ok artis">🌱 yeni</span>' : '';
+  }
+  const fark = suanki - oncekiToplam;
+  const yuzde = Math.round((fark / oncekiToplam) * 100);
+  if (Math.abs(yuzde) < 3) return '<span class="karsilastirma-ok ayni">~ aynı</span>';
+  if (yuzde > 0) return `<span class="karsilastirma-ok artis">↑ %${yuzde}</span>`;
+  return `<span class="karsilastirma-ok azalis">↓ %${Math.abs(yuzde)}</span>`;
+}
+
+function istatistikKarsilastirmaGuncelle() {
+  const bugun = bugunTarih();
+
+  // Bu hafta vs geçen hafta
+  const haftaT = buHaftaToplam();
+  let oncekiHafta = 0;
+  for (let i = 7; i < 14; i++) oncekiHafta += gunToplam(nDays(bugun, -i));
+  const haftaEl = document.getElementById('s-hafta');
+  if (haftaEl) {
+    haftaEl.innerHTML = `${haftaT.toLocaleString('tr-TR')}${karsilastirmaHesapla(haftaT, oncekiHafta)}`;
+  }
+
+  // Bu ay vs geçen ay
+  const ayT = buAyToplam();
+  const d = new Date();
+  let oncekiAy = 0;
+  const oncekiAyYil = d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear();
+  const oncekiAyAy = d.getMonth() === 0 ? 12 : d.getMonth();
+  const oncekiAyPref = `${oncekiAyYil}-${String(oncekiAyAy).padStart(2,'0')}`;
+  Object.keys(kayitlar).forEach(t => {
+    if (t.startsWith(oncekiAyPref)) oncekiAy += gunToplam(t);
+  });
+  const ayEl = document.getElementById('s-ay');
+  if (ayEl) {
+    ayEl.innerHTML = `${ayT.toLocaleString('tr-TR')}${karsilastirmaHesapla(ayT, oncekiAy)}`;
+  }
+}
+
+// =========================================================
+// VAKİT KAÇIRMA UYARISI
+// =========================================================
+function vakitKacirmaKontrol() {
+  const d = new Date();
+  const saat = d.getHours();
+  const bugun = bugunTarih();
+  const bugunSayi = gunToplam(bugun);
+  const kart = document.getElementById('uyari-kart');
+  if (!kart) return;
+
+  // Akşam 20:00+ ve bugün hiç namaz yoksa
+  if (saat >= 20 && bugunSayi === 0) {
+    kart.style.display = 'flex';
+    document.getElementById('uyari-kart-metin').textContent =
+      'Bugün henüz hiç kaza kılmadın — gece bitmeden bir tane kıl';
+    return;
+  }
+
+  // 5 vakit hiç yoksa
+  const k = gunKaydi(bugun);
+  const sifirVakitler = VAKITLER.filter(v => (parseInt(k[v.id]) || 0) === 0);
+  if (saat >= 21 && sifirVakitler.length === VAKITLER.length - 1 && bugunSayi > 0) {
+    kart.style.display = 'flex';
+    document.getElementById('uyari-kart-metin').textContent =
+      `${sifirVakitler.length} vakitten kaza yok — dengeli dağıt`;
+    return;
+  }
+
+  kart.style.display = 'none';
+}
+
+// =========================================================
+// YILDÖNÜMÜ KONTROL — Kullanım yıldönümleri
+// =========================================================
+function gunFarki(t1, t2) {
+  return Math.floor((new Date(t2) - new Date(t1)) / (1000*60*60*24));
+}
+
+function yildonumuKontrol() {
+  const bugun = bugunTarih();
+  const son = localStorage.getItem(SON_YILDONUMU_KEY);
+  if (son === bugun) return; // bugün zaten gösterildi
+
+  const gun = gunFarki(ILK_KULLANIM, bugun);
+  if (gun < 7) return;
+
+  const milestone = [7, 30, 60, 90, 100, 180, 250, 365, 500, 730, 1000, 1825];
+  if (!milestone.includes(gun)) return;
+
+  let mesaj = '';
+  let baslik = `${gun} GÜN`;
+  if (gun === 7) mesaj = 'İlk hafta — başlangıç en zor adımdı, mâşaallah';
+  else if (gun === 30) mesaj = '1 ay tamam — disiplin gelişiyor';
+  else if (gun === 60) mesaj = '2 ay — alışkanlık oturmaya başladı';
+  else if (gun === 90) mesaj = '3 ay — istikrar';
+  else if (gun === 100) mesaj = '100 gün! Üç hane';
+  else if (gun === 180) mesaj = 'Yarım yıl — adanmışlık';
+  else if (gun === 250) mesaj = '250 gün — kararlı yol';
+  else if (gun === 365) { baslik = '1 YIL'; mesaj = '1 tam yıl manevi yolculuk — Allah kabul etsin'; }
+  else if (gun === 500) mesaj = '500 gün — abide bir disiplin';
+  else if (gun === 730) { baslik = '2 YIL'; mesaj = '2 yıl mâşaallah'; }
+  else if (gun === 1000) { baslik = '1000 GÜN'; mesaj = '1000 gün — destansı'; }
+  else if (gun === 1825) { baslik = '5 YIL'; mesaj = '5 yıl — bir nesil'; }
+
+  document.getElementById('yildonumu-baslik').textContent = 'YILDÖNÜMÜ — KULLANIM';
+  document.getElementById('yildonumu-rakam').textContent = baslik;
+  document.getElementById('yildonumu-alt').textContent = mesaj;
+  document.getElementById('yildonumu-kart').style.display = 'block';
+
+  localStorage.setItem(SON_YILDONUMU_KEY, bugun);
+  toast('🎉', `${baslik} — ${mesaj}`, 'basari');
+}
+
+// =========================================================
+// ANA GÜNCELLEME — Tüm yaşayan özellikler
+// =========================================================
+function yasayanGuncelle() {
+  try {
+    mubarekBandiGuncelle();
+    streakGuncelle();
+    gorevGuncelle();
+    hedefGuncelle();
+    vakitKacirmaKontrol();
+    yildonumuKontrol();
+    istatistikKarsilastirmaGuncelle();
+    // Popuplar - dakikalık değil, sadece sayfa açılışta veya saat geçtikçe
+    haftaSonuKontrol();
+    aySonuKontrol();
+  } catch(e) {
+    console.error('Yaşayan güncelleme hatası:', e);
+  }
+}
+
+// İlk yükleme ve dakikalık güncelleme
+setTimeout(() => yasayanGuncelle(), 1000); // İlk seferde gecik (DOM hazır olsun)
+setInterval(yasayanGuncelle, 60000); // her dakika
+
+</script>
 </body>
 </html>
