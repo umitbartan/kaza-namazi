@@ -2192,6 +2192,46 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   line-height: 1.7;
 }
 .dua-anlam strong { color: var(--orta); font-style: normal; }
+
+/* Okunuş (Latin transliterasyon) — zarif tipografi */
+.dua-ayetler {
+  padding: 6px 0 2px;
+  margin-bottom: 4px;
+}
+.dua-ayet {
+  display: block;
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: #2D3838;
+  padding: 8px 4px 8px 4px;
+  border-bottom: 1px solid rgba(212,175,55,0.12);
+  letter-spacing: 0.1px;
+  font-weight: 400;
+}
+.dua-ayet:last-child { border-bottom: none; }
+.dua-ayet b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  background: var(--altin-bg);
+  color: #8B6F1E;
+  font-weight: 700;
+  font-size: 10.5px;
+  padding: 0 6px;
+  border-radius: 11px;
+  margin-right: 8px;
+  vertical-align: 1px;
+  letter-spacing: 0;
+  border: 1px solid rgba(212,175,55,0.35);
+}
+.dua-ayet em {
+  font-style: italic;
+  color: #8B6F1E;
+  font-weight: 500;
+}
+
 .dua-fazilet {
   margin-top: 8px;
   font-size: 12px;
@@ -5186,54 +5226,134 @@ esmaCizdir();
 // DUALAR VE SURELER
 // =========================================================
 const DUALAR = [
-  {
+{
+    id: 'fatiha',
+    ad: 'Fâtiha Sûresi',
+    ikon: '📖',
+    alt: '1. Sûre — Kitabın açılışı',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Elhamdü lillâhi rabbil-âlemîn.',
+      '<b>2</b> Er-Rahmânir-Rahîm.',
+      '<b>3</b> Mâliki yevmid-dîn.',
+      '<b>4</b> İyyâke na\'büdü ve iyyâke nesteîn.',
+      '<b>5</b> İhdinas-sırâtal-müstakîm.',
+      '<b>6</b> Sırâtallezîne en\'amte aleyhim ğayril-mağdûbi aleyhim ve led-dâllîn. Âmîn.'
+    ],
+    anlam: 'Hamd, âlemlerin Rabbi olan Allah\'a mahsustur. O Rahmân ve Rahîm\'dir. Din gününün sahibidir. Yalnız sana ibadet eder, yalnız senden yardım dileriz. Bizi doğru yola ilet. Kendilerine nimet verdiklerinin yoluna, gazaba uğramışların ve sapmışların yoluna değil. Âmîn.',
+    fazilet: '✨ Her namazda okunan, "Kur\'an\'ın anası" olarak isimlendirilen sûre. Şifa için ve hacetin görülmesi için 7-41-100 kere okunur.'
+  },
+{
     id: 'ayetel-kursi',
     ad: 'Âyetel Kürsî',
     ikon: '👑',
     alt: 'Bakara Sûresi, 255. ayet',
     bismillah: true,
     ayetler: [
-      'Allâhü lâ ilâhe illâ hüvel hayyül kayyûm.',
-      'Lâ te\'huzühû sinetün ve lâ nevm.',
-      'Lehû mâ fis-semâvâti vemâ fil-ard.',
-      'Men zellezî yeşfeu ındehû illâ bi-iznih.',
-      'Ya\'lemü mâ beyne eydîhim vemâ halfehüm.',
-      'Velâ yühîtûne bi-şey\'in min ılmihî illâ bi-mâ şâ\'.',
-      'Vesia kürsiyyühüs-semâvâti vel-ard, velâ yeûdühû hıfzuhümâ.',
-      've hüvel-aliyyül-azîm.'
+      '<b>255</b> Allâhü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te\'huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil-ard. Men zellezî yeşfeu ındehû illâ bi-iznih. Ya\'lemü mâ beyne eydîhim vemâ halfehüm. Velâ yühîtûne bi-şey\'in min ılmihî illâ bi-mâ şâ\'. Vesia kürsiyyühüs-semâvâti vel-ard, velâ yeûdühû hıfzuhümâ ve hüvel-aliyyül-azîm.'
     ],
     anlam: 'Allah, kendisinden başka hiçbir ilâh olmayandır. Diridir, kayyumdur. O\'nu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey O\'nundur. İzni olmaksızın O\'nun katında şefaatte bulunacak kimdir? O, kullarının önlerindekini ve arkalarındakini (yaptıklarını ve yapacaklarını) bilir. Onlar O\'nun ilminden, kendisinin dilediği kadarından başkasını kavrayamazlar. O\'nun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek O\'na güç gelmez. O, yücedir, büyüktür.',
     fazilet: '✨ Her farz namazın ardından okunduğunda kişinin cennete girmesine engel kalmaz (Nesâî, Müslim). Uyumadan önce okuyana Allah\'tan bir koruyucu görevlendirilir.'
   },
-  {
-    id: 'hasr-son',
-    ad: 'Haşr Sûresi (son 3 âyet)',
-    ikon: '🛡️',
-    alt: 'Haşr Sûresi, 22-24. ayetler',
-    bismillah: false,
-    ayetler: [
-      'Eûzü billâhi mineş-şeytânir-racîm.',
-      'Hüvallâhüllezî lâ ilâhe illâ hû. Âlimü\'l-gaybi veş-şehâdeti hüver-Rahmânür-Rahîm.',
-      'Hüvallâhüllezî lâ ilâhe illâ hû. El-Melikül-Kuddûsüs-Selâmül-Mü\'minül-Müheyminül-Azîzül-Cebbârül-Mütekebbir. Sübhânallâhi ammâ yüşrikûn.',
-      'Hüvallâhül-Hâlikul-Bâriül-Müsavviru lehül-esmâül-hüsnâ. Yüsebbihu lehû mâ fis-semâvâti vel-ard. Ve hüvel-Azîzül-Hakîm.'
-    ],
-    anlam: 'O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. Gaybı da, görünen âlemi de bilendir. O, Rahmân\'dır, Rahîm\'dir. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. O, mülkün gerçek sahibi, kutsal (her türlü eksiklikten uzak), barış ve esenliğin kaynağı, güvenlik veren, gözetip koruyan, mutlak güç sahibi, düzeltip ıslah eden ve dilediğini yaptıran ve büyüklükte eşsiz olan Allah\'tır. Allah, onların ortak koştuklarından uzaktır. O, yaratan, yoktan var eden, şekil veren Allah\'tır. Güzel isimler O\'nundur. Göklerdeki ve yerdeki her şey O\'nu tesbih eder. O, mutlak güç sahibidir, hüküm ve hikmet sahibidir.',
-    fazilet: '✨ Sabah ve akşam okuyana 70 bin melek dua eder. O gece veya ertesi gün ölürse şehit olarak ölür (Tirmizî, Dârimî).'
-  },
-  {
+{
     id: 'amenerrasulu',
     ad: 'Âmenerrasûlü',
     ikon: '🌟',
     alt: 'Bakara Sûresi, 285-286. ayetler',
     bismillah: false,
     ayetler: [
-      'Âmenerrasûlü bimâ ünzile ileyhi min rabbihî vel-mü\'minûn. Küllün âmene billâhi ve melâ\'iketihî ve kütübihî ve rusulih. Lâ nüferriku beyne ehadin min rusulih, ve kâlû semi\'nâ ve eta\'nâ ğufrâneke rabbenâ ve ileyke\'l-masîr.',
-      'Lâ yükellifullâhü nefsen illâ vüs\'ahâ. Lehâ mâ kesebet ve aleyhâ mektesebet. Rabbenâ lâ tü\'âhıznâ in nesînâ ev ahta\'nâ. Rabbenâ velâ tahmil aleynâ ısran kemâ hameltehû alellezîne min kablinâ. Rabbenâ velâ tühammilnâ mâ lâ tâkate lenâ bih. Va\'fü annâ vağfir lenâ verhamnâ ente Mevlânâ fensurnâ ale\'l-kavmi\'l-kâfirîn.'
+      '<b>285</b> Âmenerrasûlü bimâ ünzile ileyhi min rabbihî vel-mü\'minûn. Küllün âmene billâhi ve melâ\'iketihî ve kütübihî ve rusulih. Lâ nüferriku beyne ehadin min rusulih, ve kâlû semi\'nâ ve eta\'nâ ğufrâneke rabbenâ ve ileyke\'l-masîr.',
+      '<b>286</b> Lâ yükellifullâhü nefsen illâ vüs\'ahâ. Lehâ mâ kesebet ve aleyhâ mektesebet. Rabbenâ lâ tü\'âhıznâ in nesînâ ev ahta\'nâ. Rabbenâ velâ tahmil aleynâ ısran kemâ hameltehû alellezîne min kablinâ. Rabbenâ velâ tühammilnâ mâ lâ tâkate lenâ bih. Va\'fü annâ vağfir lenâ verhamnâ ente Mevlânâ fensurnâ ale\'l-kavmi\'l-kâfirîn.'
     ],
     anlam: 'Peygamber ve mü\'minler, Rabbi tarafından kendisine indirilene iman ettiler. Hepsi Allah\'a, meleklerine, kitaplarına ve peygamberlerine iman ettiler. "Onun peygamberlerinden hiçbirini diğerinden ayırt etmeyiz" dediler. Şöyle dediler: "İşittik, itaat ettik. Bağışlamanı dileriz Rabbimiz! Dönüş yalnız sanadır." Allah bir kimseyi ancak gücünün yettiği şeyle yükümlü kılar. Onun kazandığı iyilik kendi yararına, kötülük de kendi zararınadır. (Şöyle diyerek dua edin:) "Ey Rabbimiz! Unutur, ya da yanılırsak bizi sorumlu tutma! Ey Rabbimiz! Bize, bizden öncekilere yüklediğin gibi ağır yük yükleme. Ey Rabbimiz! Bize gücümüzün yetmediği şeyleri yükleme! Bizi affet, bizi bağışla, bize acı! Sen bizim Mevlâmızsın. Kâfirler topluluğuna karşı bize yardım et."',
     fazilet: '✨ Yatmadan önce okuyana o gece için yeter (Buhârî, Müslim). Şeytanı evden uzaklaştırır.'
   },
-  {
+{
+    id: 'fetih',
+    ad: 'Fetih Sûresi',
+    ikon: '🌟',
+    alt: '48. Sûre — Hudeybiye fethi',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> İnnâ fetahnâ leke fethan mübînâ.',
+      '<b>2</b> Liyağfira lekellâhü mâ tekaddeme min zenbike vemâ teahhare ve yütimme ni\'metehû aleyke ve yehdiyeke sırâtan müstekîmâ.',
+      '<b>3</b> Ve yensurakellâhü nasran azîzâ.',
+      '<b>4</b> Hüvellezî enzeles-sekînete fî kulûbil-mü\'minîne liyezdâdû îmânen mea îmânihim, ve lillâhi cünûdüs-semâvâti vel-ard, ve kânallâhü Alîmen Hakîmâ.',
+      '<b>5</b> Liyüdhilel-mü\'minîne vel-mü\'minâti cennâtin tecrî min tahtihel-enhâru hâlidîne fîhâ ve yükeffira anhüm seyyiâtihim, ve kâne zâlike indallâhi fevzen azîmâ.',
+      '<b>27</b> Lekad sadakallâhü rasûlehür-rü\'yâ bilhakk, le-tedhulünnel-mescidel-harâme inşâallâhü âminîne, muhallikîne ruûseküm ve mukassırîne lâ tehâfûn.',
+      '<b>28</b> Hüvellezî ersele rasûlehû bilhüdâ ve dînil-hakkı liyuzhirahû aled-dîni küllihî, ve kefâ billâhi şehîdâ.',
+      '<b>29</b> Muhammedün rasûlullâh, vellezîne meahû eşiddâü alel-küffâri ruhamâü beynehüm, terâhüm rukkean süccedâ, yebteğûne fadlan minallâhi ve rıdvânâ.'
+    ],
+    anlam: 'Doğrusu Biz sana apaçık bir fetih verdik. Bu, Allah\'ın senin geçmiş ve gelecek günahlarını bağışlaması, sana olan nimetini tamamlaması, seni dosdoğru bir yola iletmesi ve Allah\'ın sana çok güçlü bir zafer vermesi içindir. Mü\'minlerin kalplerine, imanlarını kat kat artıracak şekilde sekîne (huzur) indiren O\'dur. Muhammed Allah\'ın elçisidir. Onunla beraber olanlar, kâfirlere karşı şiddetli, kendi aralarında ise merhametlidirler.',
+    fazilet: '✨ Maddî-manevî fetihler için okunur. Sıkıntılarda kolaylık, hayırlı sonuç için. Zafer ve müjde sûresi.'
+  },
+{
+    id: 'rahman',
+    ad: 'Rahmân Sûresi',
+    ikon: '💚',
+    alt: '55. Sûre — "Hangi nimeti yalanlayabilirsiniz?"',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Er-Rahmân.',
+      '<b>2</b> Allemel-Kur\'ân.',
+      '<b>3</b> Halekal-insân.',
+      '<b>4</b> Allemehül-beyân.',
+      '<b>5</b> Eş-şemsü vel-kameru bi-husbân.',
+      '<b>6</b> Vennecmü veş-şeceru yescudân.',
+      '<b>7</b> Ves-semâe rafeahâ ve vedaal-mîzân.',
+      '<b>8</b> Ellâ tatğav fil-mîzân.',
+      '<b>9</b> Ve ekîmül-vezne bil-kıstı velâ tuhsirul-mîzân.',
+      '<b>10</b> Vel-arda vedaahâ lil-enâm.',
+      '<b>13</b> <em>Febi-eyyi âlâi rabbikümâ tükezzibân.</em>',
+      '<b>14</b> Halekal-insâne min salsâlin kel-fehhâr.',
+      '<b>15</b> Ve halekal-cânne min mâricin min nâr.',
+      '<b>16</b> <em>Febi-eyyi âlâi rabbikümâ tükezzibân.</em>',
+      '<b>17</b> Rabbül-meşrikayni ve rabbül-mağribeyn.',
+      '<b>18</b> <em>Febi-eyyi âlâi rabbikümâ tükezzibân.</em>',
+      '<b>19</b> Mereçel-bahrayni yeltekıyân.',
+      '<b>20</b> Beynehümâ berzehun lâ yebğıyân.',
+      '<b>26</b> Küllü men aleyhâ fân.',
+      '<b>27</b> Ve yebkâ vechü rabbike zül-celâli vel-ikrâm.',
+      '<b>78</b> Tebârekesmü rabbike zil-celâli vel-ikrâm.'
+    ],
+    anlam: 'O, Rahmân\'dır. Kur\'an\'ı O öğretti. İnsanı O yarattı. Ona beyanı (konuşmayı) O öğretti. Güneş ve ay bir hesaba göre hareket eder. Otlar ve ağaçlar da secde ederler. Göğü yükseltti ve mîzânı (ölçüyü) koydu. Şu hâlde tartıda taşkınlık etmeyin. Yeryüzünde ne varsa fânîdir. Yalnız celâl ve ikram sahibi Rabbinin yüzü (zâtı) bâkîdir. — "Şimdi Rabbinizin nimetlerinden hangisini yalanlayabilirsiniz?" (Bu âyet sûre boyunca 31 kez tekrarlanır.)',
+    fazilet: '✨ "Kur\'an\'ın gelini" denir. Allah\'ın nimetlerini hatırlatır, şükrü çoğaltır. Her hayırlı iş için okunur, evlere bereket getirir.'
+  },
+{
+    id: 'hasr-son',
+    ad: 'Haşr Sûresi (son 4 âyet)',
+    ikon: '🛡️',
+    alt: 'Haşr Sûresi, 21-24. ayetler',
+    bismillah: false,
+    ayetler: [
+      '<em>Eûzü billâhi mineş-şeytânir-racîm.</em>',
+      '<b>21</b> Lev enzelnâ hâzel-kur\'âne alâ cebelin leraeytehû hâşian mütesaddian min haşyetillâh. Ve tilkel-emsâlü nadribühâ lin-nâsi leallehüm yetefekkerûn.',
+      '<b>22</b> Hüvallâhüllezî lâ ilâhe illâ hû. Âlimü\'l-gaybi veş-şehâdeti hüver-Rahmânür-Rahîm.',
+      '<b>23</b> Hüvallâhüllezî lâ ilâhe illâ hû. El-Melikül-Kuddûsüs-Selâmül-Mü\'minül-Müheyminül-Azîzül-Cebbârül-Mütekebbir. Sübhânallâhi ammâ yüşrikûn.',
+      '<b>24</b> Hüvallâhül-Hâlikul-Bâriül-Müsavviru lehül-esmâül-hüsnâ. Yüsebbihu lehû mâ fis-semâvâti vel-ard. Ve hüvel-Azîzül-Hakîm.'
+    ],
+    anlam: 'Eğer biz bu Kur\'an\'ı bir dağa indirseydik, elbette sen onu, Allah korkusundan başını eğmiş, parça parça olmuş görürdün. Bu misalleri biz insanlara, düşünüp ibret alsınlar diye veriyoruz. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. Gaybı da, görünen âlemi de bilendir. O, Rahmân\'dır, Rahîm\'dir. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. O, mülkün gerçek sahibi, kutsal (her türlü eksiklikten uzak), barış ve esenliğin kaynağı, güvenlik veren, gözetip koruyan, mutlak güç sahibi, düzeltip ıslah eden ve dilediğini yaptıran ve büyüklükte eşsiz olan Allah\'tır. Allah, onların ortak koştuklarından uzaktır. O, yaratan, yoktan var eden, şekil veren Allah\'tır. Güzel isimler O\'nundur. Göklerdeki ve yerdeki her şey O\'nu tesbih eder. O, mutlak güç sahibidir, hüküm ve hikmet sahibidir.',
+    fazilet: '✨ Sabah ve akşam okuyana 70 bin melek dua eder. O gece veya ertesi gün ölürse şehit olarak ölür (Tirmizî, Dârimî).'
+  },
+{
+    id: 'cuma',
+    ad: 'Cuma Sûresi',
+    ikon: '🕌',
+    alt: '62. Sûre — 11 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Yüsebbihu lillâhi mâ fis-semâvâti vemâ fil-ard, el-Melikil-Kuddûsil-Azîzil-Hakîm.',
+      '<b>2</b> Hüvellezî bease fil-ümmiyyîne resûlen minhüm yetlû aleyhim âyâtihî ve yüzekkîhim ve yüallimühümül-kitâbe vel-hikmeh, ve in kânû min kablü lefî dalâlin mübîn.',
+      '<b>3</b> Ve âharîne minhüm lemmâ yelhakû bihim, ve hüvel-Azîzül-Hakîm.',
+      '<b>4</b> Zâlike fadlullâhi yü\'tîhi men yeşâ\', vallâhü zül-fadlil-azîm.',
+      '<b>9</b> Yâ eyyühellezîne âmenû izâ nûdiye lis-salâti min yevmil-cumuati fes\'av ilâ zikrillâhi vezerul-bey\'a, zâliküm hayrun leküm in küntüm ta\'lemûn.',
+      '<b>10</b> Feizâ kudıyetis-salâtü fenteşirû fil-ardı vebteğû min fadlillâhi vezkürullâhe kesîran leallekum tüflihûn.',
+      '<b>11</b> Ve izâ raev ticâraten ev lehven, infaddû ileyhâ ve terakûke kâimâ, kul mâ indallâhi hayrun minel-lehvi ve minet-ticârah, vallâhü hayrur-râzikîn.'
+    ],
+    anlam: 'Göklerdeki ve yerdeki her şey, mülkün gerçek sahibi, mukaddes, mutlak güç sahibi, hüküm ve hikmet sahibi olan Allah\'ı tesbih eder. O, ümmîlere içlerinden, kendilerine âyetlerini okuyan, onları temizleyen, onlara kitabı ve hikmeti öğreten bir peygamber gönderendir. Ey iman edenler! Cuma günü namaza çağrıldığınız zaman Allah\'ı zikre koşun ve alışverişi bırakın. Eğer bilirseniz bu sizin için daha hayırlıdır. Namaz kılındıktan sonra yeryüzüne dağılın, Allah\'ın lütfundan isteyin. Allah\'ı çok zikredin ki kurtuluşa eresiniz.',
+    fazilet: '✨ Cuma günü okunması özellikle tavsiye edilir. Bereket, rızık ve manevi kurtuluş için. Yâsîn\'den sonra cuma günü okunan en faziletli sûrelerdendir.'
+  },
+{
     id: 'mulk',
     ad: 'Mülk Sûresi (Tebâreke)',
     ikon: '📜',
@@ -5274,87 +5394,84 @@ const DUALAR = [
     anlam: 'Mülk Sûresi (Tebâreke), Kur\'an\'ın 67. sûresidir. Allah\'ın hükümranlığını, yaratıcılığını ve kullarına lütfunu anlatır.',
     fazilet: '✨ Her gece yatmadan önce okuyanı kabir azabından korur (Tirmizî, Nesâî). "Mülk Sûresi kabir azabını engelleyendir" buyurulmuştur.'
   },
-  {
-    id: 'fatiha',
-    ad: 'Fâtiha Sûresi',
-    ikon: '📖',
-    alt: '1. Sûre — Kitabın açılışı',
+{
+    id: 'muddessir',
+    ad: 'Müddessir Sûresi',
+    ikon: '📜',
+    alt: '74. Sûre — Peygambere ilk emirler',
     bismillah: true,
     ayetler: [
-      '<b>1</b> Elhamdü lillâhi rabbil-âlemîn.',
-      '<b>2</b> Er-Rahmânir-Rahîm.',
-      '<b>3</b> Mâliki yevmid-dîn.',
-      '<b>4</b> İyyâke na\'büdü ve iyyâke nesteîn.',
-      '<b>5</b> İhdinas-sırâtal-müstakîm.',
-      '<b>6</b> Sırâtallezîne en\'amte aleyhim ğayril-mağdûbi aleyhim ve led-dâllîn. Âmîn.'
+      '<b>1</b> Yâ eyyühel-müddessir.',
+      '<b>2</b> Kum feenzir.',
+      '<b>3</b> Ve rabbeke fekebbir.',
+      '<b>4</b> Ve siyâbeke fetahhir.',
+      '<b>5</b> Verrucze fehcür.',
+      '<b>6</b> Velâ temnün testeksir.',
+      '<b>7</b> Veli-rabbike fasbir.',
+      '<b>8</b> Feizâ nukıra fin-nâkûr.',
+      '<b>9</b> Fezâlike yevmeizin yevmün asîr.',
+      '<b>10</b> Alel-kâfirîne ğayru yesîr.'
     ],
-    anlam: 'Hamd, âlemlerin Rabbi olan Allah\'a mahsustur. O Rahmân ve Rahîm\'dir. Din gününün sahibidir. Yalnız sana ibadet eder, yalnız senden yardım dileriz. Bizi doğru yola ilet. Kendilerine nimet verdiklerinin yoluna, gazaba uğramışların ve sapmışların yoluna değil. Âmîn.',
-    fazilet: '✨ Her namazda okunan, "Kur\'an\'ın anası" olarak isimlendirilen sûre. Şifa için ve hacetin görülmesi için 7-41-100 kere okunur.'
+    anlam: 'Ey örtüsüne bürünen (Peygamber)! Kalk ve uyar. Rabbini yücelt. Elbiseni temiz tut. Şirkten uzaklaş. İyilik yapma ki çok bulasın diye yapma. Rabbin için sabret. Sûra üflendiği zaman, işte o gün çetin bir gündür. Kâfirler için hiç de kolay değildir. (Sûrenin tamamı için Diyanet meali tavsiye edilir.)',
+    fazilet: '✨ Peygamberimize gelen ilk vahiylerden. Mânevi tembellikten kurtulmak, gayrete gelmek için okunur.'
   },
-  {
-    id: 'ihlas',
-    ad: 'İhlâs Sûresi',
-    ikon: '✨',
-    alt: '112. Sûre — Tevhidin özü',
+{
+    id: 'kiyame',
+    ad: 'Kıyâme Sûresi',
+    ikon: '⚖️',
+    alt: '75. Sûre — kıyâmet ve hesap',
     bismillah: true,
     ayetler: [
-      '<b>1</b> Kul hüvallâhü ehad.',
-      '<b>2</b> Allâhüs-samed.',
-      '<b>3</b> Lem yelid ve lem yûled.',
-      '<b>4</b> Ve lem yekün lehû küfüven ehad.'
+      '<b>1</b> Lâ uksimü bi-yevmil-kıyâmeh.',
+      '<b>2</b> Velâ uksimü bin-nefsil-levvâmeh.',
+      '<b>3</b> Eyahsebül-insânü ellen necmea ızâmeh.',
+      '<b>4</b> Belâ kâdirîne alâ en nüsevviye benâneh.',
+      '<b>5</b> Bel yürîdül-insânü liyefcüra emâmeh.',
+      '<b>6</b> Yes\'elü eyyâne yevmül-kıyâmeh.',
+      '<b>7</b> Feizâ berikal-besar.',
+      '<b>8</b> Ve hasefel-kamer.',
+      '<b>9</b> Ve cümias-şemsü vel-kamer.',
+      '<b>10</b> Yekûlül-insânü yevmeizin eynel-meferr.',
+      '<b>11</b> Kellâ lâ vezer.',
+      '<b>12</b> İlâ rabbike yevmeizinil-müstekarr.',
+      '<b>13</b> Yünebbeül-insânü yevmeizin bimâ kaddeme ve ahhar.',
+      '<b>14</b> Belil-insânü alâ nefsihî basîrah.',
+      '<b>15</b> Velev elkâ meâzîrah.'
     ],
-    anlam: 'De ki: "O, Allah\'tır, tektir. Allah Samed\'dir (her şey ona muhtaçtır, O hiçbir şeye muhtaç değildir). Doğurmamış ve doğurulmamıştır. Hiçbir şey O\'na denk değildir."',
-    fazilet: '✨ Kur\'an\'ın üçte birine denktir (Buhârî, Müslim). 3 kez okumak 1 hatim sevabıdır. Her gün okuyanın günahları affedilir.'
+    anlam: 'Kıyâmet gününe yemin ederim ve kendini kınayan nefse de yemin ederim. İnsan, kendisinin kemiklerini bir araya getiremeyeceğimizi mi sanıyor? Evet, biz onun parmak uçlarını bile düzenlemeye gücü yetenleriz. Fakat insan, önündekini (yapacaklarını) inkâra yeltenmek ister. "Kıyâmet günü ne zaman?" diye sorar. İşte göz şimşek gibi çakıp gözleri kamaştığında, ay tutulduğunda, güneş ile ay bir araya getirildiğinde, işte o gün insan "Kaçacak yer nerede?" der. Hayır, sığınılacak yer yok. O gün varılacak yer ancak Rabbinin huzurudur. (Sûrenin tamamı için Diyanet meali tavsiye edilir.)',
+    fazilet: '✨ Âhiret bilincini diri tutmak ve nefis muhasebesi için okunur. Hesap günü hatırlatması.'
   },
-  {
-    id: 'kafirun',
-    ad: 'Kâfirûn Sûresi',
-    ikon: '🛡️',
-    alt: '109. Sûre — Berâat ilanı',
+{
+    id: 'leyl',
+    ad: 'Leyl Sûresi',
+    ikon: '🌙',
+    alt: '92. Sûre — 21 âyet (cömertlik ve cimrilik)',
     bismillah: true,
     ayetler: [
-      '<b>1</b> Kul yâ eyyühel-kâfirûn.',
-      '<b>2</b> Lâ a\'büdü mâ ta\'büdûn.',
-      '<b>3</b> Ve lâ entüm âbidûne mâ a\'büd.',
-      '<b>4</b> Ve lâ ene âbidün mâ abedtüm.',
-      '<b>5</b> Ve lâ entüm âbidûne mâ a\'büd.',
-      '<b>6</b> Leküm dînüküm veliye dîn.'
+      '<b>1</b> Vel-leyli izâ yağşâ.',
+      '<b>2</b> Ven-nehâri izâ tecellâ.',
+      '<b>3</b> Vemâ halekaz-zekera vel-ünsâ.',
+      '<b>4</b> İnne sa\'yeküm leşettâ.',
+      '<b>5</b> Femmen a\'tâ vettekâ.',
+      '<b>6</b> Ve saddeka bilhusnâ.',
+      '<b>7</b> Fesenüyessiruhû lilyüsrâ.',
+      '<b>8</b> Ve emmâ men bahıle vestağnâ.',
+      '<b>9</b> Ve kezzebe bilhusnâ.',
+      '<b>10</b> Fesenüyessiruhû lilusrâ.',
+      '<b>11</b> Vemâ yuğnî anhü mâlühû izâ teraddâ.',
+      '<b>12</b> İnne aleynâ lel-hüdâ.',
+      '<b>13</b> Ve inne lenâ lel-âhirate vel-ûlâ.',
+      '<b>14</b> Feenzertüküm nâran telezzâ.',
+      '<b>15</b> Lâ yaslâhâ illel-eşkâ.',
+      '<b>16</b> Ellezî kezzebe ve tevellâ.',
+      '<b>17</b> Ve seyücennebühel-etkâ.',
+      '<b>18</b> Ellezî yü\'tî mâlehû yetezekkâ.',
+      '<b>19</b> Vemâ liehadin indehû min ni\'metin tüczâ.',
+      '<b>20</b> İllebtiğâe vechi rabbihil-a\'lâ.',
+      '<b>21</b> Ve lesevfe yerdâ.'
     ],
-    anlam: 'De ki: "Ey kâfirler! Ben sizin kulluk ettiklerinize kulluk etmem. Sizin dininiz size, benim dinim de bana."',
-    fazilet: '✨ Yatmadan önce okuyan şirkten korunur (Tirmizî). Kur\'an\'ın dörtte birine denktir.'
-  },
-  {
-    id: 'felak',
-    ad: 'Felak Sûresi',
-    ikon: '🛡️',
-    alt: '113. Sûre — Muavvizeteynden',
-    bismillah: true,
-    ayetler: [
-      '<b>1</b> Kul eûzü bi-rabbil-felak.',
-      '<b>2</b> Min şerri mâ halak.',
-      '<b>3</b> Ve min şerri ğâsikın izâ vekab.',
-      '<b>4</b> Ve min şerrin-neffâsâti fil-ukad.',
-      '<b>5</b> Ve min şerri hâsidin izâ hased.'
-    ],
-    anlam: 'De ki: "Sığınırım sabahın Rabbine, yarattığı şeylerin şerrinden, karanlık çöktüğü zaman gecenin şerrinden, düğümlere üfleyenlerin şerrinden ve haset eden hasetçinin şerrinden."',
-    fazilet: '✨ Nas Sûresi ile birlikte "Muavvizeteyn" — her türlü kötülükten korunma için sabah-akşam 3\'er kez okunur (Tirmizî).'
-  },
-  {
-    id: 'nas',
-    ad: 'Nâs Sûresi',
-    ikon: '🛡️',
-    alt: '114. Sûre — Son sûre',
-    bismillah: true,
-    ayetler: [
-      '<b>1</b> Kul eûzü bi-rabbin-nâs.',
-      '<b>2</b> Melikin-nâs.',
-      '<b>3</b> İlâhin-nâs.',
-      '<b>4</b> Min şerril-vesvâsil-hannâs.',
-      '<b>5</b> Ellezî yüvesvisü fî sudûrin-nâs.',
-      '<b>6</b> Minel-cinneti ven-nâs.'
-    ],
-    anlam: 'De ki: "Sığınırım insanların Rabbine, insanların Melikine, insanların İlâhına; sinsi vesvesecinin şerrinden — insanların göğsüne vesvese verenin (şerrinden); cinlerden olsun, insanlardan olsun."',
-    fazilet: '✨ Felak ile birlikte Muavvizeteyn — vesveseden ve şer odaklarından koruyan iki sûre. Sabah-akşam 3 kere okunur.'
+    anlam: 'Bürüdüğü zaman geceye, açılıp aydınlandığı zaman gündüze, erkeği ve dişiyi yaratana yemin olsun ki, sizin çalışmanız çeşit çeşittir. Kim verir ve sakınırsa, en güzeli (cenneti) de tasdik ederse, biz de onu en kolaya muvaffak kılarız. Kim cimrilik eder, kendini müstağni sayar, en güzeli yalanlarsa, biz de onu en zora muvaffak kılarız.',
+    fazilet: '✨ Cömertlik, takvâ ve âhiret bilinci için okunur. Cimrilikten kurtulmak isteyenlere.'
   },
   {
     id: 'duha',
@@ -5378,6 +5495,438 @@ const DUALAR = [
     anlam: 'Andolsun kuşluk vaktine ve sükûna erdiği zaman geceye ki: Rabbin seni terk etmedi ve sana darılmadı. Şüphesiz âhiret senin için dünyadan daha hayırlıdır. Rabbin sana verecek ve sen razı olacaksın. Seni yetim bulup barındırmadı mı? Seni şaşkın bulup yola iletmedi mi? Seni yoksul bulup zengin etmedi mi? Öyleyse yetimi sakın ezme; isteyeni de sakın azarlama. Rabbinin nimetini durmadan an.'
     ,
     fazilet: '✨ Kuşluk (Duha) namazından sonra okunması müstehab. Üzüntü ve hüzünden kurtulmak için, kayıp eşyanın bulunması için okunur.'
+  },
+{
+    id: 'insirah',
+    ad: 'İnşirâh Sûresi',
+    ikon: '☀️',
+    alt: '94. Sûre — 8 âyet (sıkıntıdan kurtuluş)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Elem neşrah leke sadrak.',
+      '<b>2</b> Ve veda\'nâ anke vizrak.',
+      '<b>3</b> Ellezî enkada zahrak.',
+      '<b>4</b> Ve rafe\'nâ leke zikrak.',
+      '<b>5</b> Feinne mealusri yüsrâ.',
+      '<b>6</b> İnne mealusri yüsrâ.',
+      '<b>7</b> Feizâ ferağte fensab.',
+      '<b>8</b> Ve ilâ rabbike fergab.'
+    ],
+    anlam: 'Biz senin göğsünü açıp genişletmedik mi? Belini büken yükü senden indirmedik mi? Senin şânını yüceltmedik mi? Şüphesiz güçlükle beraber bir kolaylık vardır. Gerçekten, güçlükle beraber bir kolaylık vardır. Öyleyse bir işi bitirince hemen başka bir işe giriş. Ve yalnız Rabbine yönel.',
+    fazilet: '✨ Sıkıntı ve daralma zamanlarında okunur. "Güçlükle beraber bir kolaylık vardır" âyeti ferahlık verir.'
+  },
+{
+    id: 'tin',
+    ad: 'Tîn Sûresi',
+    ikon: '🫒',
+    alt: '95. Sûre — 8 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Vet-tîni vez-zeytûn.',
+      '<b>2</b> Ve tûri sînîn.',
+      '<b>3</b> Ve hâzel-beledil-emîn.',
+      '<b>4</b> Lekad halaknel-insâne fî ahseni takvîm.',
+      '<b>5</b> Sümme redednâhü esfele sâfilîn.',
+      '<b>6</b> İllellezîne âmenû ve amilus-sâlihâti felehüm ecrun ğayru memnûn.',
+      '<b>7</b> Femâ yükezzibüke ba\'dü bid-dîn.',
+      '<b>8</b> Eleysallâhü bi-ahkemil-hâkimîn.'
+    ],
+    anlam: 'İncire ve zeytine, Sinâ dağına ve şu güvenli şehre (Mekke\'ye) yemin olsun ki, biz insanı en güzel bir biçimde yarattık. Sonra onu aşağıların aşağısına indirdik. Ancak iman edip salih ameller işleyenler başka — onlar için kesintisiz bir mükâfat vardır. (Ey insan!) Hâl böyleyken hangi şey sana, dini yalanlatabiliyor? Allah, hâkimlerin en üstünü değil mi?',
+    fazilet: '✨ İnsanın yaratılışının güzelliğini ve sorumluluğunu hatırlatır. Yatsı vakti okunması müstehab.'
+  },
+{
+    id: 'alak',
+    ad: 'Alak Sûresi',
+    ikon: '📜',
+    alt: '96. Sûre — 19 âyet (ilk inen vahiy)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Ikra\' bismi rabbikellezî halak.',
+      '<b>2</b> Halakal-insâne min alak.',
+      '<b>3</b> Ikra\' ve rabbükel-ekrem.',
+      '<b>4</b> Ellezî alleme bil-kalem.',
+      '<b>5</b> Allemel-insâne mâ lem ya\'lem.',
+      '<b>6</b> Kellâ innel-insâne leyetğâ.',
+      '<b>7</b> En raâhüstağnâ.',
+      '<b>8</b> İnne ilâ rabbiker-ruc\'â.',
+      '<b>9</b> Eraeytellezî yenhâ.',
+      '<b>10</b> Abden izâ sallâ.',
+      '<b>11</b> Eraeyte in kâne alel-hüdâ.',
+      '<b>12</b> Ev emera bit-takvâ.',
+      '<b>13</b> Eraeyte in kezzebe ve tevellâ.',
+      '<b>14</b> Elem ya\'lem biennallâhe yerâ.',
+      '<b>15</b> Kellâ lein lem yentehi lenesfean bin-nâsiyeh.',
+      '<b>16</b> Nâsiyetin kâzibetin hâtieh.',
+      '<b>17</b> Felyed\'u nâdiyeh.',
+      '<b>18</b> Senedu\'uz-zebâniyeh.',
+      '<b>19</b> Kellâ lâ tütı\'hü vescüd vakterib.'
+    ],
+    anlam: 'Yaratan Rabbinin adıyla oku! O, insanı bir aleka\'dan (asılmış zigot) yarattı. Oku, Rabbin en büyük kerem sahibidir. O, kalem ile (yazmayı) öğretendir. İnsana bilmediğini öğretti. Sakın! İnsan azar — kendini müstağni gördüğü için. Şüphesiz dönüş Rabbinedir. Kulu, namaz kılarken engelleyeni gördün mü? Sen O\'nu görmesen de O seni görüyor. Sakın ona uyma; secde et ve (Rabbine) yaklaş.',
+    fazilet: '✨ Peygamberimize ilk inen âyetlerdir. Okuma, ilim, öğrenmenin Allah\'ın adıyla başladığını öğretir. Hira mağarasında nazil olmuştur.'
+  },
+{
+    id: 'kadir',
+    ad: 'Kadir Sûresi',
+    ikon: '🌌',
+    alt: '97. Sûre — 5 âyet (Kadir Gecesi)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> İnnâ enzelnâhü fî leyletil-kadr.',
+      '<b>2</b> Vemâ edrâke mâ leyletul-kadr.',
+      '<b>3</b> Leyletul-kadri hayrun min elfi şehr.',
+      '<b>4</b> Tenezzelül-melâiketü ver-rûhu fîhâ bi-izni rabbihim min külli emr.',
+      '<b>5</b> Selâmün hiye hattâ matlaıl-fecr.'
+    ],
+    anlam: 'Biz onu (Kur\'an\'ı) Kadir Gecesi\'nde indirdik. Kadir Gecesi\'nin ne olduğunu sen nereden bileceksin? Kadir Gecesi, bin aydan daha hayırlıdır. O gecede melekler ve Rûh (Cebrâil), Rablerinin izniyle her iş için inerler. O gece, tan yeri ağarıncaya kadar bir esenliktir.',
+    fazilet: '✨ Kadir Gecesi\'nde okunması özellikle tavsiye edilir. Bin aydan hayırlı bir gecenin bilinmesi için.'
+  },
+{
+    id: 'beyyine',
+    ad: 'Beyyine Sûresi',
+    ikon: '📖',
+    alt: '98. Sûre — 8 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Lem yekünillezîne keferû min ehlil-kitâbi vel-müşrikîne münfekkîne hattâ te\'tiyehümül-beyyineh.',
+      '<b>2</b> Resûlün minallâhi yetlû suhufen mütahhereh.',
+      '<b>3</b> Fîhâ kütübün kayyimeh.',
+      '<b>4</b> Vemâ teferrekallezîne ûtul-kitâbe illâ min ba\'di mâ câethümül-beyyineh.',
+      '<b>5</b> Vemâ ümirû illâ liya\'büdullâhe muhlisîne lehüd-dîne hunefâe ve yukîmus-salâte ve yü\'tüz-zekâte ve zâlike dînül-kayyimeh.',
+      '<b>6</b> İnnellezîne keferû min ehlil-kitâbi vel-müşrikîne fî nâri cehenneme hâlidîne fîhâ, ülâike hüm şerrul-beriyyeh.',
+      '<b>7</b> İnnellezîne âmenû ve amilus-sâlihâti ülâike hüm hayrul-beriyyeh.',
+      '<b>8</b> Cezâuhüm inde rabbihim cennâtü adnin tecrî min tahtihel-enhâru hâlidîne fîhâ ebedâ, radıyallâhü anhüm ve radû anh, zâlike li-men haşiye rabbeh.'
+    ],
+    anlam: 'Kitap ehlinden ve müşriklerden inkâr edenler, kendilerine apaçık delil gelinceye kadar (inkârlarından) ayrılacak değillerdi. Apaçık delil ise Allah\'tan gönderilen ve tertemiz sayfalar okuyan bir Resul\'dür. Onlara sadece, dini Allah\'a has kılarak, hanîfler olarak O\'na kulluk etmeleri, namaz kılmaları ve zekât vermeleri emredildi. İşte dosdoğru din budur. İman edip salih amel işleyenler — onlar yaratılmışların en hayırlısıdır.',
+    fazilet: '✨ "İman edip salih amel işleyenler yaratılmışların en hayırlısıdır" âyetiyle müjde verir. İhlâs ile kulluk üzerine.'
+  },
+{
+    id: 'zilzal',
+    ad: 'Zilzâl Sûresi',
+    ikon: '🌍',
+    alt: '99. Sûre — 8 âyet (zerre miskal iyilik)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> İzâ zülziletil-ardu zilzâlehâ.',
+      '<b>2</b> Ve ahrecetil-ardu eskâlehâ.',
+      '<b>3</b> Ve kâlel-insânü mâ lehâ.',
+      '<b>4</b> Yevmeizin tühaddisü ahbârahâ.',
+      '<b>5</b> Bi-enne rabbeke evhâ lehâ.',
+      '<b>6</b> Yevmeizin yasdurun-nâsü eştâten li-yürav a\'mâlehüm.',
+      '<b>7</b> Femen ya\'mel miskâle zerratin hayran yerah.',
+      '<b>8</b> Vemen ya\'mel miskâle zerratin şerran yerah.'
+    ],
+    anlam: 'Yer şiddetle sarsıldığında, yer ağırlıklarını çıkardığında, insan "Buna ne oluyor?" dediğinde — o gün yer, Rabbinin ona vahyetmesiyle haberlerini anlatır. O gün insanlar amellerini görmeleri için bölük bölük çıkarlar. Kim zerre miskâl bir hayır işlerse onu görür. Kim de zerre miskâl bir kötülük işlerse onu görür.',
+    fazilet: '✨ Küçük amellerin değerini hatırlatır. Sahihte "Kur\'an\'ın dörtte birine denk" rivayeti vardır (Tirmizî).'
+  },
+{
+    id: 'adiyat',
+    ad: 'Âdiyât Sûresi',
+    ikon: '🐎',
+    alt: '100. Sûre — 11 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Vel-âdiyâti dabhâ.',
+      '<b>2</b> Felmûriyâti kadhâ.',
+      '<b>3</b> Felmuğîrâti subhâ.',
+      '<b>4</b> Feeserne bihî nak\'â.',
+      '<b>5</b> Fevesatne bihî cem\'â.',
+      '<b>6</b> İnnel-insâne li-rabbihî lekenûd.',
+      '<b>7</b> Ve innehû alâ zâlike leşehîd.',
+      '<b>8</b> Ve innehû lihubbil-hayri leşedîd.',
+      '<b>9</b> Efelâ ya\'lemü izâ bu\'sira mâ fil-kubûr.',
+      '<b>10</b> Ve hussıle mâ fis-sudûr.',
+      '<b>11</b> İnne rabbehüm bihim yevmeizin lehabîr.'
+    ],
+    anlam: 'Soluk soluğa süratle koşan, çakarak ateş çıkaran, sabahleyin baskın yapan, oradan tozu dumana katan, ve düşman topluluğunun ortasına dalan atlara yemin olsun ki, insan Rabbine karşı çok nankördür. Hiç şüphesiz buna kendisi de şâhittir. Gerçekten o, mal sevgisi sebebiyle çok katıdır. Bilmiyor mu ki kabirlerde olanlar diriltildiğinde, kalplerde olanlar açığa çıkarıldığında, o gün Rableri onlardan tamamen haberdardır?',
+    fazilet: '✨ İnsanın nankörlüğüne ve mal hırsına karşı uyarı. Âhiret bilinci için okunur.'
+  },
+{
+    id: 'karia',
+    ad: 'Kâria Sûresi',
+    ikon: '⚖️',
+    alt: '101. Sûre — 11 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> El-kâria.',
+      '<b>2</b> Mel-kâria.',
+      '<b>3</b> Vemâ edrâke mel-kâria.',
+      '<b>4</b> Yevme yekûnün-nâsü kel-ferâşil-mebsûs.',
+      '<b>5</b> Vetekûnül-cibâlü kel-ıhnil-menfûş.',
+      '<b>6</b> Feemmâ men sekulet mevâzînüh.',
+      '<b>7</b> Fehüve fî îşetin râdıyeh.',
+      '<b>8</b> Ve emmâ men haffet mevâzînüh.',
+      '<b>9</b> Feümmühû hâviyeh.',
+      '<b>10</b> Vemâ edrâke mâhiyeh.',
+      '<b>11</b> Nârun hâmiyeh.'
+    ],
+    anlam: 'Yürekleri hoplatan o büyük felâket! Yürekleri hoplatan o büyük felâket nedir? O büyük felâketin ne olduğunu sen nereden bileceksin? O gün insanlar, etrafa yayılmış kelebekler gibi olacaklar. Dağlar, atılmış renkli yünler gibi olacaklar. İşte o vakit kimin tartıları (sevap kefesi) ağır gelirse, o, hoşnut olacağı bir hayat içinde olacaktır. Ama kimin de tartıları hafif gelirse, anası Hâviye (cehennem) olacaktır. O Hâviye\'nin ne olduğunu sen nereden bileceksin? O kızgın bir ateştir.',
+    fazilet: '✨ Mîzân ve hesap günü bilinci için okunur. Amellerin tartılışını hatırlatır.'
+  },
+{
+    id: 'tekasur',
+    ad: 'Tekâsür Sûresi',
+    ikon: '⏰',
+    alt: '102. Sûre — 8 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Elhâkümüt-tekâsür.',
+      '<b>2</b> Hattâ zürtümül-mekâbir.',
+      '<b>3</b> Kellâ sevfe ta\'lemûn.',
+      '<b>4</b> Sümme kellâ sevfe ta\'lemûn.',
+      '<b>5</b> Kellâ lev ta\'lemûne ilmel-yakîn.',
+      '<b>6</b> Leteravünnel-cahîm.',
+      '<b>7</b> Sümme leteravünnehâ aynel-yakîn.',
+      '<b>8</b> Sümme letüs\'elünne yevmeizin anin-naîm.'
+    ],
+    anlam: 'Çoklukla övünmek sizi oyaladı — sonunda kabirleri ziyaret ettiniz. Hayır, ileride bileceksiniz. Yine hayır, ileride bileceksiniz. Hayır, eğer kesin bir bilgi ile bilseydiniz. Andolsun, cehennemi mutlaka göreceksiniz. Yine andolsun, onu gözlerinizle kesin olarak göreceksiniz. Sonra o gün, nimetlerden mutlaka hesaba çekileceksiniz.',
+    fazilet: '✨ Dünyaya bağlanma uyarısı. Ölüm ve hesap bilinci, mal-evlat çokluğunun aldatmaması için.'
+  },
+{
+    id: 'asr',
+    ad: 'Asr Sûresi',
+    ikon: '⏳',
+    alt: '103. Sûre — 3 âyet (insanın özeti)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Vel-asr.',
+      '<b>2</b> İnnel-insâne lefî husr.',
+      '<b>3</b> İllellezîne âmenû ve amilus-sâlihâti ve tevâsav bil-hakkı ve tevâsav bis-sabr.'
+    ],
+    anlam: 'Asra (zamana) yemin olsun ki, insan kesin bir ziyandadır. Ancak iman edip salih ameller işleyen, birbirine hakkı tavsiye eden ve birbirine sabrı tavsiye edenler müstesnâ.',
+    fazilet: '✨ İmam Şâfiî\'nin "Kur\'an\'dan sadece bu sûre inseydi insanlara yeterdi" dediği sûre. Sahabeler ayrılırken birbirlerine okurlardı.'
+  },
+{
+    id: 'humeze',
+    ad: 'Hümeze Sûresi',
+    ikon: '🚫',
+    alt: '104. Sûre — 9 âyet (dedikodu uyarısı)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Veylün likülli hümezetin lümezeh.',
+      '<b>2</b> Ellezî cemea mâlen ve addedeh.',
+      '<b>3</b> Yahsebü enne mâlehû ahledeh.',
+      '<b>4</b> Kellâ leyünbezenne fil-hutameh.',
+      '<b>5</b> Vemâ edrâke mel-hutameh.',
+      '<b>6</b> Nârullâhil-mûkadeh.',
+      '<b>7</b> Elletî tettaliu alel-ef\'ideh.',
+      '<b>8</b> İnnehâ aleyhim mü\'sadeh.',
+      '<b>9</b> Fî amedin mümeddedeh.'
+    ],
+    anlam: 'İnsanları arkadan çekiştiren, kaş-göz işaretiyle alay eden her kişinin vay haline! O ki, mal toplamış ve onu sürekli sayar. Malının kendisini ebedîleştirdiğini sanır. Hayır! O, mutlaka Hutame\'ye atılacaktır. Hutame\'nin ne olduğunu sen nereden bileceksin? O, Allah\'ın tutuşturulmuş ateşidir — yüreklere çıkar. O ateş, üzerlerine kapatılmıştır — uzatılmış sütunlar içinde.',
+    fazilet: '✨ Gıybet, alay, mal hırsından korunmak için okunur. Dilin ve kalbin terbiyesi için.'
+  },
+{
+    id: 'fil',
+    ad: 'Fîl Sûresi',
+    ikon: '🐘',
+    alt: '105. Sûre — 5 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Elem tera keyfe feale rabbüke bi-ashâbil-fîl.',
+      '<b>2</b> Elem yec\'al keydehüm fî tadlîl.',
+      '<b>3</b> Ve ersele aleyhim tayran ebâbîl.',
+      '<b>4</b> Termîhim bi-hicâratin min siccîl.',
+      '<b>5</b> Fecealehüm ke-asfin me\'kûl.'
+    ],
+    anlam: 'Rabbinin fil ordusuna ne yaptığını görmedin mi? Onların tuzaklarını boşa çıkarmadı mı? Üzerlerine sürü sürü kuşlar gönderdi. Onlara çamurdan pişirilmiş taşlar atıyorlardı. Nihayet onları yenilmiş ekin yaprakları gibi yapıverdi.',
+    fazilet: '✨ Allah\'ın yardımına tevekkül etmek, zulümlerden ve düşman tuzaklarından korunmak için okunur.'
+  },
+{
+    id: 'kureys',
+    ad: 'Kureyş Sûresi',
+    ikon: '🕋',
+    alt: '106. Sûre — 4 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Li-îlâfi Kureyş.',
+      '<b>2</b> Îlâfihim rıhleteş-şitâi ves-sayf.',
+      '<b>3</b> Felya\'büdû Rabbe hâzel-beyt.',
+      '<b>4</b> Ellezî et\'amehüm min cûin ve âmenehüm min havf.'
+    ],
+    anlam: 'Kureyş\'in alıştırılması için; onları kış ve yaz yolculuğuna alıştırılmasından dolayı, bu Beyt\'in (Kâbe\'nin) Rabbine kulluk etsinler. Ki O, kendilerini açlıktan doyurdu ve onları korkudan emin kıldı.',
+    fazilet: '✨ Rızık genişlemesi ve emniyet için okunur. Aç olan kişi tok kalır, korkan kişi emin olur.'
+  },
+{
+    id: 'maun',
+    ad: 'Mâ\'ûn Sûresi',
+    ikon: '🤲',
+    alt: '107. Sûre — 7 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Eraeytellezî yükezzibü biddîn.',
+      '<b>2</b> Fezâlikellezî yedu\'ul-yetîm.',
+      '<b>3</b> Velâ yehuddu alâ taâmil-miskîn.',
+      '<b>4</b> Feveylün lil-musallîn.',
+      '<b>5</b> Ellezîne hüm an salâtihim sâhûn.',
+      '<b>6</b> Ellezîne hüm yürâûn.',
+      '<b>7</b> Ve yemneûnel-mâ\'ûn.'
+    ],
+    anlam: 'Dîni yalanlayanı gördün mü? İşte o, yetimi itip kakar. Yoksulu doyurmaya teşvik etmez. Yazıklar olsun o namaz kılanlara ki, onlar namazlarından gafildirler. Onlar gösteriş yaparlar ve en küçük bir yardımı dahi esirgerler.',
+    fazilet: '✨ Riyâdan korunmak, ihlâs kazanmak ve yetim-yoksul gözeten ahlâka erişmek için okunur.'
+  },
+{
+    id: 'kevser',
+    ad: 'Kevser Sûresi',
+    ikon: '💧',
+    alt: '108. Sûre — 3 âyet (Kur\'an\'ın en kısa sûresi)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> İnnâ a\'taynâkel-kevser.',
+      '<b>2</b> Fesalli li-rabbike venhar.',
+      '<b>3</b> İnne şânieke hüvel-ebter.'
+    ],
+    anlam: 'Şüphesiz Biz sana Kevser\'i (çok hayır ve nimet) verdik. O hâlde, Rabbin için namaz kıl ve kurban kes. Doğrusu sana kin tutan, sonu kesik olanın ta kendisidir.',
+    fazilet: '✨ Kur\'an\'ın en kısa sûresi. Bereket ve hayır artışı için, evlat duâsı niyetiyle okunur.'
+  },
+{
+    id: 'kafirun',
+    ad: 'Kâfirûn Sûresi',
+    ikon: '🛡️',
+    alt: '109. Sûre — Berâat ilanı',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul yâ eyyühel-kâfirûn.',
+      '<b>2</b> Lâ a\'büdü mâ ta\'büdûn.',
+      '<b>3</b> Ve lâ entüm âbidûne mâ a\'büd.',
+      '<b>4</b> Ve lâ ene âbidün mâ abedtüm.',
+      '<b>5</b> Ve lâ entüm âbidûne mâ a\'büd.',
+      '<b>6</b> Leküm dînüküm veliye dîn.'
+    ],
+    anlam: 'De ki: "Ey kâfirler! Ben sizin kulluk ettiklerinize kulluk etmem. Sizin dininiz size, benim dinim de bana."',
+    fazilet: '✨ Yatmadan önce okuyan şirkten korunur (Tirmizî). Kur\'an\'ın dörtte birine denktir.'
+  },
+{
+    id: 'nasr',
+    ad: 'Nasr Sûresi',
+    ikon: '🌅',
+    alt: '110. Sûre — 3 âyet (fetih müjdesi)',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> İzâ câe nasrullâhi vel-feth.',
+      '<b>2</b> Ve raeyten-nâse yedhulûne fî dînillâhi efvâcâ.',
+      '<b>3</b> Fesebbih bi-hamdi rabbike vestağfirh, innehû kâne tevvâbâ.'
+    ],
+    anlam: 'Allah\'ın yardımı ve fetih (Mekke fethi) geldiğinde ve insanların bölük bölük Allah\'ın dinine girdiklerini gördüğünde, Rabbini hamd ile tesbih et ve O\'ndan bağışlanma dile. Şüphesiz O, tövbeleri çok kabul edendir.',
+    fazilet: '✨ Son nazil olan sûrelerden. Tevbe ve istiğfar için okunur. Bir zaferin ardından hamd duâsı.'
+  },
+{
+    id: 'tebbet',
+    ad: 'Tebbet Sûresi',
+    ikon: '🔥',
+    alt: '111. Sûre — 5 âyet',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Tebbet yedâ ebî lehebin ve tebb.',
+      '<b>2</b> Mâ ağnâ anhü mâlühû ve mâ keseb.',
+      '<b>3</b> Seyaslâ nâran zâte leheb.',
+      '<b>4</b> Vemraetühû hammâletel-hatab.',
+      '<b>5</b> Fî cîdihâ hablün min mesed.'
+    ],
+    anlam: 'Ebû Leheb\'in iki eli kurusun, kurudu da. Ona ne malı fayda verdi ne de kazandığı. O, alevli bir ateşe girecektir. Karısı da onunla beraber boynunda hurma lifinden bürülmüş bir ip olduğu hâlde, odun taşıyıcı olarak.',
+    fazilet: '✨ İslâm\'a düşmanlık edenlere karşı uyarıdır. Hidâyet için ve düşmanlardan korunma niyetiyle okunur.'
+  },
+{
+    id: 'ihlas',
+    ad: 'İhlâs Sûresi',
+    ikon: '✨',
+    alt: '112. Sûre — Tevhidin özü',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul hüvallâhü ehad.',
+      '<b>2</b> Allâhüs-samed.',
+      '<b>3</b> Lem yelid ve lem yûled.',
+      '<b>4</b> Ve lem yekün lehû küfüven ehad.'
+    ],
+    anlam: 'De ki: "O, Allah\'tır, tektir. Allah Samed\'dir (her şey ona muhtaçtır, O hiçbir şeye muhtaç değildir). Doğurmamış ve doğurulmamıştır. Hiçbir şey O\'na denk değildir."',
+    fazilet: '✨ Kur\'an\'ın üçte birine denktir (Buhârî, Müslim). 3 kez okumak 1 hatim sevabıdır. Her gün okuyanın günahları affedilir.'
+  },
+{
+    id: 'felak',
+    ad: 'Felak Sûresi',
+    ikon: '🛡️',
+    alt: '113. Sûre — Muavvizeteynden',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul eûzü bi-rabbil-felak.',
+      '<b>2</b> Min şerri mâ halak.',
+      '<b>3</b> Ve min şerri ğâsikın izâ vekab.',
+      '<b>4</b> Ve min şerrin-neffâsâti fil-ukad.',
+      '<b>5</b> Ve min şerri hâsidin izâ hased.'
+    ],
+    anlam: 'De ki: "Sığınırım sabahın Rabbine, yarattığı şeylerin şerrinden, karanlık çöktüğü zaman gecenin şerrinden, düğümlere üfleyenlerin şerrinden ve haset eden hasetçinin şerrinden."',
+    fazilet: '✨ Nas Sûresi ile birlikte "Muavvizeteyn" — her türlü kötülükten korunma için sabah-akşam 3\'er kez okunur (Tirmizî).'
+  },
+{
+    id: 'nas',
+    ad: 'Nâs Sûresi',
+    ikon: '🛡️',
+    alt: '114. Sûre — Son sûre',
+    bismillah: true,
+    ayetler: [
+      '<b>1</b> Kul eûzü bi-rabbin-nâs.',
+      '<b>2</b> Melikin-nâs.',
+      '<b>3</b> İlâhin-nâs.',
+      '<b>4</b> Min şerril-vesvâsil-hannâs.',
+      '<b>5</b> Ellezî yüvesvisü fî sudûrin-nâs.',
+      '<b>6</b> Minel-cinneti ven-nâs.'
+    ],
+    anlam: 'De ki: "Sığınırım insanların Rabbine, insanların Melikine, insanların İlâhına; sinsi vesvesecinin şerrinden — insanların göğsüne vesvese verenin (şerrinden); cinlerden olsun, insanlardan olsun."',
+    fazilet: '✨ Felak ile birlikte Muavvizeteyn — vesveseden ve şer odaklarından koruyan iki sûre. Sabah-akşam 3 kere okunur.'
+  },
+{
+    id: 'salli',
+    ad: 'Allâhümme Salli Duâsı',
+    ikon: '🤲',
+    alt: 'Namaz son oturuşunda — Peygambere salavât',
+    bismillah: false,
+    ayetler: [
+      'Allâhümme salli alâ Muhammedin ve alâ âli Muhammed,',
+      'kemâ salleyte alâ İbrâhîme ve alâ âli İbrâhîm,',
+      'inneke hamîdün mecîd.'
+    ],
+    anlam: 'Allah\'ım! Muhammed\'e ve Muhammed\'in âl\'ine (ehl-i beytine), İbrâhim ve İbrâhim\'in âl\'ine salât (rahmet) ettiğin gibi rahmet eyle. Şüphesiz Sen, hamde lâyık ve şânı yüce olansın.',
+    fazilet: '✨ Namaz son oturuşunda okunan farz duâlardandır. Allâhümme Bârik ile birlikte salât-ü selâm tamamlanır.'
+  },
+{
+    id: 'barik',
+    ad: 'Allâhümme Bârik Duâsı',
+    ikon: '🌿',
+    alt: 'Namaz son oturuşunda — bereket duâsı',
+    bismillah: false,
+    ayetler: [
+      'Allâhümme bârik alâ Muhammedin ve alâ âli Muhammed,',
+      'kemâ bârekte alâ İbrâhîme ve alâ âli İbrâhîm,',
+      'inneke hamîdün mecîd.'
+    ],
+    anlam: 'Allah\'ım! Muhammed\'e ve Muhammed\'in âl\'ine, İbrâhim\'e ve İbrâhim\'in âl\'ine bereket verdiğin gibi bereket ver. Şüphesiz Sen, hamde lâyık ve şânı yüce olansın.',
+    fazilet: '✨ Allâhümme Salli\'nin ardından okunur. Salât-ü selâmı bütünler. Müminin nuru ve şefâat vesilesi.'
+  },
+{
+    id: 'rabbena-atina',
+    ad: 'Rabbenâ Âtinâ Duâsı',
+    ikon: '🌍',
+    alt: 'Namaz son oturuşunda — dünya-ahiret duâsı',
+    bismillah: false,
+    ayetler: [
+      'Rabbenâ âtinâ fid-dünyâ haseneten,',
+      've fil-âhirati haseneten,',
+      've kınâ azâben-nâr.'
+    ],
+    anlam: 'Ey Rabbimiz! Bize dünyada da iyilik (güzellik) ver, âhirette de iyilik ver ve bizi ateş azâbından koru.',
+    fazilet: '✨ Bakara 201. âyetinden alınma duâdır. Kur\'an\'da Peygamberimizin de çokça okuduğu duâlardandır. Hem dünya hem âhiret saâdeti için.'
+  },
+{
+    id: 'rabbenagfirli',
+    ad: 'Rabbenâğfirlî Duâsı',
+    ikon: '💧',
+    alt: 'Bağışlanma duâsı — anne-baba için',
+    bismillah: false,
+    ayetler: [
+      'Rabbenâğfirlî velivâlideyye',
+      've lil-mü\'minîne yevme yekûmül-hisâb.'
+    ],
+    anlam: 'Ey Rabbimiz! Hesabın görüleceği gün beni, anne-babamı ve bütün mü\'minleri bağışla.',
+    fazilet: '✨ İbrâhim Sûresi 41. âyetinden. Anne-baba ve müminler için günahların affı niyetiyle okunur. Vefat etmiş ebeveyn için sevap vesilesi.'
   }
 ];
 
@@ -5416,21 +5965,17 @@ function duaCizdir() {
 
 function duaToggle(id) {
   const el = document.getElementById(id);
-  if (el) el.classList.toggle('acik');
+  if (!el) return;
+  const kart = el.closest('.dua-karti');
+  if (kart) kart.classList.toggle('acik');
 }
 
 function duaTumuAc() {
-  DUALAR.forEach(d => {
-    const el = document.getElementById('dua-' + d.id);
-    if (el) el.classList.add('acik');
-  });
+  document.querySelectorAll('.dua-karti').forEach(k => k.classList.add('acik'));
 }
 
 function duaTumuKapat() {
-  DUALAR.forEach(d => {
-    const el = document.getElementById('dua-' + d.id);
-    if (el) el.classList.remove('acik');
-  });
+  document.querySelectorAll('.dua-karti').forEach(k => k.classList.remove('acik'));
 }
 
 function duaAra(metin) {
