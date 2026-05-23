@@ -8,8 +8,14 @@
 <meta name="apple-mobile-web-app-title" content="İhyâ">
 <meta name="theme-color" content="#1B4332">
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231B4332'/%3E%3Ctext y='62' x='50' text-anchor='middle' font-size='52'%3E🕌%3C/text%3E%3C/svg%3E">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231B4332'/%3E%3Ctext y='62' x='50' text-anchor='middle' font-size='52'%3E🕌%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon-precomposed" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
 <title>İhyâ — Manevi Yolculuk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2835,6 +2841,690 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .ozet-stat-rakam { font-size: 18px; }
 }
 
+
+/* ═══ MERTEBE SİSTEMİ ═══ */
+.mertebe-kart {
+  background: linear-gradient(135deg, var(--koyu) 0%, var(--orta) 100%);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--vurgu);
+  box-shadow: 0 4px 18px rgba(15,46,31,0.18);
+}
+.mertebe-kart.musavvil { background: linear-gradient(135deg, #2D5F3F 0%, #1B4332 100%); }
+.mertebe-kart.tukel { background: linear-gradient(135deg, #5C4033 0%, #3E2818 100%); }
+.mertebe-kart.bakir { background: linear-gradient(135deg, #8B5A2B 0%, #6B3F1B 100%); }
+.mertebe-kart.gumus { background: linear-gradient(135deg, #707B8B 0%, #4A5563 100%); }
+.mertebe-kart.altin { background: linear-gradient(135deg, #B8941F 0%, #8B6F1E 100%); }
+.mertebe-kart.zumrut { background: linear-gradient(135deg, #1E6B5F 0%, #0F3D34 100%); }
+
+.mertebe-kart::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.mertebe-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.mertebe-sol {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mertebe-sembol {
+  font-size: 28px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+.mertebe-baslik-bilgi {
+  display: flex;
+  flex-direction: column;
+}
+.mertebe-baslik-etiket {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--altin-soft);
+  opacity: 0.85;
+}
+.mertebe-baslik-ad {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+  margin-top: 1px;
+}
+.mertebe-xp {
+  text-align: right;
+}
+.mertebe-xp-rakam {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.mertebe-xp-etiket {
+  font-size: 9px;
+  color: white;
+  opacity: 0.75;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-top: 2px;
+}
+.mertebe-progress {
+  background: rgba(255,255,255,0.15);
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.mertebe-progress-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu) 0%, var(--altin-soft) 100%);
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(212,175,55,0.5);
+}
+.mertebe-progress-yazi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  font-size: 10px;
+  color: white;
+  opacity: 0.85;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.mertebe-progress-yazi span:last-child { color: var(--altin-soft); }
+
+.carpan-rozet {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(212,175,55,0.25);
+  border: 1px solid var(--vurgu);
+  color: var(--altin-soft);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-left: 6px;
+  animation: carpanPulse 2s ease-in-out infinite;
+}
+@keyframes carpanPulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 12px rgba(212,175,55,0.4); }
+}
+
+/* ═══ YOLCULUK HARİTASI ═══ */
+.yh-kart {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 12px;
+  margin-bottom: 12px;
+}
+.yh-baslik {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--soft);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.yh-yol {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 8px 4px 0;
+}
+.yh-cizgi {
+  position: absolute;
+  top: calc(8px + 14px);
+  left: 22px;
+  right: 22px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  z-index: 0;
+}
+.yh-cizgi-dolgu {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--vurgu) 0%, var(--altin-soft) 100%);
+  border-radius: 2px;
+  transition: width 0.8s ease;
+}
+.yh-nokta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  min-width: 0;
+  flex: 1;
+}
+.yh-nokta-yuvarlak {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bej);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.3s;
+}
+.yh-nokta.gecildi .yh-nokta-yuvarlak {
+  background: var(--vurgu);
+  border-color: var(--vurgu);
+  color: var(--koyu);
+  font-weight: 800;
+}
+.yh-nokta.aktif .yh-nokta-yuvarlak {
+  background: linear-gradient(135deg, var(--vurgu) 0%, var(--altin-soft) 100%);
+  border-color: var(--vurgu);
+  color: var(--koyu);
+  font-weight: 800;
+  transform: scale(1.25);
+  box-shadow: 0 0 0 4px rgba(212,175,55,0.25), 0 4px 12px rgba(212,175,55,0.4);
+  animation: aktifNokta 2s ease-in-out infinite;
+}
+@keyframes aktifNokta {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(212,175,55,0.25), 0 4px 12px rgba(212,175,55,0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(212,175,55,0.15), 0 6px 18px rgba(212,175,55,0.5); }
+}
+.yh-nokta-ad {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--soft);
+  text-align: center;
+  letter-spacing: -0.1px;
+  line-height: 1.1;
+}
+.yh-nokta.gecildi .yh-nokta-ad,
+.yh-nokta.aktif .yh-nokta-ad {
+  color: var(--koyu);
+}
+.yh-aciklama {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--altin-bg);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 0 8px 8px 0;
+  font-size: 12px;
+  color: var(--koyu);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ═══ XP FLOAT ANIMASYON ═══ */
+.xp-float-konteyner {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1500;
+  overflow: hidden;
+}
+.xp-float {
+  position: absolute;
+  background: linear-gradient(135deg, var(--vurgu) 0%, var(--altin-soft) 100%);
+  color: var(--koyu);
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  box-shadow: 0 4px 18px rgba(212,175,55,0.4);
+  animation: xpFloat 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  white-space: nowrap;
+}
+@keyframes xpFloat {
+  0% { transform: translateY(0) scale(0.8); opacity: 0; }
+  15% { transform: translateY(-10px) scale(1); opacity: 1; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* ═══ MERTEBE ATLAMA POPUP ═══ */
+.mertebe-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.92);
+  z-index: 1300;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: rozetFade 0.5s;
+}
+.mertebe-popup.acik { display: flex; }
+.mertebe-popup-icerik {
+  background: linear-gradient(135deg, var(--koyu) 0%, var(--orta) 100%);
+  border: 2px solid var(--vurgu);
+  border-radius: 24px;
+  padding: 32px 26px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 40px rgba(212,175,55,0.4);
+  position: relative;
+  overflow: hidden;
+}
+.mertebe-popup-icerik::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 60%);
+  animation: rotate 8s linear infinite;
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.mertebe-popup-sembol {
+  font-size: 80px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+  animation: sembolPop 0.8s ease-out;
+}
+@keyframes sembolPop {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.mertebe-popup-etiket {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: var(--altin-soft);
+  margin-top: 14px;
+  position: relative;
+  z-index: 1;
+}
+.mertebe-popup-ad {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.8px;
+  margin: 4px 0 16px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.mertebe-popup-soz {
+  font-size: 13px;
+  color: white;
+  opacity: 0.92;
+  line-height: 1.6;
+  font-style: italic;
+  padding: 14px 12px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 12px;
+  border-left: 3px solid var(--vurgu);
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+.mertebe-popup-soz strong {
+  color: var(--altin-soft);
+  font-style: normal;
+}
+.mertebe-popup-rehber {
+  font-size: 12px;
+  color: var(--altin-soft);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+  opacity: 0.9;
+}
+.mertebe-popup-kapat {
+  background: var(--vurgu);
+  color: var(--koyu);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(212,175,55,0.4);
+}
+.mertebe-popup-kapat:hover { background: #E5C158; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .mertebe-baslik-ad { font-size: 16px; }
+  .mertebe-sembol { font-size: 24px; }
+  .yh-nokta-yuvarlak { width: 24px; height: 24px; font-size: 11px; }
+  .yh-nokta-ad { font-size: 8px; }
+  .yh-cizgi { top: calc(8px + 12px); }
+  .mertebe-popup-sembol { font-size: 64px; }
+  .mertebe-popup-ad { font-size: 26px; }
+}
+
+
+/* ═══ İNTERAKTİF HEATMAP ═══ */
+.heatmap-hucre {
+  cursor: pointer;
+  position: relative;
+}
+.heatmap-hucre:active { transform: scale(0.9); }
+
+/* Gün Detay Popup */
+.gd-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  z-index: 1250;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: rozetFade 0.3s;
+}
+.gd-popup.acik { display: flex; }
+.gd-icerik {
+  background: var(--kart);
+  border-radius: 18px;
+  padding: 20px;
+  max-width: 380px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  border: 1px solid var(--vurgu);
+}
+.gd-baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.gd-baslik-ad {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: -0.3px;
+}
+.gd-baslik-alt { font-size: 11px; color: var(--soft); margin-top: 2px; }
+.gd-kapat {
+  background: var(--bej);
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  font-size: 16px; cursor: pointer;
+  color: var(--soft);
+}
+.gd-vakit-satir {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.gd-vakit-satir:last-of-type { border-bottom: none; }
+.gd-vakit-ikon { font-size: 20px; flex-shrink: 0; }
+.gd-vakit-ad {
+  flex: 1;
+  font-weight: 700;
+  color: var(--koyu);
+  font-size: 13px;
+}
+.gd-vakit-rakam {
+  min-width: 32px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.4px;
+}
+.gd-vakit-btn {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bej);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--koyu);
+  font-family: inherit;
+}
+.gd-vakit-btn:hover { background: var(--altin-bg); border-color: var(--vurgu); }
+.gd-vakit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.gd-toplam-kart {
+  background: var(--altin-bg);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 0 10px 10px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gd-toplam-etiket { font-size: 11px; color: var(--koyu); font-weight: 700; }
+.gd-toplam-rakam {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.5px;
+}
+.gd-not {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--soft);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ═══ GÜNLÜK NİYET ═══ */
+.niyet-banner {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FCEFC8 100%);
+  border: 1px solid var(--vurgu);
+  border-radius: 12px;
+  padding: 9px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.niyet-banner:hover { background: var(--altin-bg); }
+.niyet-banner-ikon { font-size: 22px; }
+.niyet-banner-icerik { flex: 1; min-width: 0; }
+.niyet-banner-etiket {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--vurgu);
+  text-transform: uppercase;
+}
+.niyet-banner-ad {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--koyu);
+  letter-spacing: -0.2px;
+  margin-top: 1px;
+}
+.niyet-banner-degistir {
+  font-size: 10px;
+  color: var(--soft);
+  background: white;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-weight: 700;
+}
+.niyet-banner.bos .niyet-banner-ad { color: var(--soft); font-style: italic; }
+
+/* Niyet seçim popup */
+.niyet-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  z-index: 1250;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: rozetFade 0.3s;
+}
+.niyet-popup.acik { display: flex; }
+.niyet-popup-icerik {
+  background: var(--kart);
+  border: 2px solid var(--vurgu);
+  border-radius: 20px;
+  padding: 24px 20px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+.niyet-popup-baslik {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+.niyet-popup-alt {
+  font-size: 12px;
+  color: var(--soft);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.niyet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.niyet-secim {
+  background: var(--bej);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.niyet-secim:hover { background: var(--altin-bg); border-color: var(--vurgu); transform: translateY(-1px); }
+.niyet-secim.aktif {
+  background: var(--altin-bg);
+  border-color: var(--vurgu);
+  box-shadow: 0 4px 14px rgba(212,175,55,0.2);
+}
+.niyet-secim-ikon { font-size: 26px; }
+.niyet-secim-ad {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--koyu);
+  margin-top: 4px;
+  letter-spacing: -0.2px;
+}
+.niyet-aciklama {
+  background: var(--altin-bg);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 0 8px 8px 0;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--koyu);
+  font-style: italic;
+  margin-top: 4px;
+  text-align: left;
+  line-height: 1.5;
+  display: none;
+}
+.niyet-aciklama.gorunur { display: block; }
+.niyet-popup-aksiyonlar {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.niyet-popup-aksiyonlar button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.niyet-iptal { background: var(--bej); color: var(--soft); }
+.niyet-kaydet { background: var(--orta); color: white; }
+.niyet-kaydet:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ═══ GÜNÜN SÖZÜ ═══ */
+.gs-kart {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orta);
+  border-radius: 0 12px 12px 0;
+  padding: 11px 14px;
+  margin-bottom: 12px;
+  font-family: var(--font-serif, Georgia, serif);
+}
+.gs-baslik {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--orta);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.gs-metin {
+  font-size: 13px;
+  color: var(--koyu);
+  line-height: 1.6;
+  font-style: italic;
+}
+.gs-metin strong {
+  font-style: normal;
+  color: var(--orta);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .niyet-secim-ikon { font-size: 22px; }
+  .niyet-secim-ad { font-size: 11px; }
+  .gd-baslik-ad { font-size: 15px; }
+  .gd-vakit-rakam { font-size: 14px; }
+  .gs-metin { font-size: 12px; }
+}
+
 </style>
 </head>
 <body>
@@ -2858,8 +3548,49 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   </div>
 
   
+  
+  
+  <!-- Günün Sözü -->
+  <div class="gs-kart" id="gs-kart">
+    <div class="gs-baslik">📜 GÜNÜN SÖZÜ</div>
+    <div class="gs-metin" id="gs-metin">—</div>
+  </div>
+
+  <!-- Mertebe Kartı (XP + bereket) -->
+  <div class="mertebe-kart" id="mertebe-kart">
+    <div class="mertebe-ust">
+      <div class="mertebe-sol">
+        <div class="mertebe-sembol" id="mertebe-sembol">🌱</div>
+        <div class="mertebe-baslik-bilgi">
+          <div class="mertebe-baslik-etiket">MANEVİ MERTEBE</div>
+          <div class="mertebe-baslik-ad" id="mertebe-ad">Müptedi <span id="carpan-rozet-konteyner"></span></div>
+        </div>
+      </div>
+      <div class="mertebe-xp">
+        <div class="mertebe-xp-rakam" id="mertebe-xp">0 XP</div>
+        <div class="mertebe-xp-etiket" id="mertebe-xp-alt">Yolculuğa başla</div>
+      </div>
+    </div>
+    <div class="mertebe-progress"><div class="mertebe-progress-dolgu" id="mertebe-progress-dolgu" style="width:0%"></div></div>
+    <div class="mertebe-progress-yazi">
+      <span id="mertebe-progress-mevcut">0 / 200</span>
+      <span id="mertebe-progress-sonraki">Mürid'e 200 XP</span>
+    </div>
+  </div>
+
   <!-- Mübarek günler bandı (varsa görünür) -->
   <div id="mb-bandi-konteyner"></div>
+
+  
+  <!-- Günlük Niyet -->
+  <div class="niyet-banner bos" id="niyet-banner" onclick="niyetPopupAc()">
+    <div class="niyet-banner-ikon" id="niyet-banner-ikon">🤲</div>
+    <div class="niyet-banner-icerik">
+      <div class="niyet-banner-etiket">BUGÜNÜN NİYETİ</div>
+      <div class="niyet-banner-ad" id="niyet-banner-ad">Niyet seçmek için tıkla</div>
+    </div>
+    <div class="niyet-banner-degistir" id="niyet-degistir">Seç</div>
+  </div>
 
   <!-- Streak göstergesi -->
   <div class="streak-kart" id="streak-kart" style="display:none;">
@@ -3092,6 +3823,22 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
           </div>
         </div>
       </div>
+
+      <div class="yh-kart">
+        <div class="yh-baslik">🛤️ Manevi Yolculuk Haritası</div>
+        <div class="yh-yol" id="yh-yol">
+          <div class="yh-cizgi"><div class="yh-cizgi-dolgu" id="yh-cizgi-dolgu" style="width:0%"></div></div>
+          <div class="yh-nokta" data-mid="0" onclick="yhNoktaTikla(0)"><div class="yh-nokta-yuvarlak">🌱</div><div class="yh-nokta-ad">Müptedi</div></div>
+          <div class="yh-nokta" data-mid="1" onclick="yhNoktaTikla(1)"><div class="yh-nokta-yuvarlak">🌿</div><div class="yh-nokta-ad">Mürid</div></div>
+          <div class="yh-nokta" data-mid="2" onclick="yhNoktaTikla(2)"><div class="yh-nokta-yuvarlak">🌳</div><div class="yh-nokta-ad">Tâlib</div></div>
+          <div class="yh-nokta" data-mid="3" onclick="yhNoktaTikla(3)"><div class="yh-nokta-yuvarlak">⭐</div><div class="yh-nokta-ad">Sâlik</div></div>
+          <div class="yh-nokta" data-mid="4" onclick="yhNoktaTikla(4)"><div class="yh-nokta-yuvarlak">🏆</div><div class="yh-nokta-ad">Müntehî</div></div>
+          <div class="yh-nokta" data-mid="5" onclick="yhNoktaTikla(5)"><div class="yh-nokta-yuvarlak">👑</div><div class="yh-nokta-ad">Vâsıl</div></div>
+        </div>
+        <div class="yh-aciklama" id="yh-aciklama">Yolculuğa başla — her amel seni bir adım ileri taşır.</div>
+      </div>
+
+
     </div>
 
     <div>
@@ -3259,6 +4006,52 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     <button class="ozet-kapat" onclick="ozetPopupKapat()">Devam et</button>
   </div>
 </div>
+
+
+<div class="niyet-popup" id="niyet-popup" onclick="if(event.target.id==='niyet-popup') niyetPopupKapat()">
+  <div class="niyet-popup-icerik">
+    <div class="niyet-popup-baslik">🤲 Bugünün Niyeti</div>
+    <div class="niyet-popup-alt">"Niyetler ancak amellere göre değer kazanır" — Hadis-i Şerif</div>
+    <div class="niyet-grid" id="niyet-grid"></div>
+    <div class="niyet-aciklama" id="niyet-aciklama"></div>
+    <div class="niyet-popup-aksiyonlar">
+      <button class="niyet-iptal" onclick="niyetPopupKapat()">Vazgeç</button>
+      <button class="niyet-kaydet" id="niyet-kaydet-btn" onclick="niyetKaydet()" disabled>Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div class="gd-popup" id="gd-popup" onclick="if(event.target.id==='gd-popup') gdPopupKapat()">
+  <div class="gd-icerik">
+    <div class="gd-baslik">
+      <div>
+        <div class="gd-baslik-ad" id="gd-baslik-ad">—</div>
+        <div class="gd-baslik-alt" id="gd-baslik-alt">—</div>
+      </div>
+      <button class="gd-kapat" onclick="gdPopupKapat()">✕</button>
+    </div>
+    <div id="gd-vakit-liste"></div>
+    <div class="gd-toplam-kart">
+      <div class="gd-toplam-etiket">Bu gün toplam</div>
+      <div class="gd-toplam-rakam" id="gd-toplam">0</div>
+    </div>
+    <div class="gd-not">💡 Vakitleri geriye dönük düzenleyebilirsin. Değişiklikler anında kaydedilir.</div>
+  </div>
+</div>
+
+<div class="mertebe-popup" id="mertebe-popup" onclick="if(event.target.id==='mertebe-popup') mertebePopupKapat()">
+  <div class="mertebe-popup-icerik">
+    <div class="mertebe-popup-sembol" id="mp-sembol">🌿</div>
+    <div class="mertebe-popup-etiket">MERTEBE YÜKSELİŞİ</div>
+    <div class="mertebe-popup-ad" id="mp-ad">—</div>
+    <div class="mertebe-popup-soz" id="mp-soz">—</div>
+    <div class="mertebe-popup-rehber" id="mp-rehber">—</div>
+    <button class="mertebe-popup-kapat" onclick="mertebePopupKapat()">Yolculuğa Devam ✨</button>
+  </div>
+</div>
+
+<div class="xp-float-konteyner" id="xp-float-konteyner"></div>
+
 
 <div class="rozet-popup" id="rozet-popup" onclick="if(event.target.id==='rozet-popup') document.getElementById('rozet-popup').classList.remove('acik')">
   <div class="rozet-popup-icerik">
@@ -3662,12 +4455,19 @@ function rozetKontrol() {
   });
   if (yeniRozetler.length > 0) {
     kaydet();
+    // Yeni rozetler kazanıldı — DOM'u anında yenile
+    rozetleriCizdir();
+    try { if (typeof mertebeBannerGuncelle === 'function') mertebeBannerGuncelle(); } catch(e){}
+    try { if (typeof yolculukHaritasiCizdir === 'function') yolculukHaritasiCizdir(); } catch(e){}
     setTimeout(() => rozetPopupGoster(yeniRozetler[0]), 300);
     if (yeniRozetler.length > 1) {
       yeniRozetler.slice(1).forEach((r,i) => {
         setTimeout(() => rozetPopupGoster(r), 4000 * (i+1));
       });
     }
+  } else {
+    // Rozet yoksa da rozet ilerleme barları güncellensin
+    rozetleriCizdir();
   }
 }
 
@@ -5269,6 +6069,26 @@ const DUALAR = [
     fazilet: '✨ Yatmadan önce okuyana o gece için yeter (Buhârî, Müslim). Şeytanı evden uzaklaştırır.'
   },
 {
+    id: 'ahzab',
+    ad: 'Ahzâb Sûresi (seçme âyetler)',
+    ikon: '🕊️',
+    alt: '33. Sûre — Peygambere salavât, doğru söz, hâtemü\'n-nebiyyîn',
+    bismillah: true,
+    ayetler: [
+      '<b>21</b> Lekad kâne leküm fî resûlillâhi üsvetün hasenetün limen kâne yercüllâhe vel-yevmel-âhira ve zekerallâhe kesîrâ.',
+      '<b>35</b> İnnel-müslimîne vel-müslimâti vel-mü\'minîne vel-mü\'minâti vel-kânitîne vel-kânitâti ves-sâdikîne ves-sâdikâti ves-sâbirîne ves-sâbirâti vel-hâşi\'îne vel-hâşi\'âti vel-mütesaddikîne vel-mütesaddikâti ves-sâimîne ves-sâimâti vel-hâfizîne furûcehüm vel-hâfizâti vez-zâkirîna\'llâhe kesîran vez-zâkirâti, e\'addellâhü lehüm mağfiraten ve ecran azîmâ.',
+      '<b>40</b> Mâ kâne Muhammedün ebâ ehadin min ricâliküm, ve lâkin resûlallâhi ve hâteme\'n-nebiyyîn, ve kânallâhü bi-külli şey\'in alîmâ.',
+      '<b>41</b> Yâ eyyühellezîne âmenüzkürullâhe zikran kesîrâ.',
+      '<b>42</b> Ve sebbihûhü bükraten ve esîlâ.',
+      '<b>43</b> Hüvellezî yüsallî aleyküm ve melâiketühû liyuhriceküm minez-zulümâti ilen-nûri, ve kâne bil-mü\'minîne Rahîmâ.',
+      '<b>56</b> İnnallâhe ve melâiketehû yüsallûne ale\'n-Nebiyy. Yâ eyyühellezîne âmenû sallû aleyhi ve sellimû teslîmâ.',
+      '<b>70</b> Yâ eyyühellezîne âmenüttekullâhe ve kûlû kavlen sedîdâ.',
+      '<b>71</b> Yuslıh leküm a\'mâleküm ve yağfir leküm zünûbeküm, ve men yutı\'illâhe ve resûlehû fekad fâze fevzen azîmâ.'
+    ],
+    anlam: '<strong>21.</strong> Andolsun, Allah\'ın Resûlünde sizin için, Allah\'a ve âhiret gününe kavuşmayı uman ve Allah\'ı çokça zikreden kimseler için güzel bir örnek vardır. <br><br><strong>35.</strong> Şüphesiz Müslüman erkeklerle Müslüman kadınlar, mü\'min erkeklerle mü\'min kadınlar, itaatkâr erkeklerle itaatkâr kadınlar, doğru erkeklerle doğru kadınlar, sabreden erkeklerle sabreden kadınlar, Allah\'a derinden saygı duyan erkeklerle saygı duyan kadınlar, sadaka veren erkeklerle sadaka veren kadınlar, oruç tutan erkeklerle oruç tutan kadınlar, namuslarını koruyan erkeklerle namuslarını koruyan kadınlar, Allah\'ı çokça anan erkeklerle Allah\'ı çokça anan kadınlar — işte onlar için Allah, bağışlanma ve büyük mükâfat hazırlamıştır. <br><br><strong>40.</strong> Muhammed, sizin erkeklerinizden hiçbirinin babası değildir. Fakat O, Allah\'ın Resûlü ve nebîlerin sonuncusudur. Allah, her şeyi hakkıyla bilendir. <br><br><strong>41-43.</strong> Ey iman edenler! Allah\'ı çokça zikredin ve O\'nu sabah-akşam tesbih edin. O, sizi karanlıklardan aydınlığa çıkarmak için lütufta bulunandır; melekleri de sizin için bağışlanma diler. Allah, mü\'minlere karşı çok merhametlidir. <br><br><strong>56.</strong> Şüphesiz Allah ve melekleri Peygamber\'e salât ediyorlar. Ey iman edenler! Siz de O\'na salât edin ve esenlikle selâm verin. <br><br><strong>70-71.</strong> Ey iman edenler! Allah\'a karşı gelmekten sakının ve doğru söz söyleyin ki, Allah amellerinizi ıslah etsin ve günahlarınızı bağışlasın. Kim Allah\'a ve Resûlüne itaat ederse, büyük bir kurtuluşa ermiş olur.',
+    fazilet: '✨ Salavât âyeti olarak meşhur 56. âyet ile peygamber sevgisi pekiştirilir. Cuma günü ve mübarek gecelerde okunması tavsiye edilir. Müslüman ahlâkının özünü ortaya koyan 35. âyet hâline kavuşmak için.'
+  },
+  {
     id: 'fetih',
     ad: 'Fetih Sûresi',
     ikon: '🌟',
@@ -6705,6 +7525,671 @@ function yasayanGuncelle() {
 // İlk yükleme ve dakikalık güncelleme
 setTimeout(() => yasayanGuncelle(), 1000); // İlk seferde gecik (DOM hazır olsun)
 setInterval(yasayanGuncelle, 60000); // her dakika
+
+
+
+// ═══════════════════════════════════════════════════════════
+// MERTEBE SİSTEMİ + YOLCULUK + BEREKET ÇARPANI
+// ═══════════════════════════════════════════════════════════
+const XP_TEMEL_KEY = 'kn_xp_temel_v1'; // taban (eski state'ten)
+const XP_BONUS_KEY = 'kn_xp_bonus_v1'; // bereket bonusu
+const MERTEBE_GECILEN_KEY = 'kn_mertebe_max_v1'; // popup tekrarını önlemek için
+
+const MERTEBELER = [
+  { id:0, ad:'Müptedi',   sembol:'🌱', sinif:'musavvil', xp_min:0,     xp_max:200,
+    soz:'<strong>Hz. Ali (r.a.) buyurdu:</strong> "Yolun başında olmak, hiç yola çıkmamaktan hayırlıdır."',
+    rehber:'Bu mertebede her gün küçük bir adım yeterli. Niyet, eylemden önce gelir.' },
+  { id:1, ad:'Mürid',     sembol:'🌿', sinif:'tukel',    xp_min:200,   xp_max:1000,
+    soz:'<strong>Hz. Ömer (r.a.) buyurdu:</strong> "Allah\'a yönelene Allah, kalbine huzur indirir."',
+    rehber:'İsteyen oldun. Şimdi istikrar zamanı — her gün bir kaza, bir zikir.' },
+  { id:2, ad:'Tâlib',     sembol:'🌳', sinif:'bakir',    xp_min:1000,  xp_max:3000,
+    soz:'<strong>İmam Gazâlî buyurdu:</strong> "Allah\'ı arayan, kendini bulur. Kendini bulan, Allah\'ı bulur."',
+    rehber:'Talep eden mertebesindesin. Vakitlerin tamamına yayıl — dengeli ol.' },
+  { id:3, ad:'Sâlik',     sembol:'⭐', sinif:'gumus',    xp_min:3000,  xp_max:7500,
+    soz:'<strong>Mevlânâ buyurdu:</strong> "Sen yola çıktın ya, yol seni bekliyor zaten."',
+    rehber:'Yolcusun artık. Daha derin ameller — Esmâ, virdler, gece namazları.' },
+  { id:4, ad:'Müntehî',   sembol:'🏆', sinif:'altin',    xp_min:7500,  xp_max:15000,
+    soz:'<strong>Bediüzzaman buyurdu:</strong> "Niyet, âdetleri ibadete çevirir."',
+    rehber:'Sona yaklaştın. Her amelin tatlısını alıyorsun. Niyet sürekli yenilensin.' },
+  { id:5, ad:'Vâsıl',     sembol:'👑', sinif:'zumrut',   xp_min:15000, xp_max:9999999,
+    soz:'<strong>Hadis-i Şerif:</strong> "Allah bir kulu sevdi mi, Cebrâil\'e \"Ben filanı sevdim, sen de sev\" buyurur (Buhârî)."',
+    rehber:'Mâşaallah. Ulaştın — ama yolculuk bitmez. Şükür hâline geç, ihlâs derinleşsin.' }
+];
+
+function mertebeBul(xp) {
+  for (let i = MERTEBELER.length - 1; i >= 0; i--) {
+    if (xp >= MERTEBELER[i].xp_min) return MERTEBELER[i];
+  }
+  return MERTEBELER[0];
+}
+
+function temelXP() {
+  // State-based hesaplama
+  let xp = 0;
+  xp += genelToplamKildi() * 10;
+  xp += Math.floor(zikirSayisi / 100) * 5;
+  xp += Math.floor(ihlasSayisi / 100) * 5;
+  xp += esmaTamamlananlar.size * 50;
+  xp += Math.floor(esmaToplamZikir() / 10);
+  xp += gorevTamamlama * 30;
+  return Math.floor(xp);
+}
+
+function bonusXP() {
+  return parseInt(localStorage.getItem(XP_BONUS_KEY) || '0');
+}
+
+function bonusXPArttir(miktar) {
+  const yeni = bonusXP() + Math.max(0, Math.floor(miktar));
+  localStorage.setItem(XP_BONUS_KEY, yeni.toString());
+}
+
+function toplamXP() {
+  return temelXP() + bonusXP();
+}
+
+function aktifCarpan() {
+  // Hangi multiplier en yüksek?
+  let max = 1;
+  let sebep = null;
+  const d = new Date();
+  const bugun = bugunTarih();
+  const streak = streakHesapla();
+
+  // Bugün özel mübarek gün mü?
+  if (typeof MUBAREK_GUNLER !== 'undefined') {
+    const ozelGun = MUBAREK_GUNLER.find(m => m.tarih === bugun);
+    if (ozelGun) {
+      if (ozelGun.tip === 'kandil' && ozelGun.ad.includes('Kadir')) {
+        if (max < 27) { max = 27; sebep = 'Kadir Gecesi'; }
+      } else {
+        if (max < 3) { max = 3; sebep = ozelGun.ad; }
+      }
+    }
+  }
+  // Cuma
+  if (d.getDay() === 5 && max < 2) { max = 2; sebep = 'Cuma günü'; }
+  // Eyyâm-ı bîz
+  if (typeof nvHicri !== 'undefined' && nvHicri && nvHicri.day) {
+    const hday = parseInt(nvHicri.day);
+    if (hday >= 13 && hday <= 15 && max < 1.5) { max = 1.5; sebep = 'Eyyâm-ı bîz'; }
+  }
+  // Streak
+  if (streak >= 30 && max < 2) { max = 2; sebep = `${streak} gün streak`; }
+  else if (streak >= 7 && max < 1.5) { max = 1.5; sebep = `${streak} gün streak`; }
+
+  return { carpan: max, sebep: sebep };
+}
+
+function xpEkle(taban, kaynak) {
+  // taban: bu eylemin BASE XP'si (örn. 1 namaz = 10)
+  // Burada SADECE bereket bonusunu ekliyoruz (taban zaten state'ten geliyor)
+  const { carpan, sebep } = aktifCarpan();
+  if (carpan > 1) {
+    const bonus = Math.floor(taban * (carpan - 1));
+    if (bonus > 0) {
+      bonusXPArttir(bonus);
+      xpFloatGoster(bonus, sebep ? `+${bonus} XP · ${sebep} bereketi ×${carpan}` : `+${bonus} bereket XP`);
+    }
+  }
+  // Mertebe kontrolü
+  const yeniXP = toplamXP();
+  const mevcutMertebe = mertebeBul(yeniXP);
+  const enYuksek = parseInt(localStorage.getItem(MERTEBE_GECILEN_KEY) || '0');
+  if (mevcutMertebe.id > enYuksek) {
+    localStorage.setItem(MERTEBE_GECILEN_KEY, mevcutMertebe.id.toString());
+    setTimeout(() => mertebePopupGoster(mevcutMertebe), 600);
+  }
+  mertebeBannerGuncelle();
+  yolculukHaritasiCizdir();
+}
+
+function xpFloatGoster(miktar, mesaj) {
+  const konteyner = document.getElementById('xp-float-konteyner');
+  if (!konteyner) return;
+  const el = document.createElement('div');
+  el.className = 'xp-float';
+  el.textContent = mesaj || `+${miktar} XP`;
+  // Rastgele konum (orta-üst civarı)
+  const cw = window.innerWidth;
+  const ch = window.innerHeight;
+  el.style.left = `${Math.max(20, Math.min(cw - 200, cw / 2 - 90 + (Math.random() - 0.5) * 100))}px`;
+  el.style.top = `${ch * 0.35 + (Math.random() - 0.5) * 50}px`;
+  konteyner.appendChild(el);
+  setTimeout(() => el.remove(), 1700);
+}
+
+function mertebeBannerGuncelle() {
+  const xp = toplamXP();
+  const mertebe = mertebeBul(xp);
+  const kart = document.getElementById('mertebe-kart');
+  if (!kart) return;
+
+  // Mertebe class
+  kart.className = 'mertebe-kart ' + mertebe.sinif;
+
+  document.getElementById('mertebe-sembol').textContent = mertebe.sembol;
+  document.getElementById('mertebe-ad').innerHTML = mertebe.ad + ' <span id="carpan-rozet-konteyner"></span>';
+  document.getElementById('mertebe-xp').textContent = xp.toLocaleString('tr-TR') + ' XP';
+
+  // Progress
+  const sonraki = MERTEBELER[mertebe.id + 1];
+  if (sonraki) {
+    const aralikXP = sonraki.xp_min - mertebe.xp_min;
+    const mevcutAralik = xp - mertebe.xp_min;
+    const yuzde = Math.min(100, (mevcutAralik / aralikXP) * 100);
+    document.getElementById('mertebe-progress-dolgu').style.width = yuzde + '%';
+    document.getElementById('mertebe-progress-mevcut').textContent =
+      `${mevcutAralik.toLocaleString('tr-TR')} / ${aralikXP.toLocaleString('tr-TR')}`;
+    const kalan = sonraki.xp_min - xp;
+    document.getElementById('mertebe-progress-sonraki').textContent = `${sonraki.ad}'e ${kalan.toLocaleString('tr-TR')} XP`;
+    document.getElementById('mertebe-xp-alt').textContent = `${sonraki.ad}'e doğru`;
+  } else {
+    // Vâsıl - max
+    document.getElementById('mertebe-progress-dolgu').style.width = '100%';
+    document.getElementById('mertebe-progress-mevcut').textContent = 'Ulaştın';
+    document.getElementById('mertebe-progress-sonraki').textContent = 'En yüksek mertebede';
+    document.getElementById('mertebe-xp-alt').textContent = 'Zirve';
+  }
+
+  // Carpan rozeti
+  const { carpan, sebep } = aktifCarpan();
+  const rozetKont = document.getElementById('carpan-rozet-konteyner');
+  if (rozetKont) {
+    if (carpan > 1) {
+      const carpanText = (carpan === Math.floor(carpan)) ? carpan : carpan.toFixed(1).replace('.0','');
+      rozetKont.innerHTML = `<span class="carpan-rozet" title="${sebep || ''}">⚡ ×${carpanText} BEREKET</span>`;
+    } else {
+      rozetKont.innerHTML = '';
+    }
+  }
+}
+
+function yolculukHaritasiCizdir() {
+  const xp = toplamXP();
+  const mertebe = mertebeBul(xp);
+  const yolEl = document.getElementById('yh-yol');
+  if (!yolEl) return;
+
+  // Her noktayı gez
+  yolEl.querySelectorAll('.yh-nokta').forEach((n, idx) => {
+    n.classList.remove('gecildi','aktif');
+    if (idx < mertebe.id) n.classList.add('gecildi');
+    else if (idx === mertebe.id) n.classList.add('aktif');
+  });
+
+  // Çizgi dolgusu
+  const toplamNokta = MERTEBELER.length;
+  let dolguYuzde = 0;
+  if (mertebe.id < toplamNokta - 1) {
+    const sonraki = MERTEBELER[mertebe.id + 1];
+    const aralikXP = sonraki.xp_min - mertebe.xp_min;
+    const mevcutAralik = xp - mertebe.xp_min;
+    const yuzdeIciAralik = Math.min(1, mevcutAralik / aralikXP);
+    dolguYuzde = ((mertebe.id + yuzdeIciAralik) / (toplamNokta - 1)) * 100;
+  } else {
+    dolguYuzde = 100;
+  }
+  document.getElementById('yh-cizgi-dolgu').style.width = dolguYuzde + '%';
+
+  // Açıklama
+  const acElEl = document.getElementById('yh-aciklama');
+  if (acElEl) {
+    if (mertebe.id < toplamNokta - 1) {
+      const sonraki = MERTEBELER[mertebe.id + 1];
+      const kalan = sonraki.xp_min - xp;
+      acElEl.innerHTML = `Şu an <strong>${mertebe.ad}</strong> mertebesindesin. <strong>${sonraki.ad}</strong>'e ${kalan.toLocaleString('tr-TR')} XP kaldı.`;
+    } else {
+      acElEl.innerHTML = `Mâşaallah! En yüce mertebe <strong>Vâsıl</strong>\'a ulaştın. Şükür ile devam.`;
+    }
+  }
+}
+
+function yhNoktaTikla(idx) {
+  const m = MERTEBELER[idx];
+  const xp = toplamXP();
+  const mevcut = mertebeBul(xp);
+  let durum;
+  if (idx < mevcut.id) durum = '✓ Bu mertebeyi geçtin';
+  else if (idx === mevcut.id) durum = '⭐ Şu an buradasın';
+  else {
+    const fark = m.xp_min - xp;
+    durum = `Bu mertebeye ${fark.toLocaleString('tr-TR')} XP kaldı`;
+  }
+  toast(m.sembol, `${m.ad} — ${durum}`);
+}
+
+function mertebePopupGoster(mertebe) {
+  document.getElementById('mp-sembol').textContent = mertebe.sembol;
+  document.getElementById('mp-ad').textContent = mertebe.ad;
+  document.getElementById('mp-soz').innerHTML = mertebe.soz;
+  document.getElementById('mp-rehber').textContent = mertebe.rehber;
+  document.getElementById('mertebe-popup').classList.add('acik');
+}
+
+function mertebePopupKapat() {
+  document.getElementById('mertebe-popup').classList.remove('acik');
+}
+
+// herseyGuncelle'ye bağla
+const _eskiHerseyGuncelle = herseyGuncelle;
+herseyGuncelle = function() {
+  _eskiHerseyGuncelle();
+  try { mertebeBannerGuncelle(); } catch(e) { console.error('mertebe banner:', e); }
+  try { yolculukHaritasiCizdir(); } catch(e) { console.error('yolculuk:', e); }
+};
+
+// Aksiyonlara XP ekle (tabanı, bonus için)
+const _eskiDegistir = degistir;
+degistir = function(vakitId, miktar) {
+  _eskiDegistir(vakitId, miktar);
+  if (miktar > 0) {
+    xpEkle(miktar * 10, 'namaz');
+    xpFloatGoster(miktar * 10, `+${miktar * 10} XP · Namaz`);
+  }
+  // Tüm UI bileşenlerini yenile - güncelleme anında olsun
+  try { mertebeBannerGuncelle(); } catch(e){}
+  try { yolculukHaritasiCizdir(); } catch(e){}
+  try { rozetleriCizdir(); } catch(e){}
+};
+
+const _eskiZikirDegistir = zikirDegistir;
+zikirDegistir = function(miktar) {
+  const oncekiZikir = zikirSayisi;
+  _eskiZikirDegistir(miktar);
+  if (miktar > 0) {
+    const yeniXP = Math.floor(zikirSayisi / 100) * 5 - Math.floor(oncekiZikir / 100) * 5;
+    if (yeniXP > 0) {
+      xpEkle(yeniXP, 'zikir');
+      xpFloatGoster(yeniXP, `+${yeniXP} XP · Zikir`);
+    }
+  }
+  try { mertebeBannerGuncelle(); } catch(e){}
+  try { yolculukHaritasiCizdir(); } catch(e){}
+  try { rozetleriCizdir(); } catch(e){}
+};
+
+const _eskiIhlasDegistir = ihlasDegistir;
+ihlasDegistir = function(miktar) {
+  const onceki = ihlasSayisi;
+  _eskiIhlasDegistir(miktar);
+  if (miktar > 0) {
+    const yeniXP = Math.floor(ihlasSayisi / 100) * 5 - Math.floor(onceki / 100) * 5;
+    if (yeniXP > 0) {
+      xpEkle(yeniXP, 'ihlas');
+      xpFloatGoster(yeniXP, `+${yeniXP} XP · İhlâs`);
+    }
+  }
+  try { mertebeBannerGuncelle(); } catch(e){}
+  try { yolculukHaritasiCizdir(); } catch(e){}
+  try { rozetleriCizdir(); } catch(e){}
+};
+
+const _eskiEsmaZikirDegistir = esmaZikirDegistir;
+esmaZikirDegistir = function(miktar) {
+  const onceki = esmaToplamZikir();
+  const onceTamam = esmaTamamlananlar.size;
+  _eskiEsmaZikirDegistir(miktar);
+  if (miktar > 0) {
+    const yeni = esmaToplamZikir();
+    const yeniXP = Math.floor(yeni / 10) - Math.floor(onceki / 10);
+    if (yeniXP > 0) {
+      xpEkle(yeniXP, 'esma');
+      xpFloatGoster(yeniXP, `+${yeniXP} XP · Esmâ`);
+    }
+    if (esmaTamamlananlar.size > onceTamam) {
+      const tamamFark = esmaTamamlananlar.size - onceTamam;
+      const tamamXP = tamamFark * 50;
+      xpEkle(tamamXP, 'esma-tamam');
+      xpFloatGoster(tamamXP, `+${tamamXP} XP · Esmâ Tamamlandı`);
+    }
+  }
+  try { mertebeBannerGuncelle(); } catch(e){}
+  try { yolculukHaritasiCizdir(); } catch(e){}
+  try { rozetleriCizdir(); } catch(e){}
+};
+
+const _eskiEsmaZikirTamamla = esmaZikirTamamla;
+esmaZikirTamamla = function() {
+  const onceTamam = esmaTamamlananlar.size;
+  _eskiEsmaZikirTamamla();
+  if (esmaTamamlananlar.size > onceTamam) {
+    setTimeout(() => xpEkle(50, 'esma-tamam'), 100);
+    xpFloatGoster(50, `+50 XP · Esmâ Tamamlandı`);
+  }
+};
+
+// Mertebe init - mevcut state'te en yüksek geçilen mertebeyi kaydet (popup spam'i önle)
+setTimeout(() => {
+  const xp = toplamXP();
+  const mertebe = mertebeBul(xp);
+  const enYuksek = parseInt(localStorage.getItem(MERTEBE_GECILEN_KEY) || '-1');
+  if (enYuksek < 0) {
+    // İlk yükleme - sessizce ayarla
+    localStorage.setItem(MERTEBE_GECILEN_KEY, mertebe.id.toString());
+  }
+  mertebeBannerGuncelle();
+  yolculukHaritasiCizdir();
+}, 200);
+
+
+
+
+// ═══════════════════════════════════════════════════════════
+// PAKET 2: İnteraktif Heatmap + Günlük Niyet + Günün Sözü
+// ═══════════════════════════════════════════════════════════
+const NIYET_KEY = 'kn_niyet_v1';
+const NIYET_GECMIS_KEY = 'kn_niyet_gecmis_v1';
+
+const NIYETLER = [
+  { id:'affedilmek', ikon:'🤲', ad:'Affedilmek',
+    aciklama:'Geçmiş günahların bağışlanması niyetiyle. "Allah\'ım, beni affet, çünkü senden başka affedici yoktur."' },
+  { id:'sukur', ikon:'🙏', ad:'Şükür',
+    aciklama:'Verilen nimetlere şükür niyetiyle. "Eğer şükrederseniz, mutlaka size nimetimi artırırım." (İbrâhim, 7)' },
+  { id:'sabir', ikon:'💪', ad:'Sabır',
+    aciklama:'Zorluklara sabır niyetiyle. "Allah sabredenlerle beraberdir." (Bakara, 153)' },
+  { id:'sifa', ikon:'💚', ad:'Şifâ',
+    aciklama:'Kendinin veya bir yakının şifâsı niyetiyle. Hz. Eyyûb (a.s.) duâsı: "Ente erhamur-râhimîn."' },
+  { id:'hidayet', ikon:'🕊️', ad:'Hidâyet',
+    aciklama:'Doğru yolda kalmak niyetiyle. Fâtiha\'da her gün okuduğumuz: "Bizi doğru yola ilet."' },
+  { id:'yenilenme', ikon:'🌱', ad:'Yenilenme',
+    aciklama:'Manevi yenilenme ve tövbe niyetiyle. "Allah\'a samimi bir tövbe ile dönün." (Tahrîm, 8)' },
+  { id:'aile', ikon:'🌍', ad:'Aile için',
+    aciklama:'Aile fertlerinin hayrı ve hidâyeti niyetiyle. "Rabbim, beni ve çocuklarımdan namazını ikâme edenlerden eyle." (İbrâhim, 40)' },
+  { id:'vefat', ikon:'💞', ad:'Vefat Edenler',
+    aciklama:'Vefat eden yakınlar için niyetiyle. "Rabbim, beni, anne-babamı ve mü\'minleri bağışla." (Nûh, 28)' }
+];
+
+function niyetBugun() {
+  const raw = localStorage.getItem(NIYET_KEY);
+  if (!raw) return null;
+  try {
+    const v = JSON.parse(raw);
+    if (v.tarih === bugunTarih()) return v;
+  } catch(e) {}
+  return null;
+}
+
+let niyetSecim = null; // popup'ta tıklananın id'si
+
+function niyetBannerGuncelle() {
+  const banner = document.getElementById('niyet-banner');
+  const ikonEl = document.getElementById('niyet-banner-ikon');
+  const adEl = document.getElementById('niyet-banner-ad');
+  const degEl = document.getElementById('niyet-degistir');
+  if (!banner) return;
+  const n = niyetBugun();
+  if (n && n.id) {
+    const niyet = NIYETLER.find(x => x.id === n.id);
+    if (niyet) {
+      banner.classList.remove('bos');
+      ikonEl.textContent = niyet.ikon;
+      adEl.textContent = niyet.ad;
+      if (degEl) degEl.textContent = 'Değiştir';
+      return;
+    }
+  }
+  banner.classList.add('bos');
+  ikonEl.textContent = '🤲';
+  adEl.textContent = 'Niyet seçmek için tıkla';
+  if (degEl) degEl.textContent = 'Seç';
+}
+
+function niyetPopupAc() {
+  niyetSecim = null;
+  // Mevcut niyet varsa onu işaretle
+  const mevcut = niyetBugun();
+  if (mevcut) niyetSecim = mevcut.id;
+  niyetSecimGridDoldur();
+  document.getElementById('niyet-popup').classList.add('acik');
+}
+
+function niyetPopupKapat() {
+  document.getElementById('niyet-popup').classList.remove('acik');
+}
+
+function niyetSecimGridDoldur() {
+  const grid = document.getElementById('niyet-grid');
+  const acikEl = document.getElementById('niyet-aciklama');
+  const kaydetBtn = document.getElementById('niyet-kaydet-btn');
+  if (!grid) return;
+  grid.innerHTML = '';
+  NIYETLER.forEach(n => {
+    const btn = document.createElement('button');
+    btn.className = 'niyet-secim' + (niyetSecim === n.id ? ' aktif' : '');
+    btn.onclick = () => {
+      niyetSecim = n.id;
+      niyetSecimGridDoldur();
+      if (acikEl) {
+        acikEl.classList.add('gorunur');
+        acikEl.innerHTML = n.aciklama;
+      }
+      if (kaydetBtn) kaydetBtn.disabled = false;
+    };
+    btn.innerHTML = '<div class="niyet-secim-ikon">' + n.ikon + '</div><div class="niyet-secim-ad">' + n.ad + '</div>';
+    grid.appendChild(btn);
+  });
+  // Eğer secim varsa açıklamayı göster
+  if (niyetSecim) {
+    const n = NIYETLER.find(x => x.id === niyetSecim);
+    if (n && acikEl) {
+      acikEl.classList.add('gorunur');
+      acikEl.innerHTML = n.aciklama;
+    }
+    if (kaydetBtn) kaydetBtn.disabled = false;
+  }
+}
+
+function niyetKaydet() {
+  if (!niyetSecim) return;
+  const veri = { id: niyetSecim, tarih: bugunTarih() };
+  localStorage.setItem(NIYET_KEY, JSON.stringify(veri));
+  // Geçmişe ekle
+  let gecmis = [];
+  try { gecmis = JSON.parse(localStorage.getItem(NIYET_GECMIS_KEY) || '[]'); } catch(e){}
+  gecmis = gecmis.filter(x => x.tarih !== veri.tarih);
+  gecmis.push(veri);
+  if (gecmis.length > 365) gecmis = gecmis.slice(-365);
+  localStorage.setItem(NIYET_GECMIS_KEY, JSON.stringify(gecmis));
+  const n = NIYETLER.find(x => x.id === niyetSecim);
+  toast(n ? n.ikon : '🤲', `Niyet kaydedildi: ${n ? n.ad : ''}`, 'basari');
+  niyetPopupKapat();
+  niyetBannerGuncelle();
+}
+
+// ═══ GÜN DETAY POPUP (heatmap tıklama) ═══
+let gdAcikTarih = null;
+
+function gdPopupAc(tarih) {
+  gdAcikTarih = tarih;
+  document.getElementById('gd-baslik-ad').textContent = tarihYazi(new Date(tarih));
+  const d = new Date(tarih);
+  const bugun = new Date(bugunTarih());
+  const fark = Math.floor((bugun - d) / (1000*60*60*24));
+  let altYazi = '';
+  if (fark === 0) altYazi = 'Bugün';
+  else if (fark === 1) altYazi = 'Dün';
+  else if (fark < 0) altYazi = 'Gelecek tarih — düzenleme kapalı';
+  else altYazi = `${fark} gün önce`;
+  document.getElementById('gd-baslik-alt').textContent = altYazi;
+  gdVakitListeCizdir();
+  document.getElementById('gd-popup').classList.add('acik');
+}
+
+function gdPopupKapat() {
+  document.getElementById('gd-popup').classList.remove('acik');
+  gdAcikTarih = null;
+}
+
+function gdVakitListeCizdir() {
+  if (!gdAcikTarih) return;
+  const liste = document.getElementById('gd-vakit-liste');
+  liste.innerHTML = '';
+  const k = gunKaydi(gdAcikTarih);
+  const bugun = new Date(bugunTarih());
+  const d = new Date(gdAcikTarih);
+  const gelecek = d > bugun;
+
+  VAKITLER.forEach(v => {
+    const sayi = parseInt(k[v.id]) || 0;
+    const satir = document.createElement('div');
+    satir.className = 'gd-vakit-satir';
+    satir.innerHTML = `
+      <div class="gd-vakit-ikon">${v.ikon}</div>
+      <div class="gd-vakit-ad">${v.isim}</div>
+      <button class="gd-vakit-btn" onclick="gdDegistir('${v.id}', -1)" ${sayi === 0 || gelecek ? 'disabled' : ''}>−</button>
+      <div class="gd-vakit-rakam">${sayi}</div>
+      <button class="gd-vakit-btn" onclick="gdDegistir('${v.id}', 1)" ${gelecek ? 'disabled' : ''}>+</button>
+    `;
+    liste.appendChild(satir);
+  });
+  document.getElementById('gd-toplam').textContent = gunToplam(gdAcikTarih);
+}
+
+function gdDegistir(vakitId, miktar) {
+  if (!gdAcikTarih) return;
+  if (!kayitlar[gdAcikTarih]) {
+    kayitlar[gdAcikTarih] = { imsak:0, ogle:0, ikindi:0, aksam:0, yatsi:0, vitir:0 };
+  }
+  const mevcut = parseInt(kayitlar[gdAcikTarih][vakitId]) || 0;
+  const yeni = Math.max(0, mevcut + miktar);
+  // Borç sınırı
+  const vakit = VAKITLER.find(v => v.id === vakitId);
+  if (vakit && miktar > 0) {
+    const toplam = vakitToplamKildi(vakitId) - mevcut + yeni;
+    if (toplam > vakit.borc) {
+      toast('⚠️', `${vakit.isim} borç sınırına ulaştın`, 'hata');
+      return;
+    }
+  }
+  kayitlar[gdAcikTarih][vakitId] = yeni;
+  kaydet();
+  gdVakitListeCizdir();
+  herseyGuncelle();
+  // XP - sadece bugünse XP bildirimi anlamlı, geçmiş gün için sessiz
+  if (miktar > 0 && gdAcikTarih === bugunTarih()) {
+    setTimeout(() => xpEkle(miktar * 10, 'namaz'), 100);
+    xpFloatGoster(miktar * 10, `+${miktar * 10} XP · Namaz`);
+  }
+}
+
+// Heatmap tıklama bağla
+function heatmapTiklaBagla() {
+  document.querySelectorAll('.heatmap-hucre').forEach(h => {
+    if (h.dataset.tarih) {
+      h.onclick = () => gdPopupAc(h.dataset.tarih);
+    }
+  });
+}
+
+// heatmapCizdir'i override et — tarih dataset'i ekle
+const _eskiHeatmap = heatmapCizdir;
+heatmapCizdir = function() {
+  _eskiHeatmap();
+  // Karelere tarih ekle (cizmek son halinde)
+  const hm = document.getElementById('heatmap');
+  if (!hm) return;
+  const bugun = bugunTarih();
+  const hucreler = hm.querySelectorAll('.heatmap-hucre');
+  let idx = 0;
+  for (let i = 89; i >= 0; i--) {
+    if (idx >= hucreler.length) break;
+    const t = nDays(bugun, -i);
+    hucreler[idx].dataset.tarih = t;
+    hucreler[idx].onclick = () => gdPopupAc(t);
+    hucreler[idx].title = `${tarihFormat(t)}: ${gunToplam(t)} namaz — tıkla, düzenle`;
+    idx++;
+  }
+};
+
+// ═══ GÜNÜN SÖZÜ ═══
+const GUNLUK_SOZLER = [
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Niyetler ancak amellere göre değer kazanır; herkesin niyet ettiği ne ise eline geçecek olan da odur." (Buhârî, Müslim)',
+  '<strong>Hz. Ebû Bekir (r.a.):</strong> "Allah\'ın rahmetinden ümit kesmeyin; çünkü O, gizlide en çok lütfedicidir."',
+  '<strong>Hz. Ömer (r.a.):</strong> "Hesaba çekilmeden önce kendinizi hesaba çekin; tartılmadan önce kendinizi tartın."',
+  '<strong>Hz. Osman (r.a.):</strong> "Eğer kalpler temiz olsaydı, Allah\'ın kelâmından doyma olmazdı."',
+  '<strong>Hz. Ali (r.a.):</strong> "İlim, kişiyi yüceltir; mal ise alçaltabilir."',
+  '<strong>Hadis-i Şerif:</strong> "Allah, kullarından sadık kalbi olanı sever." (Hâkim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "İki nimet vardır ki insanların çoğu onları kıymetini bilmez: Sağlık ve boş vakit." (Buhârî)',
+  '<strong>Mevlânâ:</strong> "Sen yola çıktın ya, yol seni bekliyor zaten."',
+  '<strong>Yunus Emre:</strong> "Bir kez gönül yıktın ise, bu kıldığın namaz değil — yetmiş iki millet dahi elin yüzün yumaz değil."',
+  '<strong>İmam Gazâlî:</strong> "Allah\'ı arayan, kendini bulur. Kendini bulan, Allah\'ı bulur."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Niyet, âdetleri ibadete çevirir."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'minin namazda kıldığı her secdede, Allah onun derecesini yükseltir ve bir hatasını siler." (Müslim)',
+  '<strong>Hz. Ali (r.a.):</strong> "Sabır iki türlüdür: Hoşuna gitmeyen şeye sabır, hoşuna giden şeyden çekinmeye sabır."',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ın en sevdiği amel, az da olsa devamlı olanıdır." (Buhârî)',
+  '<strong>Hz. Ömer (r.a.):</strong> "Tövbeyi sonraya bırakmak büyük bir gaflettir."',
+  '<strong>İmam Şâfiî:</strong> "Eğer Kur\'an\'dan sadece Asr Sûresi inseydi, insanlara yeterdi."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Cennet, anaların ayakları altındadır." (Nesâî)',
+  '<strong>Hz. Aişe (r.a.):</strong> "Resûlullah\'ın ahlâkı Kur\'an\'dı." (Müslim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Sadakanın en faziletlisi, dargın iki gönlü barıştırmaktır." (Ebû Dâvûd)',
+  '<strong>İmam-ı Âzam Ebû Hanîfe:</strong> "İlmin afetlerinden biri, sabırsızlıktır."',
+  '<strong>Hadis-i Şerif:</strong> "Kim bana bir kere salavât getirirse, Allah ona on rahmet eyler." (Müslim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "İnsanların en hayırlısı, insanlara en faydalı olandır." (Beyhakî)',
+  '<strong>Sokrates\'in tövbesi gibi:</strong> Tövbe geç değildir; nefesin son anına kadar.',
+  '<strong>Mâlik bin Dînâr:</strong> "Allah, gözden değil; kalpten bakar."',
+  '<strong>Hz. Hasan-ı Basrî:</strong> "Mü\'min, gündüzünü ibadetle, gecesini de gözyaşıyla geçirir."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'ım! Senin rızanı kazanmadıkça hiçbir şey beni tatmin etmesin." (Hadis duâsı)',
+  '<strong>Hz. Ali (r.a.):</strong> "Aklın süsü hayâ, hayânın süsü tevazudur."',
+  '<strong>Hadis-i Kudsî:</strong> "Kulum bana bir karış yaklaşırsa, Ben ona bir arşın yaklaşırım." (Buhârî)',
+  '<strong>İbn Atâullah:</strong> "Rabbinden ümit kesme — secde et, kapısı her zaman açıktır."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'ı zikretmek, Allah katında en hayırlı, en faziletli ameldir." (Tirmizî)',
+  '<strong>Şah-ı Nakşibend:</strong> "Tövbe için yaş ve vakit beklenmez; ihlâs, sonsuza yeter."',
+  '<strong>Hz. Ömer (r.a.):</strong> "Ben senden istiğfar etmen için tutarken, bir an evvel istiğfar et."',
+  '<strong>Hadis-i Şerif:</strong> "İnsan, sevdiği ile beraberdir." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Hayrı söyleyin; yoksa susun." (Buhârî)',
+  '<strong>Yunus Emre:</strong> "İlim, ilim bilmektir — ilim kendin bilmektir. Sen kendini bilmezsen, ya nice okumaktır."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Müslüman, dilinden ve elinden müslümanların emin olduğu kimsedir." (Buhârî)',
+  '<strong>İmam Mâlik:</strong> "İlim çoğaltmak, ameli azaltmak için değildir."',
+  '<strong>Bediüzzaman:</strong> "Şu hayat-ı dünyeviyenin meşrû ve gayri meşrû her zevkinde, en hâlis lezzet, Allah\'ı zikretmektir."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'minin işi tuhaftır — her hâlinde hayır vardır. Sevinirse şükreder; üzülürse sabreder." (Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey âdemoğlu! Bana yöneldiğin sürece seni bağışlarım — günahların gökyüzü kadar olsa bile."'
+];
+
+function gunlukSozGoster() {
+  const el = document.getElementById('gs-metin');
+  if (!el) return;
+  const idx = gunIndeksi(GUNLUK_SOZLER.length);
+  el.innerHTML = GUNLUK_SOZLER[idx];
+}
+
+// Niyet motivasyon mesajı entegrasyonu
+const _eskiMotivasyonMesaji = (typeof motivasyonMesaji !== 'undefined') ? motivasyonMesaji : null;
+if (_eskiMotivasyonMesaji) {
+  motivasyonMesaji = function(toplam, borc, streak) {
+    const base = _eskiMotivasyonMesaji(toplam, borc, streak);
+    const niyet = niyetBugun();
+    if (niyet && niyet.id) {
+      const n = NIYETLER.find(x => x.id === niyet.id);
+      if (n) return n.ikon + ' Niyet: ' + n.ad + ' — ' + base;
+    }
+    return base;
+  };
+}
+
+// herseyGuncelle'ye Paket 2 fonksiyonlarını bağla
+const _eskiHerseyGuncelle2 = herseyGuncelle;
+herseyGuncelle = function() {
+  _eskiHerseyGuncelle2();
+  try { niyetBannerGuncelle(); } catch(e) { console.error('niyet:', e); }
+  try { gunlukSozGoster(); } catch(e) { console.error('gunluk soz:', e); }
+};
+
+// İlk yükleme - niyet popup açma kontrolü (yeni gün ve hiç niyet yoksa)
+setTimeout(() => {
+  niyetBannerGuncelle();
+  gunlukSozGoster();
+  // Eğer bugün için niyet yoksa ve henüz sorulmadıysa, 3 sn sonra popup aç
+  const bugun = bugunTarih();
+  const sorulduKey = 'kn_niyet_soruldu_' + bugun;
+  if (!niyetBugun() && !localStorage.getItem(sorulduKey)) {
+    setTimeout(() => {
+      localStorage.setItem(sorulduKey, '1');
+      niyetPopupAc();
+    }, 3000);
+  }
+}, 500);
+
 
 </script>
 </body>
