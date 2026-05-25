@@ -6,7 +6,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="İhyâ">
-<meta name="theme-color" content="#1B4332">
+<meta name="theme-color" content="#1B4332" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F2E1F" media="(prefers-color-scheme: dark)">
+<meta name="msapplication-TileColor" content="#1B4332">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
@@ -3525,6 +3527,851 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .gs-metin { font-size: 12px; }
 }
 
+
+/* ═══ SETUP WIZARD ═══ */
+.setup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(15,46,31,0.95) 0%, rgba(0,58,40,0.97) 100%);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: rozetFade 0.4s;
+  overflow-y: auto;
+}
+.setup-overlay.acik { display: flex; }
+.setup-kart {
+  background: var(--kart);
+  border-radius: 22px;
+  padding: 26px 22px;
+  max-width: 460px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  border: 2px solid var(--vurgu);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.setup-baslik-buyuk {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.setup-alt {
+  font-size: 13px;
+  color: var(--soft);
+  text-align: center;
+  margin-bottom: 18px;
+  line-height: 1.5;
+  font-style: italic;
+}
+.setup-ikon-buyuk { font-size: 56px; text-align: center; margin-bottom: 10px; }
+.setup-secenek {
+  width: 100%;
+  background: var(--bej);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+.setup-secenek:hover {
+  background: var(--altin-bg);
+  border-color: var(--vurgu);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(212,175,55,0.15);
+}
+.setup-secenek-ikon { font-size: 28px; flex-shrink: 0; }
+.setup-secenek-icerik { flex: 1; }
+.setup-secenek-ad {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: -0.2px;
+}
+.setup-secenek-alt {
+  font-size: 11px;
+  color: var(--soft);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.setup-secenek-ok {
+  font-size: 18px;
+  color: var(--vurgu);
+}
+
+.setup-form { margin-top: 6px; }
+.setup-form-grup { margin-bottom: 14px; }
+.setup-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--orta);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+.setup-input, .setup-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bej);
+  color: var(--metin);
+}
+.setup-input:focus, .setup-select:focus {
+  outline: none;
+  border-color: var(--vurgu);
+  background: var(--altin-bg);
+}
+.setup-cinsiyet-grup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.setup-cinsiyet-btn {
+  background: var(--bej);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--koyu);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.setup-cinsiyet-btn.aktif {
+  background: var(--altin-bg);
+  border-color: var(--vurgu);
+  color: var(--vurgu);
+}
+.setup-cinsiyet-ikon { font-size: 24px; display: block; margin-bottom: 4px; }
+
+.setup-onizleme {
+  background: linear-gradient(135deg, var(--altin-bg) 0%, #FFF4CE 100%);
+  border: 1px solid var(--vurgu);
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 14px;
+}
+.setup-onizleme-baslik {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.setup-onizleme-yas {
+  font-size: 13px;
+  color: var(--koyu);
+  margin-bottom: 6px;
+}
+.setup-onizleme-vakit {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.setup-onizleme-kart {
+  background: white;
+  border-radius: 8px;
+  padding: 8px 4px;
+  text-align: center;
+}
+.setup-onizleme-kart-ikon { font-size: 14px; }
+.setup-onizleme-kart-rakam {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
+}
+.setup-onizleme-kart-ad { font-size: 9px; color: var(--soft); margin-top: 2px; }
+
+.setup-aksiyon {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.setup-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.2px;
+  transition: all 0.2s;
+}
+.setup-btn-ana {
+  background: var(--orta);
+  color: white;
+  box-shadow: 0 4px 14px rgba(27,67,50,0.25);
+}
+.setup-btn-ana:hover { background: var(--koyu); }
+.setup-btn-geri {
+  background: transparent;
+  color: var(--soft);
+  border: 1px solid var(--border);
+}
+.setup-btn-geri:hover { background: var(--bej); }
+.setup-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.setup-uyari {
+  font-size: 11px;
+  color: var(--soft);
+  text-align: center;
+  margin-top: 12px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.setup-yedek-alan {
+  background: var(--bej);
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.setup-yedek-alan:hover { background: var(--altin-bg); border-color: var(--vurgu); }
+.setup-yedek-ikon { font-size: 42px; margin-bottom: 8px; }
+.setup-yedek-metin { font-size: 13px; color: var(--koyu); font-weight: 700; }
+.setup-yedek-alt { font-size: 11px; color: var(--soft); margin-top: 4px; }
+
+@media (max-width: 600px) {
+  .setup-kart { padding: 22px 18px; border-radius: 18px; }
+  .setup-baslik-buyuk { font-size: 19px; }
+  .setup-onizleme-kart-rakam { font-size: 11px; }
+}
+
+
+/* ═══ PAKET 3: CUMA + RAMAZAN + VIRDLER ═══ */
+
+/* Cuma Özel Kartı */
+.cuma-kart {
+  background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%);
+  color: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #C77DFF;
+  box-shadow: 0 8px 24px rgba(74,20,140,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.cuma-kart::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cuma-baslik {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.cuma-baslik-ikon { font-size: 26px; }
+.cuma-baslik-ad {
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.2px;
+  flex: 1;
+}
+.cuma-baslik-rozet {
+  background: var(--vurgu);
+  color: var(--koyu);
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.cuma-bolum {
+  background: rgba(0,0,0,0.25);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.cuma-bolum:last-child { margin-bottom: 0; }
+.cuma-bolum-baslik {
+  font-size: 11px;
+  font-weight: 800;
+  color: #E0AAFF;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cuma-kehf-liste { display: flex; flex-direction: column; gap: 4px; }
+.cuma-kehf-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.08);
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cuma-kehf-item:hover { background: rgba(255,255,255,0.15); }
+.cuma-kehf-item.tamam { background: rgba(212,175,55,0.25); }
+.cuma-kehf-item.tamam .cuma-kehf-ad { text-decoration: line-through; opacity: 0.85; }
+.cuma-kehf-box {
+  width: 22px; height: 22px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--koyu);
+}
+.cuma-kehf-item.tamam .cuma-kehf-box { background: var(--vurgu); border-color: var(--vurgu); }
+.cuma-kehf-item.tamam .cuma-kehf-box::before { content: '✓'; font-weight: 800; }
+.cuma-kehf-ad { font-size: 12px; color: white; flex: 1; font-weight: 600; }
+.cuma-kehf-aciklama { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+
+.cuma-salavat-rakam {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--vurgu);
+  text-align: center;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin: 6px 0;
+}
+.cuma-salavat-progress {
+  background: rgba(0,0,0,0.3);
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.cuma-salavat-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu) 0%, var(--altin-soft) 100%);
+  border-radius: 3px;
+  transition: width 0.4s;
+}
+.cuma-salavat-btnlar {
+  display: flex;
+  gap: 6px;
+}
+.cuma-salavat-btn {
+  flex: 1;
+  background: var(--vurgu);
+  color: var(--koyu);
+  border: none;
+  padding: 9px 4px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+}
+.cuma-salavat-btn:hover { background: var(--altin-soft); }
+.cuma-tamam {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--vurgu);
+  padding: 10px;
+  background: rgba(212,175,55,0.2);
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+/* Ramazan Kartı */
+.ramazan-kart {
+  background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 50%, #40916C 100%);
+  color: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 2px solid var(--vurgu);
+  box-shadow: 0 8px 24px rgba(27,67,50,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.ramazan-kart::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 90% 10%, rgba(212,175,55,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.ramazan-baslik {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.ramazan-baslik-ad {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--altin-soft);
+  letter-spacing: -0.3px;
+  flex: 1;
+  font-family: 'Amiri', Georgia, serif;
+}
+.ramazan-istatistik {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.ramazan-stat {
+  background: rgba(0,0,0,0.25);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.ramazan-stat-rakam {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.ramazan-stat-etiket {
+  font-size: 9px;
+  color: var(--altin-soft);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 700;
+}
+.ramazan-cuz-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  position: relative;
+  z-index: 1;
+}
+.ramazan-cuz {
+  aspect-ratio: 1;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ramazan-cuz:hover { background: rgba(255,255,255,0.2); }
+.ramazan-cuz.okundu {
+  background: var(--vurgu);
+  color: var(--koyu);
+  border-color: var(--vurgu);
+  box-shadow: 0 2px 8px rgba(212,175,55,0.3);
+}
+.ramazan-cuz.bugun {
+  border-color: var(--vurgu);
+  border-width: 2px;
+  animation: bugunPulse 2s ease-in-out infinite;
+}
+@keyframes bugunPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(212,175,55,0); }
+}
+
+/* Virdler */
+.vird-bolum-kart {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.vird-tab-bar {
+  display: flex;
+  gap: 4px;
+  background: var(--bej);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 14px;
+}
+.vird-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--soft);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.vird-tab-btn.aktif {
+  background: var(--orta);
+  color: white;
+  box-shadow: 0 2px 6px rgba(27,67,50,0.15);
+}
+.vird-liste { display: flex; flex-direction: column; gap: 6px; }
+.vird-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bej);
+  border-left: 3px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.vird-item:hover { background: var(--altin-bg); border-left-color: var(--vurgu); }
+.vird-item.tamam {
+  background: #E8F5E9;
+  border-left-color: var(--orta);
+}
+.vird-item.tamam .vird-ad { text-decoration: line-through; opacity: 0.8; }
+.vird-box {
+  width: 22px; height: 22px;
+  border: 2px solid var(--orta);
+  border-radius: 6px;
+  flex-shrink: 0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+}
+.vird-item.tamam .vird-box { background: var(--orta); }
+.vird-item.tamam .vird-box::before { content: '✓'; font-weight: 800; }
+.vird-bilgi { flex: 1; }
+.vird-ad { font-size: 13px; font-weight: 700; color: var(--koyu); letter-spacing: -0.1px; }
+.vird-sayi {
+  font-size: 11px;
+  color: var(--vurgu);
+  font-weight: 700;
+  background: var(--altin-bg);
+  padding: 2px 7px;
+  border-radius: 8px;
+  margin-left: 4px;
+}
+.vird-aciklama { font-size: 11px; color: var(--soft); margin-top: 2px; line-height: 1.4; }
+.vird-ozet-kart {
+  background: linear-gradient(135deg, var(--altin-bg) 0%, #FFF4CE 100%);
+  border: 1px solid var(--vurgu);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vird-ozet-metin {
+  font-size: 12px;
+  color: var(--koyu);
+  font-weight: 700;
+}
+.vird-ozet-rakam {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.3px;
+}
+.vird-tamam-bilgi {
+  text-align: center;
+  padding: 10px;
+  background: #D7F4DC;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--koyu);
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .cuma-salavat-rakam { font-size: 30px; }
+  .ramazan-stat-rakam { font-size: 20px; }
+  .ramazan-cuz-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+  .ramazan-cuz { font-size: 10px; }
+}
+
+
+/* Arapça tam metin (mushaf görünümü) */
+.dua-arapca-tam {
+  font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+  font-size: 23px;
+  line-height: 2.4;
+  color: var(--koyu);
+  text-align: right;
+  direction: rtl;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFFBEC 50%, #FFF8E7 100%);
+  border-radius: 14px;
+  margin: 10px 0;
+  border: 1px solid rgba(212,175,55,0.35);
+  box-shadow: inset 0 0 30px rgba(212,175,55,0.06);
+  letter-spacing: 0;
+  word-spacing: 1px;
+}
+.dua-okunus-baslik {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--orta);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin: 14px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+@media (max-width: 600px) {
+  .dua-arapca-tam { font-size: 20px; line-height: 2.2; padding: 14px; }
+}
+
+
+/* ═══ PAKET 4 ═══ */
+
+/* Esnek madalyalar (haftalık döngü) */
+.esnek-madalya-bolum {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.em-baslik {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.em-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.em-kart {
+  background: var(--bej);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 6px;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+.em-kart.kazanildi {
+  background: linear-gradient(135deg, var(--altin-bg) 0%, #FFF4CE 100%);
+  border-color: var(--vurgu);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.18);
+}
+.em-kart.kazanildi::before {
+  content: '✓';
+  position: absolute;
+  top: 2px; right: 4px;
+  color: var(--orta);
+  font-size: 11px;
+  font-weight: 800;
+}
+.em-ikon { font-size: 24px; margin-bottom: 3px; filter: grayscale(60%); }
+.em-kart.kazanildi .em-ikon { filter: none; }
+.em-ad {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: -0.2px;
+}
+.em-aciklama { font-size: 9px; color: var(--soft); margin-top: 2px; line-height: 1.3; }
+
+/* All-time rekorlar */
+.rekor-bolum {
+  background: linear-gradient(135deg, var(--koyu) 0%, var(--orta) 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--vurgu);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(15,46,31,0.2);
+}
+.rekor-bolum::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 90% 10%, rgba(212,175,55,0.18) 0%, transparent 50%);
+  pointer-events: none;
+}
+.rekor-baslik {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--altin-soft);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+.rekor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+.rekor-item {
+  background: rgba(0,0,0,0.25);
+  border-radius: 12px;
+  padding: 12px 10px;
+  border: 1px solid rgba(212,175,55,0.2);
+}
+.rekor-ikon { font-size: 18px; margin-bottom: 4px; }
+.rekor-rakam {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.rekor-etiket {
+  font-size: 9px;
+  color: var(--altin-soft);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.rekor-tarih { font-size: 8px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+/* Konfeti animasyon */
+.konfeti-konteyner {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1350;
+  overflow: hidden;
+}
+.konfeti-parca {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  top: -20px;
+  border-radius: 2px;
+  animation: konfetiDus 3s linear forwards;
+}
+@keyframes konfetiDus {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* Yıldız parlama */
+@keyframes yildizParla {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.7; }
+}
+.mertebe-popup-icerik.yildizli::after {
+  content: '✨';
+  position: absolute;
+  top: 20px; left: 30px;
+  font-size: 24px;
+  animation: yildizParla 1.5s ease-in-out infinite;
+}
+
+/* Ayar paneli (ses, bildirim) */
+.ayar-paneli {
+  background: var(--kart);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.ayar-baslik {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--soft);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ayar-satir {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ayar-satir:last-child { border-bottom: none; }
+.ayar-info { flex: 1; }
+.ayar-ad {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--koyu);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ayar-alt { font-size: 11px; color: var(--soft); margin-top: 1px; }
+.ayar-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.ayar-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 20px; height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.ayar-switch.aktif { background: var(--orta); }
+.ayar-switch.aktif::after { transform: translateX(20px); }
+
 </style>
 </head>
 <body>
@@ -3580,6 +4427,57 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
   <!-- Mübarek günler bandı (varsa görünür) -->
   <div id="mb-bandi-konteyner"></div>
+
+  <!-- CUMA ÖZEL KARTI -->
+  <div class="cuma-kart" id="cuma-kart" style="display:none;">
+    <div class="cuma-baslik">
+      <div class="cuma-baslik-ikon">🕌</div>
+      <div class="cuma-baslik-ad">Cuma Mübarek Olsun</div>
+      <div class="cuma-baslik-rozet" id="cuma-rozet-durum">0/2</div>
+    </div>
+    <div class="cuma-bolum">
+      <div class="cuma-bolum-baslik">📖 Kehf Sûresi Okuma</div>
+      <div class="cuma-kehf-liste" id="cuma-kehf-liste"></div>
+    </div>
+    <div class="cuma-bolum">
+      <div class="cuma-bolum-baslik">🤲 Salavât Hedefi: 100</div>
+      <div class="cuma-salavat-rakam" id="cuma-salavat-rakam">0</div>
+      <div class="cuma-salavat-progress"><div class="cuma-salavat-dolgu" id="cuma-salavat-dolgu" style="width:0%"></div></div>
+      <div class="cuma-salavat-btnlar">
+        <button class="cuma-salavat-btn" onclick="cumaSalavatEkle(10)">+10</button>
+        <button class="cuma-salavat-btn" onclick="cumaSalavatEkle(33)">+33</button>
+        <button class="cuma-salavat-btn" onclick="cumaSalavatEkle(100)">+100</button>
+      </div>
+      <div id="cuma-tamam-bilgi"></div>
+    </div>
+  </div>
+
+  <!-- RAMAZAN KARTI -->
+  <div class="ramazan-kart" id="ramazan-kart" style="display:none;">
+    <div class="ramazan-baslik">
+      <div style="font-size:28px;">🌙</div>
+      <div class="ramazan-baslik-ad">Ramazan-ı Şerîf Mübarek Olsun</div>
+    </div>
+    <div class="ramazan-istatistik">
+      <div class="ramazan-stat">
+        <div class="ramazan-stat-rakam" id="ramazan-cuz-okunan">0</div>
+        <div class="ramazan-stat-etiket">/ 30 Cüz</div>
+      </div>
+      <div class="ramazan-stat">
+        <div class="ramazan-stat-rakam" id="ramazan-gun">—</div>
+        <div class="ramazan-stat-etiket">Ramazan</div>
+      </div>
+      <div class="ramazan-stat">
+        <div class="ramazan-stat-rakam" id="ramazan-yuzde">0%</div>
+        <div class="ramazan-stat-etiket">Hatim</div>
+      </div>
+    </div>
+    <div class="ramazan-cuz-grid" id="ramazan-cuz-grid"></div>
+    <div style="font-size:10px; color:var(--altin-soft); margin-top:10px; text-align:center; position:relative; z-index:1; opacity:0.8;">
+      Her gün 1 cüz okuyup tıkla. 30 gün boyunca hatim hedefin.
+    </div>
+  </div>
+
 
   
   <!-- Günlük Niyet -->
@@ -3776,6 +4674,26 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
 
+      
+      <div class="bolum acilir" id="bolum-virdler">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-virdler')">🌅 Sabah-Akşam Virdleri <span class="badge" id="virdler-badge">Her gün okumalı</span></div>
+        <div class="bolum-icerik">
+          <div class="vird-ozet-kart">
+            <div class="vird-ozet-metin" id="vird-ozet-metin">Bugünün virdleri</div>
+            <div class="vird-ozet-rakam" id="vird-ozet-rakam">0 / 0</div>
+          </div>
+          <div class="vird-tab-bar">
+            <button class="vird-tab-btn aktif" id="vird-tab-sabah" onclick="virdTabDegistir('sabah')">🌅 Sabah Virdleri</button>
+            <button class="vird-tab-btn" id="vird-tab-aksam" onclick="virdTabDegistir('aksam')">🌆 Akşam Virdleri</button>
+          </div>
+          <div class="vird-liste" id="vird-liste"></div>
+          <div id="vird-tamam-bilgi"></div>
+          <div class="bilgi-kutu" style="margin-top:14px; font-size:11px;">
+            <strong>Hisn al-Muslim (Müslüman'ın Kalkanı):</strong> Bu virdler Hz. Peygamber'in (s.a.v.) sünnetinden seçilmiştir. Sabah Fecir vakti ile İkindi arası, Akşam İkindi ile Yatsı arası okunur.
+          </div>
+        </div>
+      </div>
+
       <div class="bolum acilir" id="bolum-dualar">
         <div class="bolum-baslik" onclick="bolumToggle('bolum-dualar')">📖 Dualar ve Sureler <span class="badge" id="dua-sayim">12 dua</span></div>
         <div class="bolum-icerik">
@@ -3901,6 +4819,44 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
 
+      
+      <!-- Esnek Madalyalar (haftalık döngü) -->
+      <div class="esnek-madalya-bolum">
+        <div class="em-baslik">🎖️ Bu Haftanın Onurları</div>
+        <div class="em-grid" id="em-grid"></div>
+      </div>
+
+      <!-- All-time Rekorlar -->
+      <div class="rekor-bolum">
+        <div class="rekor-baslik">🏆 Kişisel Rekorlar</div>
+        <div class="rekor-grid">
+          <div class="rekor-item">
+            <div class="rekor-ikon">🔥</div>
+            <div class="rekor-rakam" id="rekor-streak">0</div>
+            <div class="rekor-etiket">En uzun streak</div>
+            <div class="rekor-tarih" id="rekor-streak-tarih">—</div>
+          </div>
+          <div class="rekor-item">
+            <div class="rekor-ikon">💪</div>
+            <div class="rekor-rakam" id="rekor-gun">0</div>
+            <div class="rekor-etiket">En iyi gün</div>
+            <div class="rekor-tarih" id="rekor-gun-tarih">—</div>
+          </div>
+          <div class="rekor-item">
+            <div class="rekor-ikon">📅</div>
+            <div class="rekor-rakam" id="rekor-hafta">0</div>
+            <div class="rekor-etiket">En iyi hafta</div>
+            <div class="rekor-tarih">son 7 gün rekoru</div>
+          </div>
+          <div class="rekor-item">
+            <div class="rekor-ikon">📆</div>
+            <div class="rekor-rakam" id="rekor-ay">0</div>
+            <div class="rekor-etiket">En iyi ay</div>
+            <div class="rekor-tarih">son 30 gün rekoru</div>
+          </div>
+        </div>
+      </div>
+
       <div class="bolum acilir" id="bolum-rozetler">
         <div class="bolum-baslik" onclick="bolumToggle('bolum-rozetler')">🥇 Kazanılan Rozetler <span class="badge" id="rozet-sayisi">0/12</span></div>
         <div class="bolum-icerik">
@@ -3948,13 +4904,32 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     </div>
   </div>
 
+  <!-- Ayar paneli -->
+  <div class="ayar-paneli">
+    <div class="ayar-baslik">⚙️ Ayarlar</div>
+    <div class="ayar-satir">
+      <div class="ayar-info">
+        <div class="ayar-ad">🔊 Ses Geri Bildirimleri</div>
+        <div class="ayar-alt">Namaz, rozet, zikir eklemede kısa ses</div>
+      </div>
+      <div class="ayar-switch" id="ayar-ses" onclick="ayarSesToggle()"></div>
+    </div>
+    <div class="ayar-satir">
+      <div class="ayar-info">
+        <div class="ayar-ad">🔔 Bildirimler</div>
+        <div class="ayar-alt">Streak ve görev hatırlatmaları</div>
+      </div>
+      <div class="ayar-switch" id="ayar-bildirim" onclick="ayarBildirimToggle()"></div>
+    </div>
+  </div>
+
   <div class="bolum">
     <div class="bolum-baslik">💾 Veri Yönetimi</div>
     <div class="aksiyon-satir" style="margin-top:0; padding-top:0; border-top:none;">
       <button class="aksiyon-btn" onclick="yedekIndir()">📥 JSON Yedek İndir</button>
       <button class="aksiyon-btn" onclick="document.getElementById('import-file').click()">📤 Yedekten Yükle</button>
       <input type="file" id="import-file" accept=".json" style="display:none" onchange="iceAktar(event)">
-      <button class="aksiyon-btn tehlikeli" onclick="tumunuSifirla()" style="margin-left:auto;">🔄 Tüm Verileri Sıfırla</button>
+      <button class="aksiyon-btn" onclick="setupYenidenAc()" style="background:transparent; color:var(--orta); border-color:var(--orta); margin-right:6px;">📅 Borçları Yeniden Hesapla</button><button class="aksiyon-btn tehlikeli" onclick="tumunuSifirla()" style="margin-left:auto;">🔄 Tüm Verileri Sıfırla</button>
     </div>
   </div>
 
@@ -4066,13 +5041,22 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 // =========================================================
 // SABİTLER VE VARSAYILAN BORÇLAR
 // =========================================================
-const VAKITLER = [
-  { id:'imsak',  isim:'Sabah',  borc:10865, ikon:'🌅', sinif:'imsak'  },
-  { id:'ogle',   isim:'Öğle',   borc:10950, ikon:'☀️', sinif:'ogle'   },
-  { id:'ikindi', isim:'İkindi', borc:10950, ikon:'🌇', sinif:'ikindi' },
-  { id:'aksam',  isim:'Akşam',  borc:10950, ikon:'🌆', sinif:'aksam'  },
-  { id:'yatsi',  isim:'Yatsı',  borc:10950, ikon:'🌙', sinif:'yatsi'  }
+// Varsayılan borç değerleri (kullanıcı setup'ta kendi değerlerini girer)
+const VAKITLER_DEFAULT_BORC = { imsak:10865, ogle:10950, ikindi:10950, aksam:10950, yatsi:10950 };
+const BORCLAR_KEY = 'kn_borclar_v1';
+let kullaniciBorclar = JSON.parse(localStorage.getItem(BORCLAR_KEY) || 'null') || VAKITLER_DEFAULT_BORC;
+let VAKITLER = [
+  { id:'imsak',  isim:'Sabah',  borc:kullaniciBorclar.imsak  || VAKITLER_DEFAULT_BORC.imsak,  ikon:'🌅', sinif:'imsak'  },
+  { id:'ogle',   isim:'Öğle',   borc:kullaniciBorclar.ogle   || VAKITLER_DEFAULT_BORC.ogle,   ikon:'☀️', sinif:'ogle'   },
+  { id:'ikindi', isim:'İkindi', borc:kullaniciBorclar.ikindi || VAKITLER_DEFAULT_BORC.ikindi, ikon:'🌇', sinif:'ikindi' },
+  { id:'aksam',  isim:'Akşam',  borc:kullaniciBorclar.aksam  || VAKITLER_DEFAULT_BORC.aksam,  ikon:'🌆', sinif:'aksam'  },
+  { id:'yatsi',  isim:'Yatsı',  borc:kullaniciBorclar.yatsi  || VAKITLER_DEFAULT_BORC.yatsi,  ikon:'🌙', sinif:'yatsi'  }
 ];
+function vakitBorclariUygula(yeniBorclar) {
+  kullaniciBorclar = yeniBorclar;
+  localStorage.setItem(BORCLAR_KEY, JSON.stringify(yeniBorclar));
+  VAKITLER.forEach(v => { if (yeniBorclar[v.id]) v.borc = yeniBorclar[v.id]; });
+}
 
 const ROZET_KATEGORILER = {
   adim:    { ikon:'🚶', ad:'Adımlar',            sira:1 },
@@ -6041,6 +7025,7 @@ const DUALAR = [
       '<b>6</b> Sırâtallezîne en\'amte aleyhim ğayril-mağdûbi aleyhim ve led-dâllîn. Âmîn.'
     ],
     anlam: 'Hamd, âlemlerin Rabbi olan Allah\'a mahsustur. O Rahmân ve Rahîm\'dir. Din gününün sahibidir. Yalnız sana ibadet eder, yalnız senden yardım dileriz. Bizi doğru yola ilet. Kendilerine nimet verdiklerinin yoluna, gazaba uğramışların ve sapmışların yoluna değil. Âmîn.',
+    arapca: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿١﴾ الرَّحْمَنِ الرَّحِيمِ ﴿٢﴾ مَالِكِ يَوْمِ الدِّينِ ﴿٣﴾ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ﴿٤﴾ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ﴿٥﴾ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ﴿٧﴾ آمين',
     fazilet: '✨ Her namazda okunan, "Kur\'an\'ın anası" olarak isimlendirilen sûre. Şifa için ve hacetin görülmesi için 7-41-100 kere okunur.'
   },
 {
@@ -6053,6 +7038,7 @@ const DUALAR = [
       '<b>255</b> Allâhü lâ ilâhe illâ hüvel hayyül kayyûm. Lâ te\'huzühû sinetün ve lâ nevm. Lehû mâ fis-semâvâti vemâ fil-ard. Men zellezî yeşfeu ındehû illâ bi-iznih. Ya\'lemü mâ beyne eydîhim vemâ halfehüm. Velâ yühîtûne bi-şey\'in min ılmihî illâ bi-mâ şâ\'. Vesia kürsiyyühüs-semâvâti vel-ard, velâ yeûdühû hıfzuhümâ ve hüvel-aliyyül-azîm.'
     ],
     anlam: 'Allah, kendisinden başka hiçbir ilâh olmayandır. Diridir, kayyumdur. O\'nu ne bir uyuklama tutabilir, ne de bir uyku. Göklerdeki her şey, yerdeki her şey O\'nundur. İzni olmaksızın O\'nun katında şefaatte bulunacak kimdir? O, kullarının önlerindekini ve arkalarındakini (yaptıklarını ve yapacaklarını) bilir. Onlar O\'nun ilminden, kendisinin dilediği kadarından başkasını kavrayamazlar. O\'nun kürsüsü bütün gökleri ve yeri kaplayıp kuşatmıştır. (O, göklere, yere, bütün evrene hükmetmektedir.) Gökleri ve yeri koruyup gözetmek O\'na güç gelmez. O, yücedir, büyüktür.',
+    arapca: 'اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ ﴿٢٥٥﴾',
     fazilet: '✨ Her farz namazın ardından okunduğunda kişinin cennete girmesine engel kalmaz (Nesâî, Müslim). Uyumadan önce okuyana Allah\'tan bir koruyucu görevlendirilir.'
   },
 {
@@ -6066,6 +7052,7 @@ const DUALAR = [
       '<b>286</b> Lâ yükellifullâhü nefsen illâ vüs\'ahâ. Lehâ mâ kesebet ve aleyhâ mektesebet. Rabbenâ lâ tü\'âhıznâ in nesînâ ev ahta\'nâ. Rabbenâ velâ tahmil aleynâ ısran kemâ hameltehû alellezîne min kablinâ. Rabbenâ velâ tühammilnâ mâ lâ tâkate lenâ bih. Va\'fü annâ vağfir lenâ verhamnâ ente Mevlânâ fensurnâ ale\'l-kavmi\'l-kâfirîn.'
     ],
     anlam: 'Peygamber ve mü\'minler, Rabbi tarafından kendisine indirilene iman ettiler. Hepsi Allah\'a, meleklerine, kitaplarına ve peygamberlerine iman ettiler. "Onun peygamberlerinden hiçbirini diğerinden ayırt etmeyiz" dediler. Şöyle dediler: "İşittik, itaat ettik. Bağışlamanı dileriz Rabbimiz! Dönüş yalnız sanadır." Allah bir kimseyi ancak gücünün yettiği şeyle yükümlü kılar. Onun kazandığı iyilik kendi yararına, kötülük de kendi zararınadır. (Şöyle diyerek dua edin:) "Ey Rabbimiz! Unutur, ya da yanılırsak bizi sorumlu tutma! Ey Rabbimiz! Bize, bizden öncekilere yüklediğin gibi ağır yük yükleme. Ey Rabbimiz! Bize gücümüzün yetmediği şeyleri yükleme! Bizi affet, bizi bağışla, bize acı! Sen bizim Mevlâmızsın. Kâfirler topluluğuna karşı bize yardım et."',
+    arapca: 'آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِنْ رُسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ ﴿٢٨٥﴾ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنْتَ مَوْلَانَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ ﴿٢٨٦﴾',
     fazilet: '✨ Yatmadan önce okuyana o gece için yeter (Buhârî, Müslim). Şeytanı evden uzaklaştırır.'
   },
 {
@@ -6086,9 +7073,40 @@ const DUALAR = [
       '<b>71</b> Yuslıh leküm a\'mâleküm ve yağfir leküm zünûbeküm, ve men yutı\'illâhe ve resûlehû fekad fâze fevzen azîmâ.'
     ],
     anlam: '<strong>21.</strong> Andolsun, Allah\'ın Resûlünde sizin için, Allah\'a ve âhiret gününe kavuşmayı uman ve Allah\'ı çokça zikreden kimseler için güzel bir örnek vardır. <br><br><strong>35.</strong> Şüphesiz Müslüman erkeklerle Müslüman kadınlar, mü\'min erkeklerle mü\'min kadınlar, itaatkâr erkeklerle itaatkâr kadınlar, doğru erkeklerle doğru kadınlar, sabreden erkeklerle sabreden kadınlar, Allah\'a derinden saygı duyan erkeklerle saygı duyan kadınlar, sadaka veren erkeklerle sadaka veren kadınlar, oruç tutan erkeklerle oruç tutan kadınlar, namuslarını koruyan erkeklerle namuslarını koruyan kadınlar, Allah\'ı çokça anan erkeklerle Allah\'ı çokça anan kadınlar — işte onlar için Allah, bağışlanma ve büyük mükâfat hazırlamıştır. <br><br><strong>40.</strong> Muhammed, sizin erkeklerinizden hiçbirinin babası değildir. Fakat O, Allah\'ın Resûlü ve nebîlerin sonuncusudur. Allah, her şeyi hakkıyla bilendir. <br><br><strong>41-43.</strong> Ey iman edenler! Allah\'ı çokça zikredin ve O\'nu sabah-akşam tesbih edin. O, sizi karanlıklardan aydınlığa çıkarmak için lütufta bulunandır; melekleri de sizin için bağışlanma diler. Allah, mü\'minlere karşı çok merhametlidir. <br><br><strong>56.</strong> Şüphesiz Allah ve melekleri Peygamber\'e salât ediyorlar. Ey iman edenler! Siz de O\'na salât edin ve esenlikle selâm verin. <br><br><strong>70-71.</strong> Ey iman edenler! Allah\'a karşı gelmekten sakının ve doğru söz söyleyin ki, Allah amellerinizi ıslah etsin ve günahlarınızı bağışlasın. Kim Allah\'a ve Resûlüne itaat ederse, büyük bir kurtuluşa ermiş olur.',
+    arapca: 'لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ لِمَنْ كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ وَذَكَرَ اللَّهَ كَثِيرًا ﴿٢١﴾ إِنَّ الْمُسْلِمِينَ وَالْمُسْلِمَاتِ وَالْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ وَالْقَانِتِينَ وَالْقَانِتَاتِ وَالصَّادِقِينَ وَالصَّادِقَاتِ وَالصَّابِرِينَ وَالصَّابِرَاتِ وَالْخَاشِعِينَ وَالْخَاشِعَاتِ وَالْمُتَصَدِّقِينَ وَالْمُتَصَدِّقَاتِ وَالصَّائِمِينَ وَالصَّائِمَاتِ وَالْحَافِظِينَ فُرُوجَهُمْ وَالْحَافِظَاتِ وَالذَّاكِرِينَ اللَّهَ كَثِيرًا وَالذَّاكِرَاتِ أَعَدَّ اللَّهُ لَهُمْ مَغْفِرَةً وَأَجْرًا عَظِيمًا ﴿٣٥﴾ مَا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِنْ رِجَالِكُمْ وَلَكِنْ رَسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ ۗ وَكَانَ اللَّهُ بِكُلِّ شَيْءٍ عَلِيمًا ﴿٤٠﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْرًا كَثِيرًا ﴿٤١﴾ وَسَبِّحُوهُ بُكْرَةً وَأَصِيلًا ﴿٤٢﴾ هُوَ الَّذِي يُصَلِّي عَلَيْكُمْ وَمَلَائِكَتُهُ لِيُخْرِجَكُمْ مِنَ الظُّلُمَاتِ إِلَى النُّورِ ۚ وَكَانَ بِالْمُؤْمِنِينَ رَحِيمًا ﴿٤٣﴾ إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا ﴿٥٦﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَقُولُوا قَوْلًا سَدِيدًا ﴿٧٠﴾ يُصْلِحْ لَكُمْ أَعْمَالَكُمْ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَمَنْ يُطِعِ اللَّهَ وَرَسُولَهُ فَقَدْ فَازَ فَوْزًا عَظِيمًا ﴿٧١﴾',
     fazilet: '✨ Salavât âyeti olarak meşhur 56. âyet ile peygamber sevgisi pekiştirilir. Cuma günü ve mübarek gecelerde okunması tavsiye edilir. Müslüman ahlâkının özünü ortaya koyan 35. âyet hâline kavuşmak için.'
   },
-  {
+{
+    id: 'yasin',
+    ad: 'Yâsîn Sûresi',
+    ikon: '💎',
+    alt: '36. Sûre — 83 âyet — "Kur\'an\'ın kalbi"',
+    bismillah: true,
+    arapca: 'يَس ﴿١﴾ وَالْقُرْآنِ الْحَكِيمِ ﴿٢﴾ إِنَّكَ لَمِنَ الْمُرْسَلِينَ ﴿٣﴾ عَلَى صِرَاطٍ مُسْتَقِيمٍ ﴿٤﴾ تَنْزِيلَ الْعَزِيزِ الرَّحِيمِ ﴿٥﴾ لِتُنْذِرَ قَوْمًا مَا أُنْذِرَ آبَاؤُهُمْ فَهُمْ غَافِلُونَ ﴿٦﴾ لَقَدْ حَقَّ الْقَوْلُ عَلَى أَكْثَرِهِمْ فَهُمْ لَا يُؤْمِنُونَ ﴿٧﴾ إِنَّا جَعَلْنَا فِي أَعْنَاقِهِمْ أَغْلَالًا فَهِيَ إِلَى الْأَذْقَانِ فَهُمْ مُقْمَحُونَ ﴿٨﴾ وَجَعَلْنَا مِنْ بَيْنِ أَيْدِيهِمْ سَدًّا وَمِنْ خَلْفِهِمْ سَدًّا فَأَغْشَيْنَاهُمْ فَهُمْ لَا يُبْصِرُونَ ﴿٩﴾ وَسَوَاءٌ عَلَيْهِمْ أَأَنْذَرْتَهُمْ أَمْ لَمْ تُنْذِرْهُمْ لَا يُؤْمِنُونَ ﴿١٠﴾ إِنَّمَا تُنْذِرُ مَنِ اتَّبَعَ الذِّكْرَ وَخَشِيَ الرَّحْمَنَ بِالْغَيْبِ فَبَشِّرْهُ بِمَغْفِرَةٍ وَأَجْرٍ كَرِيمٍ ﴿١١﴾ إِنَّا نَحْنُ نُحْيِ الْمَوْتَى وَنَكْتُبُ مَا قَدَّمُوا وَآثَارَهُمْ ۚ وَكُلَّ شَيْءٍ أَحْصَيْنَاهُ فِي إِمَامٍ مُبِينٍ ﴿١٢﴾ ... <br><br> سَلَامٌ قَوْلًا مِنْ رَبٍّ رَحِيمٍ ﴿٥٨﴾ ... <br><br> أَوَلَيْسَ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ بِقَادِرٍ عَلَى أَنْ يَخْلُقَ مِثْلَهُمْ ۚ بَلَى وَهُوَ الْخَلَّاقُ الْعَلِيمُ ﴿٨١﴾ إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَنْ يَقُولَ لَهُ كُنْ فَيَكُونُ ﴿٨٢﴾ فَسُبْحَانَ الَّذِي بِيَدِهِ مَلَكُوتُ كُلِّ شَيْءٍ وَإِلَيْهِ تُرْجَعُونَ ﴿٨٣﴾',
+    ayetler: [
+      '<b>1</b> Yâ-Sîn.',
+      '<b>2</b> Vel-Kur\'âni\'l-hakîm.',
+      '<b>3</b> İnneke leminel-mürselîn.',
+      '<b>4</b> Alâ sırâtın müstakîm.',
+      '<b>5</b> Tenzîlel-Azîzir-Rahîm.',
+      '<b>6</b> Litünzira kavmen mâ ünzira âbâühüm fehüm gâfilûn.',
+      '<b>7</b> Lekad hakkal-kavlü alâ ekserihim fehüm lâ yü\'minûn.',
+      '<b>8</b> İnnâ cealnâ fî a\'nâkıhim ağlâlen fehiye ile\'l-ezkâni fehüm mukmehûn.',
+      '<b>9</b> Ve cealnâ min beyni eydîhim sedden ve min halfihim sedden feağşeynâhüm fehüm lâ yübsırûn.',
+      '<b>10</b> Ve sevâün aleyhim e enzertehüm em lem tünzirhüm lâ yü\'minûn.',
+      '<b>11</b> İnnemâ tünziru menittebea\'z-zikra ve haşiyer-Rahmâne bil-ğayb, febeşşirhü bi-mağfiratin ve ecrin kerîm.',
+      '<b>12</b> İnnâ nahnü nuhyi\'l-mevtâ ve nektübü mâ kaddemû ve âsârahüm, ve külle şey\'in ahsaynâhü fî imâmin mübîn.',
+      '<em>(13-57. âyetler — Antakya hikâyesi, kâinâtın delilleri, kıyâmet sahnesi…)</em>',
+      '<b>58</b> Selâmün kavlen min Rabbi\'r-Rahîm.',
+      '<em>(59-80. âyetler — Cennet ve cehennem ehlinin durumu, yaratıcının kudreti…)</em>',
+      '<b>81</b> Eveleysellezî halekas-semâvâti vel-arda bi-kâdirin alâ en yahluka mislehüm? Belâ ve hüvel-Hallâkul-Alîm.',
+      '<b>82</b> İnnemâ emrühû izâ erâde şey\'en en yekûle lehû kün feyekûn.',
+      '<b>83</b> Fesübhânellezî bi-yedihî melekûtü külli şey\'in ve ileyhi türceûn.'
+    ],
+    anlam: 'Yâ-Sîn. Hikmet dolu Kur\'an\'a yemin olsun ki, sen elbette gönderilmiş peygamberlerden ve dosdoğru bir yol üzerindesin. Bu (Kur\'an), Aziz ve Rahîm Allah tarafından indirilmiştir. Ataları uyarılmamış bir kavmi uyarman için… Onlar gaflet içindeler. Hayatı ve ölümü Biz veririz; insanların yaptıklarını ve eserlerini Biz kaydederiz; her şeyi apaçık bir kitapta tespit ettik. (Sûrenin tamamı için Diyanet meali tavsiye edilir.) <br><br> Son âyetler: Gökleri ve yeri yaratan, onların benzerini yaratmaya kâdir değil midir? Elbette kâdirdir; O her şeyi bilen Hallâk\'tır. Bir şeyi murâd ettiğinde sözü ancak \"Ol\" demektir; hemen oluverir. Her şeyin melekûtü elinde olan Allah\'ın şânı ne yücedir. Sonunda O\'na döndürüleceksiniz.',
+    fazilet: '✨ "Kur\'an\'ın kalbidir Yâsîn" (Tirmizî). Her gece okuyana bağışlanma vesilesi olur. Ölmek üzere olan birinin başında okunması müstehab — ruh teslimini kolaylaştırır. Hayır niyetiyle okunması yaygın bir sünnettir.'
+  },
+{
     id: 'fetih',
     ad: 'Fetih Sûresi',
     ikon: '🌟',
@@ -6105,6 +7123,7 @@ const DUALAR = [
       '<b>29</b> Muhammedün rasûlullâh, vellezîne meahû eşiddâü alel-küffâri ruhamâü beynehüm, terâhüm rukkean süccedâ, yebteğûne fadlan minallâhi ve rıdvânâ.'
     ],
     anlam: 'Doğrusu Biz sana apaçık bir fetih verdik. Bu, Allah\'ın senin geçmiş ve gelecek günahlarını bağışlaması, sana olan nimetini tamamlaması, seni dosdoğru bir yola iletmesi ve Allah\'ın sana çok güçlü bir zafer vermesi içindir. Mü\'minlerin kalplerine, imanlarını kat kat artıracak şekilde sekîne (huzur) indiren O\'dur. Muhammed Allah\'ın elçisidir. Onunla beraber olanlar, kâfirlere karşı şiddetli, kendi aralarında ise merhametlidirler.',
+    arapca: 'إِنَّا فَتَحْنَا لَكَ فَتْحًا مُبِينًا ﴿١﴾ لِيَغْفِرَ لَكَ اللَّهُ مَا تَقَدَّمَ مِنْ ذَنْبِكَ وَمَا تَأَخَّرَ وَيُتِمَّ نِعْمَتَهُ عَلَيْكَ وَيَهْدِيَكَ صِرَاطًا مُسْتَقِيمًا ﴿٢﴾ وَيَنْصُرَكَ اللَّهُ نَصْرًا عَزِيزًا ﴿٣﴾ هُوَ الَّذِي أَنْزَلَ السَّكِينَةَ فِي قُلُوبِ الْمُؤْمِنِينَ لِيَزْدَادُوا إِيمَانًا مَعَ إِيمَانِهِمْ ۗ وَلِلَّهِ جُنُودُ السَّمَاوَاتِ وَالْأَرْضِ ۚ وَكَانَ اللَّهُ عَلِيمًا حَكِيمًا ﴿٤﴾ لِيُدْخِلَ الْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ جَنَّاتٍ تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ خَالِدِينَ فِيهَا وَيُكَفِّرَ عَنْهُمْ سَيِّئَاتِهِمْ ۚ وَكَانَ ذَلِكَ عِنْدَ اللَّهِ فَوْزًا عَظِيمًا ﴿٥﴾ لَقَدْ صَدَقَ اللَّهُ رَسُولَهُ الرُّؤْيَا بِالْحَقِّ ۖ لَتَدْخُلُنَّ الْمَسْجِدَ الْحَرَامَ إِنْ شَاءَ اللَّهُ آمِنِينَ مُحَلِّقِينَ رُءُوسَكُمْ وَمُقَصِّرِينَ لَا تَخَافُونَ ﴿٢٧﴾ هُوَ الَّذِي أَرْسَلَ رَسُولَهُ بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ ۚ وَكَفَى بِاللَّهِ شَهِيدًا ﴿٢٨﴾ مُحَمَّدٌ رَسُولُ اللَّهِ ۚ وَالَّذِينَ مَعَهُ أَشِدَّاءُ عَلَى الْكُفَّارِ رُحَمَاءُ بَيْنَهُمْ ۖ تَرَاهُمْ رُكَّعًا سُجَّدًا يَبْتَغُونَ فَضْلًا مِنَ اللَّهِ وَرِضْوَانًا ﴿٢٩﴾',
     fazilet: '✨ Maddî-manevî fetihler için okunur. Sıkıntılarda kolaylık, hayırlı sonuç için. Zafer ve müjde sûresi.'
   },
 {
@@ -6137,7 +7156,40 @@ const DUALAR = [
       '<b>78</b> Tebârekesmü rabbike zil-celâli vel-ikrâm.'
     ],
     anlam: 'O, Rahmân\'dır. Kur\'an\'ı O öğretti. İnsanı O yarattı. Ona beyanı (konuşmayı) O öğretti. Güneş ve ay bir hesaba göre hareket eder. Otlar ve ağaçlar da secde ederler. Göğü yükseltti ve mîzânı (ölçüyü) koydu. Şu hâlde tartıda taşkınlık etmeyin. Yeryüzünde ne varsa fânîdir. Yalnız celâl ve ikram sahibi Rabbinin yüzü (zâtı) bâkîdir. — "Şimdi Rabbinizin nimetlerinden hangisini yalanlayabilirsiniz?" (Bu âyet sûre boyunca 31 kez tekrarlanır.)',
+    arapca: 'الرَّحْمَنُ ﴿١﴾ عَلَّمَ الْقُرْآنَ ﴿٢﴾ خَلَقَ الْإِنْسَانَ ﴿٣﴾ عَلَّمَهُ الْبَيَانَ ﴿٤﴾ الشَّمْسُ وَالْقَمَرُ بِحُسْبَانٍ ﴿٥﴾ وَالنَّجْمُ وَالشَّجَرُ يَسْجُدَانِ ﴿٦﴾ وَالسَّمَاءَ رَفَعَهَا وَوَضَعَ الْمِيزَانَ ﴿٧﴾ أَلَّا تَطْغَوْا فِي الْمِيزَانِ ﴿٨﴾ وَأَقِيمُوا الْوَزْنَ بِالْقِسْطِ وَلَا تُخْسِرُوا الْمِيزَانَ ﴿٩﴾ وَالْأَرْضَ وَضَعَهَا لِلْأَنَامِ ﴿١٠﴾ فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ﴿١٣﴾ خَلَقَ الْإِنْسَانَ مِنْ صَلْصَالٍ كَالْفَخَّارِ ﴿١٤﴾ وَخَلَقَ الْجَانَّ مِنْ مَارِجٍ مِنْ نَارٍ ﴿١٥﴾ فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ﴿١٦﴾ رَبُّ الْمَشْرِقَيْنِ وَرَبُّ الْمَغْرِبَيْنِ ﴿١٧﴾ فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ﴿١٨﴾ مَرَجَ الْبَحْرَيْنِ يَلْتَقِيَانِ ﴿١٩﴾ بَيْنَهُمَا بَرْزَخٌ لَا يَبْغِيَانِ ﴿٢٠﴾ كُلُّ مَنْ عَلَيْهَا فَانٍ ﴿٢٦﴾ وَيَبْقَى وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ ﴿٢٧﴾ تَبَارَكَ اسْمُ رَبِّكَ ذِي الْجَلَالِ وَالْإِكْرَامِ ﴿٧٨﴾',
     fazilet: '✨ "Kur\'an\'ın gelini" denir. Allah\'ın nimetlerini hatırlatır, şükrü çoğaltır. Her hayırlı iş için okunur, evlere bereket getirir.'
+  },
+{
+    id: 'vakia',
+    ad: 'Vâkıa Sûresi',
+    ikon: '🌾',
+    alt: '56. Sûre — 96 âyet — rızık için meşhur',
+    bismillah: true,
+    arapca: 'إِذَا وَقَعَتِ الْوَاقِعَةُ ﴿١﴾ لَيْسَ لِوَقْعَتِهَا كَاذِبَةٌ ﴿٢﴾ خَافِضَةٌ رَافِعَةٌ ﴿٣﴾ إِذَا رُجَّتِ الْأَرْضُ رَجًّا ﴿٤﴾ وَبُسَّتِ الْجِبَالُ بَسًّا ﴿٥﴾ فَكَانَتْ هَبَاءً مُنْبَثًّا ﴿٦﴾ وَكُنْتُمْ أَزْوَاجًا ثَلَاثَةً ﴿٧﴾ فَأَصْحَابُ الْمَيْمَنَةِ مَا أَصْحَابُ الْمَيْمَنَةِ ﴿٨﴾ وَأَصْحَابُ الْمَشْأَمَةِ مَا أَصْحَابُ الْمَشْأَمَةِ ﴿٩﴾ وَالسَّابِقُونَ السَّابِقُونَ ﴿١٠﴾ أُولَئِكَ الْمُقَرَّبُونَ ﴿١١﴾ فِي جَنَّاتِ النَّعِيمِ ﴿١٢﴾ ... <br><br> أَفَرَأَيْتُمْ مَا تَحْرُثُونَ ﴿٦٣﴾ أَأَنْتُمْ تَزْرَعُونَهُ أَمْ نَحْنُ الزَّارِعُونَ ﴿٦٤﴾ ... <br><br> فَسَبِّحْ بِاسْمِ رَبِّكَ الْعَظِيمِ ﴿٧٤﴾ ... <br><br> إِنَّ هَذَا لَهُوَ حَقُّ الْيَقِينِ ﴿٩٥﴾ فَسَبِّحْ بِاسْمِ رَبِّكَ الْعَظِيمِ ﴿٩٦﴾',
+    ayetler: [
+      '<b>1</b> İzâ vekaati\'l-vâkıah.',
+      '<b>2</b> Leyse li-vak\'atihâ kâzibeh.',
+      '<b>3</b> Hâfidatün râfiah.',
+      '<b>4</b> İzâ rüccetil-ardu raccâ.',
+      '<b>5</b> Ve büssetil-cibâlü bessâ.',
+      '<b>6</b> Fekânet hebâen münbessâ.',
+      '<b>7</b> Ve küntüm ezvâcen selâseh.',
+      '<b>8</b> Feashâbül-meymeneti mâ ashâbül-meymeneh.',
+      '<b>9</b> Ve ashâbül-meş\'emeti mâ ashâbül-meş\'emeh.',
+      '<b>10</b> Ves-sâbikûnes-sâbikûn.',
+      '<b>11</b> Ülâikel-mukarrabûn.',
+      '<b>12</b> Fî cennâti\'n-naîm.',
+      '<em>(13-62. âyetler — cennet ve cehennem ehlinin nimet ve azapları…)</em>',
+      '<b>63</b> Eferaeytüm mâ tahrusûn.',
+      '<b>64</b> E\'entüm tezraûnehû em nahnüz-zâriûn.',
+      '<em>(65-73. âyetler — yaratılışın delilleri, rızık ve şükür…)</em>',
+      '<b>74</b> Fesebbih bi\'smi rabbike\'l-azîm.',
+      '<em>(75-94. âyetler — Kur\'an\'ın yüceliği, ölüm anı, hesap…)</em>',
+      '<b>95</b> İnne hâzâ lehüve hakku\'l-yakîn.',
+      '<b>96</b> Fesebbih bi\'smi rabbike\'l-azîm.'
+    ],
+    anlam: 'O olacak vâkıa olduğunda — onun olmasında yalan yoktur. (O gün) yer şiddetle sarsılır, dağlar paramparça olup savrulan toz haline gelir. O gün siz üç sınıfa ayrılırsınız: Sağdakiler — ne mutlu o sağdakilere! Soldakiler — ne yazık o soldakilere! Ve önde olanlar — onlar mukarrebûndur, nimet cennetlerinde olacaklardır. (...) Ektiğinize bakın: onu siz mi bitiriyorsunuz yoksa Biz mi? Öyleyse büyük Rabbinin adını tesbîh et. Şüphesiz bu, kesin gerçektir. Öyleyse büyük Rabbinin adını tesbîh et.',
+    fazilet: '✨ "Her gece Vâkıa Sûresi\'ni okuyana fakirlik dokunmaz" (İbn Mâce — zayıf rivayet ama yaygın amel). Rızık ve bereket için her gece okumak müstehab kabul edilmiştir.'
   },
 {
     id: 'hasr-son',
@@ -6153,6 +7205,7 @@ const DUALAR = [
       '<b>24</b> Hüvallâhül-Hâlikul-Bâriül-Müsavviru lehül-esmâül-hüsnâ. Yüsebbihu lehû mâ fis-semâvâti vel-ard. Ve hüvel-Azîzül-Hakîm.'
     ],
     anlam: 'Eğer biz bu Kur\'an\'ı bir dağa indirseydik, elbette sen onu, Allah korkusundan başını eğmiş, parça parça olmuş görürdün. Bu misalleri biz insanlara, düşünüp ibret alsınlar diye veriyoruz. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. Gaybı da, görünen âlemi de bilendir. O, Rahmân\'dır, Rahîm\'dir. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. O, mülkün gerçek sahibi, kutsal (her türlü eksiklikten uzak), barış ve esenliğin kaynağı, güvenlik veren, gözetip koruyan, mutlak güç sahibi, düzeltip ıslah eden ve dilediğini yaptıran ve büyüklükte eşsiz olan Allah\'tır. Allah, onların ortak koştuklarından uzaktır. O, yaratan, yoktan var eden, şekil veren Allah\'tır. Güzel isimler O\'nundur. Göklerdeki ve yerdeki her şey O\'nu tesbih eder. O, mutlak güç sahibidir, hüküm ve hikmet sahibidir.',
+    arapca: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ <br>لَوْ أَنْزَلْنَا هَذَا الْقُرْآنَ عَلَى جَبَلٍ لَرَأَيْتَهُ خَاشِعًا مُتَصَدِّعًا مِنْ خَشْيَةِ اللَّهِ ۚ وَتِلْكَ الْأَمْثَالُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ ﴿٢١﴾ هُوَ اللَّهُ الَّذِي لَا إِلَهَ إِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمَنُ الرَّحِيمُ ﴿٢٢﴾ هُوَ اللَّهُ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ ۚ سُبْحَانَ اللَّهِ عَمَّا يُشْرِكُونَ ﴿٢٣﴾ هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْأَسْمَاءُ الْحُسْنَى ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿٢٤﴾',
     fazilet: '✨ Sabah ve akşam okuyana 70 bin melek dua eder. O gece veya ertesi gün ölürse şehit olarak ölür (Tirmizî, Dârimî).'
   },
 {
@@ -6171,6 +7224,7 @@ const DUALAR = [
       '<b>11</b> Ve izâ raev ticâraten ev lehven, infaddû ileyhâ ve terakûke kâimâ, kul mâ indallâhi hayrun minel-lehvi ve minet-ticârah, vallâhü hayrur-râzikîn.'
     ],
     anlam: 'Göklerdeki ve yerdeki her şey, mülkün gerçek sahibi, mukaddes, mutlak güç sahibi, hüküm ve hikmet sahibi olan Allah\'ı tesbih eder. O, ümmîlere içlerinden, kendilerine âyetlerini okuyan, onları temizleyen, onlara kitabı ve hikmeti öğreten bir peygamber gönderendir. Ey iman edenler! Cuma günü namaza çağrıldığınız zaman Allah\'ı zikre koşun ve alışverişi bırakın. Eğer bilirseniz bu sizin için daha hayırlıdır. Namaz kılındıktan sonra yeryüzüne dağılın, Allah\'ın lütfundan isteyin. Allah\'ı çok zikredin ki kurtuluşa eresiniz.',
+    arapca: 'يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ الْمَلِكِ الْقُدُّوسِ الْعَزِيزِ الْحَكِيمِ ﴿١﴾ هُوَ الَّذِي بَعَثَ فِي الْأُمِّيِّينَ رَسُولًا مِنْهُمْ يَتْلُو عَلَيْهِمْ آيَاتِهِ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ الْكِتَابَ وَالْحِكْمَةَ وَإِنْ كَانُوا مِنْ قَبْلُ لَفِي ضَلَالٍ مُبِينٍ ﴿٢﴾ وَآخَرِينَ مِنْهُمْ لَمَّا يَلْحَقُوا بِهِمْ ۚ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿٣﴾ ذَلِكَ فَضْلُ اللَّهِ يُؤْتِيهِ مَنْ يَشَاءُ ۚ وَاللَّهُ ذُو الْفَضْلِ الْعَظِيمِ ﴿٤﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِنْ يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَى ذِكْرِ اللَّهِ وَذَرُوا الْبَيْعَ ۚ ذَلِكُمْ خَيْرٌ لَكُمْ إِنْ كُنْتُمْ تَعْلَمُونَ ﴿٩﴾ فَإِذَا قُضِيَتِ الصَّلَاةُ فَانْتَشِرُوا فِي الْأَرْضِ وَابْتَغُوا مِنْ فَضْلِ اللَّهِ وَاذْكُرُوا اللَّهَ كَثِيرًا لَعَلَّكُمْ تُفْلِحُونَ ﴿١٠﴾ وَإِذَا رَأَوْا تِجَارَةً أَوْ لَهْوًا انْفَضُّوا إِلَيْهَا وَتَرَكُوكَ قَائِمًا ۚ قُلْ مَا عِنْدَ اللَّهِ خَيْرٌ مِنَ اللَّهْوِ وَمِنَ التِّجَارَةِ ۚ وَاللَّهُ خَيْرُ الرَّازِقِينَ ﴿١١﴾',
     fazilet: '✨ Cuma günü okunması özellikle tavsiye edilir. Bereket, rızık ve manevi kurtuluş için. Yâsîn\'den sonra cuma günü okunan en faziletli sûrelerdendir.'
   },
 {
@@ -6212,6 +7266,7 @@ const DUALAR = [
       '<b>30</b> Kul eraeytüm in asbeha mâüküm ğavran femen ye\'tîküm bi-mâin maîn.'
     ],
     anlam: 'Mülk Sûresi (Tebâreke), Kur\'an\'ın 67. sûresidir. Allah\'ın hükümranlığını, yaratıcılığını ve kullarına lütfunu anlatır.',
+    arapca: 'تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ ﴿١﴾ الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ الْعَزِيزُ الْغَفُورُ ﴿٢﴾ الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَا تَرَى فِي خَلْقِ الرَّحْمَنِ مِنْ تَفَاوُتٍ ۖ فَارْجِعِ الْبَصَرَ هَلْ تَرَى مِنْ فُطُورٍ ﴿٣﴾ ثُمَّ ارْجِعِ الْبَصَرَ كَرَّتَيْنِ يَنْقَلِبْ إِلَيْكَ الْبَصَرُ خَاسِئًا وَهُوَ حَسِيرٌ ﴿٤﴾ وَلَقَدْ زَيَّنَّا السَّمَاءَ الدُّنْيَا بِمَصَابِيحَ وَجَعَلْنَاهَا رُجُومًا لِلشَّيَاطِينِ ۖ وَأَعْتَدْنَا لَهُمْ عَذَابَ السَّعِيرِ ﴿٥﴾ وَلِلَّذِينَ كَفَرُوا بِرَبِّهِمْ عَذَابُ جَهَنَّمَ ۖ وَبِئْسَ الْمَصِيرُ ﴿٦﴾ إِذَا أُلْقُوا فِيهَا سَمِعُوا لَهَا شَهِيقًا وَهِيَ تَفُورُ ﴿٧﴾ تَكَادُ تَمَيَّزُ مِنَ الْغَيْظِ ۖ كُلَّمَا أُلْقِيَ فِيهَا فَوْجٌ سَأَلَهُمْ خَزَنَتُهَا أَلَمْ يَأْتِكُمْ نَذِيرٌ ﴿٨﴾ قَالُوا بَلَى قَدْ جَاءَنَا نَذِيرٌ فَكَذَّبْنَا وَقُلْنَا مَا نَزَّلَ اللَّهُ مِنْ شَيْءٍ إِنْ أَنْتُمْ إِلَّا فِي ضَلَالٍ كَبِيرٍ ﴿٩﴾ وَقَالُوا لَوْ كُنَّا نَسْمَعُ أَوْ نَعْقِلُ مَا كُنَّا فِي أَصْحَابِ السَّعِيرِ ﴿١٠﴾ فَاعْتَرَفُوا بِذَنْبِهِمْ فَسُحْقًا لِأَصْحَابِ السَّعِيرِ ﴿١١﴾ إِنَّ الَّذِينَ يَخْشَوْنَ رَبَّهُمْ بِالْغَيْبِ لَهُمْ مَغْفِرَةٌ وَأَجْرٌ كَبِيرٌ ﴿١٢﴾ وَأَسِرُّوا قَوْلَكُمْ أَوِ اجْهَرُوا بِهِ ۖ إِنَّهُ عَلِيمٌ بِذَاتِ الصُّدُورِ ﴿١٣﴾ أَلَا يَعْلَمُ مَنْ خَلَقَ وَهُوَ اللَّطِيفُ الْخَبِيرُ ﴿١٤﴾ هُوَ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ ذَلُولًا فَامْشُوا فِي مَنَاكِبِهَا وَكُلُوا مِنْ رِزْقِهِ ۖ وَإِلَيْهِ النُّشُورُ ﴿١٥﴾ أَأَمِنْتُمْ مَنْ فِي السَّمَاءِ أَنْ يَخْسِفَ بِكُمُ الْأَرْضَ فَإِذَا هِيَ تَمُورُ ﴿١٦﴾ أَمْ أَمِنْتُمْ مَنْ فِي السَّمَاءِ أَنْ يُرْسِلَ عَلَيْكُمْ حَاصِبًا ۖ فَسَتَعْلَمُونَ كَيْفَ نَذِيرِ ﴿١٧﴾ وَلَقَدْ كَذَّبَ الَّذِينَ مِنْ قَبْلِهِمْ فَكَيْفَ كَانَ نَكِيرِ ﴿١٨﴾ أَوَلَمْ يَرَوْا إِلَى الطَّيْرِ فَوْقَهُمْ صَافَّاتٍ وَيَقْبِضْنَ ۚ مَا يُمْسِكُهُنَّ إِلَّا الرَّحْمَنُ ۚ إِنَّهُ بِكُلِّ شَيْءٍ بَصِيرٌ ﴿١٩﴾ أَمَّنْ هَذَا الَّذِي هُوَ جُنْدٌ لَكُمْ يَنْصُرُكُمْ مِنْ دُونِ الرَّحْمَنِ ۚ إِنِ الْكَافِرُونَ إِلَّا فِي غُرُورٍ ﴿٢٠﴾ أَمَّنْ هَذَا الَّذِي يَرْزُقُكُمْ إِنْ أَمْسَكَ رِزْقَهُ ۚ بَلْ لَجُّوا فِي عُتُوٍّ وَنُفُورٍ ﴿٢١﴾ أَفَمَنْ يَمْشِي مُكِبًّا عَلَى وَجْهِهِ أَهْدَى أَمَّنْ يَمْشِي سَوِيًّا عَلَى صِرَاطٍ مُسْتَقِيمٍ ﴿٢٢﴾ قُلْ هُوَ الَّذِي أَنْشَأَكُمْ وَجَعَلَ لَكُمُ السَّمْعَ وَالْأَبْصَارَ وَالْأَفْئِدَةَ ۖ قَلِيلًا مَا تَشْكُرُونَ ﴿٢٣﴾ قُلْ هُوَ الَّذِي ذَرَأَكُمْ فِي الْأَرْضِ وَإِلَيْهِ تُحْشَرُونَ ﴿٢٤﴾ وَيَقُولُونَ مَتَى هَذَا الْوَعْدُ إِنْ كُنْتُمْ صَادِقِينَ ﴿٢٥﴾ قُلْ إِنَّمَا الْعِلْمُ عِنْدَ اللَّهِ وَإِنَّمَا أَنَا نَذِيرٌ مُبِينٌ ﴿٢٦﴾ فَلَمَّا رَأَوْهُ زُلْفَةً سِيئَتْ وُجُوهُ الَّذِينَ كَفَرُوا وَقِيلَ هَذَا الَّذِي كُنْتُمْ بِهِ تَدَّعُونَ ﴿٢٧﴾ قُلْ أَرَأَيْتُمْ إِنْ أَهْلَكَنِيَ اللَّهُ وَمَنْ مَعِيَ أَوْ رَحِمَنَا فَمَنْ يُجِيرُ الْكَافِرِينَ مِنْ عَذَابٍ أَلِيمٍ ﴿٢٨﴾ قُلْ هُوَ الرَّحْمَنُ آمَنَّا بِهِ وَعَلَيْهِ تَوَكَّلْنَا ۖ فَسَتَعْلَمُونَ مَنْ هُوَ فِي ضَلَالٍ مُبِينٍ ﴿٢٩﴾ قُلْ أَرَأَيْتُمْ إِنْ أَصْبَحَ مَاؤُكُمْ غَوْرًا فَمَنْ يَأْتِيكُمْ بِمَاءٍ مَعِينٍ ﴿٣٠﴾',
     fazilet: '✨ Her gece yatmadan önce okuyanı kabir azabından korur (Tirmizî, Nesâî). "Mülk Sûresi kabir azabını engelleyendir" buyurulmuştur.'
   },
 {
@@ -6233,6 +7288,7 @@ const DUALAR = [
       '<b>10</b> Alel-kâfirîne ğayru yesîr.'
     ],
     anlam: 'Ey örtüsüne bürünen (Peygamber)! Kalk ve uyar. Rabbini yücelt. Elbiseni temiz tut. Şirkten uzaklaş. İyilik yapma ki çok bulasın diye yapma. Rabbin için sabret. Sûra üflendiği zaman, işte o gün çetin bir gündür. Kâfirler için hiç de kolay değildir. (Sûrenin tamamı için Diyanet meali tavsiye edilir.)',
+    arapca: 'يَا أَيُّهَا الْمُدَّثِّرُ ﴿١﴾ قُمْ فَأَنْذِرْ ﴿٢﴾ وَرَبَّكَ فَكَبِّرْ ﴿٣﴾ وَثِيَابَكَ فَطَهِّرْ ﴿٤﴾ وَالرُّجْزَ فَاهْجُرْ ﴿٥﴾ وَلَا تَمْنُنْ تَسْتَكْثِرُ ﴿٦﴾ وَلِرَبِّكَ فَاصْبِرْ ﴿٧﴾ فَإِذَا نُقِرَ فِي النَّاقُورِ ﴿٨﴾ فَذَلِكَ يَوْمَئِذٍ يَوْمٌ عَسِيرٌ ﴿٩﴾ عَلَى الْكَافِرِينَ غَيْرُ يَسِيرٍ ﴿١٠﴾',
     fazilet: '✨ Peygamberimize gelen ilk vahiylerden. Mânevi tembellikten kurtulmak, gayrete gelmek için okunur.'
   },
 {
@@ -6259,7 +7315,343 @@ const DUALAR = [
       '<b>15</b> Velev elkâ meâzîrah.'
     ],
     anlam: 'Kıyâmet gününe yemin ederim ve kendini kınayan nefse de yemin ederim. İnsan, kendisinin kemiklerini bir araya getiremeyeceğimizi mi sanıyor? Evet, biz onun parmak uçlarını bile düzenlemeye gücü yetenleriz. Fakat insan, önündekini (yapacaklarını) inkâra yeltenmek ister. "Kıyâmet günü ne zaman?" diye sorar. İşte göz şimşek gibi çakıp gözleri kamaştığında, ay tutulduğunda, güneş ile ay bir araya getirildiğinde, işte o gün insan "Kaçacak yer nerede?" der. Hayır, sığınılacak yer yok. O gün varılacak yer ancak Rabbinin huzurudur. (Sûrenin tamamı için Diyanet meali tavsiye edilir.)',
+    arapca: 'لَا أُقْسِمُ بِيَوْمِ الْقِيَامَةِ ﴿١﴾ وَلَا أُقْسِمُ بِالنَّفْسِ اللَّوَّامَةِ ﴿٢﴾ أَيَحْسَبُ الْإِنْسَانُ أَلَّنْ نَجْمَعَ عِظَامَهُ ﴿٣﴾ بَلَى قَادِرِينَ عَلَى أَنْ نُسَوِّيَ بَنَانَهُ ﴿٤﴾ بَلْ يُرِيدُ الْإِنْسَانُ لِيَفْجُرَ أَمَامَهُ ﴿٥﴾ يَسْأَلُ أَيَّانَ يَوْمُ الْقِيَامَةِ ﴿٦﴾ فَإِذَا بَرِقَ الْبَصَرُ ﴿٧﴾ وَخَسَفَ الْقَمَرُ ﴿٨﴾ وَجُمِعَ الشَّمْسُ وَالْقَمَرُ ﴿٩﴾ يَقُولُ الْإِنْسَانُ يَوْمَئِذٍ أَيْنَ الْمَفَرُّ ﴿١٠﴾ كَلَّا لَا وَزَرَ ﴿١١﴾ إِلَى رَبِّكَ يَوْمَئِذٍ الْمُسْتَقَرُّ ﴿١٢﴾ يُنَبَّأُ الْإِنْسَانُ يَوْمَئِذٍ بِمَا قَدَّمَ وَأَخَّرَ ﴿١٣﴾ بَلِ الْإِنْسَانُ عَلَى نَفْسِهِ بَصِيرَةٌ ﴿١٤﴾ وَلَوْ أَلْقَى مَعَاذِيرَهُ ﴿١٥﴾',
     fazilet: '✨ Âhiret bilincini diri tutmak ve nefis muhasebesi için okunur. Hesap günü hatırlatması.'
+  },
+{
+    id: 'naba',
+    ad: 'Naba\' Sûresi',
+    ikon: '📯',
+    alt: '78. Sûre — Amme Cüzü başı — 40 âyet',
+    bismillah: true,
+    arapca: 'عَمَّ يَتَسَاءَلُونَ ﴿١﴾ عَنِ النَّبَإِ الْعَظِيمِ ﴿٢﴾ الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ ﴿٣﴾ كَلَّا سَيَعْلَمُونَ ﴿٤﴾ ثُمَّ كَلَّا سَيَعْلَمُونَ ﴿٥﴾ ... <br><br> إِنَّ يَوْمَ الْفَصْلِ كَانَ مِيقَاتًا ﴿١٧﴾ ... <br><br> إِنَّ لِلْمُتَّقِينَ مَفَازًا ﴿٣١﴾ حَدَائِقَ وَأَعْنَابًا ﴿٣٢﴾ ... <br><br> ذَلِكَ الْيَوْمُ الْحَقُّ ۖ فَمَنْ شَاءَ اتَّخَذَ إِلَى رَبِّهِ مَآبًا ﴿٣٩﴾ إِنَّا أَنْذَرْنَاكُمْ عَذَابًا قَرِيبًا يَوْمَ يَنْظُرُ الْمَرْءُ مَا قَدَّمَتْ يَدَاهُ وَيَقُولُ الْكَافِرُ يَا لَيْتَنِي كُنْتُ تُرَابًا ﴿٤٠﴾',
+    ayetler: [
+      '<b>1</b> Amme yetesâelûn.',
+      '<b>2</b> Anin-nebei\'l-azîm.',
+      '<b>3</b> Ellezî hüm fîhi muhtelifûn.',
+      '<b>4</b> Kellâ seya\'lemûn.',
+      '<b>5</b> Sümme kellâ seya\'lemûn.',
+      '<em>(6-30. âyetler — Allah\'ın kudret delilleri, kıyamet günü…)</em>',
+      '<b>31</b> İnne lil-müttekîne mefâzâ.',
+      '<b>32</b> Hadâika ve a\'nâbâ.',
+      '<em>(33-38. âyetler — cennet nimetleri…)</em>',
+      '<b>39</b> Zâlikel-yevmü\'l-hakk, femen şâettehaze ilâ rabbihî meâbâ.',
+      '<b>40</b> İnnâ enzernâküm azâben karîban yevme yenzurul-mer\'ü mâ kaddemet yedâhü ve yekûlül-kâfiru yâ leytenî küntü türâbâ.'
+    ],
+    anlam: 'Birbirlerine neyi soruyorlar? Üzerinde anlaşmazlığa düştükleri o büyük haberi mi? Hayır, yakında bilecekler! Yine hayır, yakında bilecekler. (...) Müttakîler için kurtuluş, bahçeler ve üzüm bağları vardır. (...) İşte o hak gündür; dileyen Rabbine bir dönüş yolu tutsun. Sizi yakın bir azâpla uyardık. O gün kişi, elleriyle gönderdiklerini görür ve kâfir der ki: "Keşke ben toprak olsaydım!"',
+    fazilet: '✨ Amme Cüzü\'nün başlangıç sûresidir. Kıyamet günü ve âhiret bilinci için okunur.'
+  },
+{
+    id: 'naziat',
+    ad: 'Nâziât Sûresi',
+    ikon: '⚡',
+    alt: '79. Sûre — 46 âyet',
+    bismillah: true,
+    arapca: 'وَالنَّازِعَاتِ غَرْقًا ﴿١﴾ وَالنَّاشِطَاتِ نَشْطًا ﴿٢﴾ وَالسَّابِحَاتِ سَبْحًا ﴿٣﴾ فَالسَّابِقَاتِ سَبْقًا ﴿٤﴾ فَالْمُدَبِّرَاتِ أَمْرًا ﴿٥﴾ ... <br><br> فَإِذَا جَاءَتِ الطَّامَّةُ الْكُبْرَى ﴿٣٤﴾ ... <br><br> فَأَمَّا مَنْ خَافَ مَقَامَ رَبِّهِ وَنَهَى النَّفْسَ عَنِ الْهَوَى ﴿٤٠﴾ فَإِنَّ الْجَنَّةَ هِيَ الْمَأْوَى ﴿٤١﴾',
+    ayetler: [
+      '<b>1</b> Ven-nâziâti ğarkâ.',
+      '<b>2</b> Ven-nâşitâti neştâ.',
+      '<b>3</b> Ves-sâbihâti sebhâ.',
+      '<b>4</b> Fes-sâbikâti sebkâ.',
+      '<b>5</b> Felmüdebbirâti emrâ.',
+      '<em>(6-39. âyetler — kıyâmet, Hz. Mûsâ ve Firavun kıssası…)</em>',
+      '<b>40</b> Ve emmâ men hâfe makâme rabbihî ve nehe\'n-nefse ani\'l-hevâ.',
+      '<b>41</b> Feinnel-cennete hiye\'l-me\'vâ.'
+    ],
+    anlam: 'Söküp çıkaranlara, hafifçe alanlara, yüzüp gidenlere, yarışıp geçenlere, işi düzenleyenlere yemin olsun ki kıyâmet gerçektir. (...) Kim Rabbinin makâmından korkar ve nefsini hevâdan men ederse, cennet onun yurdudur.',
+    fazilet: '✨ Âhiret bilincini sağlamak için, nefis terbiyesi için okunur.'
+  },
+{
+    id: 'abese',
+    ad: 'Abese Sûresi',
+    ikon: '👁️',
+    alt: '80. Sûre — 42 âyet',
+    bismillah: true,
+    arapca: 'عَبَسَ وَتَوَلَّى ﴿١﴾ أَنْ جَاءَهُ الْأَعْمَى ﴿٢﴾ وَمَا يُدْرِيكَ لَعَلَّهُ يَزَّكَّى ﴿٣﴾ أَوْ يَذَّكَّرُ فَتَنْفَعَهُ الذِّكْرَى ﴿٤﴾ ... <br><br> كَلَّا إِنَّهَا تَذْكِرَةٌ ﴿١١﴾ فَمَنْ شَاءَ ذَكَرَهُ ﴿١٢﴾ ... <br><br> فَلْيَنْظُرِ الْإِنْسَانُ إِلَى طَعَامِهِ ﴿٢٤﴾ ... <br><br> لِكُلِّ امْرِئٍ مِنْهُمْ يَوْمَئِذٍ شَأْنٌ يُغْنِيهِ ﴿٣٧﴾',
+    ayetler: [
+      '<b>1</b> Abese ve tevellâ.',
+      '<b>2</b> En câehul-a\'mâ.',
+      '<b>3</b> Ve mâ yüdrîke leallehû yezzekkâ.',
+      '<b>4</b> Ev yezzekkeru fetenfaahüz-zikrâ.',
+      '<em>(5-23. âyetler — İlim talebinin önemi, Allah\'ın yaratışı…)</em>',
+      '<b>24</b> Felyenzuril-insânü ilâ taâmih.',
+      '<em>(25-36. âyetler — Allah\'ın insana verdiği nimetler…)</em>',
+      '<b>37</b> Likülli\'mri\'in minhüm yevmeizin şe\'nün yuğnîh.'
+    ],
+    anlam: '(Peygamber) Yüzünü buruşturdu ve ona sırtını döndü — o âmâ ona geldi diye. Belki o (âmâ) arınacak, ya da öğüt alıp o öğüt ona fayda verecek, ne bilirsin? (...) Hayır, şüphesiz bu (Kur\'an) bir öğüttür; dileyen ondan ders alır. (...) İnsan yediğine bir baksın. (...) O gün her kişinin kendine yetecek bir derdi olacaktır.',
+    fazilet: '✨ Eğitim, ilim ve adaletin Allah katındaki önemini hatırlatır. Hz. Peygamber\'in bile bir hata yapabileceği ve Allah\'tan terbiye aldığını gösterir.'
+  },
+{
+    id: 'tekvir',
+    ad: 'Tekvîr Sûresi',
+    ikon: '☀️',
+    alt: '81. Sûre — 29 âyet',
+    bismillah: true,
+    arapca: 'إِذَا الشَّمْسُ كُوِّرَتْ ﴿١﴾ وَإِذَا النُّجُومُ انْكَدَرَتْ ﴿٢﴾ وَإِذَا الْجِبَالُ سُيِّرَتْ ﴿٣﴾ وَإِذَا الْعِشَارُ عُطِّلَتْ ﴿٤﴾ وَإِذَا الْوُحُوشُ حُشِرَتْ ﴿٥﴾ وَإِذَا الْبِحَارُ سُجِّرَتْ ﴿٦﴾ وَإِذَا النُّفُوسُ زُوِّجَتْ ﴿٧﴾ ... <br><br> عَلِمَتْ نَفْسٌ مَا أَحْضَرَتْ ﴿١٤﴾ ... <br><br> إِنْ هُوَ إِلَّا ذِكْرٌ لِلْعَالَمِينَ ﴿٢٧﴾ لِمَنْ شَاءَ مِنْكُمْ أَنْ يَسْتَقِيمَ ﴿٢٨﴾ وَمَا تَشَاءُونَ إِلَّا أَنْ يَشَاءَ اللَّهُ رَبُّ الْعَالَمِينَ ﴿٢٩﴾',
+    ayetler: [
+      '<b>1</b> İze\'ş-şemsü küvviret.',
+      '<b>2</b> Ve ize\'n-nücûmün-keder.',
+      '<b>3</b> Ve ize\'l-cibâlü süyyiret.',
+      '<b>4</b> Ve ize\'l-işâru uttılet.',
+      '<b>5</b> Ve ize\'l-vuhûşü huşiret.',
+      '<b>6</b> Ve ize\'l-bihâru süccirat.',
+      '<b>7</b> Ve ize\'n-nüfûsü züvvicet.',
+      '<em>(8-13. âyetler — kıyâmet sahneleri…)</em>',
+      '<b>14</b> Alimet nefsün mâ ahderat.',
+      '<em>(15-26. âyetler — Kur\'an\'ın yüceliği, Cebrâil\'in vasıfları…)</em>',
+      '<b>27</b> İn hüve illâ zikrun lil-âlemîn.',
+      '<b>28</b> Limen şâe minküm en yestakîm.',
+      '<b>29</b> Ve mâ teşâûne illâ en yeşâallâhu Rabbü\'l-âlemîn.'
+    ],
+    anlam: 'Güneş dürüldüğünde, yıldızlar dökülüp söndüğünde, dağlar yürütüldüğünde, on aylık gebe develer başıboş bırakıldığında, vahşi hayvanlar bir araya toplandığında, denizler kaynatıldığında, ruhlar (bedenleriyle) eşleştirildiğinde — herkes hazırladığı şeyi bilecektir. (...) Bu (Kur\'an) ancak âlemler için bir öğüttür. Sizden doğru olmak isteyen için. Âlemlerin Rabbi Allah dilemedikçe siz dileyemezsiniz.',
+    fazilet: '✨ Hz. Peygamber: "Kim kıyâmeti gözüyle görmüş gibi seyretmek isterse Tekvîr, İnfitâr ve İnşikâk sûrelerini okusun" (Tirmizî).'
+  },
+{
+    id: 'infitar',
+    ad: 'İnfitâr Sûresi',
+    ikon: '☄️',
+    alt: '82. Sûre — 19 âyet',
+    bismillah: true,
+    arapca: 'إِذَا السَّمَاءُ انْفَطَرَتْ ﴿١﴾ وَإِذَا الْكَوَاكِبُ انْتَثَرَتْ ﴿٢﴾ وَإِذَا الْبِحَارُ فُجِّرَتْ ﴿٣﴾ وَإِذَا الْقُبُورُ بُعْثِرَتْ ﴿٤﴾ عَلِمَتْ نَفْسٌ مَا قَدَّمَتْ وَأَخَّرَتْ ﴿٥﴾ يَا أَيُّهَا الْإِنْسَانُ مَا غَرَّكَ بِرَبِّكَ الْكَرِيمِ ﴿٦﴾ الَّذِي خَلَقَكَ فَسَوَّاكَ فَعَدَلَكَ ﴿٧﴾ فِي أَيِّ صُورَةٍ مَا شَاءَ رَكَّبَكَ ﴿٨﴾ ... <br><br> إِنَّ الْأَبْرَارَ لَفِي نَعِيمٍ ﴿١٣﴾ وَإِنَّ الْفُجَّارَ لَفِي جَحِيمٍ ﴿١٤﴾',
+    ayetler: [
+      '<b>1</b> İze\'s-semâün-fetarat.',
+      '<b>2</b> Ve ize\'l-kevâkibün-teserat.',
+      '<b>3</b> Ve ize\'l-bihâru füccirat.',
+      '<b>4</b> Ve ize\'l-kubûru bu\'siret.',
+      '<b>5</b> Alimet nefsün mâ kaddemet ve ahharat.',
+      '<b>6</b> Yâ eyyühe\'l-insânü mâ ğarrake bi-rabbike\'l-kerîm.',
+      '<b>7</b> Ellezî halekake fesevvâke fe-adelek.',
+      '<b>8</b> Fî eyyi sûratin mâ şâe rakkebek.',
+      '<em>(9-12. âyetler — meleklerin amelleri kaydedişi…)</em>',
+      '<b>13</b> İnnel-ebrâra lefî naîm.',
+      '<b>14</b> Ve innel-füccâra lefî cahîm.'
+    ],
+    anlam: 'Gök yarıldığında, yıldızlar dağıldığında, denizler taştığında, kabirler altüst edildiğinde — herkes yaptığını ve geri bıraktığını anlayacaktır. Ey insan! Kerîm Rabbine karşı seni aldatan nedir? O Rabbin ki seni yarattı, düzenli ve dengeli kıldı, dilediği biçimde sana şekil verdi. (...) Şüphesiz iyiler nimet içinde, kötüler ise cehennemdedir.',
+    fazilet: '✨ Kıyâmet sahneleri için okunur; Allah\'ın yaratış kudretini hatırlatır.'
+  },
+{
+    id: 'mutaffifin',
+    ad: 'Mutaffifîn Sûresi',
+    ikon: '⚖️',
+    alt: '83. Sûre — 36 âyet',
+    bismillah: true,
+    arapca: 'وَيْلٌ لِلْمُطَفِّفِينَ ﴿١﴾ الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ ﴿٢﴾ وَإِذَا كَالُوهُمْ أَوْ وَزَنُوهُمْ يُخْسِرُونَ ﴿٣﴾ أَلَا يَظُنُّ أُولَئِكَ أَنَّهُمْ مَبْعُوثُونَ ﴿٤﴾ لِيَوْمٍ عَظِيمٍ ﴿٥﴾ ... <br><br> إِنَّ كِتَابَ الْأَبْرَارِ لَفِي عِلِّيِّينَ ﴿١٨﴾ ... <br><br> فَالْيَوْمَ الَّذِينَ آمَنُوا مِنَ الْكُفَّارِ يَضْحَكُونَ ﴿٣٤﴾',
+    ayetler: [
+      '<b>1</b> Veylün lil-mütaffifîn.',
+      '<b>2</b> Ellezîne ize\'k-tâlû ale\'n-nâsi yestevfûn.',
+      '<b>3</b> Ve izâ kâlûhüm ev vezenûhüm yuhsirûn.',
+      '<b>4</b> Elâ yezunnü ülâike ennehüm meb\'ûsûn.',
+      '<b>5</b> Li-yevmin azîm.',
+      '<em>(6-17. âyetler — Siccîn ve facirlerin durumu…)</em>',
+      '<b>18</b> İnne kitâbe\'l-ebrâri lefî illiyyîn.',
+      '<em>(19-33. âyetler — ebrarın cennette durumu…)</em>',
+      '<b>34</b> Fe\'l-yevme\'llezîne âmenû mine\'l-küffâri yadhakûn.'
+    ],
+    anlam: 'Ölçüde hile yapanların vay haline! Onlar, insanlardan bir şey ölçüp aldıklarında tam alırlar; ama insanlara ölçüp ya da tartıp verdiklerinde eksik verirler. Bunlar büyük bir günde dirileceklerini sanmıyorlar mı? (...) İyiler\'in kitabı şüphesiz İlliyyîn\'dedir. (...) İşte o gün iman edenler kâfirlere gülerler.',
+    fazilet: '✨ Ticarette ölçü-tartı dürüstlüğü, ahirette hesap için uyarıdır.'
+  },
+{
+    id: 'insikak',
+    ad: 'İnşikâk Sûresi',
+    ikon: '🌌',
+    alt: '84. Sûre — 25 âyet',
+    bismillah: true,
+    arapca: 'إِذَا السَّمَاءُ انْشَقَّتْ ﴿١﴾ وَأَذِنَتْ لِرَبِّهَا وَحُقَّتْ ﴿٢﴾ وَإِذَا الْأَرْضُ مُدَّتْ ﴿٣﴾ وَأَلْقَتْ مَا فِيهَا وَتَخَلَّتْ ﴿٤﴾ وَأَذِنَتْ لِرَبِّهَا وَحُقَّتْ ﴿٥﴾ يَا أَيُّهَا الْإِنْسَانُ إِنَّكَ كَادِحٌ إِلَى رَبِّكَ كَدْحًا فَمُلَاقِيهِ ﴿٦﴾ ... <br><br> وَالْقُرْآنُ الْمَجِيدُ ﴿فِي اللَّوْحِ الْمَحْفُوظِ﴾',
+    ayetler: [
+      '<b>1</b> İze\'s-semâün-şakkat.',
+      '<b>2</b> Ve ezinet li-rabbihâ ve hukkat.',
+      '<b>3</b> Ve ize\'l-ardu müddet.',
+      '<b>4</b> Ve elkat mâ fîhâ ve tehallet.',
+      '<b>5</b> Ve ezinet li-rabbihâ ve hukkat.',
+      '<b>6</b> Yâ eyyühe\'l-insânü inneke kâdihun ilâ rabbike kedhan femülâkîh.',
+      '<em>(7-25. âyetler — amel kitabının verilişi, kıyâmet sahneleri…)</em>'
+    ],
+    anlam: 'Gök yarıldığında ve Rabbine boyun eğdiğinde — ki gök buna lâyıktır; yer yayılıp dümdüz olduğunda, içindekileri dışarı atıp boşaldığında ve Rabbine boyun eğdiğinde — ki yer de buna lâyıktır. Ey insan! Sen Rabbine kavuşuncaya kadar çabalayıp duracaksın; sonunda O\'na kavuşacaksın.',
+    fazilet: '✨ Tekvîr, İnfitâr ve İnşikâk üçlüsünü okuyan kıyâmeti gözüyle görmüş gibi olur (hadis).'
+  },
+{
+    id: 'buruc',
+    ad: 'Bürûc Sûresi',
+    ikon: '✨',
+    alt: '85. Sûre — 22 âyet',
+    bismillah: true,
+    arapca: 'وَالسَّمَاءِ ذَاتِ الْبُرُوجِ ﴿١﴾ وَالْيَوْمِ الْمَوْعُودِ ﴿٢﴾ وَشَاهِدٍ وَمَشْهُودٍ ﴿٣﴾ قُتِلَ أَصْحَابُ الْأُخْدُودِ ﴿٤﴾ النَّارِ ذَاتِ الْوَقُودِ ﴿٥﴾ ... <br><br> إِنَّ بَطْشَ رَبِّكَ لَشَدِيدٌ ﴿١٢﴾ إِنَّهُ هُوَ يُبْدِئُ وَيُعِيدُ ﴿١٣﴾ وَهُوَ الْغَفُورُ الْوَدُودُ ﴿١٤﴾ ... <br><br> بَلْ هُوَ قُرْآنٌ مَجِيدٌ ﴿٢١﴾ فِي لَوْحٍ مَحْفُوظٍ ﴿٢٢﴾',
+    ayetler: [
+      '<b>1</b> Ves-semâi zâti\'l-bürûc.',
+      '<b>2</b> Ve\'l-yevmi\'l-mev\'ûd.',
+      '<b>3</b> Ve şâhidin ve meşhûd.',
+      '<b>4</b> Kutile ashâbül-uhdûd.',
+      '<b>5</b> En-nâri zâti\'l-vakûd.',
+      '<em>(6-11. âyetler — uhdûd ashâbının kıssası, mü\'minler için cennet…)</em>',
+      '<b>12</b> İnne batşe rabbike leşedîd.',
+      '<b>13</b> İnnehû hüve yübdiü ve yuîd.',
+      '<b>14</b> Ve hüve\'l-Ğafûru\'l-Vedûd.',
+      '<em>(15-20. âyetler — Allah\'ın mutlak hâkimiyeti, Firavun ve Semûd kıssaları…)</em>',
+      '<b>21</b> Bel hüve Kur\'ânün mecîd.',
+      '<b>22</b> Fî levhin mahfûz.'
+    ],
+    anlam: 'Burçlarla dolu göğe, va\'dedilmiş güne, şâhide ve şehâdet edilene yemin olsun ki — hendek (ateş çukuru) sahipleri lânetlenmiştir, o tutuşturulmuş ateşin sahipleri. (...) Şüphesiz Rabbinin tutuşu çok şiddetlidir; O ilk yaratandır, tekrar diriltendir; O bağışlayandır, sevendir (Vedûd\'tur). (...) Hayır, bu yüce bir Kur\'an\'dır; korunmuş bir levhada (Levh-i Mahfûz\'da) yazılıdır.',
+    fazilet: '✨ Allah\'ın "Vedûd" (çok seven) ismini öne çıkarır. Mü\'minlerin imtihana karşı sabrı için okunur.'
+  },
+{
+    id: 'tarik',
+    ad: 'Târık Sûresi',
+    ikon: '⭐',
+    alt: '86. Sûre — 17 âyet',
+    bismillah: true,
+    arapca: 'وَالسَّمَاءِ وَالطَّارِقِ ﴿١﴾ وَمَا أَدْرَاكَ مَا الطَّارِقُ ﴿٢﴾ النَّجْمُ الثَّاقِبُ ﴿٣﴾ إِنْ كُلُّ نَفْسٍ لَمَّا عَلَيْهَا حَافِظٌ ﴿٤﴾ فَلْيَنْظُرِ الْإِنْسَانُ مِمَّ خُلِقَ ﴿٥﴾ خُلِقَ مِنْ مَاءٍ دَافِقٍ ﴿٦﴾ يَخْرُجُ مِنْ بَيْنِ الصُّلْبِ وَالتَّرَائِبِ ﴿٧﴾ ... <br><br> إِنَّهُ لَقَوْلٌ فَصْلٌ ﴿١٣﴾ وَمَا هُوَ بِالْهَزْلِ ﴿١٤﴾ ... <br><br> فَمَهِّلِ الْكَافِرِينَ أَمْهِلْهُمْ رُوَيْدًا ﴿١٧﴾',
+    ayetler: [
+      '<b>1</b> Ves-semâi vet-târık.',
+      '<b>2</b> Ve mâ edrâke me\'t-târık.',
+      '<b>3</b> En-necmüs-sâkıb.',
+      '<b>4</b> İn küllü nefsin lemmâ aleyhâ hâfız.',
+      '<b>5</b> Fe\'l-yenzuril-insânü mimme hulik.',
+      '<b>6</b> Hulika min mâin dâfik.',
+      '<b>7</b> Yahrucü min beyni\'s-sulbi vet-terâib.',
+      '<em>(8-12. âyetler — Allah\'ın diriltmeye kâdir olduğu…)</em>',
+      '<b>13</b> İnnehû le-kavlün fasl.',
+      '<b>14</b> Ve mâ hüve bi\'l-hezl.',
+      '<em>(15-16. âyetler — kâfirlerin tuzakları, Allah\'ın da tuzak kuruşu…)</em>',
+      '<b>17</b> Femehhili\'l-kâfirîne emhilhüm rüveydâ.'
+    ],
+    anlam: 'Göğe ve gece doğan (Târık) yıldıza yemin olsun ki — Târık\'ın ne olduğunu sen bilir misin? O delip geçen yıldızdır. Hiçbir kimse yoktur ki üzerinde bir koruyucu (melek) olmasın. İnsan neden yaratıldığına bir baksın: Atılan bir sudan yaratıldı — bel ile göğüs kemikleri arasından çıkan. (...) Şüphesiz bu (Kur\'an), hak ile bâtılı ayıran bir sözdür; bir şaka değildir. Kâfirlere mühlet ver, onlara biraz süre tanı.',
+    fazilet: '✨ Allah\'ın yaratış kudretini ve her insanın koruyucu meleği olduğunu hatırlatır.'
+  },
+{
+    id: 'ala',
+    ad: 'A\'lâ Sûresi',
+    ikon: '🌟',
+    alt: '87. Sûre — 19 âyet — vitirde okunur',
+    bismillah: true,
+    arapca: 'سَبِّحِ اسْمَ رَبِّكَ الْأَعْلَى ﴿١﴾ الَّذِي خَلَقَ فَسَوَّى ﴿٢﴾ وَالَّذِي قَدَّرَ فَهَدَى ﴿٣﴾ وَالَّذِي أَخْرَجَ الْمَرْعَى ﴿٤﴾ فَجَعَلَهُ غُثَاءً أَحْوَى ﴿٥﴾ سَنُقْرِئُكَ فَلَا تَنْسَى ﴿٦﴾ إِلَّا مَا شَاءَ اللَّهُ ۚ إِنَّهُ يَعْلَمُ الْجَهْرَ وَمَا يَخْفَى ﴿٧﴾ وَنُيَسِّرُكَ لِلْيُسْرَى ﴿٨﴾ فَذَكِّرْ إِنْ نَفَعَتِ الذِّكْرَى ﴿٩﴾ سَيَذَّكَّرُ مَنْ يَخْشَى ﴿١٠﴾ وَيَتَجَنَّبُهَا الْأَشْقَى ﴿١١﴾ الَّذِي يَصْلَى النَّارَ الْكُبْرَى ﴿١٢﴾ ثُمَّ لَا يَمُوتُ فِيهَا وَلَا يَحْيَى ﴿١٣﴾ قَدْ أَفْلَحَ مَنْ تَزَكَّى ﴿١٤﴾ وَذَكَرَ اسْمَ رَبِّهِ فَصَلَّى ﴿١٥﴾ بَلْ تُؤْثِرُونَ الْحَيَاةَ الدُّنْيَا ﴿١٦﴾ وَالْآخِرَةُ خَيْرٌ وَأَبْقَى ﴿١٧﴾ إِنَّ هَذَا لَفِي الصُّحُفِ الْأُولَى ﴿١٨﴾ صُحُفِ إِبْرَاهِيمَ وَمُوسَى ﴿١٩﴾',
+    ayetler: [
+      '<b>1</b> Sebbihısme rabbike\'l-a\'lâ.',
+      '<b>2</b> Ellezî halaka fesevvâ.',
+      '<b>3</b> Vellezî kaddera fehedâ.',
+      '<b>4</b> Vellezî ahrace\'l-mer\'â.',
+      '<b>5</b> Fecealehû ğusâen ahvâ.',
+      '<b>6</b> Senukriüke felâ tensâ.',
+      '<b>7</b> İllâ mâ şâallâh, innehû ya\'lemu\'l-cehra ve mâ yahfâ.',
+      '<b>8</b> Ve nüyessiruke lil-yüsrâ.',
+      '<b>9</b> Fezekkir in nefeati\'z-zikrâ.',
+      '<b>10</b> Seyezzekkeru men yahşâ.',
+      '<b>11</b> Ve yetecennebühe\'l-eşkâ.',
+      '<b>12</b> Ellezî yaslen-nâral-kübrâ.',
+      '<b>13</b> Sümme lâ yemûtü fîhâ ve lâ yahyâ.',
+      '<b>14</b> Kad efleha men tezekkâ.',
+      '<b>15</b> Ve zekeresme rabbihî fesallâ.',
+      '<b>16</b> Bel tü\'sirûnel-hayâted-dünyâ.',
+      '<b>17</b> Vel-âhiretü hayrun ve ebkâ.',
+      '<b>18</b> İnne hâzâ lefis-suhufil-ûlâ.',
+      '<b>19</b> Suhufi İbrâhîme ve Mûsâ.'
+    ],
+    anlam: 'Yüce Rabbinin ismini tesbîh et. O ki yarattı ve düzene koydu; ölçtü ve yol gösterdi; otlağı çıkardı, sonra onu siyah çer-çöpe çevirdi. Sana (Kur\'an\'ı) okutacağız ve unutmayacaksın — ancak Allah\'ın dilediği müstesnâ. Şüphesiz O, açığı da gizliyi de bilir. Seni en kolay olana muvaffak kılarız. Öğüt fayda verecekse öğüt ver. Allah\'tan korkan öğüt alır. En şakî olan ondan kaçınır — o ki büyük ateşe girer, sonra orada ne ölür ne de yaşar. Şüphesiz arınan kurtulmuştur. O ki Rabbinin ismini anar ve namaz kılar. Fakat siz dünya hayatını tercih ediyorsunuz. Hâlbuki âhiret daha hayırlı ve daha bâkîdir. Bunlar ilk sayfalarda, İbrâhim ve Mûsâ\'nın sayfalarında vardır.',
+    fazilet: '✨ Vitir namazının ilk rekâtında okunması sünnet. Hz. Peygamber bayram ve cuma namazlarında bu sûreyi sıkça okurdu. Ezberi kolay, manası derin sûrelerden.'
+  },
+{
+    id: 'gasiye',
+    ad: 'Gâşiye Sûresi',
+    ikon: '🌌',
+    alt: '88. Sûre — 26 âyet',
+    bismillah: true,
+    arapca: 'هَلْ أَتَاكَ حَدِيثُ الْغَاشِيَةِ ﴿١﴾ وُجُوهٌ يَوْمَئِذٍ خَاشِعَةٌ ﴿٢﴾ عَامِلَةٌ نَاصِبَةٌ ﴿٣﴾ تَصْلَى نَارًا حَامِيَةً ﴿٤﴾ ... <br><br> وُجُوهٌ يَوْمَئِذٍ نَاعِمَةٌ ﴿٨﴾ لِسَعْيِهَا رَاضِيَةٌ ﴿٩﴾ فِي جَنَّةٍ عَالِيَةٍ ﴿١٠﴾ ... <br><br> أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴿١٧﴾ وَإِلَى السَّمَاءِ كَيْفَ رُفِعَتْ ﴿١٨﴾ وَإِلَى الْجِبَالِ كَيْفَ نُصِبَتْ ﴿١٩﴾ وَإِلَى الْأَرْضِ كَيْفَ سُطِحَتْ ﴿٢٠﴾ فَذَكِّرْ إِنَّمَا أَنْتَ مُذَكِّرٌ ﴿٢١﴾ ... <br><br> إِنَّ إِلَيْنَا إِيَابَهُمْ ﴿٢٥﴾ ثُمَّ إِنَّ عَلَيْنَا حِسَابَهُمْ ﴿٢٦﴾',
+    ayetler: [
+      '<b>1</b> Hel etâke hadîsü\'l-ğâşiyeh.',
+      '<b>2</b> Vücûhün yevmeizin hâşiah.',
+      '<b>3</b> Âmiletün nâsıbeh.',
+      '<b>4</b> Teslâ nâran hâmiyeh.',
+      '<em>(5-7. âyetler — cehennem ehlinin durumu…)</em>',
+      '<b>8</b> Vücûhün yevmeizin nâimeh.',
+      '<b>9</b> Lisa\'yihâ râdıyeh.',
+      '<b>10</b> Fî cennetin âliyeh.',
+      '<em>(11-16. âyetler — cennet nimetleri…)</em>',
+      '<b>17</b> Efelâ yenzurûne ile\'l-ibili keyfe hulikat.',
+      '<b>18</b> Ve ile\'s-semâi keyfe rufiat.',
+      '<b>19</b> Ve ile\'l-cibâli keyfe nüsıbet.',
+      '<b>20</b> Ve ile\'l-ardı keyfe sutıhat.',
+      '<b>21</b> Fezekkir innemâ ente müzekkir.',
+      '<em>(22-24. âyetler — peygamberin görevi…)</em>',
+      '<b>25</b> İnne ileynâ iyâbehüm.',
+      '<b>26</b> Sümme inne aleynâ hisâbehüm.'
+    ],
+    anlam: 'Sana o (her şeyi kaplayacak olan) felâketin haberi geldi mi? O gün bir takım yüzler eğilmiş, çalışmış, yorgun düşmüştür — kızgın bir ateşe girer. (...) O gün bir takım yüzler de mutludur, çalışmasından memnundur — yüksek bir cennettedir. (...) Deveye bakmıyorlar mı, nasıl yaratılmış; göğe nasıl yükseltilmiş, dağlara nasıl dikilmiş, yere nasıl yayılmış? Sen sadece bir hatırlatıcısın. (...) Şüphesiz onların dönüşü Bizedir. Sonra hesapları da Bize aittir.',
+    fazilet: '✨ Hz. Peygamber Cuma ve bayram namazlarında bu sûreyi sıkça okurdu (Müslim). Kâinattaki delilleri hatırlatır.'
+  },
+{
+    id: 'fecr',
+    ad: 'Fecr Sûresi',
+    ikon: '🌄',
+    alt: '89. Sûre — 30 âyet',
+    bismillah: true,
+    arapca: 'وَالْفَجْرِ ﴿١﴾ وَلَيَالٍ عَشْرٍ ﴿٢﴾ وَالشَّفْعِ وَالْوَتْرِ ﴿٣﴾ وَاللَّيْلِ إِذَا يَسْرِ ﴿٤﴾ هَلْ فِي ذَلِكَ قَسَمٌ لِذِي حِجْرٍ ﴿٥﴾ ... <br><br> فَأَمَّا الْإِنْسَانُ إِذَا مَا ابْتَلَاهُ رَبُّهُ فَأَكْرَمَهُ وَنَعَّمَهُ فَيَقُولُ رَبِّي أَكْرَمَنِ ﴿١٥﴾ ... <br><br> يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ ﴿٢٧﴾ ارْجِعِي إِلَى رَبِّكِ رَاضِيَةً مَرْضِيَّةً ﴿٢٨﴾ فَادْخُلِي فِي عِبَادِي ﴿٢٩﴾ وَادْخُلِي جَنَّتِي ﴿٣٠﴾',
+    ayetler: [
+      '<b>1</b> Vel-fecr.',
+      '<b>2</b> Ve leyâlin aşr.',
+      '<b>3</b> Veş-şef\'i vel-vetr.',
+      '<b>4</b> Vel-leyli izâ yesr.',
+      '<b>5</b> Hel fî zâlike kasemün lizî hicr.',
+      '<em>(6-14. âyetler — Âd, Semûd, Firavun kavimlerinin durumu…)</em>',
+      '<b>15</b> Feemme\'l-insânü izâ me\'btelâhü rabbühû feekramehû ve naamehû feyekûlü rabbî ekramen.',
+      '<em>(16-26. âyetler — insanın imtihanı, kıyâmet sahnesi…)</em>',
+      '<b>27</b> Yâ eyyetühe\'n-nefsü\'l-mutmainneh.',
+      '<b>28</b> İrciî ilâ rabbiki râdıyeten merdıyyeh.',
+      '<b>29</b> Fedhulî fî ibâdî.',
+      '<b>30</b> Vedhulî cennetî.'
+    ],
+    anlam: 'Fecre, on geceye, çifte ve teke, gelip geçen geceye yemin olsun ki — bunda akıl sahibi için yemine değer şey vardır. (...) Rabbi insanı imtihan edip ona ikram ettiğinde, nimetlere boğduğunda der ki: "Rabbim bana ikram etti." (...) Ey huzura kavuşmuş nefis! Rabbine razı ve razı olunmuş olarak dön. Kullarımın arasına gir. Cennetime gir.',
+    fazilet: '✨ Son 4 âyeti — "Yâ eyyetühe\'n-nefsü\'l-mutmainneh" — vefat eden mü\'minin başında okunması müstehab. "On gece" Zilhicce\'nin ilk 10 gecesidir.'
+  },
+{
+    id: 'beled',
+    ad: 'Beled Sûresi',
+    ikon: '🏔️',
+    alt: '90. Sûre — 20 âyet',
+    bismillah: true,
+    arapca: 'لَا أُقْسِمُ بِهَذَا الْبَلَدِ ﴿١﴾ وَأَنْتَ حِلٌّ بِهَذَا الْبَلَدِ ﴿٢﴾ وَوَالِدٍ وَمَا وَلَدَ ﴿٣﴾ لَقَدْ خَلَقْنَا الْإِنْسَانَ فِي كَبَدٍ ﴿٤﴾ ... <br><br> فَلَا اقْتَحَمَ الْعَقَبَةَ ﴿١١﴾ وَمَا أَدْرَاكَ مَا الْعَقَبَةُ ﴿١٢﴾ فَكُّ رَقَبَةٍ ﴿١٣﴾ أَوْ إِطْعَامٌ فِي يَوْمٍ ذِي مَسْغَبَةٍ ﴿١٤﴾ يَتِيمًا ذَا مَقْرَبَةٍ ﴿١٥﴾ أَوْ مِسْكِينًا ذَا مَتْرَبَةٍ ﴿١٦﴾ ثُمَّ كَانَ مِنَ الَّذِينَ آمَنُوا وَتَوَاصَوْا بِالصَّبْرِ وَتَوَاصَوْا بِالْمَرْحَمَةِ ﴿١٧﴾ أُولَئِكَ أَصْحَابُ الْمَيْمَنَةِ ﴿١٨﴾',
+    ayetler: [
+      '<b>1</b> Lâ uksimü bi-hâze\'l-beled.',
+      '<b>2</b> Ve ente hıllün bi-hâze\'l-beled.',
+      '<b>3</b> Ve vâlidin ve mâ veled.',
+      '<b>4</b> Lekad halaknel-insâne fî kebed.',
+      '<em>(5-10. âyetler — insanın güç ve nimetleri…)</em>',
+      '<b>11</b> Felâktehame\'l-akabeh.',
+      '<b>12</b> Ve mâ edrâke me\'l-akabeh.',
+      '<b>13</b> Fekku rakabeh.',
+      '<b>14</b> Ev it\'âmün fî yevmin zî mesğabeh.',
+      '<b>15</b> Yetîmen zâ makrabeh.',
+      '<b>16</b> Ev miskînen zâ metrabeh.',
+      '<b>17</b> Sümme kâne mine\'llezîne âmenû ve tevâsav bi\'s-sabri ve tevâsav bi\'l-marhameh.',
+      '<b>18</b> Ülâike ashâbü\'l-meymeneh.'
+    ],
+    anlam: 'Bu beldeye (Mekke\'ye) yemin ederim — sen de bu beldede oturmaktasın; ve babaya ve doğan çocuğa yemin ederim ki, insanı meşakkat içinde yarattık. (...) (Fakat o,) sarp yokuşu aşmadı. Sarp yokuşun ne olduğunu sana bildiren nedir? Bir köleyi azat etmektir, ya da açlık gününde yetim olan akrabaya, yahut yere düşmüş bir miskîne yemek yedirmektir. Sonra iman edip birbirine sabır ve merhamet tavsiye edenlerden olmaktır. İşte bunlar sağdakilerdir.',
+    fazilet: '✨ Yetim ve yoksulun gözetilmesi, kölelerin azat edilmesi, sabır ve merhametin önemi. Sosyal adalet sûrelerinden.'
+  },
+{
+    id: 'sems',
+    ad: 'Şems Sûresi',
+    ikon: '☀️',
+    alt: '91. Sûre — 15 âyet — nefsi tezkiye',
+    bismillah: true,
+    arapca: 'وَالشَّمْسِ وَضُحَاهَا ﴿١﴾ وَالْقَمَرِ إِذَا تَلَاهَا ﴿٢﴾ وَالنَّهَارِ إِذَا جَلَّاهَا ﴿٣﴾ وَاللَّيْلِ إِذَا يَغْشَاهَا ﴿٤﴾ وَالسَّمَاءِ وَمَا بَنَاهَا ﴿٥﴾ وَالْأَرْضِ وَمَا طَحَاهَا ﴿٦﴾ وَنَفْسٍ وَمَا سَوَّاهَا ﴿٧﴾ فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا ﴿٨﴾ قَدْ أَفْلَحَ مَنْ زَكَّاهَا ﴿٩﴾ وَقَدْ خَابَ مَنْ دَسَّاهَا ﴿١٠﴾ كَذَّبَتْ ثَمُودُ بِطَغْوَاهَا ﴿١١﴾ إِذِ انْبَعَثَ أَشْقَاهَا ﴿١٢﴾ فَقَالَ لَهُمْ رَسُولُ اللَّهِ نَاقَةَ اللَّهِ وَسُقْيَاهَا ﴿١٣﴾ فَكَذَّبُوهُ فَعَقَرُوهَا فَدَمْدَمَ عَلَيْهِمْ رَبُّهُمْ بِذَنْبِهِمْ فَسَوَّاهَا ﴿١٤﴾ وَلَا يَخَافُ عُقْبَاهَا ﴿١٥﴾',
+    ayetler: [
+      '<b>1</b> Veş-şemsi ve duhâhâ.',
+      '<b>2</b> Vel-kameri izâ telâhâ.',
+      '<b>3</b> Ven-nehâri izâ cellâhâ.',
+      '<b>4</b> Vel-leyli izâ yağşâhâ.',
+      '<b>5</b> Ves-semâi ve mâ benâhâ.',
+      '<b>6</b> Vel-ardı ve mâ tahâhâ.',
+      '<b>7</b> Ve nefsin ve mâ sevvâhâ.',
+      '<b>8</b> Feelhemehâ fücûrahâ ve takvâhâ.',
+      '<b>9</b> Kad efleha men zekkâhâ.',
+      '<b>10</b> Ve kad hâbe men dessâhâ.',
+      '<b>11</b> Kezzebet semûdü bi-tağvâhâ.',
+      '<b>12</b> İzin-ba\'ase eşkâhâ.',
+      '<b>13</b> Fekâle lehüm Resûlullâhi nâkatallâhi ve sukyâhâ.',
+      '<b>14</b> Fekezzebûhü fea\'karûhâ fedemdeme aleyhim rabbühüm bi-zenbihim fesevvâhâ.',
+      '<b>15</b> Velâ yehâfu ukbâhâ.'
+    ],
+    anlam: 'Güneşe ve kuşluk vaktine, onu izlediği zaman Aya, onu aydınlattığı zaman gündüze, onu bürüdüğü zaman geceye, göğe ve onu kurana, yere ve onu döşeyene, nefse ve ona düzgün biçim verene yemin olsun ki — Allah ona kötülüğünü ve takvâsını ilham etti. Nefsini arıtan kesinlikle kurtulmuştur; onu kötülüklere gömen ise hüsrana uğramıştır. Semûd (kavmi) azgınlıkları yüzünden (peygamberini) yalanladı. Onların en şakî olanı (Allah\'ın peygamberini ve onun devesini öldürmek üzere) atıldığında, Allah\'ın peygamberi onlara dedi ki: "Allah\'ın devesini ve onun su içme hakkını koruyun!" Ama onlar onu yalanladılar ve deveyi kestiler. Bunun üzerine Rableri günahları yüzünden onları (azapla) helak etti, hepsini eşitledi.',
+    fazilet: '✨ Nefis tezkiyesi (arınma) için temel sûrelerden. "Nefsini arıtan kurtuldu" âyeti tasavvufun temelidir.'
   },
 {
     id: 'leyl',
@@ -6291,9 +7683,10 @@ const DUALAR = [
       '<b>21</b> Ve lesevfe yerdâ.'
     ],
     anlam: 'Bürüdüğü zaman geceye, açılıp aydınlandığı zaman gündüze, erkeği ve dişiyi yaratana yemin olsun ki, sizin çalışmanız çeşit çeşittir. Kim verir ve sakınırsa, en güzeli (cenneti) de tasdik ederse, biz de onu en kolaya muvaffak kılarız. Kim cimrilik eder, kendini müstağni sayar, en güzeli yalanlarsa, biz de onu en zora muvaffak kılarız.',
+    arapca: 'وَاللَّيْلِ إِذَا يَغْشَى ﴿١﴾ وَالنَّهَارِ إِذَا تَجَلَّى ﴿٢﴾ وَمَا خَلَقَ الذَّكَرَ وَالْأُنْثَى ﴿٣﴾ إِنَّ سَعْيَكُمْ لَشَتَّى ﴿٤﴾ فَأَمَّا مَنْ أَعْطَى وَاتَّقَى ﴿٥﴾ وَصَدَّقَ بِالْحُسْنَى ﴿٦﴾ فَسَنُيَسِّرُهُ لِلْيُسْرَى ﴿٧﴾ وَأَمَّا مَنْ بَخِلَ وَاسْتَغْنَى ﴿٨﴾ وَكَذَّبَ بِالْحُسْنَى ﴿٩﴾ فَسَنُيَسِّرُهُ لِلْعُسْرَى ﴿١٠﴾ وَمَا يُغْنِي عَنْهُ مَالُهُ إِذَا تَرَدَّى ﴿١١﴾ إِنَّ عَلَيْنَا لَلْهُدَى ﴿١٢﴾ وَإِنَّ لَنَا لَلْآخِرَةَ وَالْأُولَى ﴿١٣﴾ فَأَنْذَرْتُكُمْ نَارًا تَلَظَّى ﴿١٤﴾ لَا يَصْلَاهَا إِلَّا الْأَشْقَى ﴿١٥﴾ الَّذِي كَذَّبَ وَتَوَلَّى ﴿١٦﴾ وَسَيُجَنَّبُهَا الْأَتْقَى ﴿١٧﴾ الَّذِي يُؤْتِي مَالَهُ يَتَزَكَّى ﴿١٨﴾ وَمَا لِأَحَدٍ عِنْدَهُ مِنْ نِعْمَةٍ تُجْزَى ﴿١٩﴾ إِلَّا ابْتِغَاءَ وَجْهِ رَبِّهِ الْأَعْلَى ﴿٢٠﴾ وَلَسَوْفَ يَرْضَى ﴿٢١﴾',
     fazilet: '✨ Cömertlik, takvâ ve âhiret bilinci için okunur. Cimrilikten kurtulmak isteyenlere.'
   },
-  {
+{
     id: 'duha',
     ad: 'Duhâ Sûresi',
     ikon: '🌅',
@@ -6314,6 +7707,7 @@ const DUALAR = [
     ],
     anlam: 'Andolsun kuşluk vaktine ve sükûna erdiği zaman geceye ki: Rabbin seni terk etmedi ve sana darılmadı. Şüphesiz âhiret senin için dünyadan daha hayırlıdır. Rabbin sana verecek ve sen razı olacaksın. Seni yetim bulup barındırmadı mı? Seni şaşkın bulup yola iletmedi mi? Seni yoksul bulup zengin etmedi mi? Öyleyse yetimi sakın ezme; isteyeni de sakın azarlama. Rabbinin nimetini durmadan an.'
     ,
+    arapca: 'وَالضُّحَى ﴿١﴾ وَاللَّيْلِ إِذَا سَجَى ﴿٢﴾ مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَى ﴿٣﴾ وَلَلْآخِرَةُ خَيْرٌ لَكَ مِنَ الْأُولَى ﴿٤﴾ وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَى ﴿٥﴾ أَلَمْ يَجِدْكَ يَتِيمًا فَآوَى ﴿٦﴾ وَوَجَدَكَ ضَالًّا فَهَدَى ﴿٧﴾ وَوَجَدَكَ عَائِلًا فَأَغْنَى ﴿٨﴾ فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ ﴿٩﴾ وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ ﴿١٠﴾ وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ ﴿١١﴾',
     fazilet: '✨ Kuşluk (Duha) namazından sonra okunması müstehab. Üzüntü ve hüzünden kurtulmak için, kayıp eşyanın bulunması için okunur.'
   },
 {
@@ -6333,6 +7727,7 @@ const DUALAR = [
       '<b>8</b> Ve ilâ rabbike fergab.'
     ],
     anlam: 'Biz senin göğsünü açıp genişletmedik mi? Belini büken yükü senden indirmedik mi? Senin şânını yüceltmedik mi? Şüphesiz güçlükle beraber bir kolaylık vardır. Gerçekten, güçlükle beraber bir kolaylık vardır. Öyleyse bir işi bitirince hemen başka bir işe giriş. Ve yalnız Rabbine yönel.',
+    arapca: 'أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ ﴿١﴾ وَوَضَعْنَا عَنْكَ وِزْرَكَ ﴿٢﴾ الَّذِي أَنْقَضَ ظَهْرَكَ ﴿٣﴾ وَرَفَعْنَا لَكَ ذِكْرَكَ ﴿٤﴾ فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٥﴾ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٦﴾ فَإِذَا فَرَغْتَ فَانْصَبْ ﴿٧﴾ وَإِلَى رَبِّكَ فَارْغَبْ ﴿٨﴾',
     fazilet: '✨ Sıkıntı ve daralma zamanlarında okunur. "Güçlükle beraber bir kolaylık vardır" âyeti ferahlık verir.'
   },
 {
@@ -6352,6 +7747,7 @@ const DUALAR = [
       '<b>8</b> Eleysallâhü bi-ahkemil-hâkimîn.'
     ],
     anlam: 'İncire ve zeytine, Sinâ dağına ve şu güvenli şehre (Mekke\'ye) yemin olsun ki, biz insanı en güzel bir biçimde yarattık. Sonra onu aşağıların aşağısına indirdik. Ancak iman edip salih ameller işleyenler başka — onlar için kesintisiz bir mükâfat vardır. (Ey insan!) Hâl böyleyken hangi şey sana, dini yalanlatabiliyor? Allah, hâkimlerin en üstünü değil mi?',
+    arapca: 'وَالتِّينِ وَالزَّيْتُونِ ﴿١﴾ وَطُورِ سِينِينَ ﴿٢﴾ وَهَذَا الْبَلَدِ الْأَمِينِ ﴿٣﴾ لَقَدْ خَلَقْنَا الْإِنْسَانَ فِي أَحْسَنِ تَقْوِيمٍ ﴿٤﴾ ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ ﴿٥﴾ إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ ﴿٦﴾ فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ ﴿٧﴾ أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ ﴿٨﴾',
     fazilet: '✨ İnsanın yaratılışının güzelliğini ve sorumluluğunu hatırlatır. Yatsı vakti okunması müstehab.'
   },
 {
@@ -6382,6 +7778,7 @@ const DUALAR = [
       '<b>19</b> Kellâ lâ tütı\'hü vescüd vakterib.'
     ],
     anlam: 'Yaratan Rabbinin adıyla oku! O, insanı bir aleka\'dan (asılmış zigot) yarattı. Oku, Rabbin en büyük kerem sahibidir. O, kalem ile (yazmayı) öğretendir. İnsana bilmediğini öğretti. Sakın! İnsan azar — kendini müstağni gördüğü için. Şüphesiz dönüş Rabbinedir. Kulu, namaz kılarken engelleyeni gördün mü? Sen O\'nu görmesen de O seni görüyor. Sakın ona uyma; secde et ve (Rabbine) yaklaş.',
+    arapca: 'اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴿١﴾ خَلَقَ الْإِنْسَانَ مِنْ عَلَقٍ ﴿٢﴾ اقْرَأْ وَرَبُّكَ الْأَكْرَمُ ﴿٣﴾ الَّذِي عَلَّمَ بِالْقَلَمِ ﴿٤﴾ عَلَّمَ الْإِنْسَانَ مَا لَمْ يَعْلَمْ ﴿٥﴾ كَلَّا إِنَّ الْإِنْسَانَ لَيَطْغَى ﴿٦﴾ أَنْ رَآهُ اسْتَغْنَى ﴿٧﴾ إِنَّ إِلَى رَبِّكَ الرُّجْعَى ﴿٨﴾ أَرَأَيْتَ الَّذِي يَنْهَى ﴿٩﴾ عَبْدًا إِذَا صَلَّى ﴿١٠﴾ أَرَأَيْتَ إِنْ كَانَ عَلَى الْهُدَى ﴿١١﴾ أَوْ أَمَرَ بِالتَّقْوَى ﴿١٢﴾ أَرَأَيْتَ إِنْ كَذَّبَ وَتَوَلَّى ﴿١٣﴾ أَلَمْ يَعْلَمْ بِأَنَّ اللَّهَ يَرَى ﴿١٤﴾ كَلَّا لَئِنْ لَمْ يَنْتَهِ لَنَسْفَعًا بِالنَّاصِيَةِ ﴿١٥﴾ نَاصِيَةٍ كَاذِبَةٍ خَاطِئَةٍ ﴿١٦﴾ فَلْيَدْعُ نَادِيَهُ ﴿١٧﴾ سَنَدْعُ الزَّبَانِيَةَ ﴿١٨﴾ كَلَّا لَا تُطِعْهُ وَاسْجُدْ وَاقْتَرِبْ ﴿١٩﴾',
     fazilet: '✨ Peygamberimize ilk inen âyetlerdir. Okuma, ilim, öğrenmenin Allah\'ın adıyla başladığını öğretir. Hira mağarasında nazil olmuştur.'
   },
 {
@@ -6398,6 +7795,7 @@ const DUALAR = [
       '<b>5</b> Selâmün hiye hattâ matlaıl-fecr.'
     ],
     anlam: 'Biz onu (Kur\'an\'ı) Kadir Gecesi\'nde indirdik. Kadir Gecesi\'nin ne olduğunu sen nereden bileceksin? Kadir Gecesi, bin aydan daha hayırlıdır. O gecede melekler ve Rûh (Cebrâil), Rablerinin izniyle her iş için inerler. O gece, tan yeri ağarıncaya kadar bir esenliktir.',
+    arapca: 'إِنَّا أَنْزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ ﴿١﴾ وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ ﴿٢﴾ لَيْلَةُ الْقَدْرِ خَيْرٌ مِنْ أَلْفِ شَهْرٍ ﴿٣﴾ تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِمْ مِنْ كُلِّ أَمْرٍ ﴿٤﴾ سَلَامٌ هِيَ حَتَّى مَطْلَعِ الْفَجْرِ ﴿٥﴾',
     fazilet: '✨ Kadir Gecesi\'nde okunması özellikle tavsiye edilir. Bin aydan hayırlı bir gecenin bilinmesi için.'
   },
 {
@@ -6417,6 +7815,7 @@ const DUALAR = [
       '<b>8</b> Cezâuhüm inde rabbihim cennâtü adnin tecrî min tahtihel-enhâru hâlidîne fîhâ ebedâ, radıyallâhü anhüm ve radû anh, zâlike li-men haşiye rabbeh.'
     ],
     anlam: 'Kitap ehlinden ve müşriklerden inkâr edenler, kendilerine apaçık delil gelinceye kadar (inkârlarından) ayrılacak değillerdi. Apaçık delil ise Allah\'tan gönderilen ve tertemiz sayfalar okuyan bir Resul\'dür. Onlara sadece, dini Allah\'a has kılarak, hanîfler olarak O\'na kulluk etmeleri, namaz kılmaları ve zekât vermeleri emredildi. İşte dosdoğru din budur. İman edip salih amel işleyenler — onlar yaratılmışların en hayırlısıdır.',
+    arapca: 'لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنْفَكِّينَ حَتَّى تَأْتِيَهُمُ الْبَيِّنَةُ ﴿١﴾ رَسُولٌ مِنَ اللَّهِ يَتْلُو صُحُفًا مُطَهَّرَةً ﴿٢﴾ فِيهَا كُتُبٌ قَيِّمَةٌ ﴿٣﴾ وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ إِلَّا مِنْ بَعْدِ مَا جَاءَتْهُمُ الْبَيِّنَةُ ﴿٤﴾ وَمَا أُمِرُوا إِلَّا لِيَعْبُدُوا اللَّهَ مُخْلِصِينَ لَهُ الدِّينَ حُنَفَاءَ وَيُقِيمُوا الصَّلَاةَ وَيُؤْتُوا الزَّكَاةَ ۚ وَذَلِكَ دِينُ الْقَيِّمَةِ ﴿٥﴾ إِنَّ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ فِي نَارِ جَهَنَّمَ خَالِدِينَ فِيهَا ۚ أُولَئِكَ هُمْ شَرُّ الْبَرِيَّةِ ﴿٦﴾ إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَئِكَ هُمْ خَيْرُ الْبَرِيَّةِ ﴿٧﴾ جَزَاؤُهُمْ عِنْدَ رَبِّهِمْ جَنَّاتُ عَدْنٍ تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ خَالِدِينَ فِيهَا أَبَدًا ۚ رَضِيَ اللَّهُ عَنْهُمْ وَرَضُوا عَنْهُ ۚ ذَلِكَ لِمَنْ خَشِيَ رَبَّهُ ﴿٨﴾',
     fazilet: '✨ "İman edip salih amel işleyenler yaratılmışların en hayırlısıdır" âyetiyle müjde verir. İhlâs ile kulluk üzerine.'
   },
 {
@@ -6436,6 +7835,7 @@ const DUALAR = [
       '<b>8</b> Vemen ya\'mel miskâle zerratin şerran yerah.'
     ],
     anlam: 'Yer şiddetle sarsıldığında, yer ağırlıklarını çıkardığında, insan "Buna ne oluyor?" dediğinde — o gün yer, Rabbinin ona vahyetmesiyle haberlerini anlatır. O gün insanlar amellerini görmeleri için bölük bölük çıkarlar. Kim zerre miskâl bir hayır işlerse onu görür. Kim de zerre miskâl bir kötülük işlerse onu görür.',
+    arapca: 'إِذَا زُلْزِلَتِ الْأَرْضُ زِلْزَالَهَا ﴿١﴾ وَأَخْرَجَتِ الْأَرْضُ أَثْقَالَهَا ﴿٢﴾ وَقَالَ الْإِنْسَانُ مَا لَهَا ﴿٣﴾ يَوْمَئِذٍ تُحَدِّثُ أَخْبَارَهَا ﴿٤﴾ بِأَنَّ رَبَّكَ أَوْحَى لَهَا ﴿٥﴾ يَوْمَئِذٍ يَصْدُرُ النَّاسُ أَشْتَاتًا لِيُرَوْا أَعْمَالَهُمْ ﴿٦﴾ فَمَنْ يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ ﴿٧﴾ وَمَنْ يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ ﴿٨﴾',
     fazilet: '✨ Küçük amellerin değerini hatırlatır. Sahihte "Kur\'an\'ın dörtte birine denk" rivayeti vardır (Tirmizî).'
   },
 {
@@ -6458,6 +7858,7 @@ const DUALAR = [
       '<b>11</b> İnne rabbehüm bihim yevmeizin lehabîr.'
     ],
     anlam: 'Soluk soluğa süratle koşan, çakarak ateş çıkaran, sabahleyin baskın yapan, oradan tozu dumana katan, ve düşman topluluğunun ortasına dalan atlara yemin olsun ki, insan Rabbine karşı çok nankördür. Hiç şüphesiz buna kendisi de şâhittir. Gerçekten o, mal sevgisi sebebiyle çok katıdır. Bilmiyor mu ki kabirlerde olanlar diriltildiğinde, kalplerde olanlar açığa çıkarıldığında, o gün Rableri onlardan tamamen haberdardır?',
+    arapca: 'وَالْعَادِيَاتِ ضَبْحًا ﴿١﴾ فَالْمُورِيَاتِ قَدْحًا ﴿٢﴾ فَالْمُغِيرَاتِ صُبْحًا ﴿٣﴾ فَأَثَرْنَ بِهِ نَقْعًا ﴿٤﴾ فَوَسَطْنَ بِهِ جَمْعًا ﴿٥﴾ إِنَّ الْإِنْسَانَ لِرَبِّهِ لَكَنُودٌ ﴿٦﴾ وَإِنَّهُ عَلَى ذَلِكَ لَشَهِيدٌ ﴿٧﴾ وَإِنَّهُ لِحُبِّ الْخَيْرِ لَشَدِيدٌ ﴿٨﴾ أَفَلَا يَعْلَمُ إِذَا بُعْثِرَ مَا فِي الْقُبُورِ ﴿٩﴾ وَحُصِّلَ مَا فِي الصُّدُورِ ﴿١٠﴾ إِنَّ رَبَّهُمْ بِهِمْ يَوْمَئِذٍ لَخَبِيرٌ ﴿١١﴾',
     fazilet: '✨ İnsanın nankörlüğüne ve mal hırsına karşı uyarı. Âhiret bilinci için okunur.'
   },
 {
@@ -6480,6 +7881,7 @@ const DUALAR = [
       '<b>11</b> Nârun hâmiyeh.'
     ],
     anlam: 'Yürekleri hoplatan o büyük felâket! Yürekleri hoplatan o büyük felâket nedir? O büyük felâketin ne olduğunu sen nereden bileceksin? O gün insanlar, etrafa yayılmış kelebekler gibi olacaklar. Dağlar, atılmış renkli yünler gibi olacaklar. İşte o vakit kimin tartıları (sevap kefesi) ağır gelirse, o, hoşnut olacağı bir hayat içinde olacaktır. Ama kimin de tartıları hafif gelirse, anası Hâviye (cehennem) olacaktır. O Hâviye\'nin ne olduğunu sen nereden bileceksin? O kızgın bir ateştir.',
+    arapca: 'الْقَارِعَةُ ﴿١﴾ مَا الْقَارِعَةُ ﴿٢﴾ وَمَا أَدْرَاكَ مَا الْقَارِعَةُ ﴿٣﴾ يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ ﴿٤﴾ وَتَكُونُ الْجِبَالُ كَالْعِهْنِ الْمَنْفُوشِ ﴿٥﴾ فَأَمَّا مَنْ ثَقُلَتْ مَوَازِينُهُ ﴿٦﴾ فَهُوَ فِي عِيشَةٍ رَاضِيَةٍ ﴿٧﴾ وَأَمَّا مَنْ خَفَّتْ مَوَازِينُهُ ﴿٨﴾ فَأُمُّهُ هَاوِيَةٌ ﴿٩﴾ وَمَا أَدْرَاكَ مَا هِيَهْ ﴿١٠﴾ نَارٌ حَامِيَةٌ ﴿١١﴾',
     fazilet: '✨ Mîzân ve hesap günü bilinci için okunur. Amellerin tartılışını hatırlatır.'
   },
 {
@@ -6499,6 +7901,7 @@ const DUALAR = [
       '<b>8</b> Sümme letüs\'elünne yevmeizin anin-naîm.'
     ],
     anlam: 'Çoklukla övünmek sizi oyaladı — sonunda kabirleri ziyaret ettiniz. Hayır, ileride bileceksiniz. Yine hayır, ileride bileceksiniz. Hayır, eğer kesin bir bilgi ile bilseydiniz. Andolsun, cehennemi mutlaka göreceksiniz. Yine andolsun, onu gözlerinizle kesin olarak göreceksiniz. Sonra o gün, nimetlerden mutlaka hesaba çekileceksiniz.',
+    arapca: 'أَلْهَاكُمُ التَّكَاثُرُ ﴿١﴾ حَتَّى زُرْتُمُ الْمَقَابِرَ ﴿٢﴾ كَلَّا سَوْفَ تَعْلَمُونَ ﴿٣﴾ ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ ﴿٤﴾ كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ ﴿٥﴾ لَتَرَوُنَّ الْجَحِيمَ ﴿٦﴾ ثُمَّ لَتَرَوُنَّهَا عَيْنَ الْيَقِينِ ﴿٧﴾ ثُمَّ لَتُسْأَلُنَّ يَوْمَئِذٍ عَنِ النَّعِيمِ ﴿٨﴾',
     fazilet: '✨ Dünyaya bağlanma uyarısı. Ölüm ve hesap bilinci, mal-evlat çokluğunun aldatmaması için.'
   },
 {
@@ -6513,6 +7916,7 @@ const DUALAR = [
       '<b>3</b> İllellezîne âmenû ve amilus-sâlihâti ve tevâsav bil-hakkı ve tevâsav bis-sabr.'
     ],
     anlam: 'Asra (zamana) yemin olsun ki, insan kesin bir ziyandadır. Ancak iman edip salih ameller işleyen, birbirine hakkı tavsiye eden ve birbirine sabrı tavsiye edenler müstesnâ.',
+    arapca: 'وَالْعَصْرِ ﴿١﴾ إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ ﴿٢﴾ إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ ﴿٣﴾',
     fazilet: '✨ İmam Şâfiî\'nin "Kur\'an\'dan sadece bu sûre inseydi insanlara yeterdi" dediği sûre. Sahabeler ayrılırken birbirlerine okurlardı.'
   },
 {
@@ -6533,6 +7937,7 @@ const DUALAR = [
       '<b>9</b> Fî amedin mümeddedeh.'
     ],
     anlam: 'İnsanları arkadan çekiştiren, kaş-göz işaretiyle alay eden her kişinin vay haline! O ki, mal toplamış ve onu sürekli sayar. Malının kendisini ebedîleştirdiğini sanır. Hayır! O, mutlaka Hutame\'ye atılacaktır. Hutame\'nin ne olduğunu sen nereden bileceksin? O, Allah\'ın tutuşturulmuş ateşidir — yüreklere çıkar. O ateş, üzerlerine kapatılmıştır — uzatılmış sütunlar içinde.',
+    arapca: 'وَيْلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ ﴿١﴾ الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ ﴿٢﴾ يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ ﴿٣﴾ كَلَّا لَيُنْبَذَنَّ فِي الْحُطَمَةِ ﴿٤﴾ وَمَا أَدْرَاكَ مَا الْحُطَمَةُ ﴿٥﴾ نَارُ اللَّهِ الْمُوقَدَةُ ﴿٦﴾ الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ ﴿٧﴾ إِنَّهَا عَلَيْهِمْ مُؤْصَدَةٌ ﴿٨﴾ فِي عَمَدٍ مُمَدَّدَةٍ ﴿٩﴾',
     fazilet: '✨ Gıybet, alay, mal hırsından korunmak için okunur. Dilin ve kalbin terbiyesi için.'
   },
 {
@@ -6549,6 +7954,7 @@ const DUALAR = [
       '<b>5</b> Fecealehüm ke-asfin me\'kûl.'
     ],
     anlam: 'Rabbinin fil ordusuna ne yaptığını görmedin mi? Onların tuzaklarını boşa çıkarmadı mı? Üzerlerine sürü sürü kuşlar gönderdi. Onlara çamurdan pişirilmiş taşlar atıyorlardı. Nihayet onları yenilmiş ekin yaprakları gibi yapıverdi.',
+    arapca: 'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ﴿١﴾ أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ ﴿٢﴾ وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ ﴿٣﴾ تَرْمِيهِمْ بِحِجَارَةٍ مِنْ سِجِّيلٍ ﴿٤﴾ فَجَعَلَهُمْ كَعَصْفٍ مَأْكُولٍ ﴿٥﴾',
     fazilet: '✨ Allah\'ın yardımına tevekkül etmek, zulümlerden ve düşman tuzaklarından korunmak için okunur.'
   },
 {
@@ -6564,6 +7970,7 @@ const DUALAR = [
       '<b>4</b> Ellezî et\'amehüm min cûin ve âmenehüm min havf.'
     ],
     anlam: 'Kureyş\'in alıştırılması için; onları kış ve yaz yolculuğuna alıştırılmasından dolayı, bu Beyt\'in (Kâbe\'nin) Rabbine kulluk etsinler. Ki O, kendilerini açlıktan doyurdu ve onları korkudan emin kıldı.',
+    arapca: 'لِإِيلَافِ قُرَيْشٍ ﴿١﴾ إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ ﴿٢﴾ فَلْيَعْبُدُوا رَبَّ هَذَا الْبَيْتِ ﴿٣﴾ الَّذِي أَطْعَمَهُمْ مِنْ جُوعٍ وَآمَنَهُمْ مِنْ خَوْفٍ ﴿٤﴾',
     fazilet: '✨ Rızık genişlemesi ve emniyet için okunur. Aç olan kişi tok kalır, korkan kişi emin olur.'
   },
 {
@@ -6582,6 +7989,7 @@ const DUALAR = [
       '<b>7</b> Ve yemneûnel-mâ\'ûn.'
     ],
     anlam: 'Dîni yalanlayanı gördün mü? İşte o, yetimi itip kakar. Yoksulu doyurmaya teşvik etmez. Yazıklar olsun o namaz kılanlara ki, onlar namazlarından gafildirler. Onlar gösteriş yaparlar ve en küçük bir yardımı dahi esirgerler.',
+    arapca: 'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ ﴿١﴾ فَذَلِكَ الَّذِي يَدُعُّ الْيَتِيمَ ﴿٢﴾ وَلَا يَحُضُّ عَلَى طَعَامِ الْمِسْكِينِ ﴿٣﴾ فَوَيْلٌ لِلْمُصَلِّينَ ﴿٤﴾ الَّذِينَ هُمْ عَنْ صَلَاتِهِمْ سَاهُونَ ﴿٥﴾ الَّذِينَ هُمْ يُرَاءُونَ ﴿٦﴾ وَيَمْنَعُونَ الْمَاعُونَ ﴿٧﴾',
     fazilet: '✨ Riyâdan korunmak, ihlâs kazanmak ve yetim-yoksul gözeten ahlâka erişmek için okunur.'
   },
 {
@@ -6596,6 +8004,7 @@ const DUALAR = [
       '<b>3</b> İnne şânieke hüvel-ebter.'
     ],
     anlam: 'Şüphesiz Biz sana Kevser\'i (çok hayır ve nimet) verdik. O hâlde, Rabbin için namaz kıl ve kurban kes. Doğrusu sana kin tutan, sonu kesik olanın ta kendisidir.',
+    arapca: 'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ ﴿١﴾ فَصَلِّ لِرَبِّكَ وَانْحَرْ ﴿٢﴾ إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ ﴿٣﴾',
     fazilet: '✨ Kur\'an\'ın en kısa sûresi. Bereket ve hayır artışı için, evlat duâsı niyetiyle okunur.'
   },
 {
@@ -6613,6 +8022,7 @@ const DUALAR = [
       '<b>6</b> Leküm dînüküm veliye dîn.'
     ],
     anlam: 'De ki: "Ey kâfirler! Ben sizin kulluk ettiklerinize kulluk etmem. Sizin dininiz size, benim dinim de bana."',
+    arapca: 'قُلْ يَا أَيُّهَا الْكَافِرُونَ ﴿١﴾ لَا أَعْبُدُ مَا تَعْبُدُونَ ﴿٢﴾ وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٣﴾ وَلَا أَنَا عَابِدٌ مَا عَبَدْتُمْ ﴿٤﴾ وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٥﴾ لَكُمْ دِينُكُمْ وَلِيَ دِينِ ﴿٦﴾',
     fazilet: '✨ Yatmadan önce okuyan şirkten korunur (Tirmizî). Kur\'an\'ın dörtte birine denktir.'
   },
 {
@@ -6627,6 +8037,7 @@ const DUALAR = [
       '<b>3</b> Fesebbih bi-hamdi rabbike vestağfirh, innehû kâne tevvâbâ.'
     ],
     anlam: 'Allah\'ın yardımı ve fetih (Mekke fethi) geldiğinde ve insanların bölük bölük Allah\'ın dinine girdiklerini gördüğünde, Rabbini hamd ile tesbih et ve O\'ndan bağışlanma dile. Şüphesiz O, tövbeleri çok kabul edendir.',
+    arapca: 'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ ﴿١﴾ وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا ﴿٢﴾ فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا ﴿٣﴾',
     fazilet: '✨ Son nazil olan sûrelerden. Tevbe ve istiğfar için okunur. Bir zaferin ardından hamd duâsı.'
   },
 {
@@ -6643,6 +8054,7 @@ const DUALAR = [
       '<b>5</b> Fî cîdihâ hablün min mesed.'
     ],
     anlam: 'Ebû Leheb\'in iki eli kurusun, kurudu da. Ona ne malı fayda verdi ne de kazandığı. O, alevli bir ateşe girecektir. Karısı da onunla beraber boynunda hurma lifinden bürülmüş bir ip olduğu hâlde, odun taşıyıcı olarak.',
+    arapca: 'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ ﴿١﴾ مَا أَغْنَى عَنْهُ مَالُهُ وَمَا كَسَبَ ﴿٢﴾ سَيَصْلَى نَارًا ذَاتَ لَهَبٍ ﴿٣﴾ وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ ﴿٤﴾ فِي جِيدِهَا حَبْلٌ مِنْ مَسَدٍ ﴿٥﴾',
     fazilet: '✨ İslâm\'a düşmanlık edenlere karşı uyarıdır. Hidâyet için ve düşmanlardan korunma niyetiyle okunur.'
   },
 {
@@ -6658,6 +8070,7 @@ const DUALAR = [
       '<b>4</b> Ve lem yekün lehû küfüven ehad.'
     ],
     anlam: 'De ki: "O, Allah\'tır, tektir. Allah Samed\'dir (her şey ona muhtaçtır, O hiçbir şeye muhtaç değildir). Doğurmamış ve doğurulmamıştır. Hiçbir şey O\'na denk değildir."',
+    arapca: 'قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ ﴿٤﴾',
     fazilet: '✨ Kur\'an\'ın üçte birine denktir (Buhârî, Müslim). 3 kez okumak 1 hatim sevabıdır. Her gün okuyanın günahları affedilir.'
   },
 {
@@ -6674,6 +8087,7 @@ const DUALAR = [
       '<b>5</b> Ve min şerri hâsidin izâ hased.'
     ],
     anlam: 'De ki: "Sığınırım sabahın Rabbine, yarattığı şeylerin şerrinden, karanlık çöktüğü zaman gecenin şerrinden, düğümlere üfleyenlerin şerrinden ve haset eden hasetçinin şerrinden."',
+    arapca: 'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِنْ شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾',
     fazilet: '✨ Nas Sûresi ile birlikte "Muavvizeteyn" — her türlü kötülükten korunma için sabah-akşam 3\'er kez okunur (Tirmizî).'
   },
 {
@@ -6691,7 +8105,63 @@ const DUALAR = [
       '<b>6</b> Minel-cinneti ven-nâs.'
     ],
     anlam: 'De ki: "Sığınırım insanların Rabbine, insanların Melikine, insanların İlâhına; sinsi vesvesecinin şerrinden — insanların göğsüne vesvese verenin (şerrinden); cinlerden olsun, insanlardan olsun."',
+    arapca: 'قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَهِ النَّاسِ ﴿٣﴾ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾',
     fazilet: '✨ Felak ile birlikte Muavvizeteyn — vesveseden ve şer odaklarından koruyan iki sûre. Sabah-akşam 3 kere okunur.'
+  },
+{
+    id: 'subhaneke',
+    ad: 'Sübhâneke Duâsı',
+    ikon: '🤲',
+    alt: 'Namaz başında okunan duâ',
+    bismillah: false,
+    arapca: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ ، وَتَبَارَكَ اسْمُكَ ، وَتَعَالَى جَدُّكَ ، وَلَا إِلَهَ غَيْرُكَ',
+    ayetler: [
+      'Sübhânekellâhümme ve bi-hamdik,',
+      've tebârakesmük, ve teâlâ ceddük,',
+      've lâ ilâhe ğayruk.'
+    ],
+    anlam: 'Allah\'ım! Seni tüm noksanlıklardan tenzîh ederim ve sana hamd ederim. İsmin mübarektir. Şânın yücedir. Senden başka ilâh yoktur.',
+    fazilet: '✨ Her namazın ilk rekâtında, iftitah tekbirinin (Allâhuekber\'in) hemen ardından okunur. Cenaze namazında da birinci tekbirden sonra okunur.'
+  },
+{
+    id: 'tahiyyat',
+    ad: 'Ettehiyyâtü (Tahiyyat) Duâsı',
+    ikon: '🤲',
+    alt: 'Namaz son oturuşunda okunur',
+    bismillah: false,
+    arapca: 'التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
+    ayetler: [
+      'Ettehiyyâtü lillâhi ves-salavâtü vet-tayyibât,',
+      'esselâmü aleyke eyyühen-nebiyyü ve rahmetullâhi ve berakâtüh,',
+      'esselâmü aleynâ ve alâ ibâdillâhis-sâlihîn,',
+      'eşhedü en lâ ilâhe illallâh,',
+      've eşhedü enne Muhammeden abdühû ve resûlüh.'
+    ],
+    anlam: 'Bütün hayır duâlar, namazlar, malî ibadetler Allah\'ındır. Ey Peygamber! Allah\'ın selâmı, rahmeti ve bereketi senin üzerine olsun. Selâm bizim ve Allah\'ın salih kullarının üzerine olsun. Şehâdet ederim ki Allah\'tan başka ilâh yoktur. Ve şehâdet ederim ki Muhammed O\'nun kulu ve resûlüdür.',
+    fazilet: '✨ Her namazın son oturuşunda (ka\'de-i ahîre) okunur. Bunu okumadan namaz tamam olmaz. Hz. Peygamber Mi\'rac\'da Allah ile bizzat bu sözlerle konuşmuştur.'
+  },
+{
+    id: 'kunut',
+    ad: 'Kunut Duâları',
+    ikon: '🤲',
+    alt: 'Vitir namazında okunur — iki duâ',
+    bismillah: false,
+    arapca: '<b>1.</b> اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنَسْتَهْدِيكَ وَنُؤْمِنُ بِكَ وَنَتُوبُ إِلَيْكَ وَنَتَوَكَّلُ عَلَيْكَ وَنُثْنِي عَلَيْكَ الْخَيْرَ كُلَّهُ نَشْكُرُكَ وَلَا نَكْفُرُكَ وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ <br><br> <b>2.</b> اللَّهُمَّ إِيَّاكَ نَعْبُدُ وَلَكَ نُصَلِّي وَنَسْجُدُ وَإِلَيْكَ نَسْعَى وَنَحْفِدُ نَرْجُو رَحْمَتَكَ وَنَخْشَى عَذَابَكَ إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ',
+    ayetler: [
+      '<b>1. Kunut Duâsı:</b>',
+      'Allâhümme innâ nesteînüke ve nestağfirüke ve nestehdîke',
+      've nü\'minü bike ve netûbü ileyk,',
+      've netevekkelü aleyke ve nüsnî aleykel-hayra küllehû',
+      'neşkürüke ve lâ nekfürüke,',
+      've nahleu ve netrukü men yefcürük.',
+      '<b>2. Kunut Duâsı:</b>',
+      'Allâhümme iyyâke na\'büdü ve leke nüsallî ve nescüd,',
+      've ileyke nes\'â ve nahfid,',
+      'nercû rahmeteke ve nahşâ azâbek,',
+      'inne azâbeke bil-küffâri mülhik.'
+    ],
+    anlam: '<strong>1.</strong> Allah\'ım! Senden yardım dileriz, bağışlanma dileriz, hidâyet dileriz. Sana iman ederiz, tövbe ederiz. Sana tevekkül ederiz. Bütün hayırla Seni överiz. Sana şükrederiz, nimetlerini inkâr etmeyiz. Sana isyan edenleri terk eder, onlardan ayrılırız. <br><br> <strong>2.</strong> Allah\'ım! Yalnız Sana ibadet ederiz. Yalnız Senin için namaz kılar, Sana secde ederiz. Yalnız Sana koşar, Sana yaklaşmaya çalışırız. Rahmetini umar, azâbından korkarız. Şüphesiz Senin azâbın kâfirlere ulaşacaktır.',
+    fazilet: '✨ Hanefî mezhebine göre Vitir namazının üçüncü rekâtında, rükûya gitmeden önce okunur. Ezberlenmesi farzdır; ezbere bilmeyen \"Rabbenâ âtinâ...\" duâsını okur.'
   },
 {
     id: 'salli',
@@ -6705,6 +8175,7 @@ const DUALAR = [
       'inneke hamîdün mecîd.'
     ],
     anlam: 'Allah\'ım! Muhammed\'e ve Muhammed\'in âl\'ine (ehl-i beytine), İbrâhim ve İbrâhim\'in âl\'ine salât (rahmet) ettiğin gibi rahmet eyle. Şüphesiz Sen, hamde lâyık ve şânı yüce olansın.',
+    arapca: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
     fazilet: '✨ Namaz son oturuşunda okunan farz duâlardandır. Allâhümme Bârik ile birlikte salât-ü selâm tamamlanır.'
   },
 {
@@ -6719,6 +8190,7 @@ const DUALAR = [
       'inneke hamîdün mecîd.'
     ],
     anlam: 'Allah\'ım! Muhammed\'e ve Muhammed\'in âl\'ine, İbrâhim\'e ve İbrâhim\'in âl\'ine bereket verdiğin gibi bereket ver. Şüphesiz Sen, hamde lâyık ve şânı yüce olansın.',
+    arapca: 'اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
     fazilet: '✨ Allâhümme Salli\'nin ardından okunur. Salât-ü selâmı bütünler. Müminin nuru ve şefâat vesilesi.'
   },
 {
@@ -6733,6 +8205,7 @@ const DUALAR = [
       've kınâ azâben-nâr.'
     ],
     anlam: 'Ey Rabbimiz! Bize dünyada da iyilik (güzellik) ver, âhirette de iyilik ver ve bizi ateş azâbından koru.',
+    arapca: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً ، وَفِي الْآخِرَةِ حَسَنَةً ، وَقِنَا عَذَابَ النَّارِ',
     fazilet: '✨ Bakara 201. âyetinden alınma duâdır. Kur\'an\'da Peygamberimizin de çokça okuduğu duâlardandır. Hem dünya hem âhiret saâdeti için.'
   },
 {
@@ -6746,6 +8219,7 @@ const DUALAR = [
       've lil-mü\'minîne yevme yekûmül-hisâb.'
     ],
     anlam: 'Ey Rabbimiz! Hesabın görüleceği gün beni, anne-babamı ve bütün mü\'minleri bağışla.',
+    arapca: 'رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ',
     fazilet: '✨ İbrâhim Sûresi 41. âyetinden. Anne-baba ve müminler için günahların affı niyetiyle okunur. Vefat etmiş ebeveyn için sevap vesilesi.'
   }
 ];
@@ -6762,6 +8236,7 @@ function duaCizdir() {
     kart.className = 'dua-karti';
     kart.dataset.arama = (d.ad + ' ' + (d.alt || '')).toLowerCase();
     const ayetlerHtml = (d.ayetler || []).map(a => `<div class="dua-ayet">${a}</div>`).join('');
+    const arapcaHtml = d.arapca ? `<div class="dua-arapca-tam">${d.arapca}</div>` : '';
     kart.innerHTML = `
       <div class="dua-baslik" onclick="duaToggle('dua-${d.id}')">
         <span class="dua-ikon">${d.ikon || '📖'}</span>
@@ -6773,6 +8248,8 @@ function duaCizdir() {
       </div>
       <div class="dua-icerik" id="dua-${d.id}">
         ${d.bismillah ? '<div class="dua-bismillah">Bismillâhirrahmânirrahîm</div>' : ''}
+        ${arapcaHtml}
+        <div class="dua-okunus-baslik">📖 Türkçe Okunuş</div>
         <div class="dua-ayetler">${ayetlerHtml}</div>
         ${d.anlam ? `<div class="dua-anlam"><strong>Anlamı:</strong><br>${d.anlam}</div>` : ''}
         ${d.fazilet ? `<div class="dua-fazilet">${d.fazilet}</div>` : ''}
@@ -6856,6 +8333,7 @@ function iceAktar(event) {
       if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
       if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
       if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
+      if (v.borclar && typeof v.borclar === 'object') vakitBorclariUygula(v.borclar);
       if (typeof v.streakRekoru === 'number') { streakRekoru = v.streakRekoru; localStorage.setItem(STREAK_REKOR_KEY, streakRekoru.toString()); }
       if (typeof v.haftalikHedef === 'number') { haftalikHedef = v.haftalikHedef; localStorage.setItem(HAFTALIK_HEDEF_KEY, haftalikHedef.toString()); }
       if (typeof v.aylikHedef === 'number') { aylikHedef = v.aylikHedef; localStorage.setItem(AYLIK_HEDEF_KEY, aylikHedef.toString()); }
@@ -8191,6 +9669,935 @@ setTimeout(() => {
 }, 500);
 
 
+
+// ═══════════════════════════════════════════════════════════
+// SETUP WIZARD
+// ═══════════════════════════════════════════════════════════
+const SETUP_DONE_KEY = 'kn_setup_done_v1';
+let setupSecilenCinsiyet = 'erkek';
+let setupHesaplananBorclar = null;
+
+function setupAc() {
+  document.getElementById('setup-overlay').classList.add('acik');
+  setupGoster(1);
+}
+function setupKapat() {
+  document.getElementById('setup-overlay').classList.remove('acik');
+}
+function setupGoster(no) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('setup-ekran-' + i);
+    if (el) el.style.display = (i === no ? 'block' : 'none');
+  }
+  // Bugünün tarihini başlangıç olarak ayarla
+  if (no === 2) {
+    const bg = document.getElementById('su-baslangic');
+    if (bg && !bg.value) bg.value = bugunTarih();
+  }
+}
+function setupCinsiyet(c) {
+  setupSecilenCinsiyet = c;
+  document.getElementById('su-erkek').classList.toggle('aktif', c === 'erkek');
+  document.getElementById('su-kadin').classList.toggle('aktif', c === 'kadin');
+  // Bülüğ yaşını otomatik güncelle
+  document.getElementById('su-bulug').value = (c === 'kadin') ? 9 : 12;
+}
+function setupHesapla() {
+  const dogum = document.getElementById('su-dogum').value;
+  const bulug = parseInt(document.getElementById('su-bulug').value) || 12;
+  const baslangic = document.getElementById('su-baslangic').value || bugunTarih();
+  if (!dogum) { toast('⚠️', 'Doğum tarihini gir', 'hata'); return; }
+  // Sorumluluk başlangıç tarihi: doğum + bülüğ yıl
+  const sorumluTarih = new Date(dogum);
+  sorumluTarih.setFullYear(sorumluTarih.getFullYear() + bulug);
+  const baslangicTarih = new Date(baslangic);
+  if (baslangicTarih <= sorumluTarih) {
+    toast('⚠️', 'Başlama tarihi bülüğ yaşından önce olamaz', 'hata');
+    return;
+  }
+  // Gün farkı
+  const gunFarki = Math.floor((baslangicTarih - sorumluTarih) / (1000*60*60*24));
+  if (gunFarki <= 0) { toast('⚠️', 'Geçersiz tarih farkı', 'hata'); return; }
+
+  setupHesaplananBorclar = {
+    imsak: gunFarki, ogle: gunFarki, ikindi: gunFarki,
+    aksam: gunFarki, yatsi: gunFarki
+  };
+
+  // Önizleme doldur
+  document.getElementById('su-bs-imsak').textContent = gunFarki.toLocaleString('tr-TR');
+  document.getElementById('su-bs-ogle').textContent = gunFarki.toLocaleString('tr-TR');
+  document.getElementById('su-bs-ikindi').textContent = gunFarki.toLocaleString('tr-TR');
+  document.getElementById('su-bs-aksam').textContent = gunFarki.toLocaleString('tr-TR');
+  document.getElementById('su-bs-yatsi').textContent = gunFarki.toLocaleString('tr-TR');
+  document.getElementById('su-toplam').textContent = (gunFarki * 5).toLocaleString('tr-TR');
+
+  // Manevi yaş
+  const yil = Math.floor(gunFarki / 365);
+  const ay = Math.floor((gunFarki % 365) / 30);
+  const gun = (gunFarki % 365) % 30;
+  document.getElementById('su-ozet-yas').innerHTML =
+    '<strong>' + yil + ' yıl ' + ay + ' ay ' + gun + ' gün</strong> ' +
+    '(<small>sorumluluk: ' + sorumluTarih.toLocaleDateString('tr-TR') + ' → ' + baslangicTarih.toLocaleDateString('tr-TR') + '</small>)';
+
+  setupGoster(3);
+}
+function setupOnayla() {
+  if (!setupHesaplananBorclar) { toast('⚠️', 'Önce hesapla'); return; }
+  vakitBorclariUygula(setupHesaplananBorclar);
+  localStorage.setItem(SETUP_DONE_KEY, '1');
+  setupKapat();
+  toast('✓', 'Borçların ayarlandı. Hayırlı yolculuklar!', 'basari');
+  // Tüm görünümleri yenile
+  try { herseyGuncelle(); } catch(e){}
+}
+function setupAtla() {
+  if (!confirm('Setup atlanırsa varsayılan değerler kullanılır. Sonra ayarlardan değiştirebilirsin.')) return;
+  localStorage.setItem(SETUP_DONE_KEY, '1');
+  setupKapat();
+  toast('ℹ️', 'Varsayılan değerlerle başlandı', 'basari');
+}
+function setupYedekYukle(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const v = JSON.parse(e.target.result);
+      if (!v.kayitlar) throw new Error('Geçersiz dosya');
+      kayitlar = v.kayitlar;
+      kazanilanRozetler = new Set(v.rozetler || []);
+      if (typeof v.zikir === 'number') zikirSayisi = v.zikir;
+      if (typeof v.ihlas === 'number') ihlasSayisi = v.ihlas;
+      if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
+      if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
+      if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
+      if (v.borclar && typeof v.borclar === 'object') vakitBorclariUygula(v.borclar);
+      kaydet();
+      localStorage.setItem(SETUP_DONE_KEY, '1');
+      setupKapat();
+      toast('📤', 'Yedek yüklendi, hoş geldin!', 'basari');
+      setTimeout(() => location.reload(), 1000);
+    } catch (err) {
+      toast('⚠️', 'Dosya okunamadı: ' + err.message, 'hata');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// İlk açılış kontrolü - kullanıcının hiç verisi yoksa setup aç
+function setupKontrolu() {
+  const setupDone = localStorage.getItem(SETUP_DONE_KEY);
+  const kayitVarmi = Object.keys(kayitlar).length > 0 ||
+                     zikirSayisi > 0 || ihlasSayisi > 0 ||
+                     kazanilanRozetler.size > 0;
+  // Eğer setup yapılmamış VE hiç veri yoksa setup aç
+  // Eğer setup yapılmamış AMA veri varsa (eski kullanıcı), setup_done=true yap
+  if (!setupDone) {
+    if (kayitVarmi) {
+      localStorage.setItem(SETUP_DONE_KEY, '1');
+    } else {
+      setTimeout(() => setupAc(), 500);
+    }
+  }
+}
+setTimeout(setupKontrolu, 200);
+
+// Manuel olarak setup tekrar açma (Yedek bölümünde buton ile)
+function setupYenidenAc() {
+  if (!confirm('Borçlarını yeniden hesaplamak ister misin? Mevcut namaz kayıtların korunur, sadece toplam borç değerleri güncellenir.')) return;
+  setupAc();
+}
+
+
+
+// ═══════════════════════════════════════════════════════════
+// SERVICE WORKER (offline çalışma)
+// ═══════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW kayıtlı:', reg.scope))
+      .catch(err => console.log('SW hata:', err));
+  });
+}
+
+// Android "Install App" prompt
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Toast ile bilgilendir
+  setTimeout(() => {
+    if (deferredPrompt) {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      document.getElementById('toast-ikon').textContent = '📱';
+      document.getElementById('toast-mesaj').innerHTML = 'Uygulamayı ana ekrana ekle <button onclick="kurulumGoster()" style="background:var(--vurgu);color:var(--koyu);border:none;padding:4px 10px;border-radius:6px;font-weight:700;margin-left:8px;cursor:pointer;font-family:inherit;font-size:11px;">Yükle</button>';
+      t.className = 'toast goster';
+      setTimeout(() => t.classList.remove('goster'), 8000);
+    }
+  }, 5000);
+});
+
+function kurulumGoster() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => {
+    deferredPrompt = null;
+  });
+}
+
+
+
+// ═══════════════════════════════════════════════════════════
+// PAKET 3: CUMA + RAMAZAN + VIRDLER
+// ═══════════════════════════════════════════════════════════
+const KEHF_BOLUMLERI = [
+  { id:1, ad:'Ashâb-ı Kehf', aralik:'1-26. âyet', aciklama:'Mağaradaki yedi genç' },
+  { id:2, ad:'İki Bahçe Sahibi', aralik:'27-44. âyet', aciklama:'Servet ve şükür kıssası' },
+  { id:3, ad:'Hz. Mûsâ ve Hızır', aralik:'60-82. âyet', aciklama:'İlim ve hikmet yolculuğu' },
+  { id:4, ad:'Zülkarneyn', aralik:'83-101. âyet', aciklama:'Adâletli hükümdar ve Ye\'cüc-Me\'cüc' },
+  { id:5, ad:'Final ve Tövbe', aralik:'102-110. âyet', aciklama:'Âhiret çağrısı, en hayırlı amel' }
+];
+
+const SABAH_VIRDLERI = [
+  { id:'ayetel-kursi', ad:'Âyetel Kürsî', sayi:1, aciklama:'Bakara 255 — sabahı emniyetle geçirme' },
+  { id:'ihlas', ad:'İhlâs Sûresi', sayi:3, aciklama:'Tüm günü koruyan' },
+  { id:'felak', ad:'Felak Sûresi', sayi:3, aciklama:'Sabahı emniyete almak' },
+  { id:'nas', ad:'Nâs Sûresi', sayi:3, aciklama:'Vesveseden korunma' },
+  { id:'asbahna', ad:'Asbahnâ ve asbahal-mülkü lillâh', sayi:1, aciklama:'"Sabahladık, mülk Allah\'ındır" zikri' },
+  { id:'sabah-duasi', ad:'Allâhümme bi-ke asbahnâ', sayi:1, aciklama:'Hz. Peygamber\'in sabah duâsı' },
+  { id:'ya-hayyu', ad:'Yâ Hayyu Yâ Kayyûm bi-rahmetike estegîs', sayi:1, aciklama:'Hayat ve süreklilik duâsı' },
+  { id:'hasbiyallah', ad:'Hasbünallâhü ve niğme\'l-vekîl', sayi:7, aciklama:'Tevekkül ve dünya-âhiret yetersi' },
+  { id:'sübhanallah-bihamdihi', ad:'Sübhânallâhi ve bi-hamdihî', sayi:100, aciklama:'Günahların affı — denize köpük gibi' },
+  { id:'la-ilahe', ad:'Lâ ilâhe illallâhü vahdehû lâ şerîke leh...', sayi:10, aciklama:'Kelime-i tevhîd — köle azat sevabı' },
+  { id:'salavat-sabah', ad:'Salavât-ı Şerîfe', sayi:10, aciklama:'Şefaate vesile' },
+  { id:'koruma-duasi', ad:'Bismillâhillezî lâ yedurru maas-mihî şey\'ün', sayi:3, aciklama:'O gün hiçbir şey zarar vermez (Tirmizî)' },
+  { id:'estagfirullah-sabah', ad:'Estağfirullâhel-azîm', sayi:100, aciklama:'Affedilme ve tövbe' }
+];
+
+const AKSAM_VIRDLERI = [
+  { id:'ayetel-kursi-a', ad:'Âyetel Kürsî', sayi:1, aciklama:'Geceyi emniyetle geçirmek' },
+  { id:'ihlas-a', ad:'İhlâs Sûresi', sayi:3, aciklama:'Gece için koruma' },
+  { id:'felak-a', ad:'Felak Sûresi', sayi:3, aciklama:'Karanlığın şerrinden' },
+  { id:'nas-a', ad:'Nâs Sûresi', sayi:3, aciklama:'Vesveseden' },
+  { id:'emseyna', ad:'Emseynâ ve emsel-mülkü lillâh', sayi:1, aciklama:'"Akşamladık, mülk Allah\'ındır"' },
+  { id:'aksam-duasi', ad:'Allâhümme bi-ke emseynâ', sayi:1, aciklama:'Hz. Peygamber\'in akşam duâsı' },
+  { id:'ya-hayyu-a', ad:'Yâ Hayyu Yâ Kayyûm bi-rahmetike estegîs', sayi:1, aciklama:'Hayat ve süreklilik' },
+  { id:'hasbiyallah-a', ad:'Hasbünallâhü ve niğme\'l-vekîl', sayi:7, aciklama:'Tevekkül' },
+  { id:'sübhanallah-bihamdihi-a', ad:'Sübhânallâhi ve bi-hamdihî', sayi:100, aciklama:'Günahların affı' },
+  { id:'la-ilahe-a', ad:'Lâ ilâhe illallâhü vahdehû lâ şerîke leh...', sayi:10, aciklama:'Kelime-i tevhîd' },
+  { id:'salavat-aksam', ad:'Salavât-ı Şerîfe', sayi:10, aciklama:'Geceye bereket' },
+  { id:'koruma-duasi-a', ad:'Bismillâhillezî lâ yedurru maas-mihî şey\'ün', sayi:3, aciklama:'Geceyi emniyete almak' },
+  { id:'estagfirullah-aksam', ad:'Estağfirullâhel-azîm', sayi:100, aciklama:'Geceyi tövbe ile bitirmek' }
+];
+
+// ─── Cuma Modu ───
+function cumaBugunMu() {
+  return new Date().getDay() === 5;
+}
+
+function cumaKey(tip) {
+  return 'kn_cuma_' + tip + '_' + bugunTarih();
+}
+
+function cumaModuGuncelle() {
+  const kart = document.getElementById('cuma-kart');
+  if (!kart) return;
+  if (!cumaBugunMu()) {
+    kart.style.display = 'none';
+    return;
+  }
+  kart.style.display = 'block';
+  cumaKehfCizdir();
+  cumaSalavatGuncelle();
+  cumaRozetGuncelle();
+}
+
+function cumaKehfCizdir() {
+  const liste = document.getElementById('cuma-kehf-liste');
+  if (!liste) return;
+  const okunanlar = JSON.parse(localStorage.getItem(cumaKey('kehf')) || '[]');
+  liste.innerHTML = '';
+  KEHF_BOLUMLERI.forEach(b => {
+    const item = document.createElement('div');
+    item.className = 'cuma-kehf-item' + (okunanlar.includes(b.id) ? ' tamam' : '');
+    item.onclick = () => cumaKehfToggle(b.id);
+    item.innerHTML =
+      '<div class="cuma-kehf-box"></div>' +
+      '<div class="cuma-kehf-ad">' + b.ad +
+      '<div class="cuma-kehf-aciklama">' + b.aralik + ' — ' + b.aciklama + '</div></div>';
+    liste.appendChild(item);
+  });
+}
+
+function cumaKehfToggle(id) {
+  let okunanlar = JSON.parse(localStorage.getItem(cumaKey('kehf')) || '[]');
+  if (okunanlar.includes(id)) okunanlar = okunanlar.filter(x => x !== id);
+  else okunanlar.push(id);
+  localStorage.setItem(cumaKey('kehf'), JSON.stringify(okunanlar));
+  cumaKehfCizdir();
+  cumaRozetGuncelle();
+  if (okunanlar.length === KEHF_BOLUMLERI.length) {
+    toast('📖', 'Kehf Sûresi tamamlandı! Mâşaallah', 'basari');
+    try { xpEkle(50, 'kehf'); xpFloatGoster(50, '+50 XP · Kehf'); } catch(e){}
+  }
+}
+
+function cumaSalavatEkle(m) {
+  const k = cumaKey('salavat');
+  let s = parseInt(localStorage.getItem(k) || '0') + m;
+  localStorage.setItem(k, s.toString());
+  cumaSalavatGuncelle();
+  cumaRozetGuncelle();
+  toast('🤲', '+' + m + ' salavât (Cuma)', 'basari');
+  try { xpEkle(Math.floor(m / 10), 'salavat'); } catch(e){}
+}
+
+function cumaSalavatGuncelle() {
+  const s = parseInt(localStorage.getItem(cumaKey('salavat')) || '0');
+  const rakamEl = document.getElementById('cuma-salavat-rakam');
+  const dolguEl = document.getElementById('cuma-salavat-dolgu');
+  const tamamEl = document.getElementById('cuma-tamam-bilgi');
+  if (rakamEl) rakamEl.textContent = s;
+  if (dolguEl) dolguEl.style.width = Math.min(100, s) + '%';
+  if (tamamEl) {
+    if (s >= 100) tamamEl.innerHTML = '<div class="cuma-tamam">✓ Cuma salavât hedefin tamam</div>';
+    else tamamEl.innerHTML = '';
+  }
+}
+
+function cumaRozetGuncelle() {
+  const kehfOkunan = JSON.parse(localStorage.getItem(cumaKey('kehf')) || '[]').length;
+  const salavat = parseInt(localStorage.getItem(cumaKey('salavat')) || '0');
+  const tamamSayi = (kehfOkunan === KEHF_BOLUMLERI.length ? 1 : 0) + (salavat >= 100 ? 1 : 0);
+  const el = document.getElementById('cuma-rozet-durum');
+  if (el) {
+    el.textContent = tamamSayi + '/2';
+    if (tamamSayi === 2) {
+      el.style.background = 'var(--vurgu)';
+      el.style.color = 'var(--koyu)';
+    }
+  }
+}
+
+// ─── Ramazan Modu ───
+function ramazanMu() {
+  if (typeof nvHicri === 'undefined' || !nvHicri || !nvHicri.month) return false;
+  // Ramazan = 9. hicri ay
+  return parseInt(nvHicri.month.number) === 9;
+}
+
+function ramazanKey() {
+  if (!nvHicri || !nvHicri.year) return 'kn_ramazan_default';
+  return 'kn_ramazan_' + nvHicri.year;
+}
+
+function ramazanGuncelle() {
+  const kart = document.getElementById('ramazan-kart');
+  if (!kart) return;
+  if (!ramazanMu()) {
+    kart.style.display = 'none';
+    return;
+  }
+  kart.style.display = 'block';
+
+  const bugunCuz = parseInt(nvHicri.day) || 1;
+  const okunanlar = JSON.parse(localStorage.getItem(ramazanKey()) || '[]');
+  const yuzde = Math.round((okunanlar.length / 30) * 100);
+
+  document.getElementById('ramazan-cuz-okunan').textContent = okunanlar.length;
+  document.getElementById('ramazan-gun').textContent = bugunCuz + '. gün';
+  document.getElementById('ramazan-yuzde').textContent = yuzde + '%';
+
+  const grid = document.getElementById('ramazan-cuz-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  for (let i = 1; i <= 30; i++) {
+    const cuz = document.createElement('div');
+    cuz.className = 'ramazan-cuz' + (okunanlar.includes(i) ? ' okundu' : '') + (i === bugunCuz ? ' bugun' : '');
+    cuz.textContent = i;
+    cuz.title = i + '. Cüz' + (okunanlar.includes(i) ? ' (okundu)' : '');
+    cuz.onclick = () => ramazanCuzToggle(i);
+    grid.appendChild(cuz);
+  }
+}
+
+function ramazanCuzToggle(no) {
+  let okunanlar = JSON.parse(localStorage.getItem(ramazanKey()) || '[]');
+  if (okunanlar.includes(no)) okunanlar = okunanlar.filter(x => x !== no);
+  else okunanlar.push(no);
+  localStorage.setItem(ramazanKey(), JSON.stringify(okunanlar));
+  ramazanGuncelle();
+  try { xpEkle(30, 'cuz'); xpFloatGoster(30, '+30 XP · Cüz'); } catch(e){}
+  if (okunanlar.length === 30) {
+    toast('🏆', 'Ramazan Hatmi Tamamlandı! Mâşaallah', 'basari');
+  }
+}
+
+// ─── Sabah-Akşam Virdleri ───
+let virdAktifTab = 'sabah';
+
+function virdAktifGetir() {
+  // Saat 12'den önce sabah, sonra akşam (varsayılan)
+  const h = new Date().getHours();
+  return h < 14 ? 'sabah' : 'aksam';
+}
+
+function virdKey(tip) {
+  return 'kn_vird_' + tip + '_' + bugunTarih();
+}
+
+function virdTabDegistir(tip) {
+  virdAktifTab = tip;
+  document.getElementById('vird-tab-sabah').classList.toggle('aktif', tip === 'sabah');
+  document.getElementById('vird-tab-aksam').classList.toggle('aktif', tip === 'aksam');
+  virdListeCizdir();
+}
+
+function virdListeCizdir() {
+  const liste = document.getElementById('vird-liste');
+  if (!liste) return;
+  const virdler = virdAktifTab === 'sabah' ? SABAH_VIRDLERI : AKSAM_VIRDLERI;
+  const tamamlananlar = JSON.parse(localStorage.getItem(virdKey(virdAktifTab)) || '[]');
+  liste.innerHTML = '';
+  virdler.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'vird-item' + (tamamlananlar.includes(v.id) ? ' tamam' : '');
+    item.onclick = () => virdToggle(v.id);
+    item.innerHTML =
+      '<div class="vird-box"></div>' +
+      '<div class="vird-bilgi">' +
+        '<div class="vird-ad">' + v.ad + '<span class="vird-sayi">' + v.sayi + (v.sayi > 1 ? ' kez' : '') + '</span></div>' +
+        '<div class="vird-aciklama">' + v.aciklama + '</div>' +
+      '</div>';
+    liste.appendChild(item);
+  });
+  virdOzetGuncelle();
+}
+
+function virdToggle(id) {
+  let tamamlananlar = JSON.parse(localStorage.getItem(virdKey(virdAktifTab)) || '[]');
+  if (tamamlananlar.includes(id)) tamamlananlar = tamamlananlar.filter(x => x !== id);
+  else tamamlananlar.push(id);
+  localStorage.setItem(virdKey(virdAktifTab), JSON.stringify(tamamlananlar));
+  virdListeCizdir();
+  const virdler = virdAktifTab === 'sabah' ? SABAH_VIRDLERI : AKSAM_VIRDLERI;
+  if (tamamlananlar.length === virdler.length) {
+    const ad = virdAktifTab === 'sabah' ? 'Sabah' : 'Akşam';
+    toast('🌟', ad + ' virdleri tamamlandı', 'basari');
+    try { xpEkle(40, 'vird'); xpFloatGoster(40, '+40 XP · Vird'); } catch(e){}
+  }
+}
+
+function virdOzetGuncelle() {
+  const virdler = virdAktifTab === 'sabah' ? SABAH_VIRDLERI : AKSAM_VIRDLERI;
+  const tamamlananlar = JSON.parse(localStorage.getItem(virdKey(virdAktifTab)) || '[]');
+  const adlar = virdAktifTab === 'sabah' ? 'Sabah Virdleri' : 'Akşam Virdleri';
+  const ozetMetin = document.getElementById('vird-ozet-metin');
+  const ozetRakam = document.getElementById('vird-ozet-rakam');
+  if (ozetMetin) ozetMetin.textContent = adlar;
+  if (ozetRakam) ozetRakam.textContent = tamamlananlar.length + ' / ' + virdler.length;
+
+  const tamamBilgi = document.getElementById('vird-tamam-bilgi');
+  if (tamamBilgi) {
+    if (tamamlananlar.length === virdler.length) {
+      tamamBilgi.innerHTML = '<div class="vird-tamam-bilgi">✓ ' + adlar + ' tamamlandı, mâşaallah</div>';
+    } else {
+      tamamBilgi.innerHTML = '';
+    }
+  }
+
+  // Badge güncelle
+  const badge = document.getElementById('virdler-badge');
+  if (badge) {
+    const sabahT = JSON.parse(localStorage.getItem(virdKey('sabah')) || '[]').length;
+    const aksamT = JSON.parse(localStorage.getItem(virdKey('aksam')) || '[]').length;
+    const toplam = sabahT + aksamT;
+    const max = SABAH_VIRDLERI.length + AKSAM_VIRDLERI.length;
+    badge.textContent = toplam + ' / ' + max;
+    if (toplam === max) {
+      badge.style.background = 'var(--vurgu)';
+      badge.style.color = 'var(--koyu)';
+    }
+  }
+}
+
+function virdleriBaslat() {
+  virdAktifTab = virdAktifGetir();
+  document.getElementById('vird-tab-sabah').classList.toggle('aktif', virdAktifTab === 'sabah');
+  document.getElementById('vird-tab-aksam').classList.toggle('aktif', virdAktifTab === 'aksam');
+  virdListeCizdir();
+}
+
+// ─── herseyGuncelle'ye bağla ───
+const _eskiHersey3 = herseyGuncelle;
+herseyGuncelle = function() {
+  _eskiHersey3();
+  try { cumaModuGuncelle(); } catch(e){}
+  try { ramazanGuncelle(); } catch(e){}
+  try { virdleriBaslat(); } catch(e){}
+};
+
+// İlk başlatma
+setTimeout(() => {
+  try { cumaModuGuncelle(); } catch(e){}
+  try { ramazanGuncelle(); } catch(e){}
+  try { virdleriBaslat(); } catch(e){}
+}, 600);
+
+
+
+
+// ═══════════════════════════════════════════════════════════
+// PAKET 4: Esnek madalyalar, rekorlar, ses, bildirim, konfeti
+// ═══════════════════════════════════════════════════════════
+const SES_AKTIF_KEY = 'kn_ses_aktif_v1';
+const BILDIRIM_AKTIF_KEY = 'kn_bildirim_aktif_v1';
+
+// ─── Esnek Madalyalar ───
+const ESNEK_MADALYALAR = [
+  { id:'gunun-yildizi', ikon:'🌟', ad:'Günün Yıldızı', aciklama:'Bugün 10+ namaz', kontrol: () => gunToplam(bugunTarih()) >= 10 },
+  { id:'zakir-mahir', ikon:'📿', ad:'Zâkir-i Mâhir', aciklama:'Bu hafta +500 zikir', kontrol: () => {
+      // Bu haftadaki zikir artışı (yaklaşık) - basit kontrol: toplam zikir 500+ ise
+      return zikirSayisi >= 500;
+    }},
+  { id:'mudavim', ikon:'🕌', ad:'Müdâvim', aciklama:'Bu hafta her gün namaz', kontrol: () => {
+      const bugun = bugunTarih();
+      let aktifSayi = 0;
+      for (let i = 0; i < 7; i++) {
+        if (gunToplam(nDays(bugun, -i)) > 0) aktifSayi++;
+      }
+      return aktifSayi >= 7;
+    }},
+  { id:'hafiz', ikon:'📖', ad:'Hâfız', aciklama:'Bu hafta 3+ Esmâ tamam', kontrol: () => esmaTamamlananlar.size >= 3 },
+  { id:'hizli-salik', ikon:'⚡', ad:'Hızlı Sâlik', aciklama:'7+ gün streak', kontrol: () => streakHesapla() >= 7 },
+  { id:'cuma-ehli', ikon:'🕊️', ad:'Cuma Ehli', aciklama:'Cuma Kehf+salavât tam', kontrol: () => {
+      const kehfOkunan = JSON.parse(localStorage.getItem(cumaKey('kehf')) || '[]').length;
+      const salavat = parseInt(localStorage.getItem(cumaKey('salavat')) || '0');
+      return kehfOkunan === 5 && salavat >= 100;
+    }}
+];
+
+function esnekMadalyaCizdir() {
+  const grid = document.getElementById('em-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  ESNEK_MADALYALAR.forEach(m => {
+    let kazanildi = false;
+    try { kazanildi = m.kontrol(); } catch(e){ kazanildi = false; }
+    const div = document.createElement('div');
+    div.className = 'em-kart' + (kazanildi ? ' kazanildi' : '');
+    div.innerHTML =
+      '<div class="em-ikon">' + m.ikon + '</div>' +
+      '<div class="em-ad">' + m.ad + '</div>' +
+      '<div class="em-aciklama">' + m.aciklama + '</div>';
+    grid.appendChild(div);
+  });
+}
+
+// ─── All-Time Rekorlar ───
+function rekorlariGuncelle() {
+  // En iyi gün
+  let rekorGun = 0;
+  let rekorGunTarih = '';
+  Object.keys(kayitlar).forEach(t => {
+    const tot = gunToplam(t);
+    if (tot > rekorGun) { rekorGun = tot; rekorGunTarih = t; }
+  });
+  // En iyi hafta (rolling)
+  let rekorHafta = 0;
+  Object.keys(kayitlar).forEach(t => {
+    let toplam = 0;
+    for (let i = 0; i < 7; i++) toplam += gunToplam(nDays(t, -i));
+    if (toplam > rekorHafta) rekorHafta = toplam;
+  });
+  // En iyi ay (rolling 30 gün)
+  let rekorAy = 0;
+  Object.keys(kayitlar).forEach(t => {
+    let toplam = 0;
+    for (let i = 0; i < 30; i++) toplam += gunToplam(nDays(t, -i));
+    if (toplam > rekorAy) rekorAy = toplam;
+  });
+
+  const streakEl = document.getElementById('rekor-streak');
+  const streakTarihEl = document.getElementById('rekor-streak-tarih');
+  if (streakEl) streakEl.textContent = streakRekoru;
+  if (streakTarihEl) streakTarihEl.textContent = streakRekoru > 0 ? streakRekoru + ' gün' : '—';
+
+  const gunEl = document.getElementById('rekor-gun');
+  const gunTarihEl = document.getElementById('rekor-gun-tarih');
+  if (gunEl) gunEl.textContent = rekorGun.toLocaleString('tr-TR');
+  if (gunTarihEl) gunTarihEl.textContent = rekorGunTarih ? tarihFormat(rekorGunTarih) : '—';
+
+  const haftaEl = document.getElementById('rekor-hafta');
+  if (haftaEl) haftaEl.textContent = rekorHafta.toLocaleString('tr-TR');
+
+  const ayEl = document.getElementById('rekor-ay');
+  if (ayEl) ayEl.textContent = rekorAy.toLocaleString('tr-TR');
+}
+
+// ─── Konfeti ───
+function konfetiSac() {
+  let kont = document.getElementById('konfeti-konteyner');
+  if (!kont) {
+    kont = document.createElement('div');
+    kont.id = 'konfeti-konteyner';
+    kont.className = 'konfeti-konteyner';
+    document.body.appendChild(kont);
+  }
+  const renkler = ['#D4AF37','#F5E6A8','#1B4332','#2D6A4F','#C9A227','#FFE6F2'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'konfeti-parca';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = renkler[Math.floor(Math.random() * renkler.length)];
+    p.style.animationDelay = (Math.random() * 0.6) + 's';
+    p.style.animationDuration = (2.5 + Math.random() * 1.5) + 's';
+    p.style.width = (6 + Math.random() * 6) + 'px';
+    p.style.height = (10 + Math.random() * 8) + 'px';
+    kont.appendChild(p);
+    setTimeout(() => p.remove(), 4500);
+  }
+}
+
+// mertebePopupGoster'i konfeti ile süslemek için override
+if (typeof mertebePopupGoster === 'function') {
+  const _eskiMertebePopup = mertebePopupGoster;
+  mertebePopupGoster = function(mertebe) {
+    _eskiMertebePopup(mertebe);
+    setTimeout(konfetiSac, 200);
+    sesCal('mertebe');
+    bildirimGoster('🎉 Mertebe Yükseldin!', mertebe.ad + ' mertebesine ulaştın');
+  };
+}
+
+// ─── Ses Geri Bildirimleri (Web Audio API) ───
+let sesContext = null;
+function sesAktif() { return localStorage.getItem(SES_AKTIF_KEY) === '1'; }
+function sesContextGetir() {
+  if (sesContext) return sesContext;
+  try {
+    sesContext = new (window.AudioContext || window.webkitAudioContext)();
+    return sesContext;
+  } catch(e) { return null; }
+}
+
+function sesCal(tip) {
+  if (!sesAktif()) return;
+  const ctx = sesContextGetir();
+  if (!ctx) return;
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (tip === 'namaz') {
+      osc.frequency.value = 880;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } else if (tip === 'zikir') {
+      osc.frequency.value = 1200;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.10, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.10);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.10);
+    } else if (tip === 'rozet') {
+      // do-mi-sol
+      [523, 659, 784].forEach((f, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = f;
+        o.type = 'sine';
+        const t0 = ctx.currentTime + i * 0.12;
+        g.gain.setValueAtTime(0.15, t0);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.18);
+        o.start(t0); o.stop(t0 + 0.18);
+      });
+    } else if (tip === 'mertebe') {
+      // do-mi-sol-do (oktav)
+      [523, 659, 784, 1047].forEach((f, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = f;
+        o.type = 'triangle';
+        const t0 = ctx.currentTime + i * 0.15;
+        g.gain.setValueAtTime(0.18, t0);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.3);
+        o.start(t0); o.stop(t0 + 0.3);
+      });
+    }
+  } catch(e) { /* ses çalmadı, sessizce devam */ }
+}
+
+function ayarSesToggle() {
+  const yeni = !sesAktif();
+  localStorage.setItem(SES_AKTIF_KEY, yeni ? '1' : '0');
+  ayarSwitchGuncelle();
+  if (yeni) {
+    sesCal('rozet');
+    toast('🔊', 'Sesler açıldı', 'basari');
+  } else {
+    toast('🔇', 'Sesler kapatıldı');
+  }
+}
+
+// ─── PWA Bildirimler ───
+function bildirimAktif() { return localStorage.getItem(BILDIRIM_AKTIF_KEY) === '1'; }
+
+async function ayarBildirimToggle() {
+  if (!('Notification' in window)) {
+    toast('⚠️', 'Tarayıcın bildirim desteklemiyor', 'hata');
+    return;
+  }
+  if (bildirimAktif()) {
+    localStorage.setItem(BILDIRIM_AKTIF_KEY, '0');
+    ayarSwitchGuncelle();
+    toast('🔕', 'Bildirimler kapatıldı');
+    return;
+  }
+  // İzin iste
+  let perm = Notification.permission;
+  if (perm === 'default') {
+    perm = await Notification.requestPermission();
+  }
+  if (perm === 'granted') {
+    localStorage.setItem(BILDIRIM_AKTIF_KEY, '1');
+    ayarSwitchGuncelle();
+    toast('🔔', 'Bildirimler açıldı', 'basari');
+    bildirimGoster('İhyâ Bildirimleri Aktif', 'Streak ve görev hatırlatmaları alacaksın');
+  } else {
+    toast('⚠️', 'Bildirim izni reddedildi', 'hata');
+  }
+}
+
+function bildirimGoster(baslik, govde) {
+  if (!bildirimAktif()) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    new Notification(baslik, {
+      body: govde,
+      icon: 'icon-192.png',
+      badge: 'favicon-32.png',
+      tag: 'ihya'
+    });
+  } catch(e) {}
+}
+
+function ayarSwitchGuncelle() {
+  const sesEl = document.getElementById('ayar-ses');
+  const bildirimEl = document.getElementById('ayar-bildirim');
+  if (sesEl) sesEl.classList.toggle('aktif', sesAktif());
+  if (bildirimEl) bildirimEl.classList.toggle('aktif', bildirimAktif());
+}
+
+// ─── Aksiyon override (ses çalsın) ───
+if (typeof degistir === 'function') {
+  const _eskiDeg = degistir;
+  degistir = function(vakitId, miktar) {
+    _eskiDeg(vakitId, miktar);
+    if (miktar > 0) sesCal('namaz');
+  };
+}
+if (typeof zikirDegistir === 'function') {
+  const _eskiZik = zikirDegistir;
+  zikirDegistir = function(miktar) {
+    _eskiZik(miktar);
+    if (miktar > 0) sesCal('zikir');
+  };
+}
+if (typeof ihlasDegistir === 'function') {
+  const _eskiIhl = ihlasDegistir;
+  ihlasDegistir = function(miktar) {
+    _eskiIhl(miktar);
+    if (miktar > 0) sesCal('zikir');
+  };
+}
+if (typeof rozetPopupGoster === 'function') {
+  const _eskiRozet = rozetPopupGoster;
+  rozetPopupGoster = function(rozet) {
+    _eskiRozet(rozet);
+    sesCal('rozet');
+    bildirimGoster('🏆 Rozet Kazandın!', rozet.ad);
+  };
+}
+
+// ─── Günlük bildirim hatırlatma kontrolü ───
+function gunlukBildirimKontrol() {
+  if (!bildirimAktif()) return;
+  const sonBildirim = localStorage.getItem('kn_son_bildirim');
+  const bugun = bugunTarih();
+  const saat = new Date().getHours();
+  // Akşam 20:00+ ve bugün hiç namaz kılmamışsa
+  if (saat >= 20 && saat <= 23 && sonBildirim !== bugun) {
+    const bugunSayi = gunToplam(bugun);
+    if (bugunSayi === 0) {
+      const streak = streakHesapla();
+      if (streak >= 1) {
+        bildirimGoster('🔥 Streak Tehlikede', streak + ' gün streak\'in var. Bugün hâlâ bir kaza kılarak koru.');
+      } else {
+        bildirimGoster('🌱 Yolculuğa Devam', 'Bugün bir kaza ile yeni bir streak başlat.');
+      }
+      localStorage.setItem('kn_son_bildirim', bugun);
+    }
+  }
+}
+setInterval(gunlukBildirimKontrol, 5 * 60 * 1000); // 5 dakikada bir
+
+// ─── herseyGuncelle'ye bağla ───
+const _eskiHersey4 = herseyGuncelle;
+herseyGuncelle = function() {
+  _eskiHersey4();
+  try { esnekMadalyaCizdir(); } catch(e){}
+  try { rekorlariGuncelle(); } catch(e){}
+};
+
+// İlk başlatma
+setTimeout(() => {
+  try { esnekMadalyaCizdir(); } catch(e){}
+  try { rekorlariGuncelle(); } catch(e){}
+  try { ayarSwitchGuncelle(); } catch(e){}
+}, 700);
+
+
 </script>
+
+<!-- SETUP WIZARD -->
+<div class="setup-overlay" id="setup-overlay">
+  <div class="setup-kart">
+
+    <!-- Ekran 1: Hoş Geldin -->
+    <div id="setup-ekran-1">
+      <div class="setup-ikon-buyuk">🕌</div>
+      <div class="setup-baslik-buyuk">İhyâ'ya Hoş Geldin</div>
+      <div class="setup-alt">Manevi yolculuğuna başlamak için birkaç adım sürer.<br>Nasıl başlamak istersin?</div>
+
+      <button class="setup-secenek" onclick="setupGoster(2)">
+        <div class="setup-secenek-ikon">📅</div>
+        <div class="setup-secenek-icerik">
+          <div class="setup-secenek-ad">Yeni başlıyorum</div>
+          <div class="setup-secenek-alt">Doğum tarihimden hesaplayalım — tam ve doğru</div>
+        </div>
+        <div class="setup-secenek-ok">→</div>
+      </button>
+
+      <button class="setup-secenek" onclick="setupGoster(4)">
+        <div class="setup-secenek-ikon">📤</div>
+        <div class="setup-secenek-icerik">
+          <div class="setup-secenek-ad">Yedek dosyam var</div>
+          <div class="setup-secenek-alt">Eskiden kullandıysan, yedeğini yükle</div>
+        </div>
+        <div class="setup-secenek-ok">→</div>
+      </button>
+
+      <button class="setup-secenek" onclick="setupAtla()">
+        <div class="setup-secenek-ikon">⏩</div>
+        <div class="setup-secenek-icerik">
+          <div class="setup-secenek-ad">Şimdi atla</div>
+          <div class="setup-secenek-alt">Varsayılan değerle başla, sonra ayarlardan değiştir</div>
+        </div>
+        <div class="setup-secenek-ok">→</div>
+      </button>
+
+      <div class="setup-uyari">Verilerin sadece telefonunda saklanır. Sunucuya gönderilmez.</div>
+    </div>
+
+    <!-- Ekran 2: Detaylı hesap (Cinsiyet + Doğum) -->
+    <div id="setup-ekran-2" style="display:none;">
+      <div class="setup-ikon-buyuk">📅</div>
+      <div class="setup-baslik-buyuk">Bilgilerin</div>
+      <div class="setup-alt">Hesaplamak için birkaç bilgi gerekli. Tüm bilgiler sadece sende kalır.</div>
+
+      <div class="setup-form">
+        <div class="setup-form-grup">
+          <label class="setup-label">Cinsiyet</label>
+          <div class="setup-cinsiyet-grup">
+            <button class="setup-cinsiyet-btn aktif" id="su-erkek" onclick="setupCinsiyet('erkek')">
+              <span class="setup-cinsiyet-ikon">👨</span>Erkek
+            </button>
+            <button class="setup-cinsiyet-btn" id="su-kadin" onclick="setupCinsiyet('kadin')">
+              <span class="setup-cinsiyet-ikon">👩</span>Kadın
+            </button>
+          </div>
+        </div>
+
+        <div class="setup-form-grup">
+          <label class="setup-label">Doğum Tarihin</label>
+          <input type="date" class="setup-input" id="su-dogum" max="2025-01-01" value="1990-01-01">
+        </div>
+
+        <div class="setup-form-grup">
+          <label class="setup-label">Bülüğ Yaşın <span style="color:var(--soft);font-weight:600;font-size:10px;text-transform:none;letter-spacing:0;">(varsayılan erkek 12, kadın 9)</span></label>
+          <input type="number" class="setup-input" id="su-bulug" min="7" max="20" value="12">
+        </div>
+
+        <div class="setup-form-grup">
+          <label class="setup-label">Düzenli Kılmaya Başladığın Tarih <span style="color:var(--soft);font-weight:600;font-size:10px;text-transform:none;letter-spacing:0;">(boş bırakırsan bugün)</span></label>
+          <input type="date" class="setup-input" id="su-baslangic">
+        </div>
+      </div>
+
+      <div class="setup-aksiyon">
+        <button class="setup-btn setup-btn-geri" onclick="setupGoster(1)">← Geri</button>
+        <button class="setup-btn setup-btn-ana" onclick="setupHesapla()">Hesapla →</button>
+      </div>
+    </div>
+
+    <!-- Ekran 3: Önizleme + Onayla -->
+    <div id="setup-ekran-3" style="display:none;">
+      <div class="setup-ikon-buyuk">📊</div>
+      <div class="setup-baslik-buyuk">Hesaplama Sonucu</div>
+      <div class="setup-alt">Borçların hesaplandı. Onayladığında sıfırdan başlarsın.</div>
+
+      <div class="setup-onizleme">
+        <div class="setup-onizleme-baslik">📅 Manevi Yaş</div>
+        <div class="setup-onizleme-yas" id="su-ozet-yas">—</div>
+        <div class="setup-onizleme-baslik" style="margin-top:10px;">🕌 Vakit Başına Borç</div>
+        <div class="setup-onizleme-vakit">
+          <div class="setup-onizleme-kart"><div class="setup-onizleme-kart-ikon">🌅</div><div class="setup-onizleme-kart-rakam" id="su-bs-imsak">0</div><div class="setup-onizleme-kart-ad">Sabah</div></div>
+          <div class="setup-onizleme-kart"><div class="setup-onizleme-kart-ikon">☀️</div><div class="setup-onizleme-kart-rakam" id="su-bs-ogle">0</div><div class="setup-onizleme-kart-ad">Öğle</div></div>
+          <div class="setup-onizleme-kart"><div class="setup-onizleme-kart-ikon">🌇</div><div class="setup-onizleme-kart-rakam" id="su-bs-ikindi">0</div><div class="setup-onizleme-kart-ad">İkindi</div></div>
+          <div class="setup-onizleme-kart"><div class="setup-onizleme-kart-ikon">🌆</div><div class="setup-onizleme-kart-rakam" id="su-bs-aksam">0</div><div class="setup-onizleme-kart-ad">Akşam</div></div>
+          <div class="setup-onizleme-kart"><div class="setup-onizleme-kart-ikon">🌙</div><div class="setup-onizleme-kart-rakam" id="su-bs-yatsi">0</div><div class="setup-onizleme-kart-ad">Yatsı</div></div>
+        </div>
+        <div class="setup-uyari" style="margin-top:10px;">Toplam: <strong id="su-toplam">0</strong> namaz · 5 vakit dahil</div>
+      </div>
+
+      <div class="setup-aksiyon">
+        <button class="setup-btn setup-btn-geri" onclick="setupGoster(2)">← Geri Dön</button>
+        <button class="setup-btn setup-btn-ana" onclick="setupOnayla()">Onayla ve Başla ✓</button>
+      </div>
+    </div>
+
+    <!-- Ekran 4: Yedek Yükle -->
+    <div id="setup-ekran-4" style="display:none;">
+      <div class="setup-ikon-buyuk">📤</div>
+      <div class="setup-baslik-buyuk">Yedek Yükle</div>
+      <div class="setup-alt">Daha önce kullandığın İhyâ'nın yedek dosyasını seç (.json). Tüm verilerin geri gelir.</div>
+
+      <label for="su-yedek-input" class="setup-yedek-alan">
+        <div class="setup-yedek-ikon">📁</div>
+        <div class="setup-yedek-metin">Yedek dosyası seç</div>
+        <div class="setup-yedek-alt">kaza_namazi_yedek_*.json</div>
+        <input type="file" id="su-yedek-input" accept=".json" style="display:none;" onchange="setupYedekYukle(event)">
+      </label>
+
+      <div class="setup-aksiyon">
+        <button class="setup-btn setup-btn-geri" onclick="setupGoster(1)">← Geri</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>
