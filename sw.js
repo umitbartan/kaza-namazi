@@ -1,5 +1,5 @@
 // İhyâ Service Worker — Offline destek
-const CACHE_NAME = 'ihya-v2';
+const CACHE_NAME = 'ihya-v6';
 const STATIK_DOSYALAR = [
   './',
   './index.html',
@@ -41,6 +41,22 @@ self.addEventListener('fetch', event => {
   if (url.includes('aladhan.com') || url.includes('fonts.googleapis.com') || url.includes('cdnjs.cloudflare.com')) {
     event.respondWith(
       fetch(event.request).catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Kur'an verisi (Diyanet / jsdelivr / fastly / github raw) ve audio (everyayah) — stale-while-revalidate
+  if (url.includes('t061.diyanet.gov.tr') || url.includes('jsdelivr.net/gh/fawazahmed0/quran-api') || url.includes('raw.githubusercontent.com/fawazahmed0/quran-api') || url.includes('everyayah.com')) {
+    event.respondWith(
+      caches.open(CACHE_NAME + '-kuran').then(cache =>
+        cache.match(event.request).then(cached => {
+          const fetchPromise = fetch(event.request).then(resp => {
+            if (resp && resp.status === 200) cache.put(event.request, resp.clone());
+            return resp;
+          }).catch(() => cached);
+          return cached || fetchPromise;
+        })
+      )
     );
     return;
   }

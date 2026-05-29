@@ -2094,63 +2094,72 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
 /* ===== DUALAR VE SURELER ===== */
 .dua-liste { display: flex; flex-direction: column; gap: 8px; }
-.dua-karti {
+.dua-blok {
   background: var(--kart);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
-  transition: all 0.2s;
+  transition: all 0.25s;
 }
-.dua-karti.acik {
+.dua-blok.acik {
   border-color: var(--vurgu);
-  box-shadow: 0 4px 14px rgba(212,175,55,0.12);
+  box-shadow: 0 6px 18px rgba(212,175,55,0.15);
 }
-.dua-baslik {
+.dua-blok-baslik {
   padding: 14px 16px;
+  padding-right: 38px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
   user-select: none;
+  position: relative;
 }
-.dua-baslik:hover { background: var(--bej); }
-.dua-karti.acik .dua-baslik { background: var(--altin-bg); }
-.dua-ikon {
+.dua-blok-baslik:hover { background: var(--bej); }
+.dua-blok.acik .dua-blok-baslik { background: var(--altin-bg); }
+.dua-blok-baslik::after {
+  content: '▼';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--orta);
+  font-size: 11px;
+  transition: transform 0.3s;
+}
+.dua-blok.acik .dua-blok-baslik::after {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--vurgu);
+}
+.dua-blok-ikon {
   width: 36px; height: 36px;
   border-radius: 10px;
   background: var(--bej);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
+  transition: all 0.3s;
 }
-.dua-karti.acik .dua-ikon { background: var(--vurgu); color: white; }
-.dua-bilgi { flex: 1; min-width: 0; }
-.dua-ad {
+.dua-blok.acik .dua-blok-ikon { background: var(--vurgu); }
+.dua-blok-ad {
   font-weight: 700;
   color: var(--orta);
   font-size: 15px;
   letter-spacing: -0.2px;
 }
-.dua-alt {
+.dua-blok-alt {
   font-size: 11px;
   color: var(--soft);
   margin-top: 2px;
 }
-.dua-ok {
-  color: var(--orta);
-  font-size: 14px;
-  transition: transform 0.3s;
-  flex-shrink: 0;
-}
-.dua-karti.acik .dua-ok { transform: rotate(180deg); color: var(--vurgu); }
-
-.dua-icerik {
+.dua-blok-icerik {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease;
+  transition: max-height 0.6s ease, padding 0.4s ease;
+  padding: 0 16px;
 }
-.dua-karti.acik .dua-icerik { max-height: 8000px; }
-.dua-icerik-ic {
+.dua-blok.acik .dua-blok-icerik {
+  max-height: 12000px;
   padding: 4px 16px 18px;
 }
 .dua-bismillah {
@@ -4372,6 +4381,468 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .ayar-switch.aktif { background: var(--orta); }
 .ayar-switch.aktif::after { transform: translateX(20px); }
 
+
+/* ═══ SESLİ OKUMA PLAYER ═══ */
+.dua-player {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFEFC0 100%);
+  border: 1px solid var(--vurgu);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  position: relative;
+}
+.dua-player-baslik {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.dua-player-baslik::before { content: '🎧'; font-size: 14px; }
+.dpc-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.dpc-cal-btn {
+  background: var(--vurgu);
+  color: var(--koyu);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  box-shadow: 0 3px 10px rgba(212,175,55,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dpc-cal-btn:hover { background: #E5C158; transform: scale(1.05); }
+.dpc-cal-btn:active { transform: scale(0.95); }
+.dpc-cal-btn.caliyor { background: var(--orta); color: white; }
+.dpc-secici {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--koyu);
+  cursor: pointer;
+  flex: 1;
+  min-width: 110px;
+}
+.dpc-secici:focus { outline: none; border-color: var(--vurgu); }
+.dpc-mini-btn {
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--koyu);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+}
+.dpc-mini-btn:hover { background: var(--altin-bg); border-color: var(--vurgu); }
+.dpc-mini-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.dpi-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--soft);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.dpi-info strong { color: var(--vurgu); font-weight: 800; }
+.dpp-bar {
+  height: 4px;
+  background: rgba(212,175,55,0.18);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.dpp-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu) 0%, var(--altin-soft) 100%);
+  border-radius: 2px;
+  transition: width 0.3s linear;
+}
+.dpc-hiz-grup {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+.dpc-hiz-btn {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--soft);
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.dpc-hiz-btn.aktif {
+  background: var(--vurgu);
+  color: var(--koyu);
+  border-color: var(--vurgu);
+}
+
+/* Çalan âyet vurgu */
+.dua-ayet.calan {
+  background: linear-gradient(90deg, rgba(212,175,55,0.25) 0%, rgba(212,175,55,0.08) 100%);
+  border-left: 4px solid var(--vurgu);
+  padding-left: 12px !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.15);
+}
+.dua-ayet.calan b {
+  background: var(--vurgu) !important;
+  color: var(--koyu) !important;
+  border-color: var(--vurgu) !important;
+  transform: scale(1.1);
+}
+
+.dua-arapca-ayet {
+  display: inline;
+  transition: all 0.3s;
+  padding: 0 2px;
+  border-radius: 4px;
+}
+.dua-arapca-ayet.calan {
+  background: rgba(212,175,55,0.35);
+  color: var(--koyu);
+  font-weight: 700;
+  padding: 4px 6px;
+  box-shadow: 0 0 0 2px rgba(212,175,55,0.4);
+}
+
+/* Player aktif iken duâ kartının çerçevesi */
+.dua-blok.aktif-player {
+  border-color: var(--vurgu);
+  box-shadow: 0 8px 28px rgba(212,175,55,0.25);
+}
+
+/* Sesli oku ipucu (sure-dışı dualar için) */
+.dua-ses-yok {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--bej);
+  border-radius: 8px;
+  font-size: 10px;
+  color: var(--soft);
+  text-align: center;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .dpc-secici { font-size: 10px; padding: 6px 8px; }
+  .dpc-cal-btn { width: 38px; height: 38px; }
+}
+
+/* ═══════════════════════════════════════
+   KUR'AN — 30 CÜZ
+   ═══════════════════════════════════════ */
+
+.kuran-cuz-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+@media (min-width: 500px) {
+  .kuran-cuz-grid { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+}
+
+.kuran-cuz-kart {
+  background: linear-gradient(135deg, #fff, #fafaf5);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 8px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.kuran-cuz-kart:hover, .kuran-cuz-kart:active {
+  border-color: var(--vurgu);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.15);
+}
+.kuran-cuz-kart.tamamlandi {
+  background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.06));
+  border-color: var(--vurgu);
+}
+.kuran-cuz-kart.tamamlandi::after {
+  content: '✓';
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  color: var(--vurgu);
+  font-size: 14px;
+  font-weight: 800;
+}
+.kuran-cuz-no {
+  font-size: 11px;
+  color: var(--orta);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.kuran-cuz-baslik {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--koyu);
+  line-height: 1.2;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kuran-cuz-bar {
+  margin-top: 6px;
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.kuran-cuz-bar-icerik {
+  height: 100%;
+  background: var(--vurgu);
+  width: 0%;
+  transition: width 0.4s;
+}
+
+/* Modal */
+.kuran-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: stretch;
+  justify-content: center;
+  z-index: 5000;
+  padding: 0;
+}
+.kuran-modal.acik { display: flex; animation: rozetFade 0.25s; }
+.kuran-modal-icerik {
+  background: var(--bej, #FAF7F0);
+  border-radius: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  animation: kuranSlide 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes kuranSlide {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.kuran-modal-baslik {
+  padding: 14px 18px;
+  background: linear-gradient(135deg, var(--koyu) 0%, #2d5a44 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.kuran-modal-baslik > div > div:first-child { color: white !important; }
+.kuran-modal-baslik > div > div:last-child { color: rgba(255,255,255,0.7); }
+.kuran-kapat-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kuran-kapat-btn:hover { background: rgba(255,255,255,0.25); }
+
+.kuran-modal-kontrol {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.kuran-modal-kontrol select {
+  flex: 1;
+  min-width: 130px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  background: var(--bej);
+  color: var(--koyu);
+}
+.kuran-play-btn, .kuran-stop-btn, .kuran-okudum-btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.kuran-play-btn {
+  background: var(--vurgu);
+  color: var(--koyu);
+}
+.kuran-play-btn:active { transform: scale(0.96); }
+.kuran-play-btn.calıyor {
+  background: var(--koyu);
+  color: white;
+}
+.kuran-stop-btn {
+  background: rgba(0,0,0,0.06);
+  color: var(--orta);
+  width: 38px;
+  padding: 8px 0;
+}
+.kuran-okudum-btn {
+  background: transparent;
+  color: var(--koyu);
+  border: 1.5px solid var(--koyu);
+}
+.kuran-okudum-btn.tamamlandi {
+  background: var(--koyu);
+  color: white;
+}
+
+.kuran-modal-ayetler {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+.kuran-modal-icerik-yukleniyor {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+.kuran-modal-icerik-yukleniyor.gosterilsin { display: flex; }
+.kuran-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(212,175,55,0.2);
+  border-top-color: var(--vurgu);
+  border-radius: 50%;
+  animation: kuranSpin 0.9s linear infinite;
+}
+@keyframes kuranSpin { to { transform: rotate(360deg); } }
+
+.kuran-sure-baslik {
+  text-align: center;
+  margin: 24px 0 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.06));
+  border-radius: 12px;
+  border-left: 3px solid var(--vurgu);
+}
+.kuran-sure-baslik:first-child { margin-top: 0; }
+.kuran-sure-baslik-no {
+  font-size: 11px;
+  color: var(--orta);
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.kuran-sure-baslik-ad {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--koyu);
+  margin: 2px 0;
+}
+.kuran-sure-baslik-bismillah {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: var(--koyu);
+  margin-top: 6px;
+  direction: rtl;
+}
+
+.kuran-ayet {
+  padding: 12px 6px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: background 0.3s, padding 0.3s;
+  border-radius: 8px;
+  scroll-margin-top: 80px;
+}
+.kuran-ayet:last-child { border-bottom: none; }
+.kuran-ayet.aktif {
+  background: linear-gradient(90deg, rgba(212,175,55,0.18), rgba(212,175,55,0.08));
+  padding: 12px 12px;
+  box-shadow: 0 0 0 1px rgba(212,175,55,0.3);
+}
+.kuran-ayet-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--altin-bg);
+  color: var(--vurgu);
+  font-size: 11px;
+  font-weight: 800;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.kuran-ayet.aktif .kuran-ayet-no {
+  background: var(--vurgu);
+  color: var(--koyu);
+}
+.kuran-ayet-arapca {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  line-height: 2;
+  text-align: right;
+  direction: rtl;
+  color: var(--koyu);
+  margin: 8px 0;
+}
+.kuran-ayet-meal {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--orta);
+  padding-left: 4px;
+}
+
 </style>
 </head>
 <body>
@@ -4580,8 +5051,9 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
   <div class="ana-grid">
     <div>
-      <div class="bolum">
-        <div class="bolum-baslik">🕌 Vakit Bazlı Borç <span class="badge" id="aktif-gun">Bugün —</span></div>
+      <div class="bolum acilir" id="bolum-vakit">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-vakit')">🕌 Vakit Bazlı Borç <span class="badge" id="aktif-gun">Bugün —</span></div>
+        <div class="bolum-icerik">
 
         <div class="kaza-ozet-satir">
           <div>
@@ -4596,6 +5068,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
 
         <div class="vakit-liste" id="vakit-liste"></div>
+        </div>
       </div>
 
       <div class="bolum acilir" id="bolum-zikirler">
@@ -4705,6 +5178,88 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
             <button class="dua-mini-btn" onclick="duaTumuKapat()">Tümünü Kapat</button>
           </div>
           <div class="dua-liste" id="dua-liste" style="margin-top:12px;"></div>
+        </div>
+      </div>
+
+      <div class="bolum acilir" id="bolum-kuran">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-kuran')">🕋 Kur'an — 30 Cüz <span class="badge" id="kuran-rozet">0 / 30 cüz</span></div>
+        <div class="bolum-icerik">
+          <div style="background:linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.05)); padding:14px; border-radius:12px; border-left:3px solid var(--vurgu); margin-bottom:12px;">
+            <div style="font-size:12px; color:var(--orta); font-style:italic; line-height:1.6; margin-bottom:8px;">
+              "Şüphesiz biz Kur'ân'ı öğüt almak için kolaylaştırdık. Öyle ise var mı düşünüp öğüt alan?" — Kamer, 17
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="flex:1; height:8px; background:rgba(0,0,0,0.08); border-radius:4px; overflow:hidden;">
+                <div id="hatim-bar" style="height:100%; background:linear-gradient(90deg, var(--vurgu), #f4d03f); width:0%; transition:width 0.6s ease;"></div>
+              </div>
+              <span id="hatim-yuzde" style="font-size:13px; font-weight:700; color:var(--vurgu); min-width:42px; text-align:right;">%0</span>
+            </div>
+          </div>
+          <div id="kuran-cuz-grid" class="kuran-cuz-grid"></div>
+          <div style="text-align:center; padding:10px 8px; margin-top:8px;">
+            <div style="color:var(--orta); font-size:12px; margin-bottom:6px;">
+              💡 İlk açtığın cüz Diyanet API'sinden indirilir, sonra offline kullanılır.
+            </div>
+            <button class="dua-mini-btn" onclick="diyanetTokenModalAc()" style="font-size:11px;">🔑 API Anahtarını Değiştir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Anahtar Değiştirme Modalı -->
+      <div class="kuran-modal" id="diyanet-token-modal" onclick="if(event.target.id==='diyanet-token-modal') diyanetTokenModalKapat()" style="z-index:6000;">
+        <div class="kuran-modal-icerik" style="max-width:480px; height:auto; max-height:90vh; border-radius:18px; align-self:center; margin:auto;">
+          <div class="kuran-modal-baslik">
+            <div>
+              <div style="font-size:16px; font-weight:800;">🔑 Diyanet API Anahtarı</div>
+              <div style="font-size:11px; margin-top:2px;">acikkaynakkuran-dev.diyanet.gov.tr</div>
+            </div>
+            <button class="kuran-kapat-btn" onclick="diyanetTokenModalKapat()">×</button>
+          </div>
+          <div style="padding:20px; overflow-y:auto;">
+            <div style="font-size:13px; color:var(--orta); line-height:1.6; margin-bottom:12px;">
+              Diyanet İşleri Başkanlığı Açık Kaynak Kur'an API'si için kendi anahtarını kullanabilirsin. Anahtar sadece bu cihazda <strong>localStorage</strong>'da saklanır.
+            </div>
+            <div style="background:var(--altin-bg); padding:10px; border-radius:8px; font-size:11px; color:var(--orta); margin-bottom:14px; border-left:3px solid var(--vurgu);">
+              📌 Anahtar almak için: <strong>acikkaynakkuran-dev.diyanet.gov.tr</strong> → GitHub ile giriş → "API Anahtarınız" bölümünden kopyala.
+            </div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--koyu); margin-bottom:6px;">API Anahtarınız (Bearer Token)</label>
+            <input type="text" id="diyanet-token-input" placeholder="123|abcXYZ..." style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px; font-size:12px; font-family:monospace; box-sizing:border-box; margin-bottom:14px;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="dua-mini-btn" onclick="diyanetTokenKaydet()" style="background:var(--vurgu); color:var(--koyu); flex:1; min-width:120px;">💾 Kaydet</button>
+              <button class="dua-mini-btn" onclick="diyanetTokenVarsayilanaDon()" style="flex:1; min-width:120px;">🔄 Varsayılan</button>
+              <button class="dua-mini-btn" onclick="diyanetTokenModalKapat()" style="flex:1; min-width:120px;">İptal</button>
+            </div>
+            <div id="diyanet-token-mesaj" style="margin-top:12px; font-size:12px; text-align:center;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cüz okuma modalı -->
+      <div class="kuran-modal" id="kuran-modal" onclick="if(event.target.id==='kuran-modal') kuranModalKapat()">
+        <div class="kuran-modal-icerik">
+          <div class="kuran-modal-baslik">
+            <div>
+              <div id="kuran-modal-cuz" style="font-size:18px; font-weight:800; color:var(--koyu);">Cüz 1</div>
+              <div id="kuran-modal-aciklama" style="font-size:12px; color:var(--orta); margin-top:2px;">Fâtiha 1 — Bakara 141</div>
+            </div>
+            <button class="kuran-kapat-btn" onclick="kuranModalKapat()">×</button>
+          </div>
+          <div class="kuran-modal-kontrol">
+            <select id="kuran-kari-sec" onchange="kuranKariDegistir()">
+              <option value="alafasy">Mishary Alafasy</option>
+              <option value="husary">Mahmoud Husary</option>
+              <option value="abdulbaset">Abdul Basit Murattal</option>
+              <option value="maher">Maher Al-Muaiqly</option>
+            </select>
+            <button class="kuran-play-btn" id="kuran-play-btn" onclick="kuranPlayToggle()">▶ Tümünü Çal</button>
+            <button class="kuran-stop-btn" onclick="kuranDurdur()" title="Durdur">⏹</button>
+            <button class="kuran-okudum-btn" id="kuran-okudum-btn" onclick="cuzuOkudumIsaretle()">✓ Okudum</button>
+          </div>
+          <div class="kuran-modal-icerik-yukleniyor" id="kuran-yukleniyor">
+            <div class="kuran-spinner"></div>
+            <div style="margin-top:14px; color:var(--orta); font-size:13px;">Cüz indiriliyor… İlk açılış 5-15 saniye sürebilir.</div>
+          </div>
+          <div class="kuran-modal-ayetler" id="kuran-ayetler"></div>
         </div>
       </div>
 
@@ -4933,7 +5488,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     </div>
   </div>
 
-  <div class="ayet">
+  <div class="ayet" id="alt-ayet">
     "Şüphesiz namaz, müminler üzerine vakitleri belli bir farzdır." — Nisâ, 103
   </div>
 
@@ -6808,7 +7363,505 @@ const GUNLUK_AYETLER = [
   '« Allah\'ın rahmeti sonsuzdur, ümitvâr ol » — Tasavvuf',
   '« Allah, kullarına asla zulmetmez » — Yûnus, 44',
   '« Allah\'a gelin, kalbiniz ferahlasın » — Hadis',
-  '« Bir vakit namazı geçirmek, dünyadan büyük bir kayıptır » — Hadis'
+  '« Bir vakit namazı geçirmek, dünyadan büyük bir kayıptır » — Hadis',
+  '« Allah, hiç bir nefse gücünün üstünde bir şey yüklemez » — Talâk, 7',
+  '« Bilesiniz ki kalpler ancak Allah\'ı anmakla mutmain olur » — Ra\'d, 28',
+  '« Şüphesiz Allah, adaleti, iyiliği ve akrabaya vermeyi emreder » — Nahl, 90',
+  '« Sizden hayra çağıran bir topluluk bulunsun » — Âl-i İmrân, 104',
+  '« Hiç şüphesiz biz onu Kadir gecesinde indirdik » — Kadr, 1',
+  '« Allah\'ın ipine hepiniz sımsıkı sarılın, ayrılmayın » — Âl-i İmrân, 103',
+  '« Rahmân ve Rahîm olan Allah\'ın adıyla » — Fâtiha, 1',
+  '« Hamd, âlemlerin Rabbi olan Allah\'a mahsustur » — Fâtiha, 2',
+  '« Ancak Sana ibadet eder, yalnız Senden yardım dileriz » — Fâtiha, 5',
+  '« Allah, en güzel sözü indirmiştir » — Zümer, 23',
+  '« De ki: O Allah birdir » — İhlâs, 1',
+  '« Şüphesiz biz, her şeyi bir ölçüye göre yarattık » — Kamer, 49',
+  '« Allah müminlerin dostudur » — Bakara, 257',
+  '« Göklerin ve yerin orduları Allah\'ındır » — Fetih, 7',
+  '« Şüphesiz Allah, kâinatın en güzel hâkimidir » — Tîn, 8',
+  '« Rabbim, ilmimi artır » — Tâhâ, 114',
+  '« Şüphesiz biz Allah\'ınız ve şüphesiz O\'na döneceğiz » — Bakara, 156',
+  '« Kim Allah\'tan korkarsa, Allah ona bir çıkış yolu gösterir » — Talâk, 2',
+  '« Allah, dilediğini hesapsız rızıklandırır » — Bakara, 212',
+  '« Bizim için kim kefil olur? Allah yeter » — Mü\'minûn, 60',
+  '« Sabredin, çünkü Allah sabredenlerle beraberdir » — Enfâl, 46',
+  '« Allah, kullarına merhameti çok geniş olandır » — En\'âm, 12',
+  '« Şüphesiz iyilikler kötülükleri giderir » — Hûd, 114',
+  '« Kim bir iyilik getirirse ona onun on katı vardır » — En\'âm, 160',
+  '« Allah\'ın âyetlerini az bir karşılığa satmayın » — Bakara, 41',
+  '« Yetimi sakın horlama, dilenciyi azarlama » — Duhâ, 9-10',
+  '« Rabbinin nimetini durmadan söyle » — Duhâ, 11',
+  '« Allah, kullarına asla zulmetmek istemez » — Mü\'min, 31',
+  '« İyilik ediniz, çünkü Allah iyilik edenleri sever » — Bakara, 195',
+  '« Allah\'ın yardımı yakındır » — Bakara, 214',
+  '« Allah, sabredenlere müjdele » — Bakara, 155',
+  '« Yalnız Allah\'a tevekkül edin » — Mâide, 23',
+  '« Şüphesiz Allah, sıdk üzere olanlarla beraberdir » — Tevbe, 119',
+  '« Andolsun ki insanı en güzel biçimde yarattık » — Tîn, 4',
+  '« Allah size kolaylık diler, zorluk dilemez » — Bakara, 185',
+  '« Doğru söyleyin, Allah amellerinizi düzeltsin » — Ahzâb, 70-71',
+  '« Bu dünya hayatı geçici bir oyundan başka bir şey değildir » — Ankebût, 64',
+  '« Şüphesiz hidayet, Allah\'ın hidayetidir » — Bakara, 120',
+  '« Ne bilirsin, belki kıyamet yakındır » — Ahzâb, 63',
+  '« Allah, sizi karanlıklardan aydınlığa çıkarır » — Ahzâb, 43',
+  '« Allah\'ın rahmetinden hiç kimse ümit kesmez » — Yûsuf, 87',
+  '« Ümitsizliğe düşmeyin, Allah\'ın yardımı yakındır » — Bakara, 214',
+  '« Şüphesiz Allah, çok bağışlayandır, kullarına acıyandır » — Bakara, 143',
+  '« Salih amel işleyene, mü\'min olarak biz ona güzel bir hayat yaşatacağız » — Nahl, 97',
+  '« Hak Rabbinden gelendir, kim dilerse iman etsin » — Kehf, 29',
+  '« De ki: Hiç bilenlerle bilmeyenler bir olur mu? » — Zümer, 9',
+  '« Allah size karşı çok şefkatli, çok merhametlidir » — Hadîd, 9',
+  '« Allah\'ın âyetlerini düşünmüyor musunuz? » — Yûnus, 24',
+  '« Onların kalpleri vardır, fakat onunla anlamazlar » — A\'râf, 179',
+  '« Şüphesiz hesap Rabbinin huzurundadır » — Gâşiye, 26',
+  '« Allah onlara ne büyük bir ecir hazırlamıştır » — Ahzâb, 29',
+  '« İman edip salih amel işleyenler için Adn cennetleri vardır » — Beyyine, 8',
+  '« Sana ölüm gelinceye kadar Rabbine ibadet et » — Hicr, 99',
+  '« Onlar geceleri pek az uyurlardı » — Zâriyât, 17',
+  '« Allah\'ı çokça zikreden erkekler ve zikreden kadınlar » — Ahzâb, 35',
+  '« Şüphesiz namaz, hayasızlıktan ve kötülükten alıkoyar » — Ankebût, 45',
+  '« Salât için ezan okunduğunda Allah\'ı anmak için koşun » — Cum\'a, 9',
+  '« Vakit girince hemen namazı kılın » — Nisâ, 103',
+  '« Ben cinleri ve insanları ancak bana ibadet etsinler diye yarattım » — Zâriyât, 56',
+  '« Rabbinin makamından korkana iki cennet vardır » — Rahmân, 46',
+  '« O hâlde Rabbinin nimetlerinden hangisini yalanlayabilirsiniz? » — Rahmân, 13',
+  '« Yerde ve gökte olanlar O\'nundur, hepsi O\'na boyun eğmiştir » — Rûm, 26',
+  '« Allah\'ın izniyle kalpler huzura kavuşur » — Ra\'d, 28',
+  '« Allah, sizi bilmediklerinizi öğreterek nimetlendirmiştir » — Bakara, 282',
+  '« İyi insanların alâmeti namaz kılmaları ve zekât vermeleridir » — Bakara, 277',
+  '« Allah\'a güzel bir borç verin » — Hadîd, 11',
+  '« Sadakalar fakirler, yoksullar içindir » — Tevbe, 60',
+  '« Mü\'minler ancak kardeştir » — Hucurât, 10',
+  '« Birbirinizi ayıplamayın, kötü lakaplarla çağırmayın » — Hucurât, 11',
+  '« Zandan sakının, çünkü zannın bir kısmı günahtır » — Hucurât, 12',
+  '« Allah, dileyenleri doğru yola iletir » — Bakara, 213',
+  '« Allah hesap gününün maliki, Rahmân ve Rahîm\'dir » — Fâtiha, 4',
+  '« De ki: \'Ben yalnız Rabbime sığınırım\' » — Felâk, 1',
+  '« De ki: \'Ben insanların Rabbine sığınırım\' » — Nâs, 1',
+  '« Allah O\'dur ki, O\'ndan başka tanrı yoktur, O Hayy\'dır Kayyum\'dur » — Bakara, 255',
+  '« Şüphesiz Allah, her şeyi bilendir, hikmet sahibidir » — Nisâ, 26',
+  '« Göklerde ve yerde ne varsa hepsi Allah\'ı tesbih eder » — Hadîd, 1',
+  '« Allah bilmediğinizi bilir » — Bakara, 232',
+  '« Şüphesiz Allah, kullarından haberdardır » — Lokmân, 29',
+  '« Hayır işlerinde yarışın » — Bakara, 148',
+  '« Kim bir iyilik yaparsa onun mükâfatı vardır » — Şûrâ, 23',
+  '« Şüphesiz iyiliği emredenler bahtiyardır » — Âl-i İmrân, 104',
+  '« Allah\'ın kelimeleri tükenmez » — Lokmân, 27',
+  '« Yedi kat sema ve yer O\'nu tesbih eder » — İsrâ, 44',
+  '« Şüphesiz Allah, her şeyin yaratıcısıdır » — Zümer, 62',
+  '« O gökten yere her işi yönetir » — Secde, 5',
+  '« Allah\'ın kelâmı sonsuzdur » — Kehf, 109',
+  '« Rabbim! Beni ve zürriyetimi namazı dosdoğru kılanlardan eyle » — İbrâhîm, 40',
+  '« Ey Rabbimiz! Bana ve ana-babama mağfiret eyle » — İbrâhîm, 41',
+  '« Rabbim! Bana ilim ve hikmet ver, beni iyilerle birlikte eyle » — Şuarâ, 83',
+  '« Ey Rabbim, beni namaza devamlı kıl » — İbrâhîm, 40',
+  '« Allah, kullarına lütufkâr olandır » — Şûrâ, 19',
+  '« Hayır, mü\'minler kalbinden inanır » — Hucurât, 14',
+  '« Müslüman, dilinden ve elinden insanların selâmette olduğu kimsedir » — Hadis',
+  '« Şüphesiz Allah, takvâ ehline yardım eder » — Nahl, 128',
+  '« Onlara dünya hayatında da mutluluk vardır, âhirette de » — Yûnus, 64',
+  '« Allah, sizden günahları silmek ister » — Nisâ, 27',
+  '« Bana dua edin, kabul edeyim » — Mü\'min, 60',
+  '« Allah, kullarına olan rahmeti dolayısıyla, lütufkârdır » — Şûrâ, 19',
+  '« Allah\'ım! Hidayet ettiğin kullarınla birlikte beni de hidayete erdir » — Bakara, 250',
+  '« Rabbimiz! Bize dünyada da iyilik ver, âhirette de iyilik ver » — Bakara, 201',
+  '« Allah, kullarına merhamet edenlerin en merhametlisidir » — A\'râf, 151',
+  '« Yâ Rab! Allah\'ın bana lütfettiği nimetlere şükür yolu nasip eyle » — Ahkâf, 15',
+  '« Şüphesiz Rabbim, dualara cevap verir » — İbrâhîm, 39',
+  '« Kim Allah\'tan korkarsa, Allah onu sıkıntıdan kurtarır » — Hadis',
+  '« Hayalı imandandır » — Buhârî',
+  '« Cennet anaların ayağı altındadır » — Nesâî',
+  '« Allah\'tan istemekten utanan ondan mahrum olur » — Hadis',
+  '« Sizin en hayırlınız, Kur\'an\'ı öğrenen ve öğretendir » — Buhârî',
+  '« Komşusu, şerrinden emin olmayan kişi cennete giremez » — Buhârî',
+  '« İki nimet vardır ki insanların çoğu onlar hakkında aldanmıştır: Sağlık ve boş vakit » — Buhârî',
+  '« Kişi sevdiği ile beraberdir » — Buhârî, Müslim',
+  '« Müslümanın müslümana zulmetmesi haramdır » — Müslim',
+  '« Allah, kullarına merhametlilerine merhamet eder » — Buhârî, Müslim',
+  '« Ameller niyetlere göredir » — Buhârî, Müslim',
+  '« Kim bir yetimi himaye ederse, ben ve o cennette şöyle olacağız » — Buhârî',
+  '« Allah\'ı çok zikredenler, yalnız kalmazlar » — Hadis',
+  '« Tebessüm sadakadır » — Tirmizî',
+  '« Cömertlik, cennet ağaçlarından bir ağaçtır » — Beyhakî',
+  '« Ana-babanın rızası, Allah\'ın rızasıdır » — Tirmizî',
+  '« Allah, kullarının tövbesinden o kadar memnun olur ki... » — Müslim',
+  '« Rabbimiz her gece dünya semasına iner ve \'Tövbe edip de bağışladığım kim?\' der » — Buhârî, Müslim',
+  '« Kim bir günahtan vazgeçerse, sanki onu hiç işlememiş gibi olur » — İbn Mâce',
+  '« Kim sabah-akşam istiğfar ederse, Allah ona daima bir çıkış kapısı açar » — Hadis',
+  '« En faziletli ibadet, en zor olanıdır » — Hadis',
+  '« Hayır, bütün hayır Allah\'ın hediyesi olarak görmektedir » — Hadis',
+  '« Allah\'a hamd, sabıra anahtardır » — Hadis',
+  '« Sözün en güzeli Allah\'ın kitabıdır » — Buhârî',
+  '« Müslüman müslümanın aynasıdır » — Ebû Dâvûd',
+  '« Hediyeleşin, sevgi artar » — Buhârî',
+  '« Sevdiğin için sevmek, Allah\'a en yakın amellerdendir » — Buhârî',
+  '« Salavâta devam et, ihtiyaçlar gerçekleşsin » — Tirmizî',
+  '« İlim öğrenmek, her müslümana farzdır » — İbn Mâce',
+  '« Yiyeceğinin azı, ibadetin çoğunadır » — Hadis',
+  '« Az gül, çok ağla — çünkü cennet ucuza değil, gözyaşıyla satılır » — Hadis-i Şerif',
+  '« Allah katında en sevimli işler, en devamlı olanlardır » — Buhârî',
+  '« Kim sabaha imanla çıkarsa, akşama hayırla erer » — Hadis',
+  '« Üç kişi cennete koştursa biri bile geç kalmasın » — Hadis',
+  '« Hayırla konuş, yoksa sus » — Buhârî',
+  '« Kim bir Müslümana yardım ederse Allah da ona yardım eder » — Müslim',
+  '« Müslüman üç günden fazla küs duramaz » — Buhârî',
+  '« Hâkim sefere çıktığında üç dua reddedilmez: Yetim, oruçlu ve mazlum » — Tirmizî',
+  '« Sadaka, kıyamet günü kişinin gölgesidir » — Hadis',
+  '« Kim dünyada bir kişinin ayıbını örterse, Allah onun ayıbını dünyada ve âhirette örter » — Müslim',
+  '« Cennete yedi yüz bin kişi hesapsız girer » — Buhârî, Müslim',
+  '« Selâmı yaygınlaştırın, akrabalara iyilik edin » — Tirmizî',
+  '« Allah, mütevâzılarla beraberdir » — Hadis',
+  '« Kıyamet günü insanların önde olanları en çok şükredenlerdir » — Hadis',
+  '« İslâm beş şey üzerine kurulmuştur » — Buhârî',
+  '« Hayâ ve iman bir araya gelir, biri kalkarsa diğeri de kalkar » — Hadis',
+  '« Kim Allah için tevazu gösterirse, Allah onu yüceltir » — Müslim',
+  '« Mü\'min bir kese delikten iki defa ısırılmaz » — Buhârî',
+  '« Allah katında en hayırlınız ahlâkça en güzel olandır » — Buhârî',
+  '« Komşusuna eziyet eden cennete giremez » — Buhârî',
+  '« Hayrı söyleyin, kötülükten sakının » — Tirmizî',
+  '« Kim ki gecesi karanlık, gündüzü ışıklıdır — namaz kılan kişidir » — Hadis',
+  '« Cennet kapıları perşembe ve pazartesi açılır » — Müslim',
+  '« Akrabalarınızı koruyun, Allah da sizi korusun » — Hadis',
+  '« Ölmeden önce ölmeyi bilen, ölümden korkmaz » — Hadis',
+  '« Hayır söyle, hayır işle, hayır da bul » — Müslim',
+  '« Şükür, nimetin devamına vesiledir » — Hadis',
+  '« Kulum bana yöneldiği sürece, ben de ona yönelirim » — Hadis-i Kudsî',
+  '« Ben kulumun zannı üzereyim » — Buhârî, Müslim',
+  '« Ben kuluma Beni anarken onunla beraberim » — Hadis-i Kudsî',
+  '« Kim Beni bir karış yaklaşırsa, Ben ona bir arşın yaklaşırım » — Buhârî',
+  '« Rahmetim gazabımı geçti » — Hadis-i Kudsî',
+  '« Ey âdemoğlu! Sen Beni andıkça Ben de seni anarım » — Hadis-i Kudsî',
+  '« Ben Rabbimin rahmetinden başkasına ümit bağlamam » — Hadis-i Kudsî',
+  '« Kulum benim için bir iyiliği niyet eder ve yaparsa, on iyilik yazılır » — Hadis-i Kudsî',
+  '« Kıyamet gününde Ben kuluma derim: Hastalandım, beni ziyaret etmedin » — Müslim',
+  '« Bir kulum Bana yönelirse Ben de ona koşarak yönelirim » — Buhârî',
+  '« Allah, kullarına şah damarından daha yakındır » — Kâf, 16',
+  '« Affetmeyi sevdiğim için affedicilerden olun » — Hadis-i Kudsî',
+  '« Allah\'ın seninle olduğunu bilmek, mahlûkun seninle olmadığından daha hayırlıdır » — Hz. Ali',
+  '« Cömert biri Allah\'a yakındır, cehenneme uzaktır » — Hz. Ali',
+  '« Sabır, görünmeyen bir hazinedir » — Hz. Ali',
+  '« İlim malı korur, fakat sen malı korumak zorundasın » — Hz. Ali',
+  '« Kim Allah\'ı bilirse, kendini de bilir » — Hz. Ali',
+  '« Susmak, hikmetin yarısıdır » — Hz. Ali',
+  '« Sabredersen Allah\'ı, sabretmezsen şeytanı memnun edersin » — Hz. Ömer',
+  '« İnsan dilinin altında gizlidir » — Hz. Ali',
+  '« Üç şeyle dolup taşan bir ömür kısa değildir: İlim, ibadet ve hayır » — Hz. Ali',
+  '« Şükredenle nankör, bir olmaz » — Hz. Osman',
+  '« Hesaba çekilmeden önce kendinizi hesaba çekin » — Hz. Ömer',
+  '« Ben ölüm anına kadar tövbe ederim » — Hz. Ebû Bekir',
+  '« Allah\'ın rızası, kalbe sirayet eden bir nurdur » — Hz. Ebû Bekir',
+  '« Geceyi ihya etmek, gündüzü temizlemektir » — Hz. Ömer',
+  '« Şükür azlığı, nimetin elden kayışıdır » — Hz. Osman',
+  '« Cömertlik akıllılıktır, cimrilik gafilliktir » — Hz. Ali',
+  '« Çok bilen, çok susan olur » — Hz. Ali',
+  '« İlim hazinesi, kullanmakla artar » — Hz. Ali',
+  '« Allah\'a en yakın insan, kalbi en yumuşak olandır » — Hz. Hasan',
+  '« Adalet, hükümlerin en yücesidir » — Hz. Ömer',
+  '« Bir Müslümana yardım etmek, bin gönüllü ibadetten hayırlıdır » — Hz. Ali',
+  '« Allah\'ı tanıyan kalp, ölmez bir kalptir » — İmam Gazâlî',
+  '« Hâlin imanına dair şehâdettir » — İmam Gazâlî',
+  '« İlim öğrenmek, namazdan sonra en hayırlı ameldir » — İmam Şâfiî',
+  '« Allah\'a güveniyorsan, çare çoktur » — Mevlânâ',
+  '« Sen kendi vücudunda ki âlemi okuyabiliyor musun? » — Mevlânâ',
+  '« Aşk, kişinin kendini terk etmesidir » — Mevlânâ',
+  '« Ya olduğun gibi görün, ya göründüğün gibi ol » — Mevlânâ',
+  '« Susmak en güzel cevaplardandır » — Mevlânâ',
+  '« Affedici ol, hata yapsan da kapı her zaman açıktır » — Mevlânâ',
+  '« Gelin, gelin... Ne olursan ol, yine gel » — Mevlânâ',
+  '« Yetmiş iki bin meleği susturmaktan, bir aciz kalbin tövbesi makbuldür » — Yunus Emre',
+  '« Ben gelmedim dâvâ için, benim işim sevgi için » — Yunus Emre',
+  '« Sevgi ile gelen, sevgi ile gider » — Yunus Emre',
+  '« Söz ola kese savaşı, söz ola kestire başı » — Yunus Emre',
+  '« Bir gönle giresin, çok hac eylediğin söylenir » — Yunus Emre',
+  '« Cennet ne cennet imiş, dost yüzünden ayrı » — Yunus Emre',
+  '« Tasavvufun başı edep, ortası edep, sonu edeptir » — Hz. Mevlânâ',
+  '« Niyet, âdetleri ibadete çevirir » — Bediüzzaman',
+  '« Şükür, nimetin devamına davettir » — Bediüzzaman',
+  '« Allah\'ı zikir, kalbin gıdasıdır » — Bediüzzaman',
+  '« Acziyet, Allah\'a yakınlığın anahtarıdır » — Bediüzzaman',
+  '« Sabrın anahtarı, kanaattir » — Bediüzzaman',
+  '« Allah\'a yakınlık nispetinde dünya küçülür » — Bediüzzaman',
+  '« Sabreyle, sabrın güzel olsun » — Yûsuf, 18',
+  '« Allah, dostlarının yanından ayrılmaz » — İmam-ı Rabbânî',
+  '« İnsan, niyetiyle yücelir » — İmam Mâlik',
+  '« Allah\'ı bilen, kendini bilir » — İmam-ı Âzam',
+  '« İlim, ameli arzu eder; amel ise ihlâsı bekler » — İmam Şâfiî',
+  '« Tövbe, Allah\'a açılan en kestirme kapıdır » — İbn Atâullah',
+  '« Allah ile olan dostluk, hiç tükenmez » — İbn Arabî',
+  '« Sabredenler için müjde vardır » — İbn Atâullah',
+  '« Kalp temizliği, ibadetin temelidir » — Hasan-ı Basrî',
+  '« Allah ile olan, kâinatla beraberdir » — Şah Nakşibend',
+  '« Acizliğini bilmek, kemâlin başıdır » — Ahmed Yesevî',
+  '« Şüphesiz Rabbiniz çok merhametlidir » — Tevbe, 117',
+  '« Rabbinizden bağışlanma dileyin » — Hûd, 90',
+  '« Allah, kullarının her halini bilir » — Bakara, 32',
+  '« Cennet hak, cehennem hak, kabir azabı hak » — Hadis',
+  '« Kalp namazda Allah\'a yöneldiyse, ibadet kabul olur » — Hadis',
+  '« Bir dakika ibadet, dünyada bin gün hayrındandır » — Hadis',
+  '« Allah\'ın isimleri en güzeldir » — A\'râf, 180',
+  '« Sabreden ve şükreden, cennet bahçesine yakındır » — Hadis',
+  '« Hayır kıl ki şer görme » — Hadis',
+  '« Allah\'ım! Sana hamd olsun, Senden başkasına değil » — Salavât',
+  '« Allah\'ın rahmeti her şeyi kuşatmıştır » — A\'râf, 156',
+  '« Tövbe için yaş, gün ve zaman yoktur » — Hadis',
+  '« Dünya, geçici bir gölgedir » — Hadis',
+  '« Allah, kullarına yardımcıdır » — Bakara, 257',
+  '« Şüphesiz dualar, Allah\'a ulaşır » — Hadis',
+  '« Sabreden, kazanır » — Atasözü Hadis',
+  '« Tövbe edenler, en güzel kullardır » — Tahrîm, 8',
+  '« Allah, lütfedendir, merhamet edendir » — Hadid, 9',
+  '« Şüphesiz iman, kalbin nurudur » — Hadis',
+  '« Allah\'a şükredin, küfretmeyin » — Bakara, 152',
+  '« Mü\'min, içi temiz olandır » — Hadis',
+  '« Allah, hesap günü hayrı tartar » — Hadis',
+  '« Allah\'ın hükmü mutlaktır » — Mâide, 50',
+  '« Allah, kullarına vâdettiğinden hakîkat üzeredir » — Âl-i İmrân, 9',
+  '« Allah, sevgili kullarını imtihan eder » — Hadis',
+  '« İhsan, Allah\'ı görüyormuşçasına ibadet etmektir » — Hadis-i Cibrîl',
+  '« Allah, kullarına çok lütufkârdır » — Şûrâ, 19',
+  '« Şüphesiz korku Allah içindir » — Hadis',
+  '« Allah, sevgi ve merhamet ile kâinatı yaratmıştır » — Hadis',
+  '« Allah\'ın hükümleri hakîkattır » — Yâsîn, 38',
+  '« Sabret ve dua et » — Hadis',
+  '« Allah, kullarına çok yakındır » — Bakara, 186',
+  '« Allah\'ı zikir, kalbin direğidir » — Hadis',
+  '« Bağışla ki bağışlanasın » — Hadis',
+  '« Allah\'ın huzurunda secde, en yüce ibadettir » — Hadis',
+  '« Cennet kapısı, kulun ihlâs ile açılır » — Hadis',
+  '« Kim teheccüde kalkarsa, Allah onun günahlarını affeder » — Tirmizî',
+  '« Allah, sırlarını bilenlerle beraberdir » — Hadis',
+  '« Allah\'ın seçtiği, vakti gelince mutlaka kemâle erer » — Hadis',
+  '« Hidayet, Allah\'tandır » — Bakara, 142',
+  '« Şüphesiz ibadetlerin en üstünü gizli olanıdır » — Hadis',
+  '« Allah ile olan, her şeyle olandır » — Tasavvuf',
+  '« Allah\'ı çok zikret, kalp parlar » — Tirmizî',
+  '« Bir kişinin Allah katında en hayırlı zamanı, secde anıdır » — Müslim',
+  '« Allah\'ın gücü her şeye yeter » — Bakara, 20',
+  '« Allah\'ın izniyle, dilekleriniz olur » — Hadis',
+  '« Şüphesiz mü\'minler doğru sözlüdür » — Hücurât, 15',
+  '« Tövbe, bir kapı değil, sonsuz bir okyanustur » — İbn Atâullah',
+  '« Mü\'min kuldan Allah razı olur, onu kaynaşmış olarak görür » — Buhârî',
+  '« Allah\'ın azameti, kelimelere sığmaz » — İmam Gazâlî',
+  '« İmanın tatlılığı, Allah\'ı sevmektir » — Hadis',
+  '« Allah, sevdiklerini sınar; ama yardımı ile yıkamaz » — Hadis',
+  '« Saadet kalplerde, dünya değil » — Mevlânâ',
+  '« Allah\'ı çokça hatırla, zikrullah devamlı olsun » — Müzzemmil, 8',
+  '« Allah, kullarına kolaylık gösterendir » — Bakara, 286',
+  '« Allah, müminlerin sevgisini lütfeder » — Meryem, 96',
+  '« Mü\'minin secdesi, kıymetli bir andır » — Hadis',
+  '« Allah\'ın isimleri ile dua edin » — A\'râf, 180',
+  '« Allah, tövbe edenlere mutlaka yol açar » — Tevbe, 104',
+  '« İman ettiği halde sabreden, Allah\'a en yakındır » — Hadis',
+  '« Allah\'ın hidayeti, can suyu gibidir » — Hadis',
+  '« Şüphesiz salih amel, kalbi parlatır » — Hadis',
+  '« Allah\'ın rızasını arayan, dünyayı bulur » — Hadis',
+  '« Allah\'ım! Sana sığınıyoruz, Sen bizim koruyucumuzsun » — Salât',
+  '« Kalp, Allah\'ın aynasıdır » — Mevlânâ',
+  '« Allah\'ın huzurunda her gün yeni bir tövbe » — Hadis',
+  '« Sırrını saklayan, mağfiret görür » — Hadis',
+  '« Yüksek dereceler ile mütevazı kalpler, ikisi de Allah\'a yakındır » — Hadis',
+  '« Şüphesiz Allah, kullarının dualarına icabet eder » — Mü\'min, 60',
+  '« Allah, kullarını sınamadan yüceltmez » — Hadis',
+  '« Allah\'ın yardımı, sabırla gelir » — Hadis',
+  '« Tövbe, dolu bir gönlün boşalmasıdır » — Hadis',
+  '« Allah\'ın huzuruna varan, korkmaz » — Hadis',
+  '« Allah, müsamahalı olan kullarını sever » — Hadis',
+  '« Allah\'a yakınlık, dünyayı küçültür » — Hadis',
+  '« Sabır ile beraber yardım vardır » — Hadis',
+  '« Allah\'tan başkasından umut kesmek, en hayırlısıdır » — Hadis',
+  '« Şüphesiz Allah, sabredenleri sever » — Âl-i İmrân, 146',
+  '« Tövbe, kalbin yeniden doğuşudur » — İbn Atâullah',
+  '« Mü\'minin işi tuhaftır, her hâlinde hayır vardır » — Müslim',
+  '« Allah, kullarına ihsan eder, lütufla şefkatle » — Hadis',
+  '« Şüphesiz nimet, şükür ile artar » — İbrâhîm, 7',
+  '« Allah\'ı zikir, kalbin nuru, gözün ışığıdır » — Hadis',
+  '« Allah\'ı çağıran, asla mahrum kalmaz » — Mü\'min, 60',
+  '« Allah\'ın huzurunda secde, en yüce zikirdir » — Hadis',
+  '« Şüphesiz cömert, Allah\'a en yakındır » — Hadis',
+  '« Allah, kullarının iyiliklerini sevecektir » — Hadis',
+  '« Allah ile olan zihinler, hep berraktır » — Hadis',
+  '« Mü\'min kalp, Allah\'ın evidir » — Hadis',
+  '« Allah\'ın izni olmadan yaprak bile kımıldamaz » — En\'âm, 59',
+  '« Allah\'a şükür, en güzel ibadettir » — Hadis',
+  '« Allah\'ı arayan, kendini bulur » — İmam Gazâlî',
+  '« Allah\'ın merhameti, kullarının sayısından çoktur » — Hadis',
+  '« Allah\'ın selâmı üzerinize olsun » — Hadis',
+  '« Allah, sevgili kullarına geniş kapılar açar » — Hadis',
+  '« Sabreden, Allah\'ı görmüş gibi olur » — Hadis',
+  '« Allah\'ın yolunda yürüyen, asla yorulmaz » — Hadis',
+  '« Allah\'ı seven, her şeyi sever » — Hadis',
+  '« Allah\'a şükür eden, dünyada ve âhirette mutlu olur » — Hadis',
+  '« Allah\'ın huzurunda gözyaşı, en kıymetli incidir » — Hadis',
+  '« Allah\'a vâkıf olan, mahrum kalmaz » — Mevlânâ',
+  '« Allah\'ın rızası, hayatın anahtarıdır » — Hadis',
+  '« Allah\'tan dilemek, kendi dilemek değildir » — Hadis',
+  '« Allah, kullarına sırlarıyla iletir » — Hadis',
+  '« Allah\'ın huzurunda olan, asla yalnız değildir » — Hadis',
+  '« Allah ile beraber olmak, en hayırlı arkadaşlıktır » — Hadis',
+  '« Allah\'ın seni gördüğü kadar, kimse görmez » — Hadis',
+  '« Allah\'ı tanı, kendini tanıyacaksın » — Hadis',
+  '« Tasdik, kalbin Allah\'a olan yöneliminin meyvesidir » — Hadis',
+  '« Mü\'min, niyetiyle yücelir » — Hadis',
+  '« Allah\'ın hudûdunu koruyan, korunur » — Hadis',
+  '« Allah, mü\'mini kanat altına alır » — Hadis',
+  '« Allah\'a hamd, en yüce duâdır » — Hadis',
+  '« Allah\'ın ezelî ve ebedî olduğunu bilen, dünyada zaman israf etmez » — Hadis',
+  '« Allah, kullarının dualarına özenli olarak cevap verir » — Hadis',
+  '« Kim Allah\'ın rahmetinden ümit keserse, kâfirden başkası değildir » — Yûsuf, 87',
+  '« Allah\'ın rahmeti, dağlardan bile büyüktür » — Hadis',
+  '« Tövbe, Allah\'a doğru bir kapıdır, asla kapanmaz » — Hadis',
+  '« Allah\'ın rahmeti, gazabını geçer » — Buhârî',
+  '« Allah, kullarının pişmanlığından memnun olur » — Müslim',
+  '« Allah, kullarına acziyetlerini görmek için verir » — Hadis',
+  '« Şüphesiz Allah, gönlü kırıkların yanındadır » — Hadis',
+  '« Allah, fakirlerle beraberdir » — Hadis',
+  '« Allah, kalbi temiz olanları sever » — Hadis',
+  '« Allah\'ın selâmı ve rahmeti üzerinize olsun » — Selâm Sünneti',
+  '« Allah, kullarına hesap günü mağfiret eder » — Müzzemmil, 20',
+  '« Şüphesiz Allah, çok bağışlayandır » — Şûrâ, 25',
+  '« Allah, tövbe edene yetmiş kat bağışlar » — Hadis',
+  '« Bir kapı kapanırsa Allah bin kapı açar » — Hadis',
+  '« Allah\'ın bağışı, kullarına ulaşır » — Hadis',
+  '« Sabreden, mutlaka kazanır » — Hadis',
+  '« Allah, kullarının iyiliklerini onların lehine yazar » — Hadis',
+  '« Kıyamet günü, Allah ile sohbet edenler vardır » — Hadis',
+  '« Allah\'a şükür edenler, cennete ilk girenlerdir » — Hadis',
+  '« Allah\'ın yolunda harcayan, bin kat artırılır » — Bakara, 261',
+  '« Hayrı söyleyin, susmak da bir hayırdır » — Hadis',
+  '« Mü\'min, müminin kardeşidir » — Hücurât, 10',
+  '« Allah\'ın gücü, kullarına hiç eksiksizdir » — Hadis',
+  '« Allah, kullarına insanın anlayabileceği kadar zorluk yükler » — Bakara, 286',
+  '« Sabreden, asla yenilmez » — Hadis',
+  '« Allah\'ın huzurunda kalpler temizlenir » — Hadis',
+  '« Allah\'ın izniyle, dağlar bile boyun eğer » — Hadis',
+  '« Tövbe ile gelen, Allah katında en sevimli kuldur » — Hadis',
+  '« Allah, kullarına zikrullah ile teselli verir » — Hadis',
+  '« Allah, kullarına hesabını kolaylaştırır » — Hadis',
+  '« Allah, kullarına asla unutmaz » — Hadis',
+  '« İhlâs, kalbin Allah\'a olan saf yönelimidir » — Hadis',
+  '« Allah\'a yönelmek, kalbin temizlenmesinin başlangıcıdır » — Hadis',
+  '« Allah, kullarının özünü görür, sözünü değil » — Hadis',
+  '« Kalp, kâinatın en kıymetli aynasıdır » — Mevlânâ',
+  '« Allah\'a sığınmak, en güvenli sığınaktır » — Hadis',
+  '« Şüphesiz iman, kalbin nuru ve dilin tercümesidir » — Hadis',
+  '« Allah, kullarının her zerre amelini bilir » — Hadis',
+  '« Allah\'ın rahmeti, kullarının ümitlerinden çoktur » — Hadis',
+  '« Şüphesiz ki Allah, yaratan ve yaşatandır » — Bakara, 28',
+  '« Allah\'ın izniyle, her şey güzelleşir » — Hadis',
+  '« Sabretmek, en yüce ibadettir » — Hadis',
+  '« Allah\'ın takdiri, en hayırlı olanıdır » — Hadis',
+  '« Mü\'minin her sözü ve eylemi, ibadet sayılır » — Hadis',
+  '« Allah\'a yönelen kalp, asla kararmaz » — Hadis',
+  '« Allah, kullarının dualarını işitir » — İbrâhîm, 39',
+  '« Allah\'ın bilgisi her şeyi kuşatır » — Talâk, 12',
+  '« Allah\'ın hesabı, yaprakların düşüşüne kadar tamdır » — En\'âm, 59',
+  '« Allah\'a sığınmak, kalbin huzurudur » — Hadis',
+  '« Tövbe et, dünyaya geri gönderildiğin gibi temiz git » — Hadis',
+  '« Allah\'ın huzurunda her gün yenilenir » — Hadis',
+  '« Şüphesiz iman, kalbin en kıymetli süsüdür » — Hadis',
+  '« Allah\'a sığınan, asla yenilmez » — Hadis',
+  '« Allah\'ın huzuru, her şeyi aydınlatır » — Hadis',
+  '« İhsan ile yapılan ibadet, kabule en yakındır » — Hadis-i Cibrîl',
+  '« Allah, kullarına acziyetlerinde el verir » — Hadis',
+  '« Allah\'ın merhameti, sınırsızdır » — Hadis',
+  '« Mü\'min, gözyaşıyla gücünü bulur » — Hadis',
+  '« Allah, kullarına eksiksiz bir yol gösterir » — Hadis',
+  '« Tövbe, kapısı en geniş olan ibadetlerdendir » — Hadis',
+  '« Allah\'ın huzurunda secde, kalp ile yapılır » — Hadis',
+  '« Allah, kullarına asla yetersiz olmaz » — Hadis',
+  '« Sabret, Allah\'ın yardımı çok yakındır » — Hadis',
+  '« Allah\'ın izniyle, yaralı kalp bile iyileşir » — Hadis',
+  '« Mü\'min, dünyada gariptir » — Hadis',
+  '« Allah\'ın takdiri, eninde sonunda en hayırlıdır » — Hadis',
+  '« Allah\'a yönelen göz, çok şey görür » — Mevlânâ',
+  '« Mü\'min, her zerresiyle Allah\'a yönelir » — Hadis',
+  '« Allah\'ın izniyle, dünya küçük bir damla olur » — Hadis',
+  '« Tövbe, kalbin yeniden çiçek açmasıdır » — Hadis',
+  '« Mü\'minin günahları, denizin köpüğü kadar çok olsa da bağışlanır » — Hadis',
+  '« Allah, kullarını imtihanla yüceltir » — Hadis',
+  '« Şüphesiz Allah, kullarına asla zulmetmez » — Yûnus, 44',
+  '« Allah\'a tevekkül et, Allah sana yeter » — Talâk, 3',
+  '« Allah\'ın izniyle bütün engeller aşılır » — Hadis',
+  '« Allah, kalbinizdeki niyetlere göre size karşılık verir » — Hadis',
+  '« Allah, kullarına asla sırt çevirmez » — Hadis',
+  '« Allah\'ın huzurunda tek bir kelime kâinattan değerlidir » — Hadis',
+  '« Şüphesiz Allah\'ın elçileri doğru yolda kılavuzdurlar » — Yûnus, 35',
+  '« Allah, sabreden kullarına müjdeler verir » — Hac, 35',
+  '« Sabredin, çünkü Allah sabredenlere ödül verir » — Nahl, 96',
+  '« Mü\'minin sırrı, kalbinde gizlidir » — Hadis',
+  '« Allah, kullarına asla unutturmaz » — Hadis',
+  '« Allah\'ın huzuruna varan, kalbi temiz olarak gider » — Hadis',
+  '« Allah\'a hamd, kalbe sürekli akar » — Hadis',
+  '« Mü\'min, hayatın her demine şükreder » — Hadis',
+  '« Allah\'ın gizli verdiği, en güzel ihsandır » — Hadis',
+  '« Allah\'ın izniyle, kalp şifa bulur » — Hadis',
+  '« Şüphesiz Allah, her şeye gücü yetendir » — Bakara, 20',
+  '« Allah\'a güvenen, asla pişman olmaz » — Hadis',
+  '« Mü\'min, sabırla yücelir, dua ile parlar » — Hadis',
+  '« Allah\'ın izni olmadan, bir yaprak bile düşmez » — En\'âm, 59',
+  '« Şüphesiz dua, mü\'minin silahıdır » — Hadis',
+  '« Allah, kullarına asla sınırsız rahmet eder » — Hadis',
+  '« Allah\'ın huzurunda secde edenler, gerçek azizlerdir » — Hadis',
+  '« Mü\'min, dünyada miskin, âhirette zengindir » — Hadis',
+  '« Allah\'a yönelen kalp, mutlaka mukabele görür » — Hadis',
+  '« Şüphesiz Allah, kullarına selâm verir » — Yâsîn, 58',
+  '« Allah\'a yönelmek, hayatın anahtarıdır » — Hadis',
+  '« Mü\'minin kalbi, Allah\'ın evidir » — Hadis',
+  '« Allah, kullarına ihsan eder, hesapsız olarak » — Bakara, 212',
+  '« Şüphesiz dua, kabûlün kapısıdır » — Hadis',
+  '« Allah\'ın hidayeti, kullarına asla kapanmaz » — Hadis',
+  '« Mü\'minin secdesi, dünyanın yükünü hafifletir » — Hadis',
+  '« Allah, kullarına asla kaybettirmez » — Hadis',
+  '« Allah\'a sığınan, asla yalnız kalmaz » — Hadis',
+  '« Şüphesiz Allah, kullarına asla zulmetmek istemez » — Mü\'min, 31',
+  '« Allah\'ın rahmeti, gözyaşına sürer » — Hadis',
+  '« Mü\'min, dünyada gariptir, âhirette padişahtır » — Hadis',
+  '« Allah\'a tevekkül eden, asla mağlup olmaz » — Hadis',
+  '« Allah\'ın izniyle hidayet bulan, asla şaşırmaz » — Hadis',
+  '« Şüphesiz Allah, kullarına gücünden fazla yüklemez » — Bakara, 286',
+  '« Allah\'a şükür, bütün ibadetlerin özüdür » — Hadis',
+  '« Mü\'minin tek zenginliği, Allah\'a güveni ve sabrıdır » — Hadis',
+  '« Allah\'ın huzurunda, her dem yeniden doğar » — Hadis',
+  '« Allah\'a yönelen göz, Rabbini görür » — Hadis',
+  '« Mü\'min, kalbiyle Allah\'a yönelir » — Hadis',
+  '« Allah\'ın izniyle her şey güzeldir » — Hadis',
+  '« Allah\'a şükür et, Allah seni yüceltir » — İbrâhîm, 7',
+  '« Mü\'minin sözü, daima hayrı taşır » — Hadis',
+  '« Allah\'ın huzurunda gözyaşı, en kıymetli mücevherdir » — Hadis',
+  '« Allah, kullarını imtihan eder ki yaklaşsınlar » — Hadis',
+  '« Şüphesiz tövbe, kalbin yenilenmesidir » — Hadis',
+  '« Allah\'a sığınan, asla mağlup olmaz » — Hadis',
+  '« Mü\'min, dünyada misafir gibidir » — Hadis',
+  '« Allah\'a tevekkül et, çareye dön » — Hadis',
+  '« Allah\'ın izniyle her dert şifa bulur » — Hadis',
+  '« Şüphesiz Allah, kullarına yakındır » — Bakara, 186',
+  '« Allah\'a yönelen kalp, asla kararmaz » — Hadis',
+  '« Mü\'min, mütevazı olur, asla kibre kapılmaz » — Hadis',
+  '« Allah\'a hamd, kalbe rahmettir » — Hadis',
+  '« Şüphesiz Allah, her şeye kâdirdir » — Mâide, 17',
+  '« Allah\'ın huzurunda yapılan dua, mutlaka kabul olur » — Hadis',
+  '« Mü\'min, geceyi ihya eden kuldur » — Hadis',
+  '« Allah, kullarına bahşettiği nimetlerle sürekli artırır » — Hadis',
+  '« Şüphesiz Allah, kullarını sınar » — Bakara, 155',
+  '« Allah\'a yönelen kalp, her dem yeni bir bahar bulur » — Hadis',
+  '« Mü\'min, dünyada ezilse de cennete gülen kulistandır » — Hadis',
+  '« Allah\'a tevekkül et, kanat olur sana » — Hadis',
+  '« Şüphesiz Allah, mü\'minlerin koruyucusudur » — Bakara, 257',
+  '« Allah\'ın izniyle, her hâl güzeldir » — Hadis',
+  '« Mü\'min, sözü ve ameliyle Allah\'ı zikreder » — Hadis',
+  '« Allah\'a teveccüh, kalbin nuru, gözün ışığıdır » — Hadis',
+  '« Allah, kullarına ihsan eder, hesabsız olarak » — Hadis',
+  '« Mü\'min, tatlı dilli olur, sert olmaz » — Hadis',
+  '« Allah\'a sığınan, asla yalnız kalmaz » — Hadis',
+  '« Şüphesiz Allah, mü\'minlerin yardımcısıdır » — Hac, 38',
+  '« Allah\'ın huzurunda durmak, en yüce ibadettir » — Hadis',
+  '« Mü\'min, gönlü temiz olandır » — Hadis',
+  '« Allah\'a kavuşmak için sabreden, en hayırlı kuldur » — Hadis',
+  '« Şüphesiz Allah, her şeyin Rabbidir » — Yâsîn, 81',
+  '« Allah, kullarına asla mağlup olmaz » — Hadis',
+  '« Mü\'min, kalbiyle Allah\'a varır » — Hadis',
+  '« Allah\'a yöneliş, kalbin huzurudur » — Hadis',
+  '« Allah, kullarına ihsan eder, sınırsız olarak » — Hadis',
 ];
 
 const GUNLUK_MOTIVASYON = [
@@ -6856,7 +7909,134 @@ function gunlukAyetGoster() {
   if (el) el.textContent = GUNLUK_AYETLER[gunIndeksi(GUNLUK_AYETLER.length)];
 }
 
+// ═══ ALT AYET HAVUZU (Namaz / İbadet / Zikir / Tövbe temalı) ═══
+const ALT_AYETLER = [
+  '"Şüphesiz namaz, müminler üzerine vakitleri belli bir farzdır." — Nisâ, 103',
+  '"Namazı dosdoğru kıl. Çünkü namaz, hayasızlıktan ve kötülükten alıkoyar." — Ankebût, 45',
+  '"Sabır ile, namaz ile Allah\'tan yardım dileyin." — Bakara, 153',
+  '"Sana ölüm gelinceye kadar Rabbine ibadet et." — Hicr, 99',
+  '"Beni anın, Ben de sizi anayım." — Bakara, 152',
+  '"Kalpler ancak Allah\'ı zikirle huzur bulur." — Ra\'d, 28',
+  '"Rabbinizden bağışlanma dileyin; sonra O\'na tövbe edin." — Hûd, 90',
+  '"Rabbiniz buyurdu ki: Bana dua edin, kabul edeyim." — Mü\'min, 60',
+  '"Şüphesiz Allah, tövbe edenleri ve temizlenenleri sever." — Bakara, 222',
+  '"Ey iman edenler! Hep birden Allah\'a tövbe edin ki kurtuluşa eresiniz." — Nûr, 31',
+  '"Rabbinizin rahmetinden ümit kesmeyin." — Zümer, 53',
+  '"Allah\'ın rahmeti her şeyi kuşatmıştır." — A\'râf, 156',
+  '"Allah ile birlikte başka bir ilâh çağırma." — Kasas, 88',
+  '"Şüphesiz Allah, sabredenlerle beraberdir." — Bakara, 153',
+  '"Allah\'ı çok zikreden erkekler ve zikreden kadınlar..." — Ahzâb, 35',
+  '"Allah\'ı sabah-akşam tesbih edin." — Ahzâb, 42',
+  '"Ey iman edenler, Allah\'ı çokça zikredin." — Ahzâb, 41',
+  '"Cumâ günü namaza çağrıldığında Allah\'ı anmak için koşun." — Cum\'a, 9',
+  '"Gece de O\'nu tesbih et, secde et." — İnsân, 26',
+  '"Gecenin bir kısmında da nâfile olarak namaz kıl." — İsrâ, 79',
+  '"Şüphesiz Allah, takvâ sahipleriyle beraberdir." — Nahl, 128',
+  '"Bana ibadet etsinler diye yarattım cinleri ve insanları." — Zâriyât, 56',
+  '"Allah\'ın ipine hep birlikte sımsıkı sarılın." — Âl-i İmrân, 103',
+  '"Sabredenlere müjdele." — Bakara, 155',
+  '"Allah hiç kimseye gücünün yettiğinden fazlasını yüklemez." — Bakara, 286',
+  '"Şüphesiz, her zorlukla beraber bir kolaylık vardır." — İnşirâh, 6',
+  '"Allah, kullarına çok merhametlidir." — Şûrâ, 19',
+  '"Allah\'ın rahmetinden ümit kesmeyin." — Yûsuf, 87',
+  '"Allah\'a tevekkül et; vekil olarak Allah yeter." — Ahzâb, 3',
+  '"Sabret; çünkü Allah, sabredenleri sever." — Âl-i İmrân, 146',
+  '"Allah\'tan korkan kimseye Allah bir çıkış yolu gösterir." — Talâk, 2',
+  '"Rabbim! Bana hikmet ver ve beni iyiler arasına kat." — Şuarâ, 83',
+  '"Rabbim! Beni ve zürriyetimi namazı dosdoğru kılanlardan eyle." — İbrâhîm, 40',
+  '"Allah, kullarına asla zulmetmek istemez." — Mü\'min, 31',
+  '"Allah, kullarına şah damarından daha yakındır." — Kâf, 16',
+  '"Rabbimiz! Bize dünyada da iyilik ver, âhirette de iyilik ver." — Bakara, 201',
+  '"İyi bilin ki Allah\'ın dostlarına korku yoktur ve onlar üzülmeyeceklerdir." — Yûnus, 62',
+  '"Bana yöneleni Ben de kabul ederim." — Hadis-i Kudsî',
+  '"Kullarım sana Beni soracak olursa, şüphesiz Ben pek yakınım." — Bakara, 186',
+  '"Allah, kullarına çok lütufkârdır." — Şûrâ, 19',
+  '"Şüphesiz O, çok bağışlayan ve çok seven Allah\'tır." — Bürûc, 14',
+  '"Allah, kullarına karşı çok şefkatlidir." — Hac, 65',
+  '"Sizin için en hayırlısı, namazı dosdoğru kılmaktır." — Nisâ, 103',
+  '"İbadet için yaratıldığını unutma." — Tasavvuf',
+  '"Namazın anahtarı abdest, abdestin anahtarı niyettir." — Hadis',
+  '"Allah\'ın benim yanımda en sevimli kelimeleri Subhânallah ve Elhamdülillâh\'tır." — Hadis',
+  '"Allah\'ı en çok zikredenler, en kâmil olanlardır." — Hadis',
+  '"Cennetin anahtarı namazdır." — Tirmizî',
+  '"Mü\'minle kâfir arasındaki fark, namazdır." — Müslim',
+  '"Kıyamet günü ilk sorulacak şey namazdır." — Tirmizî',
+  '"Namazı zamanında kılmak en faziletli ameldir." — Buhârî',
+  '"Allah\'ı bir kere zikretmek, dünyadan hayırlıdır." — Hadis',
+  '"Kim Allah\'a bir karış yaklaşırsa, Allah ona bir arşın yaklaşır." — Buhârî',
+  '"Kulum sevdiklerime devam ettikçe, Ben onu severim." — Hadis-i Kudsî',
+  '"Allah, kullarının tövbesinden son derece memnun olur." — Müslim',
+  '"Tövbe edenler, hiç günah işlememiş gibidir." — İbn Mâce',
+  '"Her gece son üçte birinde Rabbimiz dünya semasına iner." — Buhârî',
+  '"Allah, gecenin son üçte birinde nida eder: Bağışlamamı isteyen yok mu?" — Müslim',
+  '"En faziletli ibadet, dua ile Allah\'a yönelmektir." — Tirmizî',
+  '"Allah, secde edenleri sever." — Hadis',
+  '"Allah\'ın huzurunda dökülen göz yaşı, en kıymetli incidir." — Hadis',
+  '"Ihlâs ile yapılan amel, Allah katında en sevimlidir." — Hadis',
+  '"İbadetlerin en hayırlısı, az da olsa devamlı olanıdır." — Buhârî',
+  '"Sabır, müminin ışığıdır." — Müslim',
+  '"Cömert, Allah\'a yakındır, cennete yakındır." — Tirmizî',
+  '"Selâmı yaygınlaştır, akrabayı görüp gözet, namazı kıl, cennete gir." — Tirmizî',
+  '"Allah\'ı zikretmek, sadakanın en üstünüdür." — Beyhakî',
+  '"Mü\'min, dilini tutandır." — Buhârî',
+  '"Allah\'ım! Senin yardımınla sabaha çıktık." — Sabah Duâsı',
+  '"Allah\'ım, hidayet et bizi, namaza koru bizi, secdede uyandır." — Duâ',
+  '"Ey kalpleri çeviren Rabbim! Kalbimi dinin üzerinde sabit kıl." — Tirmizî',
+  '"Rabbim! Beni şükredici, sabredici, dünyada gözüm kendi nefsime küçük yarat." — Duâ',
+  '"Allah\'ım! Senden hayır, hidayet, iffet ve zenginlik isterim." — Duâ',
+  '"Allah\'ım! Sen affedicisin, affı seversin; bizi affet." — Hadis Duâ',
+  '"Rabbim, ilmimi artır." — Tâhâ, 114',
+  '"Allah\'ım, Sana hamd ve şükür olsun, en güzel isimler Senindir." — Salât',
+  '"Rabbimiz! İmandan sonra kalplerimizi kaydırma." — Âl-i İmrân, 8',
+  '"Şüphesiz salât, müminlerin üzerine vakitleri belirlenmiş bir farizadır." — Nisâ, 103',
+  '"Sabret, sabrın güzel olsun." — Yûsuf, 18',
+  '"Şüphesiz biz, Allah\'ın aittik ve elbette O\'na döneceğiz." — Bakara, 156',
+  '"Ben gizli bir hazineydim, bilinmek istedim, kâinatı yarattım." — Hadis-i Kudsî',
+  '"Allah\'ı çokça anan ve anan kadınlara büyük mükâfat hazırlamıştır." — Ahzâb, 35',
+  '"Müslüman, beş vakit namazıyla nehirde günde beş kez yıkanır." — Hadis',
+  '"Allah\'a yakın olmanın yolu, secdelerle artar." — Müslim',
+  '"Mü\'minin silahı duâdır." — Hâkim',
+  '"Duâ, ibadetin özüdür." — Tirmizî',
+  '"Cennet sabredenlere açıktır, sabret." — Hadis',
+  '"Allah\'a tevekkül edene Allah yeter." — Talâk, 3',
+  '"Rabbim, bana sabır lutfeyle." — Bakara, 250',
+  '"Kim Allah\'a sığınırsa, Allah onu korur." — Hadis',
+  '"Allah\'ın huzurunda durmak, dünyadan daha güzeldir." — Hadis',
+  '"Tövbe kapısı, son nefese kadar açıktır." — Tirmizî',
+  '"Allah\'ı zikretmeyen, kalbi ölü olandır." — Buhârî',
+  '"Allah, kullarına çağrılmayı sever." — Hadis',
+  '"Allah\'ın huzurunda ağlayan göz, kıyamette ışık olur." — Hadis',
+  '"Niyetler, amellerin ruhudur." — Buhârî',
+  '"Allah, kullarına acziyetlerinde el verir." — Hadis',
+  '"Mü\'min, gönlü temiz olandır." — Hadis',
+  '"Allah\'ı zikret, kalpler huzura ersin." — Ra\'d, 28',
+  '"Allah, kullarına sabır verir, kalbi geniş kılar." — Hadis',
+  '"Mü\'min, niyetiyle yücelir." — Hadis',
+  '"Allah, sevdiklerine sabır ihsan eder." — Hadis',
+  '"Sabredin, sabredenlerle yarışın." — Âl-i İmrân, 200',
+  '"Tövbe, Allah\'ın en sevdiği amellerdendir." — Tirmizî',
+  '"Allah\'ı an ki Allah da seni ansın." — Bakara, 152',
+  '"Ey iman edenler, Allah\'tan korkun, sâdık olanlarla beraber olun." — Tevbe, 119',
+  '"Allah, kullarına asla yalnız olmaz." — Hadis',
+  '"Mü\'min, Allah\'la beraber olduğunu unutmaz." — Hadis',
+  '"Allah\'ın izniyle, her gün yeni bir başlangıçtır." — Hadis',
+  '"Rabbim, Senden affını ve âfiyeti dilerim." — Tirmizî Duâ',
+  '"Allah\'ın yolu, dosdoğru yoldur." — Fâtiha, 6',
+  '"Bizi doğru yola ilet — kendilerine nimet verdiklerinin yoluna." — Fâtiha, 6-7',
+  '"Allah\'a sığınmak, en sağlam kalkandır." — Hadis',
+  '"Allah\'tan başkasından yardım istemek, mü\'mine yakışmaz." — Hadis',
+  '"Allah, kullarına asla sırt çevirmez." — Hadis',
+  '"Mü\'min, kalbiyle Allah\'a varır." — Hadis',
+  '"Allah\'ın huzurunda olmak, hayatın özüdür." — Hadis'
+];
+
+function altAyetGoster() {
+  const el = document.getElementById('alt-ayet');
+  if (el) el.textContent = ALT_AYETLER[gunIndeksi(ALT_AYETLER.length)];
+}
+
 gunlukAyetGoster();
+altAyetGoster();
 
 nvYukle(nvSehir);
 setInterval(() => { nvGeriSayim(); }, 1000);
@@ -7056,6 +8236,129 @@ const DUALAR = [
     fazilet: '✨ Yatmadan önce okuyana o gece için yeter (Buhârî, Müslim). Şeytanı evden uzaklaştırır.'
   },
 {
+    id: 'kehf',
+    ad: 'Kehf Sûresi',
+    ikon: '⛰️',
+    alt: '18. Sûre — 110 âyet — Cuma günü okunur',
+    bismillah: true,
+    arapca: 'الْحَمْدُ لِلَّهِ الَّذِي أَنْزَلَ عَلَى عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَلْ لَهُ عِوَجًا ﴿١﴾ قَيِّمًا لِيُنْذِرَ بَأْسًا شَدِيدًا مِنْ لَدُنْهُ وَيُبَشِّرَ الْمُؤْمِنِينَ الَّذِينَ يَعْمَلُونَ الصَّالِحَاتِ أَنَّ لَهُمْ أَجْرًا حَسَنًا ﴿٢﴾ مَاكِثِينَ فِيهِ أَبَدًا ﴿٣﴾ ... <br><br> إِنَّا جَعَلْنَا مَا عَلَى الْأَرْضِ زِينَةً لَهَا لِنَبْلُوَهُمْ أَيُّهُمْ أَحْسَنُ عَمَلًا ﴿٧﴾ ... <br><br> وَاصْبِرْ نَفْسَكَ مَعَ الَّذِينَ يَدْعُونَ رَبَّهُمْ بِالْغَدَاةِ وَالْعَشِيِّ يُرِيدُونَ وَجْهَهُ ﴿٢٨﴾ ... <br><br> الْمَالُ وَالْبَنُونَ زِينَةُ الْحَيَاةِ الدُّنْيَا ۖ وَالْبَاقِيَاتُ الصَّالِحَاتُ خَيْرٌ عِنْدَ رَبِّكَ ثَوَابًا وَخَيْرٌ أَمَلًا ﴿٤٦﴾ ... <br><br> قُلْ إِنَّمَا أَنَا بَشَرٌ مِثْلُكُمْ يُوحَى إِلَيَّ أَنَّمَا إِلَهُكُمْ إِلَهٌ وَاحِدٌ ۖ فَمَنْ كَانَ يَرْجُو لِقَاءَ رَبِّهِ فَلْيَعْمَلْ عَمَلًا صَالِحًا وَلَا يُشْرِكْ بِعِبَادَةِ رَبِّهِ أَحَدًا ﴿١١٠﴾',
+    ayetler: [
+      '<b>1</b> Elhamdü lillâhillezî enzele alâ abdihi\'l-kitâbe ve lem yec\'al lehû ivecâ.',
+      '<b>2</b> Kayyimen liyünzira be\'sen şedîden min ledünhü, ve yübeşşira\'l-mü\'minînellezîne ya\'melûnes-sâlihâti enne lehüm ecran hasenâ.',
+      '<b>3</b> Mâkisîne fîhi ebedâ.',
+      '<em>(4-6. âyetler — Allah\'a evlâd isnâd edenlerin uyarılması…)</em>',
+      '<b>7</b> İnnâ cealnâ mâ ale\'l-ardı zîneten lehâ linebluvehüm eyyühüm ahsenü amelâ.',
+      '<em>(8-27. âyetler — Ashâb-ı Kehf kıssası, mağaradaki gençler…)</em>',
+      '<b>28</b> Vasbir nefseke maallezîne yed\'ûne rabbehüm bil-ğadâti vel-aşiyyi yürîdûne vecheh.',
+      '<em>(29-45. âyetler — İki bahçe sahibinin kıssası, dünya hayatının fânîliği…)</em>',
+      '<b>46</b> El-mâlü vel-benûne zînetü\'l-hayâti\'d-dünyâ, vel-bâkıyâtüs-sâlihâtü hayrun inde rabbike sevâben ve hayrun emelâ.',
+      '<em>(47-82. âyetler — Hz. Mûsâ ile Hızır\'ın kıssası, ilim ve hikmet…)</em>',
+      '<em>(83-101. âyetler — Zülkarneyn ve Ye\'cûc-Me\'cûc kıssası…)</em>',
+      '<em>(102-109. âyetler — Âhiret ve hesap…)</em>',
+      '<b>110</b> Kul innemâ ene beşerun mislüküm yûhâ ileyye ennemâ ilâhüküm ilâhün vâhid, femen kâne yercû likâe rabbihî felya\'mel amelen sâlihan ve lâ yüşrik bi-ibâdeti rabbihî ehadâ.'
+    ],
+    anlam: 'Hamd, kuluna kitabı indiren ve onda hiçbir eğrilik bırakmayan Allah\'a mahsustur. (...) Yeryüzündeki şeyleri ona bir süs yaptık ki, hangisinin daha güzel amel işleyeceğini deneyelim. (...) Sabah-akşam Rablerinin rızasını dileyerek O\'na duâ edenlerle birlikte nefsini sabra alıştır. (...) Mal ve evlâtlar dünya hayatının süsüdür. Kalıcı olan iyi ameller ise Rabbinin katında daha hayırlıdır, ümit edilmeye de daha lâyıktır. (...) De ki: "Ben de sizin gibi bir insanım; bana ancak ilâhınızın tek bir ilâh olduğu vahyolunuyor. Kim Rabbine kavuşmayı umuyorsa salih amel işlesin ve Rabbine ibâdette hiçbir kimseyi ortak koşmasın."',
+    fazilet: '✨ Hz. Peygamber buyurdu: "Cuma günü Kehf Sûresi\'ni okuyana iki Cuma arasında nur saçılır" (Hâkim). "Kehf Sûresi\'nin ilk 10 âyetini ezberleyen Deccâl\'in fitnesinden korunur" (Müslim). Cuma okuma sünneti olarak en bilinen sûredir.'
+  },
+{
+    id: 'meryem',
+    ad: 'Meryem Sûresi',
+    ikon: '🌷',
+    alt: '19. Sûre — 98 âyet — Hz. Meryem ve Hz. İsa kıssası',
+    bismillah: true,
+    arapca: 'كهيعص ﴿١﴾ ذِكْرُ رَحْمَتِ رَبِّكَ عَبْدَهُ زَكَرِيَّا ﴿٢﴾ إِذْ نَادَى رَبَّهُ نِدَاءً خَفِيًّا ﴿٣﴾ قَالَ رَبِّ إِنِّي وَهَنَ الْعَظْمُ مِنِّي وَاشْتَعَلَ الرَّأْسُ شَيْبًا وَلَمْ أَكُنْ بِدُعَائِكَ رَبِّ شَقِيًّا ﴿٤﴾ ... <br><br> وَاذْكُرْ فِي الْكِتَابِ مَرْيَمَ إِذِ انْتَبَذَتْ مِنْ أَهْلِهَا مَكَانًا شَرْقِيًّا ﴿١٦﴾ ... <br><br> قَالَ إِنِّي عَبْدُ اللَّهِ آتَانِيَ الْكِتَابَ وَجَعَلَنِي نَبِيًّا ﴿٣٠﴾ وَجَعَلَنِي مُبَارَكًا أَيْنَ مَا كُنْتُ وَأَوْصَانِي بِالصَّلَاةِ وَالزَّكَاةِ مَا دُمْتُ حَيًّا ﴿٣١﴾ وَبَرًّا بِوَالِدَتِي وَلَمْ يَجْعَلْنِي جَبَّارًا شَقِيًّا ﴿٣٢﴾ وَالسَّلَامُ عَلَيَّ يَوْمَ وُلِدْتُ وَيَوْمَ أَمُوتُ وَيَوْمَ أُبْعَثُ حَيًّا ﴿٣٣﴾ ... <br><br> إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ سَيَجْعَلُ لَهُمُ الرَّحْمَنُ وُدًّا ﴿٩٦﴾',
+    ayetler: [
+      '<b>1</b> Kâf-Hâ-Yâ-Ayn-Sâd.',
+      '<b>2</b> Zikru rahmeti rabbike abdehû Zekeriyyâ.',
+      '<b>3</b> İz nâdâ rabbehû nidâen hafiyyâ.',
+      '<b>4</b> Kâle rabbi innî vehene\'l-azmü minnî veştea\'le\'r-re\'sü şeyben velem ekün biduâike rabbi şakıyyâ.',
+      '<em>(5-15. âyetler — Hz. Zekeriyyâ\'nın Hz. Yahyâ için duâsı ve müjde…)</em>',
+      '<b>16</b> Vezkür fî\'l-kitâbi Meryeme izi\'ntebezet min ehlihâ mekânen şarkıyyâ.',
+      '<em>(17-29. âyetler — Hz. Meryem\'in Hz. İsa\'yı dünyaya getirmesi…)</em>',
+      '<b>30</b> Kâle innî abdullâhi âtâniye\'l-kitâbe ve cealenî nebiyyâ.',
+      '<b>31</b> Ve cealenî mübâraken eyne mâ küntü ve evsânî bi\'s-salâti ve\'z-zekâti mâ dümtü hayyâ.',
+      '<b>32</b> Ve berran bivâlidetî ve lem yec\'alnî cebbâran şakıyyâ.',
+      '<b>33</b> Ve\'s-selâmü aleyye yevme vülidtü ve yevme emûtü ve yevme üb\'asü hayyâ.',
+      '<em>(34-95. âyetler — Hz. İbrâhîm-babası, Hz. Mûsâ-Hârûn, Hz. İsmâîl-İdrîs, kıyâmet sahnesi…)</em>',
+      '<b>96</b> İnnellezîne âmenû ve amilûs-sâlihâti seyec\'alü lehümü\'r-Rahmânü vüddâ.'
+    ],
+    anlam: 'Kâf-Hâ-Yâ-Ayn-Sâd. (Bu) Rabbinin kulu Zekeriyyâ\'ya olan rahmetinin anısıdır. Hani Rabbine gizlice yalvarmış, "Rabbim! Kemiklerim zayıfladı, başım ağarmış saçlarla parladı; Rabbim! Sana yaptığım duâda hiç hüsrâna uğramadım" demişti. (...) Kitapta Meryem\'i de an. Hani ailesinden ayrılıp doğu tarafında bir yere çekilmişti. (...) (Çocuk Hz. İsa) konuştu: "Ben Allah\'ın kuluyum. O bana kitap verdi ve beni peygamber yaptı. Nerede olursam olayım beni mübarek kıldı. Bana hayatta olduğum sürece namaz kılmamı ve zekât vermemi emretti. Anneme iyilik etmemi emretti; beni zorba ve âsi yapmadı. Doğduğum gün, öleceğim gün, diriltileceğim gün üzerime selâm olsun." (...) Şüphesiz iman edip salih amel işleyenler için Rahmân bir sevgi oluşturacaktır.',
+    fazilet: '✨ Habeşistan\'a hicret eden müslümanların Necâşî huzurunda okuduğu sûredir. Allah, mü\'minlerin gönüllerine sevgi koyduğunu müjdeler.'
+  },
+{
+    id: 'taha',
+    ad: 'Tâhâ Sûresi',
+    ikon: '🌅',
+    alt: '20. Sûre — 135 âyet — Hz. Mûsâ\'nın hayatı',
+    bismillah: true,
+    arapca: 'طه ﴿١﴾ مَا أَنْزَلْنَا عَلَيْكَ الْقُرْآنَ لِتَشْقَى ﴿٢﴾ إِلَّا تَذْكِرَةً لِمَنْ يَخْشَى ﴿٣﴾ تَنْزِيلًا مِمَّنْ خَلَقَ الْأَرْضَ وَالسَّمَاوَاتِ الْعُلَى ﴿٤﴾ الرَّحْمَنُ عَلَى الْعَرْشِ اسْتَوَى ﴿٥﴾ ... <br><br> إِنَّنِي أَنَا اللَّهُ لَا إِلَهَ إِلَّا أَنَا فَاعْبُدْنِي وَأَقِمِ الصَّلَاةَ لِذِكْرِي ﴿١٤﴾ ... <br><br> رَبِّ اشْرَحْ لِي صَدْرِي ﴿٢٥﴾ وَيَسِّرْ لِي أَمْرِي ﴿٢٦﴾ وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي ﴿٢٧﴾ يَفْقَهُوا قَوْلِي ﴿٢٨﴾ ... <br><br> رَبِّ زِدْنِي عِلْمًا ﴿١١٤﴾',
+    ayetler: [
+      '<b>1</b> Tâ-Hâ.',
+      '<b>2</b> Mâ enzelnâ aleyke\'l-Kur\'âne li-teşkâ.',
+      '<b>3</b> İllâ tezkireten li-men yahşâ.',
+      '<b>4</b> Tenzîlen mim-men halaka\'l-arda ve\'s-semâvâti\'l-ulâ.',
+      '<b>5</b> Er-Rahmânü ale\'l-arşi\'stevâ.',
+      '<em>(6-13. âyetler — Allah\'ın yüceliği, Hz. Mûsâ\'ya hitap…)</em>',
+      '<b>14</b> İnnenî ene\'llâhü lâ ilâhe illâ ene fe\'büdnî ve ekımı\'s-salâte li-zikrî.',
+      '<em>(15-24. âyetler — Hz. Mûsâ\'ya ilk vahiy ve görev…)</em>',
+      '<b>25</b> Rabbi\'şrah lî sadrî.',
+      '<b>26</b> Ve yessir lî emrî.',
+      '<b>27</b> Vehlül ukdeten min lisânî.',
+      '<b>28</b> Yefkahû kavlî.',
+      '<em>(29-113. âyetler — Hz. Mûsâ ile Firavun, Sâmirî kıssası, kıyâmet…)</em>',
+      '<b>114</b> Rabbi zidnî ilmâ.',
+      '<em>(115-135. âyetler — Hz. Âdem kıssası, Kur\'an\'ın hidâyeti…)</em>'
+    ],
+    anlam: 'Tâ-Hâ. Sana Kur\'an\'ı, zorlanasın diye indirmedik. Ancak Allah\'tan korkana bir öğüt olsun diye. (Bu Kur\'an,) yeri ve yüce gökleri yaratan tarafından indirilmiştir. Rahmân, Arş\'a istivâ etmiştir (hükümrandır). (...) "Şüphesiz Ben Allah\'ım. Benden başka ilâh yoktur. Bana kulluk et ve Beni anmak için namaz kıl." (...) "Rabbim! Göğsümü genişlet, işimi kolaylaştır, dilimden düğümü çöz ki sözümü anlasınlar." (...) "Rabbim! İlmimi artır."',
+    fazilet: '✨ Hz. Ömer\'in (r.a.) bu sûreyi dinleyerek hidâyete erdiği bilinir. "Rabbi\'şrah lî sadrî" — Hz. Mûsâ duâsı, her zor anda okunur. "Rabbi zidnî ilmâ" — ilim talebinin bayrak duâsı.'
+  },
+{
+    id: 'lokman',
+    ad: 'Lokmân Sûresi',
+    ikon: '🌳',
+    alt: '31. Sûre — 34 âyet — hikmet ve baba-evlat nasihati',
+    bismillah: true,
+    arapca: 'الم ﴿١﴾ تِلْكَ آيَاتُ الْكِتَابِ الْحَكِيمِ ﴿٢﴾ هُدًى وَرَحْمَةً لِلْمُحْسِنِينَ ﴿٣﴾ ... <br><br> وَلَقَدْ آتَيْنَا لُقْمَانَ الْحِكْمَةَ أَنِ اشْكُرْ لِلَّهِ ۚ وَمَنْ يَشْكُرْ فَإِنَّمَا يَشْكُرُ لِنَفْسِهِ ۖ وَمَنْ كَفَرَ فَإِنَّ اللَّهَ غَنِيٌّ حَمِيدٌ ﴿١٢﴾ وَإِذْ قَالَ لُقْمَانُ لِابْنِهِ وَهُوَ يَعِظُهُ يَا بُنَيَّ لَا تُشْرِكْ بِاللَّهِ ۖ إِنَّ الشِّرْكَ لَظُلْمٌ عَظِيمٌ ﴿١٣﴾ وَوَصَّيْنَا الْإِنْسَانَ بِوَالِدَيْهِ حَمَلَتْهُ أُمُّهُ وَهْنًا عَلَى وَهْنٍ وَفِصَالُهُ فِي عَامَيْنِ أَنِ اشْكُرْ لِي وَلِوَالِدَيْكَ إِلَيَّ الْمَصِيرُ ﴿١٤﴾ ... <br><br> يَا بُنَيَّ أَقِمِ الصَّلَاةَ وَأْمُرْ بِالْمَعْرُوفِ وَانْهَ عَنِ الْمُنْكَرِ وَاصْبِرْ عَلَى مَا أَصَابَكَ ۖ إِنَّ ذَلِكَ مِنْ عَزْمِ الْأُمُورِ ﴿١٧﴾ وَلَا تُصَعِّرْ خَدَّكَ لِلنَّاسِ وَلَا تَمْشِ فِي الْأَرْضِ مَرَحًا ۖ إِنَّ اللَّهَ لَا يُحِبُّ كُلَّ مُخْتَالٍ فَخُورٍ ﴿١٨﴾ وَاقْصِدْ فِي مَشْيِكَ وَاغْضُضْ مِنْ صَوْتِكَ ۚ إِنَّ أَنْكَرَ الْأَصْوَاتِ لَصَوْتُ الْحَمِيرِ ﴿١٩﴾',
+    ayetler: [
+      '<b>1</b> Elif-Lâm-Mîm.',
+      '<b>2</b> Tilke âyâtü\'l-kitâbi\'l-hakîm.',
+      '<b>3</b> Hüden ve rahmeten li\'l-muhsinîn.',
+      '<em>(4-11. âyetler — Allah\'ın âyetleri, kâinatın yaratılışı…)</em>',
+      '<b>12</b> Velekad âteynâ Lokmâne\'l-hikmete eni\'şkür lillâh, ve men yeşkür feinnemâ yeşküru linefsih, ve men kefera feinnallâhe ğaniyyün hamîd.',
+      '<b>13</b> Ve iz kâle Lokmânü li\'bnihî ve hüve yeızuhû yâ büneyye lâ tüşrik billâh, inneş-şirke lezulmün azîm.',
+      '<b>14</b> Ve vassayne\'l-insâne bivâlideyh, hamelet-hü ümmühû vehnen alâ vehn, ve fisâlühû fî âmeyni eni\'şkür lî veli-vâlideyk, ileyye\'l-masîr.',
+      '<em>(15-16. âyetler — Anne-baba hakkı, "zerre miskal" hesabı…)</em>',
+      '<b>17</b> Yâ büneyye ekımı\'s-salâte ve\'mür bi\'l-ma\'rûfi venhe ani\'l-münkeri ve\'sbir alâ mâ esâbeke inne zâlike min azmi\'l-ümûr.',
+      '<b>18</b> Ve lâ tüsa\'ır haddeke li\'n-nâsi velâ temşi fi\'l-ardı merahâ inne\'llâhe lâ yühıbbü külle muhtâlin fahûr.',
+      '<b>19</b> Vaksıd fî meşyike vağdud min savtike inne enkare\'l-asvâti le-savtü\'l-hamîr.',
+      '<em>(20-34. âyetler — Allah\'ın nimetleri, kıyâmet, beş gayb…)</em>'
+    ],
+    anlam: 'Bunlar hikmet dolu kitabın âyetleridir — muhsinler için hidâyet ve rahmettir. (...) Andolsun, Lokmân\'a hikmet verdik: "Allah\'a şükret. Kim şükrederse kendisi için şükretmiş olur. Kim de inkâr ederse — şüphesiz Allah hiç kimseye muhtaç değildir, hamde lâyıktır." Hani Lokmân oğluna nasihat ederek demişti ki: "Yavrum! Allah\'a ortak koşma. Şüphesiz şirk büyük bir zulümdür." İnsana, anne-babasına iyi davranmasını emrettik. Annesi onu zaaf üstüne zaafla taşıdı, sütten kesilmesi de iki yıl içindedir. "Bana ve anne-babana şükret. Dönüş ancak Banadır." (...) "Yavrum! Namazı dosdoğru kıl, iyiliği emret, kötülükten men et, sana isabet edene sabret. Şüphesiz bunlar azim ve kararlılık gerektiren işlerdir. İnsanlara karşı (kibirlenip) yüzünü çevirme, yeryüzünde böbürlenerek yürüme. Şüphesiz Allah, kendini büyük gören ve övünen kimseleri sevmez. Yürürken mütevâzı ol, sesini de alçalt. Şüphesiz seslerin en çirkini, eşeklerin sesidir."',
+    fazilet: '✨ Lokmân\'ın oğluna nasihatleri — namaz, iyiliği emir, sabır, anne-baba hakkı, tevâzu. Tüm bir hayat felsefesi 8 âyette.'
+  },
+{
+    id: 'secde',
+    ad: 'Secde Sûresi',
+    ikon: '🌃',
+    alt: '32. Sûre — 30 âyet — Cuma sabahı okunan',
+    bismillah: true,
+    arapca: 'الم ﴿١﴾ تَنْزِيلُ الْكِتَابِ لَا رَيْبَ فِيهِ مِنْ رَبِّ الْعَالَمِينَ ﴿٢﴾ ... <br><br> اللَّهُ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ وَمَا بَيْنَهُمَا فِي سِتَّةِ أَيَّامٍ ثُمَّ اسْتَوَى عَلَى الْعَرْشِ ﴿٤﴾ ... <br><br> أَفَمَنْ كَانَ مُؤْمِنًا كَمَنْ كَانَ فَاسِقًا ۚ لَا يَسْتَوُونَ ﴿١٨﴾ ... <br><br> تَتَجَافَى جُنُوبُهُمْ عَنِ الْمَضَاجِعِ يَدْعُونَ رَبَّهُمْ خَوْفًا وَطَمَعًا وَمِمَّا رَزَقْنَاهُمْ يُنْفِقُونَ ﴿١٦﴾ فَلَا تَعْلَمُ نَفْسٌ مَا أُخْفِيَ لَهُمْ مِنْ قُرَّةِ أَعْيُنٍ جَزَاءً بِمَا كَانُوا يَعْمَلُونَ ﴿١٧﴾',
+    ayetler: [
+      '<b>1</b> Elif-Lâm-Mîm.',
+      '<b>2</b> Tenzîlü\'l-kitâbi lâ raybe fîhi min Rabbi\'l-âlemîn.',
+      '<em>(3. âyet — Kur\'an Allah\'tan)</em>',
+      '<b>4</b> Allâhü\'llezî halaka\'s-semâvâti ve\'l-arda ve mâ beynehümâ fî sitteti eyyâmin sümme\'stevâ ale\'l-arş.',
+      '<em>(5-14. âyetler — Yaratılış, ruhun üflenmesi, kıyâmet inkârcıları…)</em>',
+      '<em>(15. âyet — gece kalkıp secde edenler)</em>',
+      '<b>16</b> Tetecâfâ cünûbühüm ani\'l-medâcı\'i yed\'ûne rabbehüm havfen ve tameâ ve mimmâ razaknâhüm yünfikûn.',
+      '<b>17</b> Felâ ta\'lemü nefsün mâ uhfiye lehüm min kurrati a\'yünin cezâen bimâ kânû ya\'melûn.',
+      '<b>18</b> Efemen kâne mü\'minen kemen kâne fâsikâ, lâ yestevûn.',
+      '<em>(19-30. âyetler — Mü\'minlerin ve fâsıkların durumu, Hz. Mûsâ kıssası…)</em>'
+    ],
+    anlam: 'Elif-Lâm-Mîm. Bu kitabın indirilişinde hiç şüphe yoktur — âlemlerin Rabbinden gelmedir. (...) Allah ki, gökleri ve yeri ve aralarındakileri altı günde yarattı, sonra Arşa istivâ etti. (...) Yanları yataklarından uzaklaşıp Rablerine korku ve umutla duâ ederler ve kendilerine verdiğimiz rızıktan harcarlar. Yaptıklarına karşılık, onlara saklanan göz aydınlığı nimetlerini hiç kimse bilemez. Mü\'min olan, fâsık olan gibi midir? Bir olmazlar.',
+    fazilet: '✨ Hz. Peygamber Cuma sabah namazının ilk rekâtında Secde, ikincide İnsân Sûresi\'ni okurdu (Buhârî, Müslim). Gece kalkıp secde edenleri öven âyetleri ünlüdür.'
+  },
+{
     id: 'ahzab',
     ad: 'Ahzâb Sûresi (seçme âyetler)',
     ikon: '🕊️',
@@ -7075,6 +8378,47 @@ const DUALAR = [
     anlam: '<strong>21.</strong> Andolsun, Allah\'ın Resûlünde sizin için, Allah\'a ve âhiret gününe kavuşmayı uman ve Allah\'ı çokça zikreden kimseler için güzel bir örnek vardır. <br><br><strong>35.</strong> Şüphesiz Müslüman erkeklerle Müslüman kadınlar, mü\'min erkeklerle mü\'min kadınlar, itaatkâr erkeklerle itaatkâr kadınlar, doğru erkeklerle doğru kadınlar, sabreden erkeklerle sabreden kadınlar, Allah\'a derinden saygı duyan erkeklerle saygı duyan kadınlar, sadaka veren erkeklerle sadaka veren kadınlar, oruç tutan erkeklerle oruç tutan kadınlar, namuslarını koruyan erkeklerle namuslarını koruyan kadınlar, Allah\'ı çokça anan erkeklerle Allah\'ı çokça anan kadınlar — işte onlar için Allah, bağışlanma ve büyük mükâfat hazırlamıştır. <br><br><strong>40.</strong> Muhammed, sizin erkeklerinizden hiçbirinin babası değildir. Fakat O, Allah\'ın Resûlü ve nebîlerin sonuncusudur. Allah, her şeyi hakkıyla bilendir. <br><br><strong>41-43.</strong> Ey iman edenler! Allah\'ı çokça zikredin ve O\'nu sabah-akşam tesbih edin. O, sizi karanlıklardan aydınlığa çıkarmak için lütufta bulunandır; melekleri de sizin için bağışlanma diler. Allah, mü\'minlere karşı çok merhametlidir. <br><br><strong>56.</strong> Şüphesiz Allah ve melekleri Peygamber\'e salât ediyorlar. Ey iman edenler! Siz de O\'na salât edin ve esenlikle selâm verin. <br><br><strong>70-71.</strong> Ey iman edenler! Allah\'a karşı gelmekten sakının ve doğru söz söyleyin ki, Allah amellerinizi ıslah etsin ve günahlarınızı bağışlasın. Kim Allah\'a ve Resûlüne itaat ederse, büyük bir kurtuluşa ermiş olur.',
     arapca: 'لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ لِمَنْ كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ وَذَكَرَ اللَّهَ كَثِيرًا ﴿٢١﴾ إِنَّ الْمُسْلِمِينَ وَالْمُسْلِمَاتِ وَالْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ وَالْقَانِتِينَ وَالْقَانِتَاتِ وَالصَّادِقِينَ وَالصَّادِقَاتِ وَالصَّابِرِينَ وَالصَّابِرَاتِ وَالْخَاشِعِينَ وَالْخَاشِعَاتِ وَالْمُتَصَدِّقِينَ وَالْمُتَصَدِّقَاتِ وَالصَّائِمِينَ وَالصَّائِمَاتِ وَالْحَافِظِينَ فُرُوجَهُمْ وَالْحَافِظَاتِ وَالذَّاكِرِينَ اللَّهَ كَثِيرًا وَالذَّاكِرَاتِ أَعَدَّ اللَّهُ لَهُمْ مَغْفِرَةً وَأَجْرًا عَظِيمًا ﴿٣٥﴾ مَا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِنْ رِجَالِكُمْ وَلَكِنْ رَسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ ۗ وَكَانَ اللَّهُ بِكُلِّ شَيْءٍ عَلِيمًا ﴿٤٠﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْرًا كَثِيرًا ﴿٤١﴾ وَسَبِّحُوهُ بُكْرَةً وَأَصِيلًا ﴿٤٢﴾ هُوَ الَّذِي يُصَلِّي عَلَيْكُمْ وَمَلَائِكَتُهُ لِيُخْرِجَكُمْ مِنَ الظُّلُمَاتِ إِلَى النُّورِ ۚ وَكَانَ بِالْمُؤْمِنِينَ رَحِيمًا ﴿٤٣﴾ إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا ﴿٥٦﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَقُولُوا قَوْلًا سَدِيدًا ﴿٧٠﴾ يُصْلِحْ لَكُمْ أَعْمَالَكُمْ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَمَنْ يُطِعِ اللَّهَ وَرَسُولَهُ فَقَدْ فَازَ فَوْزًا عَظِيمًا ﴿٧١﴾',
     fazilet: '✨ Salavât âyeti olarak meşhur 56. âyet ile peygamber sevgisi pekiştirilir. Cuma günü ve mübarek gecelerde okunması tavsiye edilir. Müslüman ahlâkının özünü ortaya koyan 35. âyet hâline kavuşmak için.'
+  },
+{
+    id: 'sebe',
+    ad: 'Sebe\' Sûresi',
+    ikon: '🏰',
+    alt: '34. Sûre — 54 âyet — Hz. Süleymân, Sebe kıssası',
+    bismillah: true,
+    arapca: 'الْحَمْدُ لِلَّهِ الَّذِي لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ وَلَهُ الْحَمْدُ فِي الْآخِرَةِ ۚ وَهُوَ الْحَكِيمُ الْخَبِيرُ ﴿١﴾ ... <br><br> وَلَقَدْ آتَيْنَا دَاوُودَ مِنَّا فَضْلًا ۖ يَا جِبَالُ أَوِّبِي مَعَهُ وَالطَّيْرَ ۖ وَأَلَنَّا لَهُ الْحَدِيدَ ﴿١٠﴾ ... <br><br> فَلَمَّا قَضَيْنَا عَلَيْهِ الْمَوْتَ مَا دَلَّهُمْ عَلَى مَوْتِهِ إِلَّا دَابَّةُ الْأَرْضِ تَأْكُلُ مِنْسَأَتَهُ ۖ فَلَمَّا خَرَّ تَبَيَّنَتِ الْجِنُّ أَنْ لَوْ كَانُوا يَعْلَمُونَ الْغَيْبَ مَا لَبِثُوا فِي الْعَذَابِ الْمُهِينِ ﴿١٤﴾ ... <br><br> وَمَا أَرْسَلْنَاكَ إِلَّا كَافَّةً لِلنَّاسِ بَشِيرًا وَنَذِيرًا ﴿٢٨﴾',
+    ayetler: [
+      '<b>1</b> Elhamdü lillâhi\'llezî lehû mâ fî\'s-semâvâti ve mâ fî\'l-ardı ve lehü\'l-hamdü fî\'l-âhirah, ve hüve\'l-Hakîmü\'l-Habîr.',
+      '<em>(2-9. âyetler — Allah\'ın ilmi ve kâfirlerin inkârı…)</em>',
+      '<b>10</b> Velekad âteynâ Dâvûde minnâ fadlâ, yâ cibâlü evvibî meahû ve\'t-tayre, ve ellennâ lehü\'l-hadîd.',
+      '<em>(11-13. âyetler — Hz. Dâvûd\'a demir, Hz. Süleymân\'ın hâkimiyeti…)</em>',
+      '<b>14</b> Felemmâ kadaynâ aleyhi\'l-mevte mâ dellehüm alâ mevtihî illâ dâbbetü\'l-ardı te\'külü minse\'eteh, felemmâ harra tebeyyeneti\'l-cinnü en lev kânû ya\'lemûne\'l-ğaybe mâ lebisû fî\'l-azâbi\'l-mühîn.',
+      '<em>(15-27. âyetler — Sebe kavminin bahçeleri, helakı…)</em>',
+      '<b>28</b> Ve mâ erselnâke illâ kâffeten lin-nâsi beşîran ve nezîrâ.',
+      '<em>(29-54. âyetler — kıyâmet, kâfirlerin pişmanlığı…)</em>'
+    ],
+    anlam: 'Hamd, göklerdekilerin ve yerdekilerin sahibi olan Allah\'a mahsustur. Âhirette de hamd O\'na mahsustur. O, hikmet sahibidir, her şeyden haberdardır. (...) Andolsun Dâvûd\'a bizden bir lütuf verdik: "Ey dağlar ve kuşlar, onunla birlikte Allah\'ı tesbîh edin!" Ona demiri de yumuşattık. (...) Süleymân\'ın ölümüne hükmettiğimizde, ölümünü onlara (cinlere) ancak değneğini yiyen bir ağaç kurdu bildirdi. Yıkıldığı zaman, cinler eğer gaybı bilseydi o aşağılayıcı azap içinde kalmayacaklarını anladılar. (...) Biz seni ancak bütün insanlara müjdeleyici ve uyarıcı olarak gönderdik.',
+    fazilet: '✨ Allah\'ın peygamberlere verdiği nimetler, Sebe kavminin nankörlüğünün sonu, Hz. Peygamberin tüm insanlığa gönderilmiş olduğu vurgusu.'
+  },
+{
+    id: 'fatir',
+    ad: 'Fâtır Sûresi',
+    ikon: '🦅',
+    alt: '35. Sûre — 45 âyet — Allah\'ın yaratıcılığı',
+    bismillah: true,
+    arapca: 'الْحَمْدُ لِلَّهِ فَاطِرِ السَّمَاوَاتِ وَالْأَرْضِ جَاعِلِ الْمَلَائِكَةِ رُسُلًا أُولِي أَجْنِحَةٍ مَثْنَى وَثُلَاثَ وَرُبَاعَ ۚ يَزِيدُ فِي الْخَلْقِ مَا يَشَاءُ ۚ إِنَّ اللَّهَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ ﴿١﴾ ... <br><br> يَا أَيُّهَا النَّاسُ أَنْتُمُ الْفُقَرَاءُ إِلَى اللَّهِ ۖ وَاللَّهُ هُوَ الْغَنِيُّ الْحَمِيدُ ﴿١٥﴾ ... <br><br> إِنَّمَا يَخْشَى اللَّهَ مِنْ عِبَادِهِ الْعُلَمَاءُ ﴿٢٨﴾ إِنَّ الَّذِينَ يَتْلُونَ كِتَابَ اللَّهِ وَأَقَامُوا الصَّلَاةَ وَأَنْفَقُوا مِمَّا رَزَقْنَاهُمْ سِرًّا وَعَلَانِيَةً يَرْجُونَ تِجَارَةً لَنْ تَبُورَ ﴿٢٩﴾ ... <br><br> ثُمَّ أَوْرَثْنَا الْكِتَابَ الَّذِينَ اصْطَفَيْنَا مِنْ عِبَادِنَا ۖ فَمِنْهُمْ ظَالِمٌ لِنَفْسِهِ وَمِنْهُمْ مُقْتَصِدٌ وَمِنْهُمْ سَابِقٌ بِالْخَيْرَاتِ بِإِذْنِ اللَّهِ ﴿٣٢﴾',
+    ayetler: [
+      '<b>1</b> Elhamdü lillâhi fâtıri\'s-semâvâti ve\'l-ardı câıli\'l-melâiketi rusülen ülî ecnihatin mesnâ ve sülâse ve rubâa, yezîdü fî\'l-halki mâ yeşâ\'u, innallâhe alâ külli şey\'in kadîr.',
+      '<em>(2-14. âyetler — Allah\'ın rahmeti, Mecazî tabiatın delilleri…)</em>',
+      '<b>15</b> Yâ eyyühe\'n-nâsü entümü\'l-fukarâü ilallâh, vallâhü hüve\'l-Ğaniyyü\'l-Hamîd.',
+      '<em>(16-27. âyetler — yağmurun bereketi, dağların renkleri…)</em>',
+      '<b>28</b> İnnemâ yahşa\'llâhe min ibâdihi\'l-ulemâ\'.',
+      '<b>29</b> İnnellezîne yetlûne kitâballâhi ve ekâmû\'s-salâte ve enfekû mim-mâ razaknâhüm sirran ve alâniyeten yercûne ticâraten len tebûr.',
+      '<em>(30-31. âyetler — kitabın faziletleri…)</em>',
+      '<b>32</b> Sümme evrasna\'l-kitâbe\'llezînasta-faynâ min ibâdinâ, fe minhüm zâlimün li-nefsihî ve minhüm muktesıd ve minhüm sâbikun bi\'l-hayrâti biizni\'llâh.',
+      '<em>(33-45. âyetler — cennet nimetleri, kâfirlerin durumu…)</em>'
+    ],
+    anlam: 'Hamd, gökleri ve yeri yoktan yaratan, ikişer, üçer, dörder kanatlı melekleri elçi yapan Allah\'a mahsustur. Yaratışta dilediğini artırır. Şüphesiz Allah her şeye kâdirdir. (...) Ey insanlar! Siz Allah\'a muhtaçsınız. Ancak Allah, ganî ve hamde lâyıktır. (...) Kullarından ancak âlimler Allah\'tan gerçekten korkar. Şüphesiz Allah\'ın kitabını okuyan, namazı dosdoğru kılan ve kendilerine verdiğimiz rızıktan gizli ve açık infak edenler, kesinlikle batıp tükenmeyecek bir ticaret umarlar. (...) Sonra biz, o kitabı kullarımızdan seçtiklerimize miras kıldık. Onlardan kimi kendine zulmeder, kimi orta yoldadır, kimi de Allah\'ın izniyle hayırlarda öncüdür.',
+    fazilet: '✨ "Kullardan ancak âlimler Allah\'tan korkar" âyetiyle ilmin yerini öğretir. "Mü\'minler ticaretten kâr eder" âyeti — ibadet ve infak yatırımıdır.'
   },
 {
     id: 'yasin',
@@ -7107,6 +8451,30 @@ const DUALAR = [
     fazilet: '✨ "Kur\'an\'ın kalbidir Yâsîn" (Tirmizî). Her gece okuyana bağışlanma vesilesi olur. Ölmek üzere olan birinin başında okunması müstehab — ruh teslimini kolaylaştırır. Hayır niyetiyle okunması yaygın bir sünnettir.'
   },
 {
+    id: 'duhan',
+    ad: 'Duhân Sûresi',
+    ikon: '🌫️',
+    alt: '44. Sûre — 59 âyet — Cuma gecesi okunan',
+    bismillah: true,
+    arapca: 'حم ﴿١﴾ وَالْكِتَابِ الْمُبِينِ ﴿٢﴾ إِنَّا أَنْزَلْنَاهُ فِي لَيْلَةٍ مُبَارَكَةٍ ۚ إِنَّا كُنَّا مُنْذِرِينَ ﴿٣﴾ فِيهَا يُفْرَقُ كُلُّ أَمْرٍ حَكِيمٍ ﴿٤﴾ أَمْرًا مِنْ عِنْدِنَا ۚ إِنَّا كُنَّا مُرْسِلِينَ ﴿٥﴾ رَحْمَةً مِنْ رَبِّكَ ۚ إِنَّهُ هُوَ السَّمِيعُ الْعَلِيمُ ﴿٦﴾ ... <br><br> رَبُّ السَّمَاوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا ۖ إِنْ كُنْتُمْ مُوقِنِينَ ﴿٧﴾ لَا إِلَهَ إِلَّا هُوَ يُحْيِي وَيُمِيتُ ۖ رَبُّكُمْ وَرَبُّ آبَائِكُمُ الْأَوَّلِينَ ﴿٨﴾ ... <br><br> إِنَّ الْمُتَّقِينَ فِي مَقَامٍ أَمِينٍ ﴿٥١﴾ فِي جَنَّاتٍ وَعُيُونٍ ﴿٥٢﴾',
+    ayetler: [
+      '<b>1</b> Hâ-Mîm.',
+      '<b>2</b> Ve\'l-kitâbi\'l-mübîn.',
+      '<b>3</b> İnnâ enzelnâhü fî leyletin mübâraketin, innâ künnâ münzirîn.',
+      '<b>4</b> Fîhâ yüfraku küllü emrin hakîm.',
+      '<b>5</b> Emran min indinâ, innâ künnâ mürsilîn.',
+      '<b>6</b> Rahmeten min Rabbik, innehû hüve\'s-Semîu\'l-Alîm.',
+      '<b>7</b> Rabbi\'s-semâvâti ve\'l-ardı ve mâ beynehümâ, in küntüm mûkınîn.',
+      '<b>8</b> Lâ ilâhe illâ hüve yuhyî ve yümît, Rabbüküm ve Rabbü âbâikümü\'l-evvelîn.',
+      '<em>(9-50. âyetler — Firavun kavminin helakı, kıyâmet sahnesi, cehennem zakkumu…)</em>',
+      '<b>51</b> İnne\'l-müttekîne fî makâmin emîn.',
+      '<b>52</b> Fî cennâtin ve uyûn.',
+      '<em>(53-59. âyetler — cennet nimetleri, Kur\'an\'ın kolaylığı…)</em>'
+    ],
+    anlam: 'Hâ-Mîm. Apaçık kitaba yemin olsun ki — Biz onu mübarek bir gecede indirdik. Şüphesiz Biz uyarıcılardanız. O gecede her hikmetli iş ayırt edilir — katımızdan bir buyrukla. Şüphesiz Biz, peygamber göndericileriz — Rabbinden bir rahmet olarak. Şüphesiz O, Semî\'dir, Alîm\'dir. Göklerin, yerin ve aralarındakilerin Rabbi — eğer kesin inanırsanız. O\'ndan başka ilâh yoktur, diriltir ve öldürür; sizin de babalarınızın da Rabbidir. (...) Şüphesiz müttakîler emin bir makamdadır, bahçeler ve pınarlar içindedir.',
+    fazilet: '✨ Hz. Peygamber buyurdu: "Kim Cuma gecesi Duhân Sûresi\'ni okursa, sabah olunca bağışlanmış olarak kalkar" (Tirmizî). "Mübarek gece" Kadir Gecesi\'dir.'
+  },
+{
     id: 'fetih',
     ad: 'Fetih Sûresi',
     ikon: '🌟',
@@ -7125,6 +8493,25 @@ const DUALAR = [
     anlam: 'Doğrusu Biz sana apaçık bir fetih verdik. Bu, Allah\'ın senin geçmiş ve gelecek günahlarını bağışlaması, sana olan nimetini tamamlaması, seni dosdoğru bir yola iletmesi ve Allah\'ın sana çok güçlü bir zafer vermesi içindir. Mü\'minlerin kalplerine, imanlarını kat kat artıracak şekilde sekîne (huzur) indiren O\'dur. Muhammed Allah\'ın elçisidir. Onunla beraber olanlar, kâfirlere karşı şiddetli, kendi aralarında ise merhametlidirler.',
     arapca: 'إِنَّا فَتَحْنَا لَكَ فَتْحًا مُبِينًا ﴿١﴾ لِيَغْفِرَ لَكَ اللَّهُ مَا تَقَدَّمَ مِنْ ذَنْبِكَ وَمَا تَأَخَّرَ وَيُتِمَّ نِعْمَتَهُ عَلَيْكَ وَيَهْدِيَكَ صِرَاطًا مُسْتَقِيمًا ﴿٢﴾ وَيَنْصُرَكَ اللَّهُ نَصْرًا عَزِيزًا ﴿٣﴾ هُوَ الَّذِي أَنْزَلَ السَّكِينَةَ فِي قُلُوبِ الْمُؤْمِنِينَ لِيَزْدَادُوا إِيمَانًا مَعَ إِيمَانِهِمْ ۗ وَلِلَّهِ جُنُودُ السَّمَاوَاتِ وَالْأَرْضِ ۚ وَكَانَ اللَّهُ عَلِيمًا حَكِيمًا ﴿٤﴾ لِيُدْخِلَ الْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ جَنَّاتٍ تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ خَالِدِينَ فِيهَا وَيُكَفِّرَ عَنْهُمْ سَيِّئَاتِهِمْ ۚ وَكَانَ ذَلِكَ عِنْدَ اللَّهِ فَوْزًا عَظِيمًا ﴿٥﴾ لَقَدْ صَدَقَ اللَّهُ رَسُولَهُ الرُّؤْيَا بِالْحَقِّ ۖ لَتَدْخُلُنَّ الْمَسْجِدَ الْحَرَامَ إِنْ شَاءَ اللَّهُ آمِنِينَ مُحَلِّقِينَ رُءُوسَكُمْ وَمُقَصِّرِينَ لَا تَخَافُونَ ﴿٢٧﴾ هُوَ الَّذِي أَرْسَلَ رَسُولَهُ بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ ۚ وَكَفَى بِاللَّهِ شَهِيدًا ﴿٢٨﴾ مُحَمَّدٌ رَسُولُ اللَّهِ ۚ وَالَّذِينَ مَعَهُ أَشِدَّاءُ عَلَى الْكُفَّارِ رُحَمَاءُ بَيْنَهُمْ ۖ تَرَاهُمْ رُكَّعًا سُجَّدًا يَبْتَغُونَ فَضْلًا مِنَ اللَّهِ وَرِضْوَانًا ﴿٢٩﴾',
     fazilet: '✨ Maddî-manevî fetihler için okunur. Sıkıntılarda kolaylık, hayırlı sonuç için. Zafer ve müjde sûresi.'
+  },
+{
+    id: 'hucurat',
+    ad: 'Hucurât Sûresi',
+    ikon: '🤝',
+    alt: '49. Sûre — 18 âyet — mü\'min adâbı',
+    bismillah: true,
+    arapca: 'يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تُقَدِّمُوا بَيْنَ يَدَيِ اللَّهِ وَرَسُولِهِ ۖ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ سَمِيعٌ عَلِيمٌ ﴿١﴾ ... <br><br> إِنَّمَا الْمُؤْمِنُونَ إِخْوَةٌ فَأَصْلِحُوا بَيْنَ أَخَوَيْكُمْ ۚ وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُرْحَمُونَ ﴿١٠﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِنْ قَوْمٍ عَسَى أَنْ يَكُونُوا خَيْرًا مِنْهُمْ وَلَا نِسَاءٌ مِنْ نِسَاءٍ عَسَى أَنْ يَكُنَّ خَيْرًا مِنْهُنَّ ۖ وَلَا تَلْمِزُوا أَنْفُسَكُمْ وَلَا تَنَابَزُوا بِالْأَلْقَابِ ۖ بِئْسَ الِاسْمُ الْفُسُوقُ بَعْدَ الْإِيمَانِ ۚ وَمَنْ لَمْ يَتُبْ فَأُولَئِكَ هُمُ الظَّالِمُونَ ﴿١١﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا اجْتَنِبُوا كَثِيرًا مِنَ الظَّنِّ إِنَّ بَعْضَ الظَّنِّ إِثْمٌ ۖ وَلَا تَجَسَّسُوا وَلَا يَغْتَبْ بَعْضُكُمْ بَعْضًا ﴿١٢﴾ يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُمْ مِنْ ذَكَرٍ وَأُنْثَى وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا ۚ إِنَّ أَكْرَمَكُمْ عِنْدَ اللَّهِ أَتْقَاكُمْ ﴿١٣﴾',
+    ayetler: [
+      '<b>1</b> Yâ eyyühe\'llezîne âmenû lâ tükaddimû beyne yedeyi\'llâhi ve resûlih, vettekûllâh, innallâhe Semîun Alîm.',
+      '<em>(2-9. âyetler — Hz. Peygambere saygı, ses yükseltmeme, fâsıkın haberini araştırma…)</em>',
+      '<b>10</b> İnneme\'l-mü\'minûne ihvetün feaslihû beyne ehaveyküm, vettekûllâhe leallekum türhamûn.',
+      '<b>11</b> Yâ eyyühe\'llezîne âmenû lâ yeshar kavmün min kavmin asâ en yekûnû hayran minhüm velâ nisâün min nisâin asâ en yekünne hayran minhünn, velâ telmizû enfüseküm velâ tenâbezû bi\'l-elkâb, bi\'sel-ismü\'l-füsûku ba\'de\'l-îmân.',
+      '<b>12</b> Yâ eyyühe\'llezîne âmenû\'ctenibû kesîran mine\'z-zann, inne ba\'da\'z-zanni ism, velâ tecessesû velâ yağteb ba\'duküm ba\'dâ.',
+      '<b>13</b> Yâ eyyühe\'n-nâsü innâ halaknâküm min zekerin ve ünsâ ve cealnâküm şuûben ve kabâile li-teârafû, inne ekremeküm indallâhi etkâküm.',
+      '<em>(14-18. âyetler — gerçek iman, Allah\'ın bilgisi…)</em>'
+    ],
+    anlam: 'Ey iman edenler! Allah\'ın ve Resûlünün önüne geçmeyin (kararlarınızda). Allah\'a karşı gelmekten sakının. Şüphesiz Allah işiten ve bilendir. (...) Şüphesiz mü\'minler kardeştir. O hâlde iki kardeşinizin arasını düzeltin ve Allah\'a karşı gelmekten sakının ki size merhamet edilsin. Ey iman edenler! Bir topluluk başka bir topluluğu alaya almasın — belki onlar kendilerinden daha hayırlıdır. Kadınlar da diğer kadınları alaya almasın — belki onlar kendilerinden daha hayırlıdır. Birbirinizi karalamayın, birbirinizi (kötü) lakaplarla çağırmayın. Birbiriniz hakkında çoğu zandan kaçının; çünkü zannın bir kısmı günahtır. Birbirinizin kusurunu araştırmayın, birbirinizin gıybetini etmeyin. Ey insanlar! Biz sizi bir erkek ve bir kadından yarattık. Sizi milletler ve kabileler hâlinde yaptık ki birbirinizi tanıyasınız. Allah katında en değerli olanınız, en takvâlı olanınızdır.',
+    fazilet: '✨ "Müslüman ahlâkının anayasası" denir. Gıybet, zann, alay, lâkap takma yasaklıdır. "Allah katında en değerli olan en takvâlı olandır" — kibrin reddidir.'
   },
 {
     id: 'rahman',
@@ -7192,6 +8579,27 @@ const DUALAR = [
     fazilet: '✨ "Her gece Vâkıa Sûresi\'ni okuyana fakirlik dokunmaz" (İbn Mâce — zayıf rivayet ama yaygın amel). Rızık ve bereket için her gece okumak müstehab kabul edilmiştir.'
   },
 {
+    id: 'hadid',
+    ad: 'Hadîd Sûresi',
+    ikon: '⚙️',
+    alt: '57. Sûre — 29 âyet — demir, infak, âhiret',
+    bismillah: true,
+    arapca: 'سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿١﴾ لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ ۖ يُحْيِي وَيُمِيتُ ۖ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ ﴿٢﴾ هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ ۖ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ ﴿٣﴾ ... <br><br> اعْلَمُوا أَنَّمَا الْحَيَاةُ الدُّنْيَا لَعِبٌ وَلَهْوٌ وَزِينَةٌ وَتَفَاخُرٌ بَيْنَكُمْ وَتَكَاثُرٌ فِي الْأَمْوَالِ وَالْأَوْلَادِ ۖ كَمَثَلِ غَيْثٍ أَعْجَبَ الْكُفَّارَ نَبَاتُهُ ثُمَّ يَهِيجُ فَتَرَاهُ مُصْفَرًّا ثُمَّ يَكُونُ حُطَامًا ﴿٢٠﴾ سَابِقُوا إِلَى مَغْفِرَةٍ مِنْ رَبِّكُمْ وَجَنَّةٍ عَرْضُهَا كَعَرْضِ السَّمَاءِ وَالْأَرْضِ ﴿٢١﴾ ... <br><br> وَأَنْزَلْنَا الْحَدِيدَ فِيهِ بَأْسٌ شَدِيدٌ وَمَنَافِعُ لِلنَّاسِ ﴿٢٥﴾',
+    ayetler: [
+      '<b>1</b> Sebbeha lillâhi mâ fî\'s-semâvâti ve\'l-ard, ve hüve\'l-Azîzü\'l-Hakîm.',
+      '<b>2</b> Lehû mülkü\'s-semâvâti ve\'l-ard, yuhyî ve yümît, ve hüve alâ külli şey\'in kadîr.',
+      '<b>3</b> Hüve\'l-Evvelü ve\'l-Âhiru ve\'z-Zâhiru ve\'l-Bâtın, ve hüve bi-külli şey\'in alîm.',
+      '<em>(4-19. âyetler — yedi sıfat, infak, mü\'min ve münâfık kalpler…)</em>',
+      '<b>20</b> İ\'lemû ennema\'l-hayâtü\'d-dünyâ leibün ve lehvün ve zînetün ve tefâhurun beyneküm ve tekâsürün fî\'l-emvâli ve\'l-evlâd.',
+      '<b>21</b> Sâbikû ilâ mağfiratin min Rabbiküm ve cennetin arduhâ keardı\'s-semâi ve\'l-ardı.',
+      '<em>(22-24. âyetler — kader ve sabır…)</em>',
+      '<b>25</b> Ve enzelne\'l-hadîde fîhi be\'sün şedîdün ve menâfiu li\'n-nâs.',
+      '<em>(26-29. âyetler — peygamberlerin nesli, Allah\'ın lütfu…)</em>'
+    ],
+    anlam: 'Göklerde ve yerde olanların hepsi Allah\'ı tesbîh etmektedir. O, Azîz ve Hakîm\'dir. Göklerin ve yerin mülkü O\'nundur — diriltir ve öldürür; O her şeye kâdirdir. O, Evvel\'dir (önce), Âhir\'dir (sonra), Zâhir\'dir (görünen), Bâtın\'dır (görünmeyen). O her şeyi bilendir. (...) Bilin ki dünya hayatı bir oyun, eğlence, süs, aranızda bir övünme, mal ve evlat çokluğu yarışıdır. Bir yağmurun bitirdiği ürünün sonra kurutulduğu ve sararıp çer-çöpe döndüğü gibi. (...) Rabbinizden bir bağışlanmaya ve genişliği göklerle yer kadar olan cennete koşun. (...) Demiri de indirdik — onda hem büyük bir kuvvet hem de insanlar için faydalar vardır.',
+    fazilet: '✨ Allah\'ın "Evvel, Âhir, Zâhir, Bâtın" dört sıfatı. Dünya hayatının fânîliği ve âhirete koşuş çağrısı. Demir âyeti, sanayinin ve adâlet kılıcının temelidir.'
+  },
+{
     id: 'hasr-son',
     ad: 'Haşr Sûresi (son 4 âyet)',
     ikon: '🛡️',
@@ -7207,6 +8615,27 @@ const DUALAR = [
     anlam: 'Eğer biz bu Kur\'an\'ı bir dağa indirseydik, elbette sen onu, Allah korkusundan başını eğmiş, parça parça olmuş görürdün. Bu misalleri biz insanlara, düşünüp ibret alsınlar diye veriyoruz. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. Gaybı da, görünen âlemi de bilendir. O, Rahmân\'dır, Rahîm\'dir. O, kendisinden başka hiçbir ilâh bulunmayan Allah\'tır. O, mülkün gerçek sahibi, kutsal (her türlü eksiklikten uzak), barış ve esenliğin kaynağı, güvenlik veren, gözetip koruyan, mutlak güç sahibi, düzeltip ıslah eden ve dilediğini yaptıran ve büyüklükte eşsiz olan Allah\'tır. Allah, onların ortak koştuklarından uzaktır. O, yaratan, yoktan var eden, şekil veren Allah\'tır. Güzel isimler O\'nundur. Göklerdeki ve yerdeki her şey O\'nu tesbih eder. O, mutlak güç sahibidir, hüküm ve hikmet sahibidir.',
     arapca: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ <br>لَوْ أَنْزَلْنَا هَذَا الْقُرْآنَ عَلَى جَبَلٍ لَرَأَيْتَهُ خَاشِعًا مُتَصَدِّعًا مِنْ خَشْيَةِ اللَّهِ ۚ وَتِلْكَ الْأَمْثَالُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ ﴿٢١﴾ هُوَ اللَّهُ الَّذِي لَا إِلَهَ إِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمَنُ الرَّحِيمُ ﴿٢٢﴾ هُوَ اللَّهُ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ ۚ سُبْحَانَ اللَّهِ عَمَّا يُشْرِكُونَ ﴿٢٣﴾ هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْأَسْمَاءُ الْحُسْنَى ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿٢٤﴾',
     fazilet: '✨ Sabah ve akşam okuyana 70 bin melek dua eder. O gece veya ertesi gün ölürse şehit olarak ölür (Tirmizî, Dârimî).'
+  },
+{
+    id: 'saff',
+    ad: 'Saff Sûresi',
+    ikon: '🛡️',
+    alt: '61. Sûre — 14 âyet — Allah yolunda saf tutmak',
+    bismillah: true,
+    arapca: 'سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿١﴾ يَا أَيُّهَا الَّذِينَ آمَنُوا لِمَ تَقُولُونَ مَا لَا تَفْعَلُونَ ﴿٢﴾ كَبُرَ مَقْتًا عِنْدَ اللَّهِ أَنْ تَقُولُوا مَا لَا تَفْعَلُونَ ﴿٣﴾ إِنَّ اللَّهَ يُحِبُّ الَّذِينَ يُقَاتِلُونَ فِي سَبِيلِهِ صَفًّا كَأَنَّهُمْ بُنْيَانٌ مَرْصُوصٌ ﴿٤﴾ ... <br><br> يَا أَيُّهَا الَّذِينَ آمَنُوا هَلْ أَدُلُّكُمْ عَلَى تِجَارَةٍ تُنْجِيكُمْ مِنْ عَذَابٍ أَلِيمٍ ﴿١٠﴾ تُؤْمِنُونَ بِاللَّهِ وَرَسُولِهِ وَتُجَاهِدُونَ فِي سَبِيلِ اللَّهِ بِأَمْوَالِكُمْ وَأَنْفُسِكُمْ ۚ ذَلِكُمْ خَيْرٌ لَكُمْ إِنْ كُنْتُمْ تَعْلَمُونَ ﴿١١﴾ يَغْفِرْ لَكُمْ ذُنُوبَكُمْ وَيُدْخِلْكُمْ جَنَّاتٍ تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ وَمَسَاكِنَ طَيِّبَةً فِي جَنَّاتِ عَدْنٍ ۚ ذَلِكَ الْفَوْزُ الْعَظِيمُ ﴿١٢﴾',
+    ayetler: [
+      '<b>1</b> Sebbeha lillâhi mâ fî\'s-semâvâti ve mâ fî\'l-ard, ve hüve\'l-Azîzü\'l-Hakîm.',
+      '<b>2</b> Yâ eyyühe\'llezîne âmenû lime tekûlûne mâ lâ tef\'alûn.',
+      '<b>3</b> Kebüra makten indallâhi en tekûlû mâ lâ tef\'alûn.',
+      '<b>4</b> İnnallâhe yuhibbü\'llezîne yukâtilûne fî sebîlihî saffan keennehüm bünyânün mersûs.',
+      '<em>(5-9. âyetler — Hz. Mûsâ ve Hz. İsa\'nın kavmine söyledikleri, Hz. Peygamber müjdesi…)</em>',
+      '<b>10</b> Yâ eyyühe\'llezîne âmenû hel edüllüküm alâ ticâratin tüncîküm min azâbin elîm.',
+      '<b>11</b> Tü\'minûne billâhi ve resûlihî ve tücâhidûne fî sebîlillâhi bi-emvâliküm ve enfüsiküm, zâliküm hayrun leküm in küntüm ta\'lemûn.',
+      '<b>12</b> Yağfir leküm zünûbeküm ve yüdhilküm cennâtin tecrî min tahtihe\'l-enhâru ve mesâkine tayyibeten fî cennâti adn, zâlike\'l-fevzü\'l-azîm.',
+      '<em>(13-14. âyetler — Hz. Peygamber müjdesi, Allah\'ın yardımı…)</em>'
+    ],
+    anlam: 'Göklerde ve yerde olanların hepsi Allah\'ı tesbîh etmiştir. O Azîz ve Hakîm\'dir. Ey iman edenler! Yapmadığınız şeyi niçin söylersiniz? Yapmayacağınızı söylemeniz Allah katında büyük bir gazaba sebeptir. Şüphesiz Allah, kendi yolunda kenetlenmiş bir bina gibi saf tutan kimseleri sever. (...) Ey iman edenler! Size acı bir azaptan kurtaracak bir ticareti göstereyim mi? Allah\'a ve resûlüne iman edip mallarınızla ve canlarınızla Allah yolunda mücâhede edersiniz. Eğer bilirseniz bu sizin için daha hayırlıdır. Sizin günahlarınızı bağışlar ve sizi altından ırmaklar akan cennetlere, Adn cennetlerindeki güzel meskenlere koyar. İşte büyük kurtuluş budur.',
+    fazilet: '✨ "Yapmadığınızı söylemeyin" âyetiyle tutarlılığı, samimiyeti ve sözünün eri olmayı emreder.'
   },
 {
     id: 'cuma',
@@ -7270,6 +8699,123 @@ const DUALAR = [
     fazilet: '✨ Her gece yatmadan önce okuyanı kabir azabından korur (Tirmizî, Nesâî). "Mülk Sûresi kabir azabını engelleyendir" buyurulmuştur.'
   },
 {
+    id: 'kalem',
+    ad: 'Kalem Sûresi',
+    ikon: '🖋️',
+    alt: '68. Sûre — 52 âyet — peygamber ahlâkı',
+    bismillah: true,
+    arapca: 'ن ۚ وَالْقَلَمِ وَمَا يَسْطُرُونَ ﴿١﴾ مَا أَنْتَ بِنِعْمَةِ رَبِّكَ بِمَجْنُونٍ ﴿٢﴾ وَإِنَّ لَكَ لَأَجْرًا غَيْرَ مَمْنُونٍ ﴿٣﴾ وَإِنَّكَ لَعَلَى خُلُقٍ عَظِيمٍ ﴿٤﴾ ... <br><br> فَلَا تُطِعِ الْمُكَذِّبِينَ ﴿٨﴾ وَدُّوا لَوْ تُدْهِنُ فَيُدْهِنُونَ ﴿٩﴾ ... <br><br> فَاصْبِرْ لِحُكْمِ رَبِّكَ وَلَا تَكُنْ كَصَاحِبِ الْحُوتِ إِذْ نَادَى وَهُوَ مَكْظُومٌ ﴿٤٨﴾ ... <br><br> وَإِنْ يَكَادُ الَّذِينَ كَفَرُوا لَيُزْلِقُونَكَ بِأَبْصَارِهِمْ لَمَّا سَمِعُوا الذِّكْرَ وَيَقُولُونَ إِنَّهُ لَمَجْنُونٌ ﴿٥١﴾ وَمَا هُوَ إِلَّا ذِكْرٌ لِلْعَالَمِينَ ﴿٥٢﴾',
+    ayetler: [
+      '<b>1</b> Nûn, ve\'l-kalemi ve mâ yestürûn.',
+      '<b>2</b> Mâ ente bi-ni\'meti rabbike bi-mecnûn.',
+      '<b>3</b> Ve inne leke leecran ğayra memnûn.',
+      '<b>4</b> Ve inneke leâlâ hulukın azîm.',
+      '<em>(5-7. âyetler — yakında kimin kötü olduğunu Allah görür…)</em>',
+      '<b>8</b> Felâ tutıi\'l-mükezzibîn.',
+      '<b>9</b> Veddû lev tüdhinü feyüdhinûn.',
+      '<em>(10-47. âyetler — yalancıların vasıfları, iki bahçe sahibi misali, kıyâmet…)</em>',
+      '<b>48</b> Fasbir li-hükmi rabbike velâ tekün ke-sâhibi\'l-hût iz nâdâ ve hüve mekzûm.',
+      '<em>(49-50. âyetler — Hz. Yûnus\'un kıssasına atıf…)</em>',
+      '<b>51</b> Ve in yekâdü\'llezîne keferû le-yüzlikûneke bi-ebsârihim lemmâ semiû\'z-zikra ve yekûlûne innehû le-mecnûn.',
+      '<b>52</b> Ve mâ hüve illâ zikrun lil-âlemîn.'
+    ],
+    anlam: 'Nûn. Kaleme ve yazdıklarına yemin olsun ki — Rabbinin nimeti sayesinde sen mecnûn değilsin. Senin için elbette kesintisiz bir mükâfat vardır. Ve şüphesiz sen büyük bir ahlâk üzerindesin. (...) Yalanlayanlara itaat etme; isterler ki sen ihmâl edesin de onlar da ihmâl etsinler. (...) Rabbinin hükmüne sabret; balık sahibi (Hz. Yûnus) gibi olma — hani o gam içindeyken Allah\'a duâ etmişti. (...) Kâfirler Kur\'an\'ı duydukları zaman, gözleriyle seni neredeyse kaydıracaklar ve "Şüphesiz o mecnûndur" derler. Oysa Kur\'an, âlemler için ancak bir öğüttür.',
+    fazilet: '✨ "İnneke leâlâ hulukın azîm" — Hz. Peygamber\'in ahlâkını Allah övdü. Hz. Âişe annemiz "Onun ahlâkı Kur\'an\'dı" demiştir. Nazara karşı 51-52. âyetler okunur.'
+  },
+{
+    id: 'hakka',
+    ad: 'Hâkka Sûresi',
+    ikon: '⚖️',
+    alt: '69. Sûre — 52 âyet — kıyâmet günü',
+    bismillah: true,
+    arapca: 'الْحَاقَّةُ ﴿١﴾ مَا الْحَاقَّةُ ﴿٢﴾ وَمَا أَدْرَاكَ مَا الْحَاقَّةُ ﴿٣﴾ ... <br><br> فَأَمَّا مَنْ أُوتِيَ كِتَابَهُ بِيَمِينِهِ فَيَقُولُ هَاؤُمُ اقْرَءُوا كِتَابِيَهْ ﴿١٩﴾ إِنِّي ظَنَنْتُ أَنِّي مُلَاقٍ حِسَابِيَهْ ﴿٢٠﴾ فَهُوَ فِي عِيشَةٍ رَاضِيَةٍ ﴿٢١﴾ ... <br><br> وَأَمَّا مَنْ أُوتِيَ كِتَابَهُ بِشِمَالِهِ فَيَقُولُ يَا لَيْتَنِي لَمْ أُوتَ كِتَابِيَهْ ﴿٢٥﴾ ... <br><br> فَسَبِّحْ بِاسْمِ رَبِّكَ الْعَظِيمِ ﴿٥٢﴾',
+    ayetler: [
+      '<b>1</b> El-hâkkah.',
+      '<b>2</b> Me\'l-hâkkah.',
+      '<b>3</b> Ve mâ edrâke me\'l-hâkkah.',
+      '<em>(4-18. âyetler — Âd, Semûd, Firavun kavmi azaplari, kıyâmet sahnesi…)</em>',
+      '<b>19</b> Feemmâ men ûtiye kitâbehû bi-yemînihî feyekûlü hâümükraû kitâbiyeh.',
+      '<b>20</b> İnnî zanentü ennî mülâkın hısâbiyeh.',
+      '<b>21</b> Fehüve fî îşetin râdıyeh.',
+      '<em>(22-24. âyetler — cennet nimetleri…)</em>',
+      '<b>25</b> Ve emmâ men ûtiye kitâbehû bi-şimâlihî feyekûlü yâ leytenî lem ûte kitâbiyeh.',
+      '<em>(26-51. âyetler — cehennem, Kur\'an\'ın hakikati…)</em>',
+      '<b>52</b> Fesebbih bismi Rabbike\'l-azîm.'
+    ],
+    anlam: 'O kesin gerçekleşecek olan! O kesin gerçekleşecek olan nedir? O kesin gerçekleşecek olanın ne olduğunu sana bildiren nedir? (...) Kitabı sağ eline verilen "Alın kitabımı okuyun, ben hesabımla karşılaşacağımı sezmiştim" der; o, hoşnut bir yaşam içindedir. (...) Kitabı sol eline verilen ise "Keşke kitabım bana verilmeseydi" der. (...) Öyleyse büyük Rabbinin adını tesbîh et.',
+    fazilet: '✨ "Hâkkah" — kıyâmetin isimlerinden. Sağ ve sol elden kitap verilmesi sembolü ile âhiret bilinci yerleşir.'
+  },
+{
+    id: 'mearic',
+    ad: 'Meâric Sûresi',
+    ikon: '🪜',
+    alt: '70. Sûre — 44 âyet — namaz vasıfları',
+    bismillah: true,
+    arapca: 'سَأَلَ سَائِلٌ بِعَذَابٍ وَاقِعٍ ﴿١﴾ لِلْكَافِرِينَ لَيْسَ لَهُ دَافِعٌ ﴿٢﴾ مِنَ اللَّهِ ذِي الْمَعَارِجِ ﴿٣﴾ ... <br><br> إِنَّ الْإِنْسَانَ خُلِقَ هَلُوعًا ﴿١٩﴾ إِذَا مَسَّهُ الشَّرُّ جَزُوعًا ﴿٢٠﴾ وَإِذَا مَسَّهُ الْخَيْرُ مَنُوعًا ﴿٢١﴾ إِلَّا الْمُصَلِّينَ ﴿٢٢﴾ الَّذِينَ هُمْ عَلَى صَلَاتِهِمْ دَائِمُونَ ﴿٢٣﴾ وَالَّذِينَ فِي أَمْوَالِهِمْ حَقٌّ مَعْلُومٌ ﴿٢٤﴾ لِلسَّائِلِ وَالْمَحْرُومِ ﴿٢٥﴾ ... <br><br> فَاصْبِرْ صَبْرًا جَمِيلًا ﴿٥﴾',
+    ayetler: [
+      '<b>1</b> Seele sâilun bi-azâbin vâkı\'.',
+      '<b>2</b> Lil-kâfirîne leyse lehû dâfi\'.',
+      '<b>3</b> Mine\'llâhi zî\'l-meâric.',
+      '<b>5</b> Fasbir sabran cemîlâ.',
+      '<em>(4, 6-18. âyetler — Allah\'ın mevkii, kıyâmet sahnesi…)</em>',
+      '<b>19</b> İnne\'l-insâne huliqa helûâ.',
+      '<b>20</b> İzâ messehû\'ş-şerru cezûâ.',
+      '<b>21</b> Ve izâ messehü\'l-hayru menûâ.',
+      '<b>22</b> İlle\'l-musallîn.',
+      '<b>23</b> Ellezîne hüm alâ salâtihim dâimûn.',
+      '<b>24</b> Vellezîne fî emvâlihim hakkun ma\'lûm.',
+      '<b>25</b> Lis-sâili ve\'l-mahrûm.',
+      '<em>(26-44. âyetler — namaz kılanların 9 vasfı, kıyâmet, cennet…)</em>'
+    ],
+    anlam: 'Bir isteyen, gerçekleşecek azabı sordu — kâfirler için onu önleyecek hiçbir şey yoktur. (Bu azap) yüksek dereceler sahibi Allah\'tandır. (...) Şüphesiz insan tamahkâr ve sabırsız yaratılmıştır. Kötülük dokunduğunda feryâd eder; iyilik dokunduğunda cimridir. Ancak namaz kılanlar müstesnâ — onlar ki namazlarında devamlıdırlar; mallarında belirli bir hak vardır — isteyen ve mahrum için. (...) Sen güzel bir sabırla sabret.',
+    fazilet: '✨ Namaz kılanların 9 vasfını sayar (22-35. âyetler) — devamlılık, infak, âhirete iman, edep, emanet, namaz devamı… Bu sûre nefis muhasebesi için ideal.'
+  },
+{
+    id: 'nuh',
+    ad: 'Nûh Sûresi',
+    ikon: '🛶',
+    alt: '71. Sûre — 28 âyet — Hz. Nûh\'un duâsı',
+    bismillah: true,
+    arapca: 'إِنَّا أَرْسَلْنَا نُوحًا إِلَى قَوْمِهِ أَنْ أَنْذِرْ قَوْمَكَ مِنْ قَبْلِ أَنْ يَأْتِيَهُمْ عَذَابٌ أَلِيمٌ ﴿١﴾ ... <br><br> قَالَ يَا قَوْمِ إِنِّي لَكُمْ نَذِيرٌ مُبِينٌ ﴿٢﴾ أَنِ اعْبُدُوا اللَّهَ وَاتَّقُوهُ وَأَطِيعُونِ ﴿٣﴾ ... <br><br> فَقُلْتُ اسْتَغْفِرُوا رَبَّكُمْ إِنَّهُ كَانَ غَفَّارًا ﴿١٠﴾ يُرْسِلِ السَّمَاءَ عَلَيْكُمْ مِدْرَارًا ﴿١١﴾ وَيُمْدِدْكُمْ بِأَمْوَالٍ وَبَنِينَ وَيَجْعَلْ لَكُمْ جَنَّاتٍ وَيَجْعَلْ لَكُمْ أَنْهَارًا ﴿١٢﴾ ... <br><br> رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَلِمَنْ دَخَلَ بَيْتِيَ مُؤْمِنًا وَلِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ ﴿٢٨﴾',
+    ayetler: [
+      '<b>1</b> İnnâ erselnâ Nûhan ilâ kavmihî en enzir kavmeke min kabli en ye\'tiyehüm azâbün elîm.',
+      '<b>2</b> Kâle yâ kavmi innî leküm nezîrun mübîn.',
+      '<b>3</b> Eni\'büdullâhe ve\'tteqûhü ve etîûn.',
+      '<em>(4-9. âyetler — Hz. Nûh\'un kavmine yapışkan davet…)</em>',
+      '<b>10</b> Fekultü\'stağfirû rabbeküm innehû kâne ğaffârâ.',
+      '<b>11</b> Yürsili\'s-semâe aleyküm midrârâ.',
+      '<b>12</b> Ve yümdidküm bi-emvâlin ve benîne ve yec\'al leküm cennâtin ve yec\'al leküm enhârâ.',
+      '<em>(13-27. âyetler — kavmin inkârı, Allah\'ın yaratış mucizeleri, Hz. Nûh\'un Allah\'a şikâyeti…)</em>',
+      '<b>28</b> Rabbi\'ğfir lî veli-vâlideyye velimen dehale beytiye mü\'minen velilmü\'minîne velmü\'minât.'
+    ],
+    anlam: 'Şüphesiz Biz Nûh\'u kavmine gönderdik: "Kavmini, kendilerine acı bir azap gelmeden uyar" diye. Dedi ki: "Ey kavmim! Ben size apaçık bir uyarıcıyım. Allah\'a ibâdet edin, ondan sakının ve bana itaat edin." (...) Dedim ki: "Rabbinizden mağfiret dileyin. Şüphesiz O, çok bağışlayandır. (Mağfiret dileyin ki) gökten size bol yağmur yağdırsın, sizi mallarla ve oğullarla desteklesin, sizin için bahçeler yapsın ve sizin için ırmaklar var kılsın." (...) "Rabbim! Beni, anne-babamı, evime mü\'min olarak girenleri ve bütün mü\'min erkek ve kadınları bağışla."',
+    fazilet: '✨ İstiğfârın bereketi — yağmur, mal, evlat, bahçe, ırmak (11-12. âyetler). Hz. Nûh\'un son duâsı (28. âyet) anne-baba için en güzel duâdır.'
+  },
+{
+    id: 'muzemmil',
+    ad: 'Müzemmil Sûresi',
+    ikon: '🌃',
+    alt: '73. Sûre — 20 âyet — gece namazı',
+    bismillah: true,
+    arapca: 'يَا أَيُّهَا الْمُزَّمِّلُ ﴿١﴾ قُمِ اللَّيْلَ إِلَّا قَلِيلًا ﴿٢﴾ نِصْفَهُ أَوِ انْقُصْ مِنْهُ قَلِيلًا ﴿٣﴾ أَوْ زِدْ عَلَيْهِ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ﴿٤﴾ إِنَّا سَنُلْقِي عَلَيْكَ قَوْلًا ثَقِيلًا ﴿٥﴾ إِنَّ نَاشِئَةَ اللَّيْلِ هِيَ أَشَدُّ وَطْئًا وَأَقْوَمُ قِيلًا ﴿٦﴾ ... <br><br> وَاذْكُرِ اسْمَ رَبِّكَ وَتَبَتَّلْ إِلَيْهِ تَبْتِيلًا ﴿٨﴾ رَبُّ الْمَشْرِقِ وَالْمَغْرِبِ لَا إِلَهَ إِلَّا هُوَ فَاتَّخِذْهُ وَكِيلًا ﴿٩﴾ وَاصْبِرْ عَلَى مَا يَقُولُونَ وَاهْجُرْهُمْ هَجْرًا جَمِيلًا ﴿١٠﴾ ... <br><br> وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَأَقْرِضُوا اللَّهَ قَرْضًا حَسَنًا ﴿٢٠﴾',
+    ayetler: [
+      '<b>1</b> Yâ eyyühe\'l-müzzemmil.',
+      '<b>2</b> Kumi\'l-leyle illâ kalîlâ.',
+      '<b>3</b> Nısfehû evi\'nkus minhü kalîlâ.',
+      '<b>4</b> Ev zid aleyhi ve rattili\'l-Kur\'âne tertîlâ.',
+      '<b>5</b> İnnâ se-nulkî aleyke kavlen sekîlâ.',
+      '<b>6</b> İnne nâşi\'ete\'l-leyli hiye eşeddü vat\'en ve akvemü kîlâ.',
+      '<em>(7. âyet — gündüz işleri…)</em>',
+      '<b>8</b> Vezkür\'sme rabbike ve tebettel ileyhi tebtîlâ.',
+      '<b>9</b> Rabbü\'l-meşrikı ve\'l-mağribi lâ ilâhe illâ hüve fe\'ttehızhü vekîlâ.',
+      '<b>10</b> Vasbir alâ mâ yekûlûne vehcürhüm hecran cemîlâ.',
+      '<em>(11-19. âyetler — kâfirlerin durumu, ahde sadakat, Hz. Mûsâ ile Firavun…)</em>',
+      '<b>20</b> Ve ekîmû\'s-salâte ve âtû\'z-zekâte ve akridullâhe kardan hasenâ.'
+    ],
+    anlam: 'Ey örtüsüne bürünen (Peygamber)! Geceyi —pek azı dışında— namazda geçir. Onun yarısını veya ondan biraz eksilt; ya da onun üzerine biraz daha ekle ve Kur\'an\'ı ağır ağır, tâne tâne oku. Şüphesiz Biz sana ağır bir söz yükleyeceğiz. Gerçekten gece kalkışı (hem nefse) çok ağır ve hem de okuma için en sâlim zamandır. (...) Rabbinin ismini an ve her şeyden uzaklaşıp O\'na yönel. O, doğuların ve batıların Rabbidir. O\'ndan başka ilâh yoktur. Öyleyse O\'nu vekîl edin. Onların söylediklerine sabret ve onları güzel bir şekilde terk et. (...) Namazı kılın, zekâtı verin ve Allah\'a güzel bir borç verin.',
+    fazilet: '✨ Gece namazının (tehecccüd) emredildiği sûre. "Geceyi namazda geçir, Kur\'an\'ı tâne tâne oku" — tehecccüd ehlinin rehberi.'
+  },
+{
     id: 'muddessir',
     ad: 'Müddessir Sûresi',
     ikon: '📜',
@@ -7317,6 +8863,31 @@ const DUALAR = [
     anlam: 'Kıyâmet gününe yemin ederim ve kendini kınayan nefse de yemin ederim. İnsan, kendisinin kemiklerini bir araya getiremeyeceğimizi mi sanıyor? Evet, biz onun parmak uçlarını bile düzenlemeye gücü yetenleriz. Fakat insan, önündekini (yapacaklarını) inkâra yeltenmek ister. "Kıyâmet günü ne zaman?" diye sorar. İşte göz şimşek gibi çakıp gözleri kamaştığında, ay tutulduğunda, güneş ile ay bir araya getirildiğinde, işte o gün insan "Kaçacak yer nerede?" der. Hayır, sığınılacak yer yok. O gün varılacak yer ancak Rabbinin huzurudur. (Sûrenin tamamı için Diyanet meali tavsiye edilir.)',
     arapca: 'لَا أُقْسِمُ بِيَوْمِ الْقِيَامَةِ ﴿١﴾ وَلَا أُقْسِمُ بِالنَّفْسِ اللَّوَّامَةِ ﴿٢﴾ أَيَحْسَبُ الْإِنْسَانُ أَلَّنْ نَجْمَعَ عِظَامَهُ ﴿٣﴾ بَلَى قَادِرِينَ عَلَى أَنْ نُسَوِّيَ بَنَانَهُ ﴿٤﴾ بَلْ يُرِيدُ الْإِنْسَانُ لِيَفْجُرَ أَمَامَهُ ﴿٥﴾ يَسْأَلُ أَيَّانَ يَوْمُ الْقِيَامَةِ ﴿٦﴾ فَإِذَا بَرِقَ الْبَصَرُ ﴿٧﴾ وَخَسَفَ الْقَمَرُ ﴿٨﴾ وَجُمِعَ الشَّمْسُ وَالْقَمَرُ ﴿٩﴾ يَقُولُ الْإِنْسَانُ يَوْمَئِذٍ أَيْنَ الْمَفَرُّ ﴿١٠﴾ كَلَّا لَا وَزَرَ ﴿١١﴾ إِلَى رَبِّكَ يَوْمَئِذٍ الْمُسْتَقَرُّ ﴿١٢﴾ يُنَبَّأُ الْإِنْسَانُ يَوْمَئِذٍ بِمَا قَدَّمَ وَأَخَّرَ ﴿١٣﴾ بَلِ الْإِنْسَانُ عَلَى نَفْسِهِ بَصِيرَةٌ ﴿١٤﴾ وَلَوْ أَلْقَى مَعَاذِيرَهُ ﴿١٥﴾',
     fazilet: '✨ Âhiret bilincini diri tutmak ve nefis muhasebesi için okunur. Hesap günü hatırlatması.'
+  },
+{
+    id: 'murselat',
+    ad: 'Mürselât Sûresi',
+    ikon: '💨',
+    alt: '77. Sûre — 50 âyet — "Veylün yevmeizin" tekrarı',
+    bismillah: true,
+    arapca: 'وَالْمُرْسَلَاتِ عُرْفًا ﴿١﴾ فَالْعَاصِفَاتِ عَصْفًا ﴿٢﴾ وَالنَّاشِرَاتِ نَشْرًا ﴿٣﴾ فَالْفَارِقَاتِ فَرْقًا ﴿٤﴾ فَالْمُلْقِيَاتِ ذِكْرًا ﴿٥﴾ ... <br><br> وَيْلٌ يَوْمَئِذٍ لِلْمُكَذِّبِينَ ﴿١٥﴾ <br><em>Bu âyet sûre boyunca 10 kez tekrarlanır.</em> <br><br> هَذَا يَوْمُ الْفَصْلِ جَمَعْنَاكُمْ وَالْأَوَّلِينَ ﴿٣٨﴾ فَإِنْ كَانَ لَكُمْ كَيْدٌ فَكِيدُونِ ﴿٣٩﴾ ... <br><br> فَبِأَيِّ حَدِيثٍ بَعْدَهُ يُؤْمِنُونَ ﴿٥٠﴾',
+    ayetler: [
+      '<b>1</b> Ve\'l-mürselâti urfâ.',
+      '<b>2</b> Fe\'l-âsifâti asfâ.',
+      '<b>3</b> Ve\'n-nâşirâti neşrâ.',
+      '<b>4</b> Fe\'l-fârikâti farkâ.',
+      '<b>5</b> Felmülkıyâti zikrâ.',
+      '<em>(6-14. âyetler — kıyâmet ihtarları…)</em>',
+      '<b>15</b> Veylün yevmeizin lil-mükezzibîn.',
+      '<em>(Bu uyarı 16, 19, 24, 28, 34, 37, 40, 45, 47 ve 49. âyetlerde de tekrarlanır — toplam 10 kez.)</em>',
+      '<em>(16-37. âyetler — eski kavimlerin akıbeti, kıyâmet sahnesi…)</em>',
+      '<b>38</b> Hâzâ yevmü\'l-fasl, cemağnâküm ve\'l-evvelîn.',
+      '<b>39</b> Fein kâne leküm keydün fekîdûn.',
+      '<em>(40-49. âyetler — cennet ve cehennem…)</em>',
+      '<b>50</b> Febi-eyyi hadîsin ba\'dehû yü\'minûn.'
+    ],
+    anlam: 'Birbiri ardınca gönderilenlere, şiddetle estirilenlere, neşredenlere, ayıranlara, zikir bırakanlara yemin olsun! (...) O gün yalanlayanların vay haline! (Bu âyet 10 kez tekrarlanır.) (...) İşte bu, ayırma günüdür. Sizi ve öncekileri topladık. Eğer bir hîleniz varsa hîle yapmayı deneyin (boşuna). (...) Artık ondan sonra hangi söze inanırlar?',
+    fazilet: '✨ "Veylün yevmeizin lil-mükezzibîn" 10 kez tekrarlanan uyarı — kıyâmet günü pişman olmamak için.'
   },
 {
     id: 'naba',
@@ -8164,6 +9735,26 @@ const DUALAR = [
     fazilet: '✨ Hanefî mezhebine göre Vitir namazının üçüncü rekâtında, rükûya gitmeden önce okunur. Ezberlenmesi farzdır; ezbere bilmeyen \"Rabbenâ âtinâ...\" duâsını okur.'
   },
 {
+    id: 'vasita',
+    ad: 'Vasıtaya Binince Duâsı',
+    ikon: '🚗',
+    alt: 'Araba, uçak, otobüs vb. binerken okunur',
+    bismillah: false,
+    arapca: 'بِسْمِ اللَّهِ ۞ الْحَمْدُ لِلَّهِ ۞ سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ ۞ اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى ، وَمِنَ الْعَمَلِ مَا تَرْضَى ، اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ ، اللَّهُمَّ أَنْتَ الصَّاحِبُ فِي السَّفَرِ وَالْخَلِيفَةُ فِي الْأَهْلِ',
+    ayetler: [
+      'Bismillâh ﹡ Elhamdülillâh ﹡',
+      '<b>Sübhânellezî sehhare lenâ hâzâ ve mâ künnâ lehû mukrinîn,</b>',
+      '<b>ve innâ ilâ rabbinâ lemünkalibûn.</b>',
+      '<em>(Zuhruf, 13-14)</em>',
+      'Allâhümme innâ nes\'elüke fî seferinâ hâze\'l-birra vet-takvâ,',
+      've mine\'l-ameli mâ terdâ.',
+      'Allâhümme hevvin aleynâ seferanâ hâzâ vatvi annâ bu\'deh.',
+      'Allâhümme entes-sâhibü fî\'s-seferi vel-halîfetü fî\'l-ehl.'
+    ],
+    anlam: '"Allah\'ın adıyla. Hamd Allah\'a mahsustur. Bu (vasıtayı) bizim hizmetimize veren Allah\'ın şânı ne yücedir; yoksa biz buna güç yetiremezdik. Şüphesiz biz Rabbimize döneceğiz." Allah\'ım! Bu yolculuğumuzda Senden iyilik, takvâ ve razı olacağın ameller dileriz. Allah\'ım! Bu yolculuğu bize kolaylaştır, mesafesini bize kısalt. Allah\'ım! Yolculukta yoldaş, geride bıraktığımız ailemiz üzerinde de vekîl Sen\'sin.',
+    fazilet: '✨ Hz. Peygamber bir vasıtaya bindiğinde önce "Bismillâh" der, sonra üç kere "Elhamdülillâh", sonra üç kere "Allâhüekber" söyler, ardından bu duâyı okurdu (Müslim, Ebû Dâvûd). Her yolculukta sünnete uymak için okunur — araba, uçak, otobüs farketmez.'
+  },
+{
     id: 'salli',
     ad: 'Allâhümme Salli Duâsı',
     ikon: '🤲',
@@ -8227,32 +9818,185 @@ const DUALAR = [
 // =========================================================
 // DUALAR — Görsel oluşturma ve etkileşim
 // =========================================================
+// ═══════════════════════════════════════════════════════════
+// SESLİ OKUMA SİSTEMİ (EveryAyah CDN)
+// ═══════════════════════════════════════════════════════════
+const SURE_INFO = {
+  'fatiha': { no:1, ayetler:[2,3,4,5,6,7] },
+  'ayetel-kursi': { no:2, ayetler:[255] },
+  'amenerrasulu': { no:2, ayetler:[285,286] },
+  'kehf': { no:18, ayetler:[1,2,3,7,28,46,110] },
+  'meryem': { no:19, ayetler:[1,2,3,4,16,30,31,32,33,96] },
+  'taha': { no:20, ayetler:[1,2,3,4,5,14,25,26,27,28,114] },
+  'lokman': { no:31, ayetler:[1,2,3,12,13,14,17,18,19] },
+  'secde': { no:32, ayetler:[1,2,4,16,17,18] },
+  'ahzab': { no:33, ayetler:[21,35,40,41,42,43,56,70,71] },
+  'sebe': { no:34, ayetler:[1,10,14,28] },
+  'fatir': { no:35, ayetler:[1,15,28,29,32] },
+  'yasin': { no:36, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,58,81,82,83] },
+  'duhan': { no:44, ayetler:[1,2,3,4,5,6,7,8,51,52] },
+  'fetih': { no:48, ayetler:[1,2,3,4,5,27,28,29] },
+  'hucurat': { no:49, ayetler:[1,10,11,12,13] },
+  'rahman': { no:55, ayetler:[1,2,3,4,5,6,7,8,9,10,13,14,15,16,17,18,19,20,26,27,78] },
+  'vakia': { no:56, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,63,64,74,95,96] },
+  'hadid': { no:57, ayetler:[1,2,3,20,21,25] },
+  'hasr-son': { no:59, ayetler:[21,22,23,24] },
+  'saff': { no:61, ayetler:[1,2,3,4,10,11,12] },
+  'cuma': { no:62, ayetler:[1,2,3,4,9,10,11] },
+  'mulk': { no:67, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30] },
+  'kalem': { no:68, ayetler:[1,2,3,4,8,9,48,51,52] },
+  'hakka': { no:69, ayetler:[1,2,3,19,20,21,25,52] },
+  'mearic': { no:70, ayetler:[1,2,3,5,19,20,21,22,23,24,25] },
+  'nuh': { no:71, ayetler:[1,2,3,10,11,12,28] },
+  'muzemmil': { no:73, ayetler:[1,2,3,4,5,6,8,9,10,20] },
+  'muddessir': { no:74, ayetler:[1,2,3,4,5,6,7,8,9,10] },
+  'kiyame': { no:75, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] },
+  'murselat': { no:77, ayetler:[1,2,3,4,5,15,38,39,50] },
+  'naba': { no:78, ayetler:[1,2,3,4,5,31,32,39,40] },
+  'naziat': { no:79, ayetler:[1,2,3,4,5,40,41] },
+  'abese': { no:80, ayetler:[1,2,3,4,24,37] },
+  'tekvir': { no:81, ayetler:[1,2,3,4,5,6,7,14,27,28,29] },
+  'infitar': { no:82, ayetler:[1,2,3,4,5,6,7,8,13,14] },
+  'mutaffifin': { no:83, ayetler:[1,2,3,4,5,18,34] },
+  'insikak': { no:84, ayetler:[1,2,3,4,5,6] },
+  'buruc': { no:85, ayetler:[1,2,3,4,5,12,13,14,21,22] },
+  'tarik': { no:86, ayetler:[1,2,3,4,5,6,7,13,14,17] },
+  'ala': { no:87, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19] },
+  'gasiye': { no:88, ayetler:[1,2,3,4,8,9,10,17,18,19,20,21,25,26] },
+  'fecr': { no:89, ayetler:[1,2,3,4,5,15,27,28,29,30] },
+  'beled': { no:90, ayetler:[1,2,3,4,11,12,13,14,15,16,17,18] },
+  'sems': { no:91, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] },
+  'leyl': { no:92, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] },
+  'duha': { no:93, ayetler:[1,2,3,4,5,6,7,8,9,10,11] },
+  'insirah': { no:94, ayetler:[1,2,3,4,5,6,7,8] },
+  'tin': { no:95, ayetler:[1,2,3,4,5,6,7,8] },
+  'alak': { no:96, ayetler:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19] },
+  'kadir': { no:97, ayetler:[1,2,3,4,5] },
+  'beyyine': { no:98, ayetler:[1,2,3,4,5,6,7,8] },
+  'zilzal': { no:99, ayetler:[1,2,3,4,5,6,7,8] },
+  'adiyat': { no:100, ayetler:[1,2,3,4,5,6,7,8,9,10,11] },
+  'karia': { no:101, ayetler:[1,2,3,4,5,6,7,8,9,10,11] },
+  'tekasur': { no:102, ayetler:[1,2,3,4,5,6,7,8] },
+  'asr': { no:103, ayetler:[1,2,3] },
+  'humeze': { no:104, ayetler:[1,2,3,4,5,6,7,8,9] },
+  'fil': { no:105, ayetler:[1,2,3,4,5] },
+  'kureys': { no:106, ayetler:[1,2,3,4] },
+  'maun': { no:107, ayetler:[1,2,3,4,5,6,7] },
+  'kevser': { no:108, ayetler:[1,2,3] },
+  'kafirun': { no:109, ayetler:[1,2,3,4,5,6] },
+  'nasr': { no:110, ayetler:[1,2,3] },
+  'tebbet': { no:111, ayetler:[1,2,3,4,5] },
+  'ihlas': { no:112, ayetler:[1,2,3,4] },
+  'felak': { no:113, ayetler:[1,2,3,4,5] },
+  'nas': { no:114, ayetler:[1,2,3,4,5,6] }
+};
+
+const KARILER = {
+  'alafasy':    { ad: 'Mishary Alafasy',       yol: 'Alafasy_128kbps' },
+  'husary':     { ad: 'Mahmoud Husary',         yol: 'Husary_128kbps' },
+  'abdulbaset': { ad: 'Abdul Basit Murattal',   yol: 'Abdul_Basit_Murattal_192kbps' },
+  'maher':      { ad: 'Maher Al-Muaiqly',       yol: 'MaherAlMuaiqly128kbps' }
+};
+
+const SESLI_PREFS_KEY = 'kn_sesli_prefs_v1';
+let sesliPrefs = JSON.parse(localStorage.getItem(SESLI_PREFS_KEY) || '{}');
+let aktifPlayer = null;
+let aktifAudio = null;
+let aktifAyetIdx = 0;
+let aktifTekrar = 0;
+
+// SURE_INFO tanımlandıktan sonra duaCizdir'i tekrar çağır (player'lar görünsün)
+setTimeout(() => { try { if (typeof duaCizdir === 'function') duaCizdir(); } catch(e){} }, 100);
+
+
 function duaCizdir() {
   const liste = document.getElementById('dua-liste');
   if (!liste) return;
   liste.innerHTML = '';
   DUALAR.forEach(d => {
     const kart = document.createElement('div');
-    kart.className = 'dua-karti';
+    kart.className = 'dua-blok';
+    kart.dataset.id = d.id;
     kart.dataset.arama = (d.ad + ' ' + (d.alt || '')).toLowerCase();
-    const ayetlerHtml = (d.ayetler || []).map(a => `<div class="dua-ayet">${a}</div>`).join('');
-    const arapcaHtml = d.arapca ? `<div class="dua-arapca-tam">${d.arapca}</div>` : '';
+
+    // Latin okunuş — her âyet için data-ayet-no
+    const ayetlerHtml = (d.ayetler || []).map(a => {
+      const m = a.match(/<b>(\d+)<\/b>/);
+      const no = m ? m[1] : '';
+      return `<div class="dua-ayet" data-ayet-no="${no}">${a}</div>`;
+    }).join('');
+
+    // Arapça — ﴿N﴾ desenlerinden span'lere ayır (senkron vurgu için)
+    let arapcaHtml = '';
+    if (d.arapca) {
+      // ﴿N﴾ ile bölme — bir âyet başlangıcından sonrakine kadar
+      const parcalar = d.arapca.split(/(?=﴿\d+﴾)/);
+      // İlk parça âyet numarası yok ise pre-text olabilir
+      const spanli = parcalar.map(p => {
+        const m = p.match(/﴿(\d+)﴾/);
+        const no = m ? m[1] : '';
+        return `<span class="dua-arapca-ayet" data-ayet-no="${no}">${p}</span>`;
+      }).join('');
+      arapcaHtml = `<div class="dua-arapca-tam">${spanli}</div>`;
+    }
+
+    // Player HTML — sadece sureNo varsa
+    const sureInfo = (typeof SURE_INFO !== 'undefined') ? SURE_INFO[d.id] : null;
+    let playerHtml = '';
+    if (sureInfo && sureInfo.no && sureInfo.ayetler.length > 0) {
+      const prefs = getPrefs(d.id);
+      playerHtml = `
+        <div class="dua-player">
+          <div class="dua-player-baslik">Sesli Dinle</div>
+          <div class="dpc-row">
+            <button class="dpc-cal-btn" onclick="sesliCal('${d.id}')">▶</button>
+            <select class="dpc-secici" onchange="playerKariDegistir('${d.id}', this.value)">
+              ${(typeof KARILER !== 'undefined' ? Object.entries(KARILER) : []).map(([k,v]) => `<option value="${k}"${prefs.kari===k?' selected':''}>${v.ad}</option>`).join('')}
+            </select>
+            <select class="dpc-secici" onchange="playerTekrarDegistir('${d.id}', this.value)">
+              <option value="1"${prefs.tekrar===1?' selected':''}>1 kez</option>
+              <option value="3"${prefs.tekrar===3?' selected':''}>3 kez tekrar</option>
+              <option value="5"${prefs.tekrar===5?' selected':''}>5 kez tekrar</option>
+              <option value="10"${prefs.tekrar===10?' selected':''}>10 kez tekrar</option>
+            </select>
+          </div>
+          <div class="dpi-info">
+            <span class="dpi-ayet">Âyet 1 / ${sureInfo.ayetler.length}</span>
+            <span class="dpi-tekrar">Tekrar 1 / ${prefs.tekrar}</span>
+          </div>
+          <div class="dpp-bar"><div class="dpp-dolgu" style="width:0%"></div></div>
+          <div class="dpc-row" style="margin-top:8px; gap:4px;">
+            <button class="dpc-mini-btn" onclick="ayetiOnceki('${d.id}')" title="Önceki âyet">⏮</button>
+            <button class="dpc-mini-btn" onclick="ayetiTekrar('${d.id}')" title="Bu âyeti tekrar">🔁</button>
+            <button class="dpc-mini-btn" onclick="ayetiSonraki('${d.id}')" title="Sonraki âyet">⏭</button>
+            <div class="dpc-hiz-grup" style="flex:1; margin-top:0;">
+              <button class="dpc-hiz-btn${prefs.hiz===0.75?' aktif':''}" data-hiz="0.75" onclick="playerHizDegistir('${d.id}', 0.75)">0.75×</button>
+              <button class="dpc-hiz-btn${(!prefs.hiz||prefs.hiz===1)?' aktif':''}" data-hiz="1" onclick="playerHizDegistir('${d.id}', 1)">1×</button>
+              <button class="dpc-hiz-btn${prefs.hiz===1.25?' aktif':''}" data-hiz="1.25" onclick="playerHizDegistir('${d.id}', 1.25)">1.25×</button>
+            </div>
+          </div>
+        </div>`;
+    } else if (sureInfo === undefined) {
+      // Sure-dışı dua
+      playerHtml = '<div class="dua-ses-yok">🤲 Bu duâ Kur\'an sûresi değildir, sadece metin olarak okunabilir.</div>';
+    }
+
     kart.innerHTML = `
-      <div class="dua-baslik" onclick="duaToggle('dua-${d.id}')">
-        <span class="dua-ikon">${d.ikon || '📖'}</span>
-        <div class="dua-baslik-orta">
-          <div class="dua-ad">${d.ad}</div>
-          ${d.alt ? `<div class="dua-alt">${d.alt}</div>` : ''}
+      <div class="dua-blok-baslik" onclick="duaToggle('dua-${d.id}')">
+        <span class="dua-blok-ikon">${d.ikon || '📖'}</span>
+        <div style="flex:1">
+          <div class="dua-blok-ad">${d.ad}</div>
+          ${d.alt ? `<div class="dua-blok-alt">${d.alt}</div>` : ''}
         </div>
-        <span class="dua-ok">▾</span>
       </div>
-      <div class="dua-icerik" id="dua-${d.id}">
+      <div class="dua-blok-icerik" id="dua-${d.id}">
         ${d.bismillah ? '<div class="dua-bismillah">Bismillâhirrahmânirrahîm</div>' : ''}
         ${arapcaHtml}
         <div class="dua-okunus-baslik">📖 Türkçe Okunuş</div>
         <div class="dua-ayetler">${ayetlerHtml}</div>
         ${d.anlam ? `<div class="dua-anlam"><strong>Anlamı:</strong><br>${d.anlam}</div>` : ''}
         ${d.fazilet ? `<div class="dua-fazilet">${d.fazilet}</div>` : ''}
+        ${playerHtml}
       </div>`;
     liste.appendChild(kart);
   });
@@ -8263,21 +10007,21 @@ function duaCizdir() {
 function duaToggle(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const kart = el.closest('.dua-karti');
+  const kart = el.closest('.dua-blok');
   if (kart) kart.classList.toggle('acik');
 }
 
 function duaTumuAc() {
-  document.querySelectorAll('.dua-karti').forEach(k => k.classList.add('acik'));
+  document.querySelectorAll('.dua-blok[data-id]').forEach(k => k.classList.add('acik'));
 }
 
 function duaTumuKapat() {
-  document.querySelectorAll('.dua-karti').forEach(k => k.classList.remove('acik'));
+  document.querySelectorAll('.dua-blok[data-id]').forEach(k => k.classList.remove('acik'));
 }
 
 function duaAra(metin) {
   const m = (metin || '').toLowerCase().trim();
-  document.querySelectorAll('.dua-karti').forEach(k => {
+  document.querySelectorAll('.dua-blok[data-id]').forEach(k => {
     const arama = k.dataset.arama || '';
     k.style.display = (!m || arama.includes(m)) ? '' : 'none';
   });
@@ -9621,7 +11365,194 @@ const GUNLUK_SOZLER = [
   '<strong>İmam Mâlik:</strong> "İlim çoğaltmak, ameli azaltmak için değildir."',
   '<strong>Bediüzzaman:</strong> "Şu hayat-ı dünyeviyenin meşrû ve gayri meşrû her zevkinde, en hâlis lezzet, Allah\'ı zikretmektir."',
   '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'minin işi tuhaftır — her hâlinde hayır vardır. Sevinirse şükreder; üzülürse sabreder." (Müslim)',
-  '<strong>Hadis-i Kudsî:</strong> "Ey âdemoğlu! Bana yöneldiğin sürece seni bağışlarım — günahların gökyüzü kadar olsa bile."'
+  '<strong>Hadis-i Kudsî:</strong> "Ey âdemoğlu! Bana yöneldiğin sürece seni bağışlarım — günahların gökyüzü kadar olsa bile."',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Kolaylaştırın, zorlaştırmayın; müjdeleyin, nefret ettirmeyin." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'a ve âhiret gününe inanan ya hayır söylesin ya da sussun." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah katında amellerin en sevimlisi, az da olsa devamlı olanıdır." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Müslüman müslümanın kardeşidir; ona zulmetmez, onu yardımsız bırakmaz." (Müslim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'minlerin imanca en olgun olanları, ahlâkça en güzel olanlarıdır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Tebessüm sadakadır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "İlim öğrenmek her müslümana farzdır." (İbn Mâce)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Bana bir kere salavât getirene, Allah on rahmetle mukabele eder." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sizin en hayırlınız Kur\'an\'ı öğrenen ve öğretendir." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'tan af dileyene Allah daima bir çıkış kapısı açar." (Ebû Dâvûd)',
+  '<strong>Hadis-i Şerif:</strong> "Komşusu açken tok yatan bizden değildir." (Hâkim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "İnsanların en hayırlısı insanlara en faydalı olandır." (Beyhakî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ı bilen, kendini bilir. Kendini bilen, Allah\'ı bilir." (Tasavvuf)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Cennet anaların ayakları altındadır." (Nesâî)',
+  '<strong>Hadis-i Şerif:</strong> "Selâmı yaygınlaştırın, akrabaya iyilik edin, herkes uyurken namaz kılın — cennete selâmetle girersiniz." (Tirmizî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Sizden biriniz, kendisi için sevdiğini kardeşi için de sevmedikçe iman etmiş olmaz." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "İki nimet vardır ki insanların çoğu bunların kıymetini bilmez: Sağlık ve boş vakit." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Kim bir Müslümanın ayıbını örterse, Allah da onun ayıbını dünya ve âhirette örter." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sadaka, kıyamet günü kişinin gölgesidir." (Tirmizî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah, mütevâzı olanları yüceltir." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sabır, müminin nurudur." (Müslim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Hayır söyleyin ya da susun." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Kim bir hayrı işlerse on katı ile yazılır." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Ana-babaya iyilik, en üstün amellerdendir." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Hediyeleşin ki sevgi artsın." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah, çok bağışlayandır; affı sever, sizi de affedin." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "İnsanlara teşekkür etmeyen, Allah\'a şükretmemiştir." (Ebû Dâvûd)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Cömert olun, çünkü cömert cennetlik, cimri cehennemliktir." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Müslüman müslümanın aynasıdır." (Ebû Dâvûd)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Cennetin anahtarı namazdır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ın kullarına en sevimli yer mescidlerdir." (Müslim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'minin işi tuhaftır — sevinirse şükreder, üzülürse sabreder, her hâlinde hayır vardır." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sözünü tutmayan, dini tam olmayan kimsedir." (Ahmed)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Hayrı söyleyin; eğer söyleyemiyorsanız susun." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Mü\'min, bir delikten iki kere ısırılmaz." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Ümmetimin ihtilafı rahmettir." (Beyhakî)',
+  '<strong>Hadis-i Şerif:</strong> "Bana hayır olarak verilen şeyi, kendim için hayır olarak gördüm." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'a tevekkül edin; kuşlara gibi rızıklandırıracaktır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ı zikir, kalbin gıdasıdır." (Müslim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Sizden biriniz başkalarına en güzel söz ne ise onu söylesin." (Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey kullarım! Ben zulmü kendime haram kıldım, sizin aranızda da haram kıldım." (Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Kulum Beni andıkça, Ben de onunla beraberim." (Buhârî)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey âdemoğlu! Senin günahların gökler kadar olsa da, Ben\'den af dilersen affederim." (Tirmizî)',
+  '<strong>Hadis-i Kudsî:</strong> "Rahmetim gazabımı geçti." (Buhârî, Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Kulum Bana bir karış yaklaşırsa, Ben ona bir arşın yaklaşırım." (Buhârî)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey âdemoğlu! Bana koşarak gelene Ben de koşarak gelirim." (Buhârî)',
+  '<strong>Hadis-i Kudsî:</strong> "Salih kullarım için cennette hazırladığım nimetleri hiçbir göz görmemiş, hiçbir kulak duymamış, hiçbir kalp hayal etmemiştir." (Buhârî, Müslim)',
+  '<strong>Hz. Ebû Bekir (r.a.):</strong> "Allah\'ın rahmetinden ümit kesmeyin; çünkü O, gizlide en çok lütfedicidir."',
+  '<strong>Hz. Ebû Bekir (r.a.):</strong> "İnsanların en hayırlısı, kendisi için yaşamayandır."',
+  '<strong>Hz. Ebû Bekir (r.a.):</strong> "Eğer ölüm benim üzerime düşseydi bile, Allah\'ı hatırlamayı bırakmazdım."',
+  '<strong>Hz. Ömer (r.a.):</strong> "Hesaba çekilmeden önce kendinizi hesaba çekin."',
+  '<strong>Hz. Ömer (r.a.):</strong> "Tövbeyi sonraya bırakmak büyük bir gaflettir."',
+  '<strong>Hz. Ömer (r.a.):</strong> "İnsan, malıyla değil, kalbiyle yücelir."',
+  '<strong>Hz. Ömer (r.a.):</strong> "Akıl, mü\'minin dostudur; ilim onun süsüdür; hilm, onun kalkanıdır."',
+  '<strong>Hz. Osman (r.a.):</strong> "Eğer kalpler temiz olsaydı, Allah\'ın kelâmından doyma olmazdı."',
+  '<strong>Hz. Osman (r.a.):</strong> "Allah\'a şükretmeyi unutan, nimetin elden gideceğini de unutmuştur."',
+  '<strong>Hz. Ali (r.a.):</strong> "İlim, kişiyi yüceltir; mal ise alçaltabilir."',
+  '<strong>Hz. Ali (r.a.):</strong> "Sabır iki türlüdür: Hoşuna gitmeyen şeye sabır, hoşuna giden şeyden çekinmeye sabır."',
+  '<strong>Hz. Ali (r.a.):</strong> "Allah\'ın seninle olduğunu bilmek, mahlûkun seninle olmadığından daha hayırlıdır."',
+  '<strong>Hz. Ali (r.a.):</strong> "Cömert, Allah\'a yakındır, cennete yakındır, insanlara yakındır."',
+  '<strong>Hz. Ali (r.a.):</strong> "Aklın süsü hayâ, hayânın süsü tevazudur."',
+  '<strong>Hz. Ali (r.a.):</strong> "Susmak, hikmetin yarısıdır."',
+  '<strong>Hz. Ali (r.a.):</strong> "İnsan, dilinin altında gizlidir."',
+  '<strong>Hz. Ali (r.a.):</strong> "Bir adam bilmediğini bildiğinde, ilmin yarısını öğrenmiştir."',
+  '<strong>Hz. Ali (r.a.):</strong> "Eğer ilmi öğrendiysen, onunla amel et — yoksa onunla beraber olmaktan utan."',
+  '<strong>Hz. Aişe (r.a.):</strong> "Resûlullah\'ın ahlâkı Kur\'an idi." (Müslim)',
+  '<strong>Hz. Aişe (r.a.):</strong> "Allah Resûlü, gece namazını öyle uzatırdı ki ayakları şişerdi. Niçin böyle yorulduğunu sorduğumda: \'Şükredici bir kul olmayayım mı?\' derdi."',
+  '<strong>Hz. Hasan (r.a.):</strong> "Allah\'a yakınlık, kalbin yumuşaklığındadır."',
+  '<strong>Hz. Hüseyin (r.a.):</strong> "İzzet ve şeref, ancak Allah\'a kulluktadır."',
+  '<strong>Hz. Bilal (r.a.):</strong> "Ezanı duyduğum her an, kalbim Resûlullah\'ı görür."',
+  '<strong>Hz. Ebû Hüreyre (r.a.):</strong> "Allah\'a yakınlık, secdelerle olur."',
+  '<strong>Hz. Abdullah b. Mes\'ud (r.a.):</strong> "Allah\'ın kelâmı, kalplerin tabibidir."',
+  '<strong>Hz. Abdullah b. Abbâs (r.a.):</strong> "İlim, hayır kapılarının anahtarıdır."',
+  '<strong>Mevlânâ:</strong> "Sen yola çıktın ya, yol seni bekliyor zaten."',
+  '<strong>Mevlânâ:</strong> "Gelin, gelin... Ne olursan ol, yine gel; tövbeni bin kere bozsan da yine gel."',
+  '<strong>Mevlânâ:</strong> "Ya olduğun gibi görün, ya göründüğün gibi ol."',
+  '<strong>Mevlânâ:</strong> "Sustuğunda yüksel, konuştuğunda alçal demişler."',
+  '<strong>Mevlânâ:</strong> "Susmak, en güzel cevaptır."',
+  '<strong>Mevlânâ:</strong> "Aşk, kişinin kendini terk etmesidir."',
+  '<strong>Mevlânâ:</strong> "Tasavvufun başı edep, ortası edep, sonu edeptir."',
+  '<strong>Mevlânâ:</strong> "Kendi karanlığını aydınlatmadan, başka karanlıkları aydınlatmaya çalışma."',
+  '<strong>Mevlânâ:</strong> "Bir mum bin mumu yakar, kendi ışığından bir şey kaybetmez."',
+  '<strong>Mevlânâ:</strong> "Allah ile beraber olanlara, dünya engel değildir."',
+  '<strong>Yunus Emre:</strong> "Bir kez gönül yıktın ise, bu kıldığın namaz değil."',
+  '<strong>Yunus Emre:</strong> "İlim ilim bilmektir, ilim kendin bilmektir. Sen kendini bilmezsen, ya nice okumaktır."',
+  '<strong>Yunus Emre:</strong> "Ben gelmedim dâvâ için, benim işim sevgi için."',
+  '<strong>Yunus Emre:</strong> "Sevelim, sevilelim — bu dünya kimseye kalmaz."',
+  '<strong>Yunus Emre:</strong> "Yetmiş iki bin meleği susturmaktan, bir aciz kalbin tövbesi makbuldür."',
+  '<strong>Yunus Emre:</strong> "Bir gönle giresin, çok hac eylediğin söylenir."',
+  '<strong>Yunus Emre:</strong> "Cennet ne cennet imiş, dost yüzünden ayrı."',
+  '<strong>Yunus Emre:</strong> "Kalbi temiz olanın yolu Allah\'a açıktır."',
+  '<strong>İmam Gazâlî:</strong> "Allah\'ı arayan, kendini bulur. Kendini bulan, Allah\'ı bulur."',
+  '<strong>İmam Gazâlî:</strong> "İlmin afetlerinden biri, riyâdır."',
+  '<strong>İmam Gazâlî:</strong> "Allah\'ı tanıyan kalp, ölmez bir kalptir."',
+  '<strong>İmam Gazâlî:</strong> "Niyetler, amellerin tohumudur."',
+  '<strong>İmam Gazâlî:</strong> "Hâlin imanına dair şehâdettir."',
+  '<strong>İmam Şâfiî:</strong> "Eğer Kur\'an\'dan sadece Asr Sûresi inseydi, insanlara yeterdi."',
+  '<strong>İmam Şâfiî:</strong> "İlmim arttıkça cehlimi anladım."',
+  '<strong>İmam Şâfiî:</strong> "İlim öğrenmek, namazdan sonra en hayırlı ameldir."',
+  '<strong>İmam Şâfiî:</strong> "Hür olanın iki anahtarı vardır: Susmak ve gözünü haramdan korumak."',
+  '<strong>İmam-ı Âzam Ebû Hanîfe:</strong> "İlmin afetlerinden biri, sabırsızlıktır."',
+  '<strong>İmam-ı Âzam Ebû Hanîfe:</strong> "İlim, ameli arar; amel, ihlâsı bekler."',
+  '<strong>İmam Mâlik:</strong> "İlim çoğaltmak, ameli azaltmak için değildir."',
+  '<strong>İmam Mâlik:</strong> "Bilenler gibi konuşma, bilmeyenler gibi sus."',
+  '<strong>İmam Ahmed b. Hanbel:</strong> "Allah\'a kulluk eden, kuldan korkmaz."',
+  '<strong>İbn Atâullah:</strong> "Rabbinden ümit kesme — secde et, kapısı her zaman açıktır."',
+  '<strong>İbn Atâullah:</strong> "Sen Allah\'la olduğun sürece, hiçbir şey seni ayağa kaldıramaz veya yıkamaz."',
+  '<strong>İbn Atâullah:</strong> "İlk önce kalbini düzelt, sonra söz söyle."',
+  '<strong>İbn Atâullah:</strong> "Tövbe, Allah\'a açılan en kestirme kapıdır."',
+  '<strong>İbn Arabî:</strong> "Allah ile olan dostluk, hiç tükenmez."',
+  '<strong>İbn Arabî:</strong> "Kalp, Rabbin nazarının düştüğü en yüksek aynadır."',
+  '<strong>Hz. Mâlik b. Dînâr:</strong> "Allah, gözden değil; kalpten bakar."',
+  '<strong>Hz. Hasan-ı Basrî:</strong> "Mü\'min, gündüzünü ibadetle, gecesini gözyaşıyla geçirir."',
+  '<strong>Hz. Hasan-ı Basrî:</strong> "Dünyaya bağlanan, ondan ayrılırken acı duyar."',
+  '<strong>Şah-ı Nakşibend:</strong> "Tövbe için yaş ve vakit beklenmez; ihlâs, sonsuza yeter."',
+  '<strong>Şah-ı Nakşibend:</strong> "Kalbini koru — orada Allah\'ın bakışı vardır."',
+  '<strong>Cüneyd-i Bağdâdî:</strong> "Tasavvuf, Allah\'tan başka her şeyi terk etmektir."',
+  '<strong>Cüneyd-i Bağdâdî:</strong> "Mü\'min, ihtirassız bir göz, samimi bir kalp, sabır dolu bir hayattır."',
+  '<strong>Bâyezid Bistâmî:</strong> "Allah\'ı bulmak için, kendini kaybet."',
+  '<strong>Bâyezid Bistâmî:</strong> "Kendi nefsini bilmeyen, Rabbini bilemez."',
+  '<strong>Abdülkadir-i Geylânî:</strong> "Allah\'a güven, çare ona yakın olur."',
+  '<strong>Abdülkadir-i Geylânî:</strong> "Tövbe, ölmeden önceki son nefesin bile içindedir."',
+  '<strong>Ahmed Yesevî:</strong> "Sen kalbini temiz tut, gerisini Allah hallediverir."',
+  '<strong>Ahmed Yesevî:</strong> "Acizliğini bilmek, kemâlin başıdır."',
+  '<strong>Hacı Bektaş-ı Velî:</strong> "İlimden gidilmeyen yolun sonu karanlıktır."',
+  '<strong>Hacı Bektaş-ı Velî:</strong> "Eline, beline, diline sahip ol."',
+  '<strong>İbn-i Sînâ:</strong> "Allah\'a olan inanç, yaratılışın temelidir."',
+  '<strong>Fârâbî:</strong> "İlim, kişinin ruhuna eşlik eden tek arkadaştır."',
+  '<strong>İmam-ı Rabbânî:</strong> "Allah ile beraber olan, asla kaybetmez."',
+  '<strong>İmam-ı Rabbânî:</strong> "Bir nefes Allah\'ı zikretmek, dünyaya bedeldir."',
+  '<strong>İmam-ı Rabbânî:</strong> "Allah\'ın takdirinden razı olan, dünyada cennettedir."',
+  '<strong>Mevlânâ Hâlid el-Bağdâdî:</strong> "Allah\'ı zikretmeyen kalp, ölmüş bir kalptir."',
+  '<strong>Mehmet Akif Ersoy:</strong> "Bir hilâl uğruna, yâ Rab, ne güneşler batıyor!"',
+  '<strong>Mehmet Akif Ersoy:</strong> "Allah\'a dayan, sa\'ye sarıl, hikmete râm ol — yol varsa budur, bilmiyorum başka çıkar yol."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Niyet, âdetleri ibadete çevirir."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Şu hayat-ı dünyeviyenin meşrû ve gayri meşrû her zevkinde, en hâlis lezzet, Allah\'ı zikretmektir."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Acziyet, Allah\'a yakınlığın anahtarıdır."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Allah\'a yakınlık nispetinde dünya küçülür."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Sabrın anahtarı, kanaattir."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "İnsan, kâinatın küçük bir misalidir."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "Hakka tâlib olan, başkasına müracaat etmez."',
+  '<strong>Bediüzzaman Said Nursî:</strong> "İlim, irfanın aydınlatıcısıdır."',
+  '<strong>Mehmed Zâhid Kotku:</strong> "Allah\'ı sevmenin yolu, O\'nun Resûlünü sevmekten geçer."',
+  '<strong>Mahmud Sâmî Ramazanoğlu:</strong> "Allah\'a yakınlık, dilden değil; kalpten başlar."',
+  '<strong>Hadis-i Şerif:</strong> "Üç şey güzeldir: Sözünü tutmak, vaadinde durmak ve emanete riayet etmek." (Tirmizî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'ı razı eden, kullarını da kazanır." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Müslüman, sağ elinin verdiğini sol elinin bilmediği kimsedir." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Cömertlik, cennet ağaçlarından bir ağaçtır." (Beyhakî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a yakın kalbe sahip ol, Allah seni başlardan büyük yapar." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Sözünüzde ve fiilinizde dürüst olun; çünkü dürüstlük cennete götürür." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Yetimleri sevindirenleri Allah sevindirir." (Tirmizî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Bir nefes Allah\'ı anmak, dünyadan ve içindekilerden daha hayırlıdır." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Cömert, herkesin sevdiği, Allah\'ın da sevdiği kuldur." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Ehliyle latif olmak, bütün dünya hayrından hayırlıdır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Yetim doyuranı Allah doyurur." (Hâkim)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Babanın çocuğa bıraktığı en hayırlı miras, güzel ahlâktır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a iyilik yap, sana iyilik gelsin." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'ın benim yanımda iki sevgili kelimesi vardır: Subhanallah ve Elhamdülillâh." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Müslüman, müslümanın yüküdür; bir kısmı bir kısmını omuzlar." (Buhârî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Hayrı söyleyin, Allah\'ı zikredin, fazla konuşma." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "İnsanların en üstünü, en çok faydalı olandır." (Beyhakî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Sabreden, Allah\'ı kazanır." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Tövbe edenleri Allah sever." (Bakara, 222 + Hadis şerhi)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah, kullarına azabı, rahmetinden sonra koymuştur." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Geceyi ibadetle ihya eden, gündüzü huzurla yaşar." (Tirmizî)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'min, sağ kulağıyla şeytanı duymaz." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ın bir kuluna en büyük lütfu, dilini muhafaza etmesini sağlamasıdır." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Kim Allah\'ı sever, Allah ona ümidini açar." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ı az zikretmek, kalpleri kararıtır." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "İnsanlara karşı sabır, hayrın anahtarıdır." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Mü\'minin kalbi, Allah\'ın evidir." (Tasavvuf)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "İlim, Çin\'de bile olsa arayın." (İbn Adiyy)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a hamd, en güzel duâdır." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'min, kalbiyle Allah\'a yönelir; nereye giderse gitsin." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım! Bize dünyada da iyilik ver, âhirette de iyilik ver." (Bakara, 201)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Mü\'min, ümitsizlik bilmez." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Sabreden, Allah\'a yakındır." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Müslüman, hayrı kendine, hayrı kardeşine ister." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ı zikretmek, gönülleri ferahlatır." (Ra\'d, 28 + Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "İlim bilen, hayra gider." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Cennet, çalışanlarındır." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'ın izniyle kalbinin pırıltısı, gözünden okunur." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Allah, ihlâs ile yapılan amelleri kabul eder." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Sabreden, asla mahrum kalmaz." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a yakın olan, dünyada da huzur bulur." (Hadis)',
+  '<strong>Hz. Muhammed (s.a.v.):</strong> "Allah\'ın huzuruna varan, asla yalnız değildir." (Hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Mü\'minin işi tuhaftır, hep hayır vardır." (Müslim)',
 ];
 
 function gunlukSozGoster() {
@@ -10469,6 +12400,838 @@ setTimeout(() => {
 }, 700);
 
 
+
+
+function prefsKaydet() {
+  localStorage.setItem(SESLI_PREFS_KEY, JSON.stringify(sesliPrefs));
+}
+
+function getPrefs(duaId) {
+  if (typeof sesliPrefs === 'undefined') return { kari:'alafasy', tekrar:3, hiz:1.0 };
+  if (!sesliPrefs[duaId]) {
+    sesliPrefs[duaId] = {
+      kari: sesliPrefs._varsayilan?.kari || 'alafasy',
+      tekrar: sesliPrefs._varsayilan?.tekrar || 3,
+      hiz: 1.0
+    };
+  }
+  return sesliPrefs[duaId];
+}
+
+function sesUrl(sureNo, ayetNo, kariId) {
+  const kari = KARILER[kariId] || KARILER['alafasy'];
+  const s = String(sureNo).padStart(3, '0');
+  const a = String(ayetNo).padStart(3, '0');
+  return `https://everyayah.com/data/${kari.yol}/${s}${a}.mp3`;
+}
+
+function sesliCal(duaId) {
+  // Başka çalıyorsa durdur
+  if (aktifPlayer && aktifPlayer !== duaId) {
+    sesliDur(aktifPlayer);
+  }
+  if (aktifPlayer === duaId && aktifAudio && !aktifAudio.paused) {
+    // Aynı dua zaten çalıyorsa pause yap
+    sesliDur(duaId);
+    return;
+  }
+  // Resume?
+  if (aktifPlayer === duaId && aktifAudio && aktifAudio.paused) {
+    aktifAudio.play().catch(()=>{});
+    playerButonGuncelle(duaId, true);
+    return;
+  }
+
+  const info = SURE_INFO[duaId];
+  if (!info) return;
+
+  aktifPlayer = duaId;
+  aktifAyetIdx = 0;
+  aktifTekrar = 0;
+
+  // Kart çerçevesini vurgula
+  document.querySelectorAll('.dua-blok.aktif-player').forEach(b => b.classList.remove('aktif-player'));
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (kart) kart.classList.add('aktif-player');
+
+  ayetiCal(duaId);
+}
+
+let _ayetGecisBekleniyor = false;
+let _aktifAudioId = 0;
+
+function ayetiCal(duaId) {
+  const info = SURE_INFO[duaId];
+  if (!info) return;
+  const prefs = getPrefs(duaId);
+
+  if (aktifAyetIdx >= info.ayetler.length) {
+    aktifTekrar++;
+    if (aktifTekrar < prefs.tekrar) {
+      aktifAyetIdx = 0;
+    } else {
+      sesliDur(duaId);
+      toast('🎧', 'Dinleme tamamlandı', 'basari');
+      return;
+    }
+  }
+
+  const ayetNo = info.ayetler[aktifAyetIdx];
+  const url = sesUrl(info.no, ayetNo, prefs.kari);
+
+  // Önceki audio'yu temizle — TÜM event listener'ları da kaldır
+  if (aktifAudio) {
+    try {
+      aktifAudio.pause();
+      aktifAudio.onended = null;
+      aktifAudio.onerror = null;
+      aktifAudio.ontimeupdate = null;
+      aktifAudio.oncanplaythrough = null;
+      aktifAudio.src = '';
+    } catch(e) {}
+    aktifAudio = null;
+  }
+
+  // Geçiş kilidini sıfırla (yeni ayet başlıyor)
+  _ayetGecisBekleniyor = false;
+  _aktifAudioId++;
+  const buAudioId = _aktifAudioId;
+
+  aktifAudio = new Audio();
+  aktifAudio.playbackRate = prefs.hiz || 1.0;
+  aktifAudio.preload = 'auto';
+
+  // Vurgula
+  ayetiVurgula(duaId, ayetNo, aktifAyetIdx === 0 && aktifTekrar === 0);
+  playerGuncelle(duaId);
+
+  let calmayaBasladi = false;
+  let calmaBaslangic = 0;
+
+  aktifAudio.addEventListener('playing', () => {
+    calmayaBasladi = true;
+    calmaBaslangic = Date.now();
+  });
+
+  aktifAudio.addEventListener('ended', () => {
+    // Bu hâlâ aktif audio mu? (eski audio'lardan tetiklenmesin)
+    if (buAudioId !== _aktifAudioId) return;
+    if (_ayetGecisBekleniyor) return;
+
+    // Çalma süresi gerçekçi mi? (en az 1.5 saniye çalmalı)
+    const calmaSuresi = (Date.now() - calmaBaslangic) / 1000;
+    if (calmayaBasladi && calmaSuresi < 1.5 && aktifAudio.duration > 2) {
+      // Yarıda kalmış, tekrar başlat
+      console.warn('Audio yarıda kalmış, tekrar deneniyor:', url);
+      aktifAudio.currentTime = 0;
+      aktifAudio.play().catch(() => {});
+      return;
+    }
+
+    _ayetGecisBekleniyor = true;
+    setTimeout(() => {
+      _ayetGecisBekleniyor = false;
+      aktifAyetIdx++;
+      ayetiCal(duaId);
+    }, 600); // 600ms duraklama — kullanıcı için doğal bir nefes
+  });
+
+  aktifAudio.addEventListener('error', (e) => {
+    if (buAudioId !== _aktifAudioId) return;
+    if (_ayetGecisBekleniyor) return;
+    console.warn('Ses yüklenemedi:', url, e);
+    _ayetGecisBekleniyor = true;
+    setTimeout(() => {
+      _ayetGecisBekleniyor = false;
+      aktifAyetIdx++;
+      ayetiCal(duaId);
+    }, 800);
+  });
+
+  aktifAudio.addEventListener('timeupdate', () => {
+    if (buAudioId !== _aktifAudioId) return;
+    playerProgressGuncelle(duaId);
+  });
+
+  // canplaythrough — yeterli buffer hazır, sorunsuz çalacak
+  aktifAudio.addEventListener('canplaythrough', () => {
+    if (buAudioId !== _aktifAudioId) return;
+    aktifAudio.play().catch(e => {
+      console.warn('Play başarısız, tekrar deneniyor:', e);
+      // Bazen iOS Safari'de programatik play engellenir — kısa bekleyip tekrar dene
+      setTimeout(() => {
+        if (aktifAudio && buAudioId === _aktifAudioId) {
+          aktifAudio.play().catch(() => {
+            toast('⚠️', 'Ses çalınamadı', 'hata');
+            sesliDur(duaId);
+          });
+        }
+      }, 200);
+    });
+  }, { once: true });
+
+  // src'i en son ata (event listener'lar hazır olduktan sonra)
+  aktifAudio.src = url;
+  aktifAudio.load();
+
+  // 5 saniye içinde canplaythrough tetiklenmezse zorla başlat
+  setTimeout(() => {
+    if (buAudioId === _aktifAudioId && aktifAudio && aktifAudio.paused && !calmayaBasladi) {
+      console.warn('canplaythrough gecikti, zorla play:', url);
+      aktifAudio.play().catch(() => {});
+    }
+  }, 5000);
+
+  playerButonGuncelle(duaId, true);
+}
+
+function sesliDur(duaId) {
+  // Aktif audio ID artır — eski callback'ler iptal olur
+  _aktifAudioId++;
+  _ayetGecisBekleniyor = false;
+  if (aktifAudio) {
+    try {
+      aktifAudio.pause();
+      aktifAudio.onended = null;
+      aktifAudio.onerror = null;
+      aktifAudio.ontimeupdate = null;
+      aktifAudio.oncanplaythrough = null;
+    } catch(e) {}
+    if (duaId && duaId !== aktifPlayer) {
+      // Başka durduruyor
+    } else {
+      try { aktifAudio.src = ''; } catch(e) {}
+      aktifAudio = null;
+    }
+  }
+  if (duaId === aktifPlayer || !duaId) {
+    if (aktifPlayer) {
+      const oneki = aktifPlayer;
+      playerButonGuncelle(oneki, false);
+      vurgulariTemizle(oneki);
+    }
+  }
+  if (duaId === aktifPlayer) {
+    aktifPlayer = null;
+    document.querySelectorAll('.dua-blok.aktif-player').forEach(b => b.classList.remove('aktif-player'));
+  }
+}
+
+function ayetiSonraki(duaId) {
+  if (aktifPlayer !== duaId) return;
+  aktifAyetIdx++;
+  ayetiCal(duaId);
+}
+
+function ayetiOnceki(duaId) {
+  if (aktifPlayer !== duaId) return;
+  if (aktifAyetIdx > 0) {
+    aktifAyetIdx--;
+    ayetiCal(duaId);
+  }
+}
+
+function ayetiTekrar(duaId) {
+  if (aktifPlayer !== duaId) return;
+  ayetiCal(duaId);
+}
+
+function ayetiVurgula(duaId, ayetNo, scrollEt) {
+  vurgulariTemizle(duaId);
+
+  // Latin okunuş vurgu
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (!kart) return;
+
+  const ayetEls = kart.querySelectorAll('.dua-ayet');
+  ayetEls.forEach(el => {
+    const aNo = parseInt(el.dataset.ayetNo || '0');
+    if (aNo === ayetNo) {
+      el.classList.add('calan');
+      if (scrollEt) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+      }
+    }
+  });
+
+  // Arapça span vurgu
+  const arEls = kart.querySelectorAll('.dua-arapca-ayet');
+  arEls.forEach(el => {
+    const aNo = parseInt(el.dataset.ayetNo || '0');
+    if (aNo === ayetNo) {
+      el.classList.add('calan');
+    }
+  });
+}
+
+function vurgulariTemizle(duaId) {
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (!kart) return;
+  kart.querySelectorAll('.dua-ayet.calan, .dua-arapca-ayet.calan').forEach(el => {
+    el.classList.remove('calan');
+  });
+}
+
+function playerKariDegistir(duaId, kariId) {
+  const prefs = getPrefs(duaId);
+  prefs.kari = kariId;
+  // Varsayılan olarak da kaydet
+  sesliPrefs._varsayilan = sesliPrefs._varsayilan || {};
+  sesliPrefs._varsayilan.kari = kariId;
+  prefsKaydet();
+  // Eğer çalıyorsa, mevcut âyeti yeniden başlat (yeni kâri ile)
+  if (aktifPlayer === duaId && aktifAudio && !aktifAudio.paused) {
+    ayetiCal(duaId);
+  }
+}
+
+function playerTekrarDegistir(duaId, tekrar) {
+  const prefs = getPrefs(duaId);
+  prefs.tekrar = parseInt(tekrar);
+  sesliPrefs._varsayilan = sesliPrefs._varsayilan || {};
+  sesliPrefs._varsayilan.tekrar = parseInt(tekrar);
+  prefsKaydet();
+}
+
+function playerHizDegistir(duaId, hiz) {
+  const prefs = getPrefs(duaId);
+  prefs.hiz = parseFloat(hiz);
+  prefsKaydet();
+  if (aktifAudio && aktifPlayer === duaId) {
+    aktifAudio.playbackRate = parseFloat(hiz);
+  }
+  // Buton aktif görünümü
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (kart) {
+    kart.querySelectorAll('.dpc-hiz-btn').forEach(b => b.classList.remove('aktif'));
+    const aktif = kart.querySelector(`.dpc-hiz-btn[data-hiz="${hiz}"]`);
+    if (aktif) aktif.classList.add('aktif');
+  }
+}
+
+function playerButonGuncelle(duaId, caliyor) {
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (!kart) return;
+  const btn = kart.querySelector('.dpc-cal-btn');
+  if (!btn) return;
+  if (caliyor) {
+    btn.innerHTML = '⏸';
+    btn.classList.add('caliyor');
+  } else {
+    btn.innerHTML = '▶';
+    btn.classList.remove('caliyor');
+  }
+}
+
+function playerGuncelle(duaId) {
+  const info = SURE_INFO[duaId];
+  if (!info) return;
+  const prefs = getPrefs(duaId);
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (!kart) return;
+  const ayetInfo = kart.querySelector('.dpi-ayet');
+  const tekrarInfo = kart.querySelector('.dpi-tekrar');
+  if (ayetInfo) ayetInfo.innerHTML = `Âyet <strong>${aktifAyetIdx + 1}</strong> / ${info.ayetler.length}`;
+  if (tekrarInfo) tekrarInfo.innerHTML = `Tekrar <strong>${aktifTekrar + 1}</strong> / ${prefs.tekrar}`;
+}
+
+function playerProgressGuncelle(duaId) {
+  if (!aktifAudio || aktifPlayer !== duaId) return;
+  const kart = document.querySelector(`.dua-blok[data-id="${duaId}"]`);
+  if (!kart) return;
+  const dolgu = kart.querySelector('.dpp-dolgu');
+  if (dolgu && aktifAudio.duration) {
+    const yuzde = (aktifAudio.currentTime / aktifAudio.duration) * 100;
+    dolgu.style.width = yuzde + '%';
+  }
+}
+
+// ═══════════════════════════════════════
+// KUR'AN — 30 CÜZ
+// ═══════════════════════════════════════
+
+// Cüz başlangıç-bitiş haritası: [başlangıç_sure, başlangıç_ayet, bitiş_sure, bitiş_ayet]
+const CUZ_HARITASI = [
+  [1,1,2,141],   [2,142,2,252],  [2,253,3,92],   [3,93,4,23],    [4,24,4,147],
+  [4,148,5,81],  [5,82,6,110],   [6,111,7,87],   [7,88,8,40],    [8,41,9,92],
+  [9,93,11,5],   [11,6,12,52],   [12,53,14,52],  [15,1,16,128],  [17,1,18,74],
+  [18,75,20,135],[21,1,22,78],   [23,1,25,20],   [25,21,27,55],  [27,56,29,45],
+  [29,46,33,30], [33,31,36,27],  [36,28,39,31],  [39,32,41,46],  [41,47,45,37],
+  [46,1,51,30],  [51,31,57,29],  [58,1,66,12],   [67,1,77,50],   [78,1,114,6]
+];
+
+// 114 sûre adı (Türkçe)
+const SURE_ADLARI = [
+  'Fâtiha','Bakara','Âl-i İmrân','Nisâ','Mâide','En\'âm','A\'râf','Enfâl','Tevbe','Yûnus',
+  'Hûd','Yûsuf','Ra\'d','İbrâhîm','Hicr','Nahl','İsrâ','Kehf','Meryem','Tâhâ',
+  'Enbiyâ','Hac','Mü\'minûn','Nûr','Furkân','Şuarâ','Neml','Kasas','Ankebût','Rûm',
+  'Lokmân','Secde','Ahzâb','Sebe','Fâtır','Yâsîn','Sâffât','Sâd','Zümer','Mü\'min',
+  'Fussilet','Şûrâ','Zuhruf','Duhân','Câsiye','Ahkâf','Muhammed','Fetih','Hucurât','Kâf',
+  'Zâriyât','Tûr','Necm','Kamer','Rahmân','Vâkıa','Hadîd','Mücâdele','Haşr','Mümtehine',
+  'Saff','Cuma','Münâfikûn','Teğâbun','Talâk','Tahrîm','Mülk','Kalem','Hâkka','Meâric',
+  'Nûh','Cinn','Müzzemmil','Müddessir','Kıyâme','İnsân','Mürselât','Nebe','Nâziât','Abese',
+  'Tekvîr','İnfitâr','Mutaffifîn','İnşikâk','Burûc','Târık','A\'lâ','Gâşiye','Fecr','Beled',
+  'Şems','Leyl','Duhâ','İnşirâh','Tîn','Alâk','Kadr','Beyyine','Zilzâl','Âdiyât',
+  'Kâria','Tekâsür','Asr','Hümeze','Fîl','Kureyş','Mâûn','Kevser','Kâfirûn','Nasr',
+  'Tebbet','İhlâs','Felak','Nâs'
+];
+
+// Sûre başına ayet sayısı (1-indexed, indeks 0 boş)
+const SURE_AYET_SAYISI = [0,
+  7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,
+  112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,
+  54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,
+  14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,
+  29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,
+  11,8,3,9,5,4,7,3,6,3,5,4,5,6
+];
+
+const KURAN_PROGRESS_KEY = 'kn_kuran_okuma_v1';
+let kuranProgress = JSON.parse(localStorage.getItem(KURAN_PROGRESS_KEY) || '{}');
+// { '1': { okundu: true/false, sonAyet: 'sure:ayet' } }
+
+// IndexedDB için basit cache wrapper
+const KURAN_DB_NAME = 'ihya-kuran';
+const KURAN_DB_VERSION = 1;
+let kuranDB = null;
+
+function kuranDBAc() {
+  return new Promise((resolve, reject) => {
+    if (kuranDB) { resolve(kuranDB); return; }
+    const req = indexedDB.open(KURAN_DB_NAME, KURAN_DB_VERSION);
+    req.onerror = () => reject(req.error);
+    req.onsuccess = () => { kuranDB = req.result; resolve(kuranDB); };
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('sureler')) db.createObjectStore('sureler', { keyPath: 'id' });
+    };
+  });
+}
+
+async function kuranSureKaydet(id, data) {
+  const db = await kuranDBAc();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('sureler', 'readwrite');
+    const store = tx.objectStore('sureler');
+    store.put({ id, data });
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function kuranSureCek(id) {
+  const db = await kuranDBAc();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('sureler', 'readonly');
+    const req = tx.objectStore('sureler').get(id);
+    req.onsuccess = () => resolve(req.result ? req.result.data : null);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+// ═══ DİYANET API ENTEGRASYONU ═══
+const DIYANET_API_BASE = 'https://t061.diyanet.gov.tr/apigateway/acikkaynakkuran';
+const DIYANET_TOKEN_VARSAYILAN = '1223|NDhp4sGIGEgxAE29rnUQDOY7HVukWAqUlwam98zraf5d2e3f';
+const DIYANET_TOKEN_KEY = 'kn_diyanet_token_v1';
+
+function diyanetToken() {
+  return localStorage.getItem(DIYANET_TOKEN_KEY) || DIYANET_TOKEN_VARSAYILAN;
+}
+
+function diyanetTokenAyarla(yeni) {
+  if (yeni && yeni.trim()) {
+    localStorage.setItem(DIYANET_TOKEN_KEY, yeni.trim());
+  } else {
+    localStorage.removeItem(DIYANET_TOKEN_KEY);
+  }
+}
+
+// Bir cüzü Diyanet API'sinden çek (Arapça + Türkçe meal tek istekte)
+async function cuzDiyanettenCek(cuzNo) {
+  const url = `${DIYANET_API_BASE}/api/v1/juz/${cuzNo}`;
+  const res = await fetch(url, {
+    headers: {
+      'Authorization': 'Bearer ' + diyanetToken(),
+      'Accept': 'application/json'
+    }
+  });
+  if (res.status === 401) throw new Error('Yetkisiz — API anahtarınızı kontrol edin');
+  if (!res.ok) throw new Error('Diyanet API hatası: HTTP ' + res.status);
+  const data = await res.json();
+  // Beklenen: { data: [VerseResource...] } veya direkt dizi
+  const ayetler = Array.isArray(data) ? data : (data.data || []);
+  if (!ayetler.length) throw new Error('Diyanet yanıtı boş');
+  return ayetler;
+}
+
+// jsdelivr fallback — Diyanet erişilemezse
+async function cuzJsdelivrFallback(cuzNo) {
+  const [bs, ba, bt, btA] = CUZ_HARITASI[cuzNo - 1];
+  const sureNumaralari = [];
+  for (let s = bs; s <= bt; s++) sureNumaralari.push(s);
+
+  async function sureCek(sureNo) {
+    const arUrl = `https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quransimple/${sureNo}.json`;
+    const trUrl = `https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/tur-diyanetisleri/${sureNo}.json`;
+    const [ar, tr] = await Promise.all([
+      fetch(arUrl).then(r => r.json()),
+      fetch(trUrl).then(r => r.json())
+    ]);
+    return { sureNo, ar: ar.chapter || [], tr: tr.chapter || [] };
+  }
+
+  const sureler = await Promise.all(sureNumaralari.map(sureCek));
+  const ayetler = [];
+  sureler.forEach((s, i) => {
+    const sureNo = s.sureNo;
+    const ayetBaslangic = (sureNo === bs) ? ba : 1;
+    const ayetBitis = (sureNo === bt) ? btA : SURE_AYET_SAYISI[sureNo];
+    const trMap = {};
+    s.tr.forEach(v => { trMap[v.verse] = v.text; });
+    s.ar.forEach(v => {
+      if (v.verse < ayetBaslangic || v.verse > ayetBitis) return;
+      ayetler.push({
+        surah_number: sureNo,
+        verse_number: v.verse,
+        arabic_text: v.text,
+        text: trMap[v.verse] || '',
+        surah_name_turkish: SURE_ADLARI[sureNo - 1]
+      });
+    });
+  });
+  return ayetler;
+}
+
+// Asıl cüz yükleme fonksiyonu: Diyanet → fallback → cache
+async function cuzYukle(cuzNo) {
+  const cacheKey = `cuz-${cuzNo}-v2`;
+  const cached = await kuranSureCek(cacheKey);
+  if (cached) return cached;
+
+  let ayetler;
+  let kaynak = 'Diyanet';
+  try {
+    ayetler = await cuzDiyanettenCek(cuzNo);
+  } catch (diyanetHata) {
+    console.warn('Diyanet API başarısız, jsdelivr fallback deneniyor:', diyanetHata.message);
+    kaynak = 'jsdelivr (Diyanet erişilemedi)';
+    try {
+      ayetler = await cuzJsdelivrFallback(cuzNo);
+    } catch (fallbackHata) {
+      throw new Error(`Diyanet: ${diyanetHata.message} | Fallback: ${fallbackHata.message}`);
+    }
+  }
+
+  const data = { cuzNo, kaynak, ayetler };
+  await kuranSureKaydet(cacheKey, data);
+  return data;
+}
+
+// ═══ API Anahtarı Modal Yönetimi ═══
+function diyanetTokenModalAc() {
+  const inp = document.getElementById('diyanet-token-input');
+  if (inp) inp.value = diyanetToken();
+  const msg = document.getElementById('diyanet-token-mesaj');
+  if (msg) msg.textContent = '';
+  document.getElementById('diyanet-token-modal').classList.add('acik');
+  document.body.style.overflow = 'hidden';
+}
+
+function diyanetTokenModalKapat() {
+  document.getElementById('diyanet-token-modal').classList.remove('acik');
+  if (!document.querySelector('.kuran-modal.acik')) document.body.style.overflow = '';
+}
+
+async function diyanetTokenKaydet() {
+  const inp = document.getElementById('diyanet-token-input');
+  const msg = document.getElementById('diyanet-token-mesaj');
+  if (!inp || !msg) return;
+  const yeni = (inp.value || '').trim();
+  if (!yeni) {
+    msg.innerHTML = '<span style="color:#c00;">Anahtar boş olamaz.</span>';
+    return;
+  }
+  diyanetTokenAyarla(yeni);
+  // Önbellek temizle ki yeni anahtarla taze veri çekilsin
+  try {
+    const db = await kuranDBAc();
+    const tx = db.transaction('sureler', 'readwrite');
+    tx.objectStore('sureler').clear();
+  } catch(e) {}
+  msg.innerHTML = '<span style="color:#2d8a4f;">✓ Kaydedildi. Cüzleri yeniden açtığında yeni anahtar kullanılacak.</span>';
+  setTimeout(diyanetTokenModalKapat, 1500);
+}
+
+function diyanetTokenVarsayilanaDon() {
+  diyanetTokenAyarla('');
+  const inp = document.getElementById('diyanet-token-input');
+  if (inp) inp.value = DIYANET_TOKEN_VARSAYILAN;
+  const msg = document.getElementById('diyanet-token-mesaj');
+  if (msg) msg.innerHTML = '<span style="color:#2d8a4f;">✓ Uygulama varsayılan anahtarına dönüldü.</span>';
+}
+
+// 30 cüz grid'ini çiz
+function kuranGridCizdir() {
+  const grid = document.getElementById('kuran-cuz-grid');
+  if (!grid) return;
+  let okunan = 0;
+  let html = '';
+  for (let i = 0; i < 30; i++) {
+    const c = i + 1;
+    const [bs, , bt] = CUZ_HARITASI[i];
+    const baslikAd = SURE_ADLARI[bs - 1] + (bs !== bt ? ' — ' + SURE_ADLARI[bt - 1] : '');
+    const p = kuranProgress[c] || {};
+    const okundu = p.okundu ? 'tamamlandi' : '';
+    if (p.okundu) okunan++;
+    html += `
+      <div class="kuran-cuz-kart ${okundu}" onclick="cuzAc(${c})">
+        <div class="kuran-cuz-no">CÜZ ${c}</div>
+        <div class="kuran-cuz-baslik">${baslikAd}</div>
+        <div class="kuran-cuz-bar"><div class="kuran-cuz-bar-icerik" style="width:${p.okundu ? 100 : 0}%"></div></div>
+      </div>`;
+  }
+  grid.innerHTML = html;
+
+  // Üst rozet + hatim ilerleme
+  const rozet = document.getElementById('kuran-rozet');
+  if (rozet) rozet.textContent = `${okunan} / 30 cüz`;
+  const bar = document.getElementById('hatim-bar');
+  const yuzde = document.getElementById('hatim-yuzde');
+  const pct = Math.round((okunan / 30) * 100);
+  if (bar) bar.style.width = pct + '%';
+  if (yuzde) yuzde.textContent = '%' + pct;
+}
+
+// Modal aç + cüz yükle
+let aktifCuzNo = null;
+let aktifCuzAyetListesi = []; // [{sure, ayet, arapca, meal}]
+
+async function cuzAc(cuzNo) {
+  aktifCuzNo = cuzNo;
+  const modal = document.getElementById('kuran-modal');
+  const baslik = document.getElementById('kuran-modal-cuz');
+  const aciklama = document.getElementById('kuran-modal-aciklama');
+  const ayetlerEl = document.getElementById('kuran-ayetler');
+  const yukleniyorEl = document.getElementById('kuran-yukleniyor');
+  const okudumBtn = document.getElementById('kuran-okudum-btn');
+
+  const [bs, ba, bt, btA] = CUZ_HARITASI[cuzNo - 1];
+  baslik.textContent = 'Cüz ' + cuzNo;
+  aciklama.textContent = `${SURE_ADLARI[bs - 1]} ${ba} — ${SURE_ADLARI[bt - 1]} ${btA}`;
+
+  // Okudum butonu durumu
+  if (kuranProgress[cuzNo] && kuranProgress[cuzNo].okundu) {
+    okudumBtn.classList.add('tamamlandi');
+    okudumBtn.textContent = '✓ Okundu';
+  } else {
+    okudumBtn.classList.remove('tamamlandi');
+    okudumBtn.textContent = '✓ Okudum';
+  }
+
+  modal.classList.add('acik');
+  document.body.style.overflow = 'hidden';
+  ayetlerEl.innerHTML = '';
+  yukleniyorEl.classList.add('gosterilsin');
+
+  try {
+    // Diyanet API'den tüm cüzü tek istekte çek
+    const cuzVeri = await cuzYukle(cuzNo);
+    const ayetler = cuzVeri.ayetler;
+
+    aktifCuzAyetListesi = [];
+    let html = '';
+    let oncekiSure = null;
+
+    for (let i = 0; i < ayetler.length; i++) {
+      const v = ayetler[i];
+      // Sûre değişimi → yeni başlık
+      if (v.surah_number !== oncekiSure) {
+        const sureAdi = v.surah_name_turkish ?
+          v.surah_name_turkish.replace(/ Suresi$/, '') :
+          SURE_ADLARI[v.surah_number - 1];
+        const ilkAyetMi = (v.verse_number === 1);
+        if (ilkAyetMi) {
+          html += `
+            <div class="kuran-sure-baslik">
+              <div class="kuran-sure-baslik-no">SÛRE ${v.surah_number}</div>
+              <div class="kuran-sure-baslik-ad">${sureAdi}</div>
+              ${v.surah_number !== 1 && v.surah_number !== 9 ? '<div class="kuran-sure-baslik-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>' : ''}
+            </div>`;
+        } else {
+          html += `<div class="kuran-sure-baslik">
+            <div class="kuran-sure-baslik-no">SÛRE ${v.surah_number} — DEVAMI</div>
+            <div class="kuran-sure-baslik-ad">${sureAdi}</div>
+            <div style="font-size:11px; color:var(--orta); margin-top:4px;">Cüz sınırı: ${v.verse_number}. ayetten devam</div>
+          </div>`;
+        }
+        oncekiSure = v.surah_number;
+      }
+
+      aktifCuzAyetListesi.push({
+        sure: v.surah_number,
+        ayet: v.verse_number,
+        arapca: v.arabic_text || '',
+        meal: v.text || ''
+      });
+      const idx = aktifCuzAyetListesi.length - 1;
+      html += `
+        <div class="kuran-ayet" id="kuran-ayet-${idx}" data-idx="${idx}">
+          <span class="kuran-ayet-no">${v.verse_number}</span>
+          <div class="kuran-ayet-arapca">${v.arabic_text || ''}</div>
+          <div class="kuran-ayet-meal">${v.text || ''}</div>
+        </div>`;
+    }
+
+    // Kaynak göstergesi (üstte)
+    if (cuzVeri.kaynak && cuzVeri.kaynak !== 'Diyanet') {
+      html = `<div style="font-size:11px; color:var(--orta); padding:6px 10px; background:#fff3cd; border-radius:6px; margin-bottom:10px; text-align:center;">
+        ℹ️ Kaynak: ${cuzVeri.kaynak}
+      </div>` + html;
+    }
+
+    yukleniyorEl.classList.remove('gosterilsin');
+    ayetlerEl.innerHTML = html;
+    // Kaldığı yere scroll
+    const son = kuranProgress[cuzNo] && kuranProgress[cuzNo].sonAyetIdx;
+    if (typeof son === 'number' && son > 0) {
+      setTimeout(() => {
+        const el = document.getElementById('kuran-ayet-' + son);
+        if (el) el.scrollIntoView({ block: 'center' });
+      }, 100);
+    }
+  } catch (err) {
+    yukleniyorEl.classList.remove('gosterilsin');
+    console.error('Cüz yükleme hatası:', err);
+    ayetlerEl.innerHTML = `<div style="padding:24px; text-align:center; color:var(--orta);">
+      <div style="font-size:32px; margin-bottom:10px;">📡</div>
+      <div style="font-size:14px; margin-bottom:6px; color:#c00;">Cüz indirilemedi.</div>
+      <div style="font-size:12px;">İnternet bağlantını kontrol et ya da biraz sonra tekrar dene.<br>
+      <span style="font-size:10px; color:#999; word-break:break-all;">Detay: ${err && err.message ? err.message : err}</span></div>
+      <button class="dua-mini-btn" style="margin-top:14px;" onclick="cuzAc(${cuzNo})">🔄 Tekrar Dene</button>
+    </div>`;
+  }
+}
+
+function kuranModalKapat() {
+  kuranDurdur();
+  const modal = document.getElementById('kuran-modal');
+  modal.classList.remove('acik');
+  document.body.style.overflow = '';
+}
+
+function cuzuOkudumIsaretle() {
+  if (!aktifCuzNo) return;
+  if (!kuranProgress[aktifCuzNo]) kuranProgress[aktifCuzNo] = {};
+  kuranProgress[aktifCuzNo].okundu = !kuranProgress[aktifCuzNo].okundu;
+  localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+  kuranGridCizdir();
+  const btn = document.getElementById('kuran-okudum-btn');
+  if (kuranProgress[aktifCuzNo].okundu) {
+    btn.classList.add('tamamlandi');
+    btn.textContent = '✓ Okundu';
+    if (typeof toastGoster === 'function') toastGoster(`Cüz ${aktifCuzNo} tamamlandı! 🕋`, '🎉');
+    // Hatim tamamlandı mı?
+    const okunan = Object.values(kuranProgress).filter(p => p.okundu).length;
+    if (okunan === 30 && typeof toastGoster === 'function') {
+      setTimeout(() => toastGoster('Tebrikler! Hatim tamamlandı 🕋✨', '🎊'), 600);
+    }
+  } else {
+    btn.classList.remove('tamamlandi');
+    btn.textContent = '✓ Okudum';
+  }
+}
+
+// Audio: cüz boyunca ayet ayet çal
+let kuranAudio = null;
+let kuranAktifAyetIdx = 0;
+let kuranCaliyorMu = false;
+
+function kuranKariDegistir() {
+  // Kari değişince çalan ses durdurulur, kullanıcı tekrar play'e basar
+  if (kuranCaliyorMu) kuranDurdur();
+}
+
+function kuranPlayToggle() {
+  if (kuranCaliyorMu) {
+    kuranDurdur();
+  } else {
+    kuranPlay();
+  }
+}
+
+function kuranPlay() {
+  if (!aktifCuzAyetListesi.length) return;
+  kuranCaliyorMu = true;
+  const btn = document.getElementById('kuran-play-btn');
+  btn.textContent = '⏸ Duraklat';
+  btn.classList.add('calıyor');
+  kuranAyetCal(kuranAktifAyetIdx);
+}
+
+function kuranDurdur() {
+  kuranCaliyorMu = false;
+  if (kuranAudio) {
+    try { kuranAudio.pause(); } catch(e){}
+    kuranAudio = null;
+  }
+  const btn = document.getElementById('kuran-play-btn');
+  if (btn) { btn.textContent = '▶ Tümünü Çal'; btn.classList.remove('calıyor'); }
+}
+
+function kuranAyetCal(idx) {
+  if (!kuranCaliyorMu || idx >= aktifCuzAyetListesi.length) {
+    kuranDurdur();
+    if (idx >= aktifCuzAyetListesi.length) {
+      if (typeof toastGoster === 'function') toastGoster('Cüz tamamlandı 🕋', '✓');
+    }
+    return;
+  }
+
+  // Önceki aktif vurguyu kaldır
+  document.querySelectorAll('.kuran-ayet.aktif').forEach(el => el.classList.remove('aktif'));
+
+  const ayet = aktifCuzAyetListesi[idx];
+  kuranAktifAyetIdx = idx;
+
+  // İlerleme kaydet
+  if (aktifCuzNo) {
+    if (!kuranProgress[aktifCuzNo]) kuranProgress[aktifCuzNo] = {};
+    kuranProgress[aktifCuzNo].sonAyetIdx = idx;
+    localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+  }
+
+  // Aktif ayeti vurgula + scroll
+  const el = document.getElementById('kuran-ayet-' + idx);
+  if (el) {
+    el.classList.add('aktif');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Audio URL: everyayah.com — sure (3 hane) + ayet (3 hane)
+  const kariSelect = document.getElementById('kuran-kari-sec');
+  const kariId = kariSelect ? kariSelect.value : 'alafasy';
+  const kari = (typeof KARILER !== 'undefined' && KARILER[kariId]) ? KARILER[kariId] : { yol: 'Alafasy_128kbps' };
+  const sureStr = String(ayet.sure).padStart(3, '0');
+  const ayetStr = String(ayet.ayet).padStart(3, '0');
+  const url = `https://everyayah.com/data/${kari.yol}/${sureStr}${ayetStr}.mp3`;
+
+  if (kuranAudio) { try { kuranAudio.pause(); } catch(e){} }
+  kuranAudio = new Audio(url);
+  kuranAudio.onended = () => {
+    setTimeout(() => kuranAyetCal(idx + 1), 400);
+  };
+  kuranAudio.onerror = () => {
+    console.warn('Ayet ses dosyası yüklenemedi:', url);
+    setTimeout(() => kuranAyetCal(idx + 1), 600);
+  };
+  kuranAudio.play().catch(err => {
+    console.warn('Audio play hatası:', err);
+  });
+}
+
+// Sayfa yüklenince grid'i çiz
+setTimeout(() => { try { kuranGridCizdir(); } catch(e) { console.error('Kuran grid:', e); } }, 200);
+
 </script>
 
 <!-- SETUP WIZARD -->
@@ -10600,4 +13363,3 @@ setTimeout(() => {
 </div>
 
 </body>
-</html>
