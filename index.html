@@ -4708,61 +4708,169 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 .kuran-kapat-btn:hover, .kuran-kapat-btn:active { background: rgba(255,255,255,0.3); transform: scale(0.95); }
 
-.kuran-modal-kontrol {
-  display: flex;
-  gap: 8px;
-  padding: 10px 14px;
+/* Modern kontrol barı — v2 */
+.kuran-modal-kontrol-v2 {
   background: white;
   border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-  align-items: center;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-.kuran-modal-kontrol select {
+
+/* Üst progress bar — cüzde nereye geldiğin */
+.kuran-progress-yatay {
+  height: 3px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+.kuran-progress-yatay-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu), #f4d03f);
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 1. satır: kâri seçici */
+.kuran-kontrol-satir-1 { display: flex; gap: 8px; }
+.kuran-kari-select {
   flex: 1;
-  min-width: 130px;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 12px;
-  background: var(--bej);
-  color: var(--koyu);
-}
-.kuran-play-btn, .kuran-stop-btn, .kuran-okudum-btn {
-  border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
   font-size: 13px;
+  background: linear-gradient(135deg, #fff, var(--bej));
+  color: var(--koyu);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231B4332' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* 2. satır: Önceki / Çal / Sonraki */
+.kuran-kontrol-satir-2 {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.kuran-nav-btn {
+  background: linear-gradient(135deg, var(--bej), #fff);
+  border: 1.5px solid var(--border);
+  color: var(--koyu);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   transition: all 0.2s;
+  font-family: inherit;
+  -webkit-tap-highlight-color: rgba(212,175,55,0.3);
+  touch-action: manipulation;
+  min-height: 44px;
 }
-.kuran-play-btn {
-  background: var(--vurgu);
+.kuran-nav-btn:hover:not(:disabled) { border-color: var(--vurgu); background: var(--altin-bg); }
+.kuran-nav-btn:active:not(:disabled) { transform: scale(0.96); }
+.kuran-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.kuran-nav-ok { font-size: 16px; font-weight: 800; color: var(--vurgu); }
+.kuran-nav-etiket { font-size: 11px; letter-spacing: 0.3px; }
+
+.kuran-play-btn-v2 {
+  background: linear-gradient(135deg, var(--vurgu), #f4d03f);
   color: var(--koyu);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.35);
+  font-family: inherit;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+  touch-action: manipulation;
+  min-height: 44px;
 }
-.kuran-play-btn:active { transform: scale(0.96); }
-.kuran-play-btn.calıyor {
-  background: var(--koyu);
+.kuran-play-btn-v2:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(212,175,55,0.45); }
+.kuran-play-btn-v2:active { transform: scale(0.97); }
+.kuran-play-btn-v2.calıyor {
+  background: linear-gradient(135deg, var(--koyu), #2d5a44);
   color: white;
+  box-shadow: 0 4px 12px rgba(27,67,50,0.4);
 }
-.kuran-stop-btn {
-  background: rgba(0,0,0,0.06);
-  color: var(--orta);
-  width: 38px;
-  padding: 8px 0;
+
+/* 3. satır: yardımcı eylemler */
+.kuran-kontrol-satir-3 {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 8px;
+  align-items: stretch;
 }
-.kuran-okudum-btn {
+.kuran-ikon-btn {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--border);
+  background: white;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: rgba(212,175,55,0.3);
+  touch-action: manipulation;
+}
+.kuran-ikon-btn:hover { border-color: var(--vurgu); background: var(--altin-bg); }
+.kuran-ikon-btn:active { transform: scale(0.92); }
+
+.kuran-okudum-btn-v2 {
   background: transparent;
   color: var(--koyu);
-  border: 1.5px solid var(--koyu);
+  border: 2px solid var(--koyu);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.25s;
+  font-family: inherit;
+  -webkit-tap-highlight-color: rgba(27,67,50,0.2);
+  touch-action: manipulation;
+  min-height: 44px;
 }
-.kuran-okudum-btn.tamamlandi {
-  background: var(--koyu);
+.kuran-okudum-btn-v2:hover { background: var(--altin-bg); border-color: var(--vurgu); }
+.kuran-okudum-btn-v2:active { transform: scale(0.96); }
+.kuran-okudum-btn-v2.tamamlandi {
+  background: linear-gradient(135deg, var(--koyu), #2d5a44);
   color: white;
+  border-color: var(--koyu);
+  box-shadow: 0 4px 12px rgba(27,67,50,0.3);
 }
+.kuran-okudum-btn-v2.tamamlandi #kuran-okudum-ikon { color: var(--vurgu); font-size: 16px; }
 
 .kuran-modal-ayetler {
   flex: 1;
@@ -4790,80 +4898,357 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 @keyframes kuranSpin { to { transform: rotate(360deg); } }
 
+/* Sûre başlığı — şık ve dekoratif */
 .kuran-sure-baslik {
   text-align: center;
-  margin: 24px 0 12px;
-  padding: 12px;
-  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.06));
-  border-radius: 12px;
-  border-left: 3px solid var(--vurgu);
+  margin: 28px 0 18px;
+  padding: 22px 16px 18px;
+  background: linear-gradient(135deg, #fff, var(--altin-bg) 50%, rgba(212,175,55,0.08));
+  border-radius: 18px;
+  border: 1px solid rgba(212,175,55,0.25);
+  position: relative;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.kuran-sure-baslik::before {
+  content: '✦';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--vurgu);
+  font-size: 14px;
+  opacity: 0.5;
 }
 .kuran-sure-baslik:first-child { margin-top: 0; }
 .kuran-sure-baslik-no {
-  font-size: 11px;
-  color: var(--orta);
-  letter-spacing: 1px;
+  display: inline-block;
+  font-size: 10px;
+  color: var(--vurgu);
+  letter-spacing: 2px;
   font-weight: 700;
+  padding: 3px 10px;
+  background: rgba(212,175,55,0.15);
+  border-radius: 999px;
+  margin-bottom: 4px;
 }
 .kuran-sure-baslik-ad {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 900;
   color: var(--koyu);
-  margin: 2px 0;
+  margin: 4px 0 6px;
+  letter-spacing: 0.5px;
 }
 .kuran-sure-baslik-bismillah {
   font-family: 'Amiri', serif;
-  font-size: 20px;
+  font-size: 24px;
   color: var(--koyu);
-  margin-top: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
   direction: rtl;
+  border-top: 1px solid rgba(212,175,55,0.2);
 }
 
+/* Ayet kartı — modern, şık */
 .kuran-ayet {
-  padding: 12px 6px;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  transition: background 0.3s, padding 0.3s;
-  border-radius: 8px;
-  scroll-margin-top: 80px;
+  padding: 14px 12px;
+  margin: 6px 0;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  scroll-margin-top: 180px;
+  position: relative;
 }
-.kuran-ayet:last-child { border-bottom: none; }
+.kuran-ayet:hover {
+  border-color: rgba(212,175,55,0.2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
 .kuran-ayet.aktif {
-  background: linear-gradient(90deg, rgba(212,175,55,0.18), rgba(212,175,55,0.08));
-  padding: 12px 12px;
-  box-shadow: 0 0 0 1px rgba(212,175,55,0.3);
+  background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+  border-color: var(--vurgu);
+  box-shadow: 0 4px 16px rgba(212,175,55,0.25);
+  transform: scale(1.01);
 }
+.kuran-ayet.secde-ayeti {
+  border-color: rgba(212,175,55,0.3);
+  background: linear-gradient(135deg, #fff, rgba(212,175,55,0.04));
+}
+.kuran-ayet.secde-ayeti::before {
+  content: '🤲';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 4px rgba(212,175,55,0.4));
+}
+.kuran-ayet.secde-ayeti .kuran-secde-not {
+  font-size: 10px;
+  color: var(--vurgu);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(212,175,55,0.1);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 6px;
+  display: block;
+}
+
 .kuran-ayet-no {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: var(--altin-bg);
+  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.15));
   color: var(--vurgu);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
-  margin-right: 6px;
+  margin-right: 8px;
   vertical-align: middle;
+  border: 1.5px solid rgba(212,175,55,0.3);
 }
 .kuran-ayet.aktif .kuran-ayet-no {
-  background: var(--vurgu);
+  background: linear-gradient(135deg, var(--vurgu), #f4d03f);
   color: var(--koyu);
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(212,175,55,0.4);
 }
 .kuran-ayet-arapca {
   font-family: 'Amiri', serif;
-  font-size: 22px;
-  line-height: 2;
+  font-size: 24px;
+  line-height: 2.1;
   text-align: right;
   direction: rtl;
   color: var(--koyu);
-  margin: 8px 0;
+  margin: 10px 0 12px;
+  letter-spacing: 0.5px;
 }
 .kuran-ayet-meal {
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 14.5px;
+  line-height: 1.75;
   color: var(--orta);
   padding-left: 4px;
+  border-left: 2px solid rgba(212,175,55,0.15);
+  padding-left: 12px;
+  margin-top: 8px;
+}
+
+/* Cüz tamamlama konfetisi */
+.cuz-konfeti-konteyner {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9000;
+  overflow: hidden;
+}
+.cuz-konfeti-parca {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  top: -20px;
+  animation: cuzKonfetiDus 3.5s cubic-bezier(0.3, 0, 0.7, 1) forwards;
+}
+@keyframes cuzKonfetiDus {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0.7; }
+}
+
+.cuz-tamamlandi-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9500;
+  padding: 20px;
+}
+.cuz-tamamlandi-popup.acik { display: flex; animation: rozetFade 0.4s; }
+.cuz-tamamlandi-icerik {
+  background: linear-gradient(135deg, #fff, var(--altin-bg));
+  border-radius: 22px;
+  padding: 36px 24px 28px;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  border: 2px solid var(--vurgu);
+  box-shadow: 0 20px 60px rgba(212,175,55,0.4);
+  animation: cuzTamamlandiPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes cuzTamamlandiPop {
+  0% { transform: scale(0) rotate(-10deg); }
+  60% { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.cuz-tamamlandi-ikon {
+  font-size: 64px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 20px rgba(212,175,55,0.6));
+  animation: cuzIkonZiplama 1.5s ease-in-out infinite;
+}
+@keyframes cuzIkonZiplama {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.cuz-tamamlandi-baslik {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--koyu);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+.cuz-tamamlandi-cuz {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--vurgu);
+  margin-bottom: 10px;
+}
+.cuz-tamamlandi-aciklama {
+  font-size: 13px;
+  color: var(--orta);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.cuz-tamamlandi-istatistik {
+  background: rgba(212,175,55,0.1);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+.cuz-tamamlandi-istatistik-rakam {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--koyu);
+}
+.cuz-tamamlandi-istatistik-etiket {
+  font-size: 11px;
+  color: var(--orta);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.cuz-tamamlandi-btnler {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.cuz-tamamlandi-btnler button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.cuz-tamamlandi-btnler .btn-ana {
+  background: linear-gradient(135deg, var(--vurgu), #f4d03f);
+  color: var(--koyu);
+  box-shadow: 0 4px 14px rgba(212,175,55,0.35);
+}
+.cuz-tamamlandi-btnler .btn-ana:active { transform: scale(0.97); }
+.cuz-tamamlandi-btnler .btn-ikincil {
+  background: transparent;
+  color: var(--orta);
+  border: 1.5px solid var(--border);
+}
+
+/* Cüz tarihçesi modal */
+.cuz-tarihce-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.75);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5500;
+  padding: 16px;
+}
+.cuz-tarihce-modal.acik { display: flex; animation: rozetFade 0.25s; }
+.cuz-tarihce-icerik {
+  background: white;
+  border-radius: 18px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px 22px;
+  animation: rozetPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.cuz-tarihce-baslik {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--koyu);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.cuz-tarihce-cuz {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--vurgu);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.cuz-tarihce-ozet {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.cuz-tarihce-ozet-kart {
+  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.05));
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(212,175,55,0.2);
+}
+.cuz-tarihce-ozet-rakam {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--koyu);
+}
+.cuz-tarihce-ozet-etiket {
+  font-size: 10px;
+  color: var(--orta);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.cuz-tarihce-liste {
+  font-size: 12px;
+  color: var(--orta);
+  margin-bottom: 14px;
+}
+.cuz-tarihce-liste div {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+.cuz-tarihce-liste div:last-child { border-bottom: none; }
+.cuz-tarihce-kapat-btn {
+  width: 100%;
+  background: var(--koyu);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 8px;
 }
 
 /* Zikir tamamlama yıldızları */
@@ -5896,22 +6281,89 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
             </div>
             <button class="kuran-kapat-btn" onclick="kuranModalKapat()">×</button>
           </div>
-          <div class="kuran-modal-kontrol">
-            <select id="kuran-kari-sec" onchange="kuranKariDegistir()">
-              <option value="alafasy">Mishary Alafasy</option>
-              <option value="husary">Mahmoud Husary</option>
-              <option value="abdulbaset">Abdul Basit Murattal</option>
-              <option value="maher">Maher Al-Muaiqly</option>
-            </select>
-            <button class="kuran-play-btn" id="kuran-play-btn" onclick="kuranPlayToggle()">▶ Tümünü Çal</button>
-            <button class="kuran-stop-btn" onclick="kuranDurdur()" title="Durdur">⏹</button>
-            <button class="kuran-okudum-btn" id="kuran-okudum-btn" onclick="cuzuOkudumIsaretle()">✓ Okudum</button>
+          <div class="kuran-modal-kontrol-v2">
+            <!-- Progress bar (kullanıcı cüzde nerede olduğunu görsün) -->
+            <div class="kuran-progress-yatay"><div class="kuran-progress-yatay-dolgu" id="kuran-progress-yatay-dolgu"></div></div>
+
+            <!-- 1. SATIR: Kâri seçici + Hız + Bookmark -->
+            <div class="kuran-kontrol-satir-1">
+              <select id="kuran-kari-sec" onchange="kuranKariDegistir()" class="kuran-kari-select">
+                <option value="alafasy">🎤 Mishary Alafasy</option>
+                <option value="husary">🎤 Mahmoud Husary</option>
+                <option value="abdulbaset">🎤 Abdul Basit Murattal</option>
+                <option value="maher">🎤 Maher Al-Muaiqly</option>
+              </select>
+            </div>
+
+            <!-- 2. SATIR: Önceki / Çal / Durdur / Sonraki -->
+            <div class="kuran-kontrol-satir-2">
+              <button class="kuran-nav-btn" id="kuran-onceki-btn" onclick="cuzAcOnceki()" title="Önceki cüz">
+                <span class="kuran-nav-ok">←</span>
+                <span class="kuran-nav-etiket">Önceki</span>
+              </button>
+              <button class="kuran-play-btn-v2" id="kuran-play-btn" onclick="kuranPlayToggle()">
+                <span id="kuran-play-ikon">▶</span>
+                <span id="kuran-play-yazi">Tümünü Çal</span>
+              </button>
+              <button class="kuran-nav-btn" id="kuran-sonraki-btn" onclick="cuzAcSonraki()" title="Sonraki cüz">
+                <span class="kuran-nav-etiket">Sonraki</span>
+                <span class="kuran-nav-ok">→</span>
+              </button>
+            </div>
+
+            <!-- 3. SATIR: Durdur + Tarihçe + Okudum -->
+            <div class="kuran-kontrol-satir-3">
+              <button class="kuran-ikon-btn" onclick="kuranDurdur()" title="Sesi durdur" aria-label="Durdur">⏹</button>
+              <button class="kuran-ikon-btn" onclick="cuzTarihcesiAc()" title="Okuma tarihçesi" aria-label="Tarihçe">📅</button>
+              <button class="kuran-okudum-btn-v2" id="kuran-okudum-btn" onclick="cuzuOkudumIsaretle()">
+                <span id="kuran-okudum-ikon">✓</span>
+                <span id="kuran-okudum-yazi">Okudum</span>
+              </button>
+            </div>
           </div>
           <div class="kuran-modal-icerik-yukleniyor" id="kuran-yukleniyor">
             <div class="kuran-spinner"></div>
             <div style="margin-top:14px; color:var(--orta); font-size:13px;">Cüz indiriliyor… İlk açılış 5-15 saniye sürebilir.</div>
           </div>
           <div class="kuran-modal-ayetler" id="kuran-ayetler"></div>
+        </div>
+      </div>
+
+      <!-- Cüz Tamamlandı Animasyonu -->
+      <div class="cuz-tamamlandi-popup" id="cuz-tamamlandi-popup" onclick="if(event.target.id==='cuz-tamamlandi-popup') cuzTamamlandiKapat()">
+        <div class="cuz-tamamlandi-icerik">
+          <div class="cuz-tamamlandi-ikon">🕋</div>
+          <div class="cuz-tamamlandi-baslik">Mâşaallah!</div>
+          <div class="cuz-tamamlandi-cuz" id="ct-cuz-yazisi">Cüz X tamamlandı</div>
+          <div class="cuz-tamamlandi-aciklama" id="ct-aciklama">Allah ilminin tatbikini kolaylaştırsın.</div>
+          <div class="cuz-tamamlandi-istatistik">
+            <div class="cuz-tamamlandi-istatistik-rakam" id="ct-yuzde">%0</div>
+            <div class="cuz-tamamlandi-istatistik-etiket" id="ct-yuzde-alt">hatim ilerlemen</div>
+          </div>
+          <div class="cuz-tamamlandi-btnler">
+            <button class="btn-ana" id="ct-sonraki-btn" onclick="ctSonrakiCuz()">Sonraki Cüze Geç →</button>
+            <button class="btn-ikincil" onclick="cuzTamamlandiKapat()">Şimdilik bu kadar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cüz Tarihçe Modal -->
+      <div class="cuz-tarihce-modal" id="cuz-tarihce-modal" onclick="if(event.target.id==='cuz-tarihce-modal') cuzTarihcesiKapat()">
+        <div class="cuz-tarihce-icerik">
+          <div class="cuz-tarihce-baslik">📅 Okuma Tarihçesi</div>
+          <div class="cuz-tarihce-cuz" id="cth-cuz">Cüz —</div>
+          <div class="cuz-tarihce-ozet">
+            <div class="cuz-tarihce-ozet-kart">
+              <div class="cuz-tarihce-ozet-rakam" id="cth-okuma-sayisi">0</div>
+              <div class="cuz-tarihce-ozet-etiket">Okuma Sayısı</div>
+            </div>
+            <div class="cuz-tarihce-ozet-kart">
+              <div class="cuz-tarihce-ozet-rakam" id="cth-son-tarih">—</div>
+              <div class="cuz-tarihce-ozet-etiket">Son Okuma</div>
+            </div>
+          </div>
+          <div id="cth-liste" class="cuz-tarihce-liste"></div>
+          <button class="cuz-tarihce-kapat-btn" onclick="cuzTarihcesiKapat()">Tamam</button>
         </div>
       </div>
 
@@ -13974,13 +14426,16 @@ async function cuzAc(cuzNo) {
   baslik.textContent = 'Cüz ' + cuzNo;
   aciklama.textContent = `${SURE_ADLARI[bs - 1]} ${ba} — ${SURE_ADLARI[bt - 1]} ${btA}`;
 
-  // Okudum butonu durumu
+  // Okudum butonu durumu (yeni v2 yapı — span'lar)
+  const okudumYaziEl = document.getElementById('kuran-okudum-yazi');
   if (kuranProgress[cuzNo] && kuranProgress[cuzNo].okundu) {
     okudumBtn.classList.add('tamamlandi');
-    okudumBtn.textContent = '✓ Okundu';
+    if (okudumYaziEl) okudumYaziEl.textContent = 'Okundu';
+    else okudumBtn.textContent = '✓ Okundu';
   } else {
     okudumBtn.classList.remove('tamamlandi');
-    okudumBtn.textContent = '✓ Okudum';
+    if (okudumYaziEl) okudumYaziEl.textContent = 'Okudum';
+    else okudumBtn.textContent = '✓ Okudum';
   }
 
   modal.classList.add('acik');
@@ -14029,11 +14484,15 @@ async function cuzAc(cuzNo) {
         meal: v.text || ''
       });
       const idx = aktifCuzAyetListesi.length - 1;
+      const secdeMi = isSecdeAyeti(v.surah_number, v.verse_number);
+      const secdeKlas = secdeMi ? ' secde-ayeti' : '';
+      const secdeNot = secdeMi ? `<div class="kuran-secde-not">🤲 Secde Ayeti — okunduğunda secde edilir</div>` : '';
       html += `
-        <div class="kuran-ayet" id="kuran-ayet-${idx}" data-idx="${idx}">
+        <div class="kuran-ayet${secdeKlas}" id="kuran-ayet-${idx}" data-idx="${idx}">
           <span class="kuran-ayet-no">${v.verse_number}</span>
           <div class="kuran-ayet-arapca">${v.arabic_text || ''}</div>
           <div class="kuran-ayet-meal">${v.text || ''}</div>
+          ${secdeNot}
         </div>`;
     }
 
@@ -14067,6 +14526,11 @@ async function cuzAc(cuzNo) {
 
     // IntersectionObserver — kullanıcı scroll yaptıkça merkezdeki ayeti kaydet (sessiz okuma için)
     kuranScrollObserverKur();
+    // Önceki/Sonraki nav butonlarını güncelle
+    navButonlariGuncelle();
+    // Scroll progress listener kur
+    kuranScrollListenerEkle();
+    kuranScrollProgressGuncelle();
   } catch (err) {
     yukleniyorEl.classList.remove('gosterilsin');
     console.error('Cüz yükleme hatası:', err);
@@ -14153,8 +14617,12 @@ function cuzuOkudumIsaretle() {
   const btn = document.getElementById('kuran-okudum-btn');
   if (kuranProgress[aktifCuzNo].okundu) {
     btn.classList.add('tamamlandi');
-    btn.textContent = '✓ Okundu';
-    if (typeof toast === 'function') toast('📖', `Cüz ${aktifCuzNo} tamamlandı! 🕋`, 'basari');
+    // Yeni v2 buton iç yapı
+    const yaziEl = document.getElementById('kuran-okudum-yazi');
+    if (yaziEl) yaziEl.textContent = 'Okundu';
+    else btn.textContent = '✓ Okundu';
+    // Okuma tarihçesine kaydet
+    try { cuzOkumaKaydet(aktifCuzNo); } catch(e){}
     // Rozet kontrol — yeni cüz rozetleri kazanılmış olabilir
     if (typeof rozetKontrol === 'function') setTimeout(rozetKontrol, 200);
     // 30 cüz tamamlandı mı? → hatim animasyonu
@@ -14163,11 +14631,19 @@ function cuzuOkudumIsaretle() {
       const hatimSayisi = parseInt(localStorage.getItem('kn_hatim_sayisi') || '0') + 1;
       localStorage.setItem('kn_hatim_sayisi', String(hatimSayisi));
       localStorage.setItem('kn_son_hatim_tarihi', new Date().toISOString());
-      setTimeout(() => hatimTamamlandi(hatimSayisi), 600);
+      setTimeout(() => {
+        try { cuzTamamlandiGoster(aktifCuzNo); } catch(e){}
+        setTimeout(() => hatimTamamlandi(hatimSayisi), 3500);
+      }, 400);
+    } else {
+      // Tek cüz tamamlama animasyonu
+      setTimeout(() => { try { cuzTamamlandiGoster(aktifCuzNo); } catch(e){} }, 200);
     }
   } else {
     btn.classList.remove('tamamlandi');
-    btn.textContent = '✓ Okudum';
+    const yaziEl = document.getElementById('kuran-okudum-yazi');
+    if (yaziEl) yaziEl.textContent = 'Okudum';
+    else btn.textContent = '✓ Okudum';
   }
 }
 
@@ -14220,8 +14696,13 @@ function kuranPlay() {
   if (!aktifCuzAyetListesi.length) return;
   kuranCaliyorMu = true;
   const btn = document.getElementById('kuran-play-btn');
-  btn.textContent = '⏸ Duraklat';
-  btn.classList.add('calıyor');
+  if (btn) {
+    btn.classList.add('calıyor');
+    const ikon = document.getElementById('kuran-play-ikon');
+    const yazi = document.getElementById('kuran-play-yazi');
+    if (ikon) ikon.textContent = '⏸';
+    if (yazi) yazi.textContent = 'Duraklat';
+  }
   kuranAyetCal(kuranAktifAyetIdx);
 }
 
@@ -14232,7 +14713,13 @@ function kuranDurdur() {
     kuranAudio = null;
   }
   const btn = document.getElementById('kuran-play-btn');
-  if (btn) { btn.textContent = '▶ Tümünü Çal'; btn.classList.remove('calıyor'); }
+  if (btn) {
+    btn.classList.remove('calıyor');
+    const ikon = document.getElementById('kuran-play-ikon');
+    const yazi = document.getElementById('kuran-play-yazi');
+    if (ikon) ikon.textContent = '▶';
+    if (yazi) yazi.textContent = 'Tümünü Çal';
+  }
 }
 
 function kuranAyetCal(idx) {
@@ -14289,6 +14776,176 @@ function kuranAyetCal(idx) {
 
 // Sayfa yüklenince grid'i çiz
 setTimeout(() => { try { kuranGridCizdir(); } catch(e) { console.error('Kuran grid:', e); } }, 200);
+
+// ═══════════════════════════════════════
+// SECDE AYETLERİ (15 secde-i tilâvet)
+// ═══════════════════════════════════════
+// Diyanet kaynaklı standart liste — Hanefi mezhebine göre 14 ayet (Sad 24 dahil)
+const SECDE_AYETLERI = {
+  '7-206': 'A\'râf Sûresi son ayeti',
+  '13-15': 'Ra\'d Sûresi 15. ayet',
+  '16-49': 'Nahl Sûresi 49-50. ayet',
+  '17-107': 'İsrâ Sûresi 107. ayet',
+  '19-58': 'Meryem Sûresi 58. ayet',
+  '22-18': 'Hac Sûresi 18. ayet',
+  '25-60': 'Furkân Sûresi 60. ayet',
+  '27-25': 'Neml Sûresi 25. ayet',
+  '32-15': 'Secde Sûresi 15. ayet',
+  '38-24': 'Sâd Sûresi 24. ayet',
+  '41-37': 'Fussilet Sûresi 37. ayet',
+  '53-62': 'Necm Sûresi son ayeti',
+  '84-21': 'İnşikâk Sûresi 21. ayet',
+  '96-19': 'Alak Sûresi son ayeti'
+};
+
+function isSecdeAyeti(sureNo, ayetNo) {
+  return !!SECDE_AYETLERI[`${sureNo}-${ayetNo}`];
+}
+
+// ═══════════════════════════════════════
+// CÜZ NAVİGASYONU (Önceki / Sonraki)
+// ═══════════════════════════════════════
+async function cuzAcOnceki() {
+  if (!aktifCuzNo || aktifCuzNo <= 1) return;
+  await cuzAc(aktifCuzNo - 1);
+}
+async function cuzAcSonraki() {
+  if (!aktifCuzNo || aktifCuzNo >= 30) return;
+  await cuzAc(aktifCuzNo + 1);
+}
+
+function navButonlariGuncelle() {
+  const oncekiBtn = document.getElementById('kuran-onceki-btn');
+  const sonrakiBtn = document.getElementById('kuran-sonraki-btn');
+  if (oncekiBtn) oncekiBtn.disabled = (!aktifCuzNo || aktifCuzNo <= 1);
+  if (sonrakiBtn) sonrakiBtn.disabled = (!aktifCuzNo || aktifCuzNo >= 30);
+}
+
+// ═══════════════════════════════════════
+// CÜZ OKUMA TARİHÇESİ
+// ═══════════════════════════════════════
+function cuzOkumaKaydet(cuzNo) {
+  if (!cuzNo) return;
+  if (!kuranProgress[cuzNo]) kuranProgress[cuzNo] = {};
+  if (!Array.isArray(kuranProgress[cuzNo].okumalar)) kuranProgress[cuzNo].okumalar = [];
+  kuranProgress[cuzNo].okumalar.push(new Date().toISOString());
+  // Hafıza sınırı: son 30 okumayı tut
+  if (kuranProgress[cuzNo].okumalar.length > 30) {
+    kuranProgress[cuzNo].okumalar = kuranProgress[cuzNo].okumalar.slice(-30);
+  }
+  localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+}
+
+function tarihiTRFormat(isoStr) {
+  try {
+    const d = new Date(isoStr);
+    return d.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch(e) { return '—'; }
+}
+
+function cuzTarihcesiAc() {
+  if (!aktifCuzNo) return;
+  const cuz = kuranProgress[aktifCuzNo] || {};
+  const okumalar = Array.isArray(cuz.okumalar) ? cuz.okumalar : [];
+  document.getElementById('cth-cuz').textContent = `Cüz ${aktifCuzNo}`;
+  document.getElementById('cth-okuma-sayisi').textContent = okumalar.length;
+  document.getElementById('cth-son-tarih').textContent = okumalar.length ? tarihiTRFormat(okumalar[okumalar.length - 1]).split(' ')[0] : '—';
+  const liste = document.getElementById('cth-liste');
+  if (okumalar.length === 0) {
+    liste.innerHTML = '<div style="text-align:center; padding:18px; color:var(--orta); font-style:italic;">Henüz hiç okuma kaydı yok.<br>Cüzü tamamladığında ✓ Okudum\'a basarak işaretle.</div>';
+  } else {
+    // Son 10 okuma — yeni en üstte
+    const son10 = okumalar.slice(-10).reverse();
+    liste.innerHTML = son10.map((iso, i) => {
+      const sira = okumalar.length - i;
+      return `<div><span>${sira}. okuma</span><span>${tarihiTRFormat(iso)}</span></div>`;
+    }).join('');
+    if (okumalar.length > 10) {
+      liste.innerHTML += `<div style="font-style:italic; opacity:0.7;"><span colspan="2">+ ${okumalar.length - 10} daha eski okuma</span></div>`;
+    }
+  }
+  document.getElementById('cuz-tarihce-modal').classList.add('acik');
+}
+function cuzTarihcesiKapat() {
+  document.getElementById('cuz-tarihce-modal').classList.remove('acik');
+}
+
+// ═══════════════════════════════════════
+// CÜZ TAMAMLAMA ANİMASYONU
+// ═══════════════════════════════════════
+function cuzKonfetiBaslat() {
+  const renkler = ['#d4af37', '#f4d03f', '#1B4332', '#2d5a44', '#ffffff'];
+  const konteyner = document.createElement('div');
+  konteyner.className = 'cuz-konfeti-konteyner';
+  document.body.appendChild(konteyner);
+  for (let i = 0; i < 80; i++) {
+    const parca = document.createElement('div');
+    parca.className = 'cuz-konfeti-parca';
+    parca.style.left = Math.random() * 100 + '%';
+    parca.style.background = renkler[Math.floor(Math.random() * renkler.length)];
+    parca.style.animationDelay = (Math.random() * 0.5) + 's';
+    parca.style.animationDuration = (2.5 + Math.random() * 1.5) + 's';
+    parca.style.transform = `rotate(${Math.random() * 360}deg)`;
+    konteyner.appendChild(parca);
+  }
+  setTimeout(() => konteyner.remove(), 4500);
+}
+
+let ctSonrakiHedefCuz = null;
+function cuzTamamlandiGoster(cuzNo) {
+  const okunan = Object.values(kuranProgress).filter(p => p && p.okundu).length;
+  const yuzde = Math.round((okunan / 30) * 100);
+  document.getElementById('ct-cuz-yazisi').textContent = `Cüz ${cuzNo} tamamlandı`;
+  document.getElementById('ct-yuzde').textContent = `%${yuzde}`;
+  if (okunan === 30) {
+    document.getElementById('ct-yuzde-alt').textContent = 'HATİM TAMAMLANDI 🕋';
+    document.getElementById('ct-aciklama').textContent = '30 cüzü baştan sona okudun. Allah kabul etsin.';
+  } else {
+    document.getElementById('ct-yuzde-alt').textContent = 'hatim ilerlemen';
+    document.getElementById('ct-aciklama').textContent = `Allah okuduklarını kabul etsin. ${30 - okunan} cüz daha kaldı.`;
+  }
+  // Sonraki cüz butonu
+  const sonrakiBtn = document.getElementById('ct-sonraki-btn');
+  if (cuzNo < 30) {
+    ctSonrakiHedefCuz = cuzNo + 1;
+    sonrakiBtn.textContent = `Cüz ${cuzNo + 1}'e Geç →`;
+    sonrakiBtn.style.display = '';
+  } else {
+    sonrakiBtn.style.display = 'none';
+  }
+  document.getElementById('cuz-tamamlandi-popup').classList.add('acik');
+  cuzKonfetiBaslat();
+  // Hafif titreşim
+  if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
+}
+function cuzTamamlandiKapat() {
+  document.getElementById('cuz-tamamlandi-popup').classList.remove('acik');
+}
+async function ctSonrakiCuz() {
+  if (!ctSonrakiHedefCuz) return cuzTamamlandiKapat();
+  cuzTamamlandiKapat();
+  await cuzAc(ctSonrakiHedefCuz);
+  ctSonrakiHedefCuz = null;
+}
+
+// Scroll progress (üst yatay bar)
+function kuranScrollProgressGuncelle() {
+  const ayetlerEl = document.getElementById('kuran-ayetler');
+  const dolgu = document.getElementById('kuran-progress-yatay-dolgu');
+  if (!ayetlerEl || !dolgu) return;
+  const max = ayetlerEl.scrollHeight - ayetlerEl.clientHeight;
+  const yuzde = max > 0 ? (ayetlerEl.scrollTop / max) * 100 : 0;
+  dolgu.style.width = Math.min(100, Math.max(0, yuzde)) + '%';
+}
+// Scroll event'ini takıştır — cuzAc içinden tekrar tekrar tetiklenmesin diye flag
+let kuranScrollListenerEkli = false;
+function kuranScrollListenerEkle() {
+  if (kuranScrollListenerEkli) return;
+  const ayetlerEl = document.getElementById('kuran-ayetler');
+  if (!ayetlerEl) return;
+  ayetlerEl.addEventListener('scroll', kuranScrollProgressGuncelle, { passive: true });
+  kuranScrollListenerEkli = true;
+}
 
 // ═══════════════════════════════════════
 // ORUÇ BORCU MODÜLÜ
