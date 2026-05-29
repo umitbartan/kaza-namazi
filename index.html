@@ -1494,6 +1494,8 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   border-left: 3px solid var(--vurgu);
 }
 .zm-kart.zm-yesil { border-left-color: var(--orta); }
+.zm-kart.zm-mor { border-left-color: #8b6914; background: linear-gradient(135deg, #fdfaf0 0%, #faf6e6 100%); }
+.zm-kart.zm-mor .zm-progress-dolgu { background: linear-gradient(90deg, #8b6914, #d4af37); }
 .zm-ust {
   display: flex;
   justify-content: space-between;
@@ -4843,6 +4845,471 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   padding-left: 4px;
 }
 
+/* Zikir tamamlama yıldızları */
+.zm-yildiz {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 1;
+}
+.zm-yildiz .yildiz {
+  display: inline-block;
+  color: var(--vurgu, #d4af37);
+  text-shadow: 0 0 6px rgba(212,175,55,0.45);
+  animation: zmYildizPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.zm-yildiz .yildiz.yeni {
+  animation: zmYildizPatla 0.9s ease;
+}
+@keyframes zmYildizPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes zmYildizPatla {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; filter: brightness(2); }
+  50% { transform: scale(1.6) rotate(0deg); opacity: 1; filter: brightness(1.6); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+}
+
+/* Kuran cüz rozetleri için ufak yıldız sistemi (zm ile aynı) */
+.kuran-hatim-sayac {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.08));
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--vurgu);
+  margin-left: 8px;
+}
+
+/* ═══════════════════════════════════════
+   ORUÇ BORCU — Gece Teması
+   ═══════════════════════════════════════ */
+
+.oruc-bos-durum {
+  text-align: center;
+  padding: 20px 16px;
+}
+.oruc-bos-durum p {
+  color: var(--orta);
+  font-size: 13px;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.oruc-ana-kart {
+  background: linear-gradient(135deg, #0f2e1f 0%, #1B4332 60%, #1f3a4f 100%);
+  border-radius: 14px;
+  padding: 18px 16px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.oruc-ana-kart::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(212,175,55,0.25), transparent 70%);
+  pointer-events: none;
+}
+.oruc-ana-kart::after {
+  content: '🌙';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 28px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.oruc-sayilar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.oruc-sayi-kart {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.oruc-sayi-etiket {
+  font-size: 10px;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.oruc-sayi-rakam {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.oruc-sayi-kart.vurgu .oruc-sayi-rakam {
+  color: var(--vurgu);
+  text-shadow: 0 0 8px rgba(212,175,55,0.4);
+}
+.oruc-progress {
+  height: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.oruc-progress-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu) 0%, #f4d03f 100%);
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(212,175,55,0.3);
+}
+.oruc-progress-bilgi {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 14px;
+}
+.oruc-butonlar {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.oruc-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.oruc-btn:active { transform: scale(0.95); }
+.oruc-btn-eksi {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.oruc-btn-eksi:hover { background: rgba(255,255,255,0.18); }
+.oruc-btn-arti {
+  background: var(--vurgu);
+  color: var(--koyu);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(212,175,55,0.35);
+}
+.oruc-btn-arti:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(212,175,55,0.45); }
+.oruc-btn-arti:disabled {
+  background: rgba(212,175,55,0.3);
+  color: rgba(0,0,0,0.4);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.oruc-btn-geri {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.oruc-btn-geri:hover { background: rgba(255,255,255,0.18); }
+.oruc-alt-aksiyon {
+  text-align: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.oruc-link-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.75);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color 0.2s;
+  font-family: inherit;
+}
+.oruc-link-btn:hover { color: var(--vurgu); }
+.oruc-tamamlandi-kart {
+  background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+  border: 1.5px solid var(--vurgu);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+}
+.oruc-tamamlandi-kart .oruc-tamamlandi-ikon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+.oruc-tamamlandi-kart .oruc-tamamlandi-yazi {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--koyu);
+  margin-bottom: 4px;
+}
+.oruc-tamamlandi-kart .oruc-tamamlandi-alt {
+  font-size: 12px;
+  color: var(--orta);
+  margin-bottom: 14px;
+}
+
+/* ═══════════════════════════════════════
+   YILLIK MANEVİ RAPOR
+   ═══════════════════════════════════════ */
+.rapor-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: stretch;
+  justify-content: center;
+  z-index: 6000;
+  padding: 0;
+}
+.rapor-modal.acik { display: flex; animation: rozetFade 0.25s; }
+.rapor-modal-icerik {
+  background: var(--bej, #FAF7F0);
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  animation: kuranSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.rapor-baslik-bar {
+  padding: 18px 22px;
+  background: linear-gradient(135deg, var(--koyu) 0%, #2d5a44 50%, #1f3a4f 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.rapor-kapat-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+.rapor-icerik {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+}
+.rapor-aksiyon-bar {
+  padding: 12px 16px;
+  background: white;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+.rapor-canvas-konteyner {
+  padding: 16px;
+}
+#rapor-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Kandil banner & modal */
+.kandil-banner {
+  background: linear-gradient(135deg, #0f1f3a 0%, #1B4332 50%, #2a3f5f 100%);
+  color: white;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(15,31,58,0.3);
+  animation: kandilGlow 3s ease-in-out infinite;
+}
+.kandil-banner::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(212,175,55,0.35), transparent 70%);
+  pointer-events: none;
+}
+@keyframes kandilGlow {
+  0%, 100% { box-shadow: 0 6px 18px rgba(15,31,58,0.3); }
+  50% { box-shadow: 0 6px 24px rgba(212,175,55,0.45); }
+}
+.kandil-banner-ikon {
+  font-size: 28px;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 8px rgba(212,175,55,0.6));
+}
+.kandil-banner-baslik {
+  display: inline-block;
+  vertical-align: middle;
+}
+.kandil-banner-ad {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--vurgu);
+}
+.kandil-banner-alt {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.kandil-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 7000;
+  padding: 16px;
+}
+.kandil-modal.acik { display: flex; animation: rozetFade 0.4s; }
+.kandil-modal-icerik {
+  background: linear-gradient(135deg, #0a1a2e 0%, #1B4332 50%, #2a3f5f 100%);
+  color: white;
+  border-radius: 22px;
+  max-width: 460px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 28px 22px;
+  position: relative;
+  text-align: center;
+  border: 1px solid rgba(212,175,55,0.3);
+  box-shadow: 0 0 40px rgba(212,175,55,0.25);
+  animation: rozetPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.kandil-modal-ikon {
+  font-size: 64px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 16px rgba(212,175,55,0.8));
+}
+.kandil-modal-ad {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--vurgu);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.kandil-modal-tarih {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+.kandil-modal-aciklama {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  text-align: left;
+  color: rgba(255,255,255,0.92);
+}
+.kandil-modal-aciklama strong { color: var(--vurgu); }
+.kandil-modal-oneri {
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: left;
+  margin-bottom: 18px;
+}
+.kandil-modal-oneri-baslik {
+  font-weight: 800;
+  color: var(--vurgu);
+  font-size: 13px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.kandil-modal-oneri ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.85);
+}
+.kandil-modal-kapat {
+  background: var(--vurgu);
+  color: var(--koyu);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+/* Oruç modal */
+.oruc-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.8);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5500;
+  padding: 16px;
+}
+.oruc-modal.acik { display: flex; animation: rozetFade 0.25s; }
+.oruc-modal-icerik {
+  background: var(--bej, #FAF7F0);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  animation: rozetPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.oruc-modal-baslik {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #0f2e1f 0%, #1B4332 70%, #1f3a4f 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.oruc-kapat-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
 </style>
 </head>
 <body>
@@ -4868,10 +5335,28 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   
   
   
+  <!-- Kandil Gecesi Banner (otomatik) -->
+  <div id="kandil-banner-konteyner"></div>
+
   <!-- Günün Sözü -->
   <div class="gs-kart" id="gs-kart">
     <div class="gs-baslik">📜 GÜNÜN SÖZÜ</div>
     <div class="gs-metin" id="gs-metin">—</div>
+  </div>
+
+  <!-- Kandil Modal -->
+  <div class="kandil-modal" id="kandil-modal" onclick="if(event.target.id==='kandil-modal') kandilModalKapat()">
+    <div class="kandil-modal-icerik">
+      <div class="kandil-modal-ikon" id="kandil-modal-ikon">🌙</div>
+      <div class="kandil-modal-ad" id="kandil-modal-ad">—</div>
+      <div class="kandil-modal-tarih" id="kandil-modal-tarih">—</div>
+      <div class="kandil-modal-aciklama" id="kandil-modal-aciklama"></div>
+      <div class="kandil-modal-oneri">
+        <div class="kandil-modal-oneri-baslik">🌟 Bu Geceyi İhyâ Etmek İçin</div>
+        <ul id="kandil-modal-oneri-liste"></ul>
+      </div>
+      <button class="kandil-modal-kapat" onclick="kandilModalKapat()">Allah Kabul Etsin 🤲</button>
+    </div>
   </div>
 
   <!-- Mertebe Kartı (XP + bereket) -->
@@ -5071,6 +5556,41 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
 
+      <div class="bolum acilir" id="bolum-oruc">
+        <div class="bolum-baslik" onclick="bolumToggle('bolum-oruc')">🌙 Oruç Borcu <span class="badge" id="oruc-badge">Henüz girilmedi</span></div>
+        <div class="bolum-icerik">
+          <div id="oruc-icerik"></div>
+        </div>
+      </div>
+
+      <!-- Oruç borç girişi/düzenleme modal -->
+      <div class="oruc-modal" id="oruc-modal" onclick="if(event.target.id==='oruc-modal') orucModalKapat()">
+        <div class="oruc-modal-icerik">
+          <div class="oruc-modal-baslik">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:22px;">🌙</span>
+              <div>
+                <div id="oruc-modal-baslik-yazi" style="font-size:16px; font-weight:800;">Oruç Borcunu Gir</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-top:2px;">Ramazan kaza orucu</div>
+              </div>
+            </div>
+            <button class="oruc-kapat-btn" onclick="orucModalKapat()">×</button>
+          </div>
+          <div style="padding:22px;">
+            <div style="font-size:13px; color:var(--orta); line-height:1.6; margin-bottom:16px;">
+              Ramazan ayında geçerli mazeretle (hastalık, sefer, hayız vb.) tutamadığın orucların toplam sayısını gir.
+            </div>
+            <label style="display:block; font-size:12px; font-weight:700; color:var(--koyu); margin-bottom:6px;">Toplam Borç (gün)</label>
+            <input type="number" id="oruc-borc-input" min="0" max="9999" placeholder="Örn. 30" style="width:100%; padding:12px; border:1.5px solid var(--border); border-radius:10px; font-size:18px; font-weight:700; text-align:center; box-sizing:border-box; margin-bottom:14px;">
+            <div style="display:flex; gap:8px;">
+              <button class="dua-mini-btn" onclick="orucBorcKaydet()" style="background:var(--vurgu); color:var(--koyu); flex:1;">💾 Kaydet</button>
+              <button class="dua-mini-btn" onclick="orucModalKapat()" style="flex:1;">İptal</button>
+            </div>
+            <div id="oruc-modal-mesaj" style="margin-top:10px; font-size:12px; text-align:center;"></div>
+          </div>
+        </div>
+      </div>
+
       <div class="bolum acilir" id="bolum-zikirler">
         <div class="bolum-baslik" onclick="bolumToggle('bolum-zikirler')">📿 Zikirler <span class="badge" id="zikir-toplam-badge">Hatırla, kalbin huzur bulur</span></div>
         <div class="bolum-icerik">
@@ -5078,7 +5598,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         <div class="zm-konteyner">
           <div class="zm-kart" id="zm-laila">
             <div class="zm-ust">
-              <div class="zm-ad">Lâ İlâhe İllallâh</div>
+              <div class="zm-ad">Lâ İlâhe İllallâh <span class="zm-yildiz" id="zm-laila-yildiz"></span></div>
               <div class="zm-sayi" id="zm-laila-sayi">0 / 70.000</div>
             </div>
             <div class="zm-progress"><div class="zm-progress-dolgu" id="zm-laila-dolgu" style="width:0%"></div></div>
@@ -5092,7 +5612,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
           <div class="zm-kart zm-yesil" id="zm-ihlas">
             <div class="zm-ust">
-              <div class="zm-ad">İhlâs Sûresi</div>
+              <div class="zm-ad">İhlâs Sûresi <span class="zm-yildiz" id="zm-ihlas-yildiz"></span></div>
               <div class="zm-sayi" id="zm-ihlas-sayi">0 / 100.000</div>
             </div>
             <div class="zm-progress"><div class="zm-progress-dolgu" id="zm-ihlas-dolgu" style="width:0%"></div></div>
@@ -5101,6 +5621,23 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
               <button class="zm-btn zm-btn-arti" onclick="ihlasDegistir(10)">+10</button>
               <button class="zm-btn zm-btn-arti" onclick="ihlasDegistir(33)">+33</button>
               <button class="zm-btn zm-btn-arti" onclick="ihlasDegistir(100)">+100</button>
+            </div>
+          </div>
+
+          <div class="zm-kart zm-mor" id="zm-salavat">
+            <div class="zm-ust">
+              <div class="zm-ad">Salavât-ı Şerife <span class="zm-yildiz" id="zm-salavat-yildiz"></span></div>
+              <div class="zm-sayi" id="zm-salavat-sayi">0 / 100.000</div>
+            </div>
+            <div class="zm-progress"><div class="zm-progress-dolgu" id="zm-salavat-dolgu" style="width:0%"></div></div>
+            <div style="text-align:center; font-size:11px; color:var(--orta); font-style:italic; margin:6px 0 10px; line-height:1.5;">
+              "Allâhumme salli alâ seyyidinâ Muhammed"
+            </div>
+            <div class="zm-butonlar">
+              <button class="zm-btn zm-btn-eksi" onclick="salavatDegistir(-10)" title="10 azalt">−10</button>
+              <button class="zm-btn zm-btn-arti" onclick="salavatDegistir(10)">+10</button>
+              <button class="zm-btn zm-btn-arti" onclick="salavatDegistir(33)">+33</button>
+              <button class="zm-btn zm-btn-arti" onclick="salavatDegistir(100)">+100</button>
             </div>
           </div>
         </div>
@@ -5481,10 +6018,30 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   <div class="bolum">
     <div class="bolum-baslik">💾 Veri Yönetimi</div>
     <div class="aksiyon-satir" style="margin-top:0; padding-top:0; border-top:none;">
+      <button class="aksiyon-btn" onclick="yillikRaporAc()" style="background:linear-gradient(135deg, var(--vurgu), #f4d03f); color:var(--koyu); font-weight:800;">📊 Yıllık Manevi Rapor</button>
       <button class="aksiyon-btn" onclick="yedekIndir()">📥 JSON Yedek İndir</button>
       <button class="aksiyon-btn" onclick="document.getElementById('import-file').click()">📤 Yedekten Yükle</button>
       <input type="file" id="import-file" accept=".json" style="display:none" onchange="iceAktar(event)">
       <button class="aksiyon-btn" onclick="setupYenidenAc()" style="background:transparent; color:var(--orta); border-color:var(--orta); margin-right:6px;">📅 Borçları Yeniden Hesapla</button><button class="aksiyon-btn tehlikeli" onclick="tumunuSifirla()" style="margin-left:auto;">🔄 Tüm Verileri Sıfırla</button>
+    </div>
+  </div>
+
+  <!-- Yıllık Manevi Rapor Modal -->
+  <div class="rapor-modal" id="rapor-modal" onclick="if(event.target.id==='rapor-modal') yillikRaporKapat()">
+    <div class="rapor-modal-icerik">
+      <div class="rapor-baslik-bar">
+        <div>
+          <div style="font-size:11px; opacity:0.8; letter-spacing:1px; text-transform:uppercase;">Manevi Bilanço</div>
+          <div id="rapor-yil" style="font-size:22px; font-weight:900; margin-top:2px;">—</div>
+        </div>
+        <button class="rapor-kapat-btn" onclick="yillikRaporKapat()">×</button>
+      </div>
+      <div id="rapor-icerik" class="rapor-icerik"></div>
+      <div class="rapor-aksiyon-bar">
+        <button class="dua-mini-btn" onclick="raporOncekiYil()" id="rapor-onceki" style="font-size:11px;">← Önceki Yıl</button>
+        <button class="dua-mini-btn" onclick="raporPNGIndir()" style="background:var(--vurgu); color:var(--koyu); font-weight:800;">💾 Görsel İndir (PNG)</button>
+        <button class="dua-mini-btn" onclick="raporSonrakiYil()" id="rapor-sonraki" style="font-size:11px;">Sonraki Yıl →</button>
+      </div>
     </div>
   </div>
 
@@ -5624,7 +6181,8 @@ const ROZET_KATEGORILER = {
   zikir:   { ikon:'📿', ad:'Lâ İlâhe İllallâh Zikri', sira:8 },
   ihlas:   { ikon:'✨', ad:'İhlas Suresi Zikri',    sira:9 },
   esma:    { ikon:'🕊️', ad:'Esmâü\'l-Hüsnâ',          sira:10 },
-  ozel:    { ikon:'🌟', ad:'Özel Başarılar',         sira:11 }
+  kuran:   { ikon:'🕋', ad:'Kur\'an — Hatim Yolculuğu', sira:11 },
+  ozel:    { ikon:'🌟', ad:'Özel Başarılar',         sira:12 }
 };
 
 const ROZETLER = [
@@ -5733,7 +6291,19 @@ const ROZETLER = [
   { id:'gorev100', ikon:'🏆', ad:'100 Görev',       kategori:'ozel', aciklama:'100 Günlük Görev tamamla — özel!', hedef:100, tip:'gorevTamam', ozel:true },
   { id:'rekor7',   ikon:'🔥', ad:'1 Hafta Rekoru',  kategori:'streak', aciklama:'En uzun streak 7+ gün',    hedef:7,   tip:'streakRekor' },
   { id:'rekor30',  ikon:'💎', ad:'1 Ay Rekoru',     kategori:'streak', aciklama:'En uzun streak 30+ gün',   hedef:30,  tip:'streakRekor' },
-  { id:'rekor100', ikon:'👑', ad:'100 Gün Rekoru',  kategori:'streak', aciklama:'En uzun streak 100+ gün — özel!', hedef:100, tip:'streakRekor', ozel:true }
+  { id:'rekor100', ikon:'👑', ad:'100 Gün Rekoru',  kategori:'streak', aciklama:'En uzun streak 100+ gün — özel!', hedef:100, tip:'streakRekor', ozel:true },
+
+  // 🕋 KUR'AN — CÜZ OKUMA İLERLEMESİ
+  { id:'c1',     ikon:'📖', ad:'İlk Adım',         kategori:'kuran', aciklama:'İlk cüzünü oku',           hedef:1,    tip:'cuzOkundu' },
+  { id:'c5',     ikon:'☘️', ad:'Yol Açıldı',       kategori:'kuran', aciklama:'5 cüz oku',                hedef:5,    tip:'cuzOkundu' },
+  { id:'c15',    ikon:'🌗', ad:'Yarı Yolda',       kategori:'kuran', aciklama:'15 cüz oku — yarı hatim',  hedef:15,   tip:'cuzOkundu' },
+  { id:'c25',    ikon:'🌕', ad:'Son Düzlük',       kategori:'kuran', aciklama:'25 cüz oku — hatime yakın',hedef:25,   tip:'cuzOkundu' },
+  { id:'c30',    ikon:'🕋', ad:'Hatim Tamamlandı', kategori:'kuran', aciklama:'30 cüzü oku — tam hatim!', hedef:30,   tip:'cuzOkundu', ozel:true },
+
+  // 🕋 KUR'AN — DEVAMLILIK & ÖZEL
+  { id:'cs7',    ikon:'📚', ad:'Cüz Dostu',        kategori:'kuran', aciklama:'7 gün ardışık cüz aç',     hedef:7,    tip:'cuzStreak' },
+  { id:'cgece',  ikon:'🌙', ad:'Geceyi Bekleyen',  kategori:'kuran', aciklama:'Teheccüd vaktinde (03:00-05:00) cüz aç', hedef:1, tip:'cuzGece' },
+  { id:'hatim2', ikon:'💎', ad:'İkinci Hatim',     kategori:'kuran', aciklama:'2 hatim tamamla',          hedef:2,    tip:'hatimSayisi', ozel:true }
 ];
 
 const STORAGE_KEY = 'kn_kayitlar_v1';
@@ -5767,6 +6337,17 @@ let kayitlar = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 let kazanilanRozetler = new Set(JSON.parse(localStorage.getItem(ROZETLER_KEY) || '[]'));
 let zikirSayisi = parseInt(localStorage.getItem(ZIKIR_KEY) || '0');
 let ihlasSayisi = parseInt(localStorage.getItem(IHLAS_KEY) || '0');
+// Zikir yıldız sayaçları — her 70K Lâ İlâhe veya 100K İhlâs tamamlanınca yıldız +1
+const ZIKIR_YILDIZ_KEY = 'kn_zikir_yildiz_v1';
+const IHLAS_YILDIZ_KEY = 'kn_ihlas_yildiz_v1';
+let zikirYildiz = parseInt(localStorage.getItem(ZIKIR_YILDIZ_KEY) || '0');
+let ihlasYildiz = parseInt(localStorage.getItem(IHLAS_YILDIZ_KEY) || '0');
+// Salavât sayacı + yıldız
+const SALAVAT_KEY = 'kn_salavat_v1';
+const SALAVAT_HEDEF = 100000;
+const SALAVAT_YILDIZ_KEY = 'kn_salavat_yildiz_v1';
+let salavatSayisi = parseInt(localStorage.getItem(SALAVAT_KEY) || '0');
+let salavatYildiz = parseInt(localStorage.getItem(SALAVAT_YILDIZ_KEY) || '0');
 let esmaZikirleri = JSON.parse(localStorage.getItem(ESMA_ZIKIR_KEY) || '{}');
 let aktifEsmaNo = parseInt(localStorage.getItem(ESMA_AKTIF_KEY) || '17');
 let esmaTamamlananlar = new Set(JSON.parse(localStorage.getItem(ESMA_TAMAMLANAN_KEY) || '[]'));
@@ -5968,8 +6549,21 @@ function rozetDurum(r) {
   else if (r.tip === 'tum5gun') { mevcut = tum5VakitGunSayisi(); }
   else if (r.tip === 'tum5ardisik') { mevcut = tum5VakitArdisikMax(); }
   else if (r.tip === 'aktifgun') { mevcut = aktifGunSayisi(); }
-  else if (r.tip === 'zikir') { mevcut = zikirSayisi; }
-  else if (r.tip === 'ihlas') { mevcut = ihlasSayisi; }
+  else if (r.tip === 'zikir') { mevcut = zikirSayisi + (zikirYildiz * ZIKIR_HEDEF); }
+  else if (r.tip === 'ihlas') { mevcut = ihlasSayisi + (ihlasYildiz * IHLAS_HEDEF); }
+  else if (r.tip === 'cuzOkundu') {
+    try { mevcut = Object.values(kuranProgress || {}).filter(p => p && p.okundu).length; }
+    catch(e) { mevcut = 0; }
+  }
+  else if (r.tip === 'hatimSayisi') {
+    mevcut = parseInt(localStorage.getItem('kn_hatim_sayisi') || '0');
+  }
+  else if (r.tip === 'cuzStreak') {
+    mevcut = cuzAcmaStreak();
+  }
+  else if (r.tip === 'cuzGece') {
+    mevcut = localStorage.getItem('kn_cuz_gece_acti') === '1' ? 1 : 0;
+  }
   else if (r.tip === 'esmaTamam') { mevcut = esmaTamamlananlar.size; }
   else if (r.tip === 'esmaToplam') { mevcut = esmaToplamZikir(); }
   else if (r.tip === 'gorevTamam') { mevcut = gorevTamamlama; }
@@ -6287,6 +6881,7 @@ function herseyGuncelle() {
   hesaplayiciGuncelle();
   zikirGuncelle();
   ihlasGuncelle();
+  try { salavatGuncelle(); } catch(e){}
   esmaZikirGuncelle();
   // İlk yüklemede zaten kazanılmış rozetleri sessizce işaretle (popup spam'ı önle)
   if (!ilkYuklemeBitti) {
@@ -6498,30 +7093,54 @@ function zikirMotivasyon(sayi) {
   return '👑 MAŞAALLAH! 70 bin zikre ulaştın — özel rozet kazandın. Allah kabul etsin.';
 }
 
-function zikirGuncelle() {
+// Yıldız render — bir konteynere kazanılmış yıldız sayısı kadar ⭐ basar
+function yildizCizdir(elId, sayi, yeniMi) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (sayi <= 0) { el.innerHTML = ''; return; }
+  let html = '';
+  for (let i = 0; i < sayi; i++) {
+    const yeniSinif = (yeniMi && i === sayi - 1) ? ' yeni' : '';
+    html += `<span class="yildiz${yeniSinif}">⭐</span>`;
+  }
+  el.innerHTML = html;
+}
+
+function zikirGuncelle(yeniYildizMi) {
   const yuzde = Math.min(100, (zikirSayisi / ZIKIR_HEDEF) * 100);
   const sayiEl = document.getElementById('zm-laila-sayi');
   const dolguEl = document.getElementById('zm-laila-dolgu');
   if (sayiEl) sayiEl.textContent = `${zikirSayisi.toLocaleString('tr-TR')} / 70.000`;
   if (dolguEl) dolguEl.style.width = yuzde + '%';
+  yildizCizdir('zm-laila-yildiz', zikirYildiz, yeniYildizMi);
 }
 
 function zikirDegistir(miktar) {
   const eski = zikirSayisi;
-  zikirSayisi = Math.max(0, zikirSayisi + miktar);
+  let yeniSayi = Math.max(0, zikirSayisi + miktar);
+  let kazaniilanYildiz = 0;
+  // Hedef geçildi mi? Her 70.000'de yıldız +1, sayaç sıfırlanır + kalan eklenir
+  if (miktar > 0 && yeniSayi >= ZIKIR_HEDEF) {
+    while (yeniSayi >= ZIKIR_HEDEF) {
+      kazaniilanYildiz++;
+      yeniSayi -= ZIKIR_HEDEF;
+    }
+    zikirYildiz += kazaniilanYildiz;
+    localStorage.setItem(ZIKIR_YILDIZ_KEY, String(zikirYildiz));
+  }
+  zikirSayisi = yeniSayi;
   kaydet();
   if (miktar > 0) {
     toast('📿', `+${miktar.toLocaleString('tr-TR')} zikir — Toplam: ${zikirSayisi.toLocaleString('tr-TR')}`, 'basari');
   } else {
     toast('📿', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
   }
-  zikirGuncelle();
-  // Rozet kontrolü (sadece yeni hedef geçildiyse popup açar)
+  zikirGuncelle(kazaniilanYildiz > 0);
   if (miktar > 0) {
     rozetKontrol();
-    // 70.000 özel kutlama
-    if (eski < ZIKIR_HEDEF && zikirSayisi >= ZIKIR_HEDEF) {
-      setTimeout(() => konfeti70Bin(), 800);
+    // 70.000 tamamlama özel kutlama
+    if (kazaniilanYildiz > 0) {
+      setTimeout(() => konfeti70Bin(kazaniilanYildiz), 800);
     }
   }
   rozetleriCizdir();
@@ -6568,24 +7187,35 @@ function degistir(vakitId, miktar) {
 // =========================================================
 // İHLAS SAYACI
 // =========================================================
-function ihlasGuncelle() {
+function ihlasGuncelle(yeniYildizMi) {
   const yuzde = Math.min(100, (ihlasSayisi / IHLAS_HEDEF) * 100);
   const sayiEl = document.getElementById('zm-ihlas-sayi');
   const dolguEl = document.getElementById('zm-ihlas-dolgu');
   if (sayiEl) sayiEl.textContent = `${ihlasSayisi.toLocaleString('tr-TR')} / 100.000`;
   if (dolguEl) dolguEl.style.width = yuzde + '%';
+  yildizCizdir('zm-ihlas-yildiz', ihlasYildiz, yeniYildizMi);
 }
 
 function ihlasDegistir(miktar) {
   const eski = ihlasSayisi;
-  ihlasSayisi = Math.max(0, ihlasSayisi + miktar);
+  let yeniSayi = Math.max(0, ihlasSayisi + miktar);
+  let kazaniilanYildiz = 0;
+  if (miktar > 0 && yeniSayi >= IHLAS_HEDEF) {
+    while (yeniSayi >= IHLAS_HEDEF) {
+      kazaniilanYildiz++;
+      yeniSayi -= IHLAS_HEDEF;
+    }
+    ihlasYildiz += kazaniilanYildiz;
+    localStorage.setItem(IHLAS_YILDIZ_KEY, String(ihlasYildiz));
+  }
+  ihlasSayisi = yeniSayi;
   kaydet();
   if (miktar > 0) toast('✨', `+${miktar.toLocaleString('tr-TR')} İhlas — Toplam: ${ihlasSayisi.toLocaleString('tr-TR')}`, 'basari');
   else toast('✨', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
-  ihlasGuncelle();
+  ihlasGuncelle(kazaniilanYildiz > 0);
   if (miktar > 0) {
     rozetKontrol();
-    if (eski < IHLAS_HEDEF && ihlasSayisi >= IHLAS_HEDEF) setTimeout(() => konfeti100Bin(), 800);
+    if (kazaniilanYildiz > 0) setTimeout(() => konfeti100Bin(kazaniilanYildiz), 800);
   }
   rozetleriCizdir();
 }
@@ -6599,13 +7229,62 @@ function ihlasSifirla() {
   rozetleriCizdir();
 }
 
-function konfeti100Bin() {
-  document.getElementById('popup-ikon').textContent = '👑';
-  document.getElementById('popup-baslik').textContent = '100 BİN İHLAS TAMAMLANDI!';
+// ═══ SALAVÂT-I ŞERİFE SAYACI ═══
+function salavatGuncelle(yeniYildizMi) {
+  const yuzde = Math.min(100, (salavatSayisi / SALAVAT_HEDEF) * 100);
+  const sayiEl = document.getElementById('zm-salavat-sayi');
+  const dolguEl = document.getElementById('zm-salavat-dolgu');
+  if (sayiEl) sayiEl.textContent = `${salavatSayisi.toLocaleString('tr-TR')} / 100.000`;
+  if (dolguEl) dolguEl.style.width = yuzde + '%';
+  yildizCizdir('zm-salavat-yildiz', salavatYildiz, yeniYildizMi);
+}
+
+function salavatDegistir(miktar) {
+  let yeniSayi = Math.max(0, salavatSayisi + miktar);
+  let kazaniilanYildiz = 0;
+  if (miktar > 0 && yeniSayi >= SALAVAT_HEDEF) {
+    while (yeniSayi >= SALAVAT_HEDEF) {
+      kazaniilanYildiz++;
+      yeniSayi -= SALAVAT_HEDEF;
+    }
+    salavatYildiz += kazaniilanYildiz;
+    localStorage.setItem(SALAVAT_YILDIZ_KEY, String(salavatYildiz));
+  }
+  salavatSayisi = yeniSayi;
+  localStorage.setItem(SALAVAT_KEY, String(salavatSayisi));
+  if (miktar > 0) toast('🤍', `+${miktar.toLocaleString('tr-TR')} Salavât — Toplam: ${salavatSayisi.toLocaleString('tr-TR')}`, 'basari');
+  else toast('🤍', `${miktar.toLocaleString('tr-TR')} (geri alındı)`);
+  salavatGuncelle(kazaniilanYildiz > 0);
+  if (miktar > 0) {
+    if (kazaniilanYildiz > 0) setTimeout(() => konfetiSalavat(kazaniilanYildiz), 800);
+  }
+}
+
+function konfetiSalavat(yeniYildiz) {
+  const sıra = salavatYildiz;
+  const sıraMetin = sıra === 1 ? '1. tur' : `${sıra}. tur`;
+  document.getElementById('popup-ikon').textContent = '🤍';
+  document.getElementById('popup-baslik').textContent = `${sıraMetin.toUpperCase()} — 100 BİN SALAVÂT TAMAMLANDI!`;
   document.getElementById('popup-aciklama').innerHTML =
-    'Mâşaallah! 100.000 kez İhlas Suresi okudun.<br><br>' +
-    'Bu yaklaşık <strong>33.333 hatim</strong> sevabına denktir.<br><br>' +
-    '<strong>👑 Yüz Bin İhlas rozeti</strong> sana verildi. Allah kabul etsin.';
+    `Mâşaallah! 100.000 kez Resûl-i Ekrem'e salavât getirdin.<br><br>` +
+    `"Bana bir salavât getirene Allah on rahmetle mukabele eder." — <em>Müslim</em><br><br>` +
+    `Toplam <strong>⭐ ${salavatYildiz} yıldız</strong> kazandın!<br>` +
+    `Sayaç sıfırlandı, yeni tura devam edebilirsin.<br><br>` +
+    `Allah kabul etsin.`;
+  document.getElementById('rozet-popup').classList.add('acik');
+}
+
+function konfeti100Bin(yeniYildiz) {
+  const sıra = ihlasYildiz; // mevcut toplam yıldız sayısı
+  const sıraMetin = sıra === 1 ? '1. tur' : `${sıra}. tur`;
+  document.getElementById('popup-ikon').textContent = '⭐';
+  document.getElementById('popup-baslik').textContent = `${sıraMetin.toLocaleUpperCase ? sıraMetin.toUpperCase() : sıraMetin} — 100 BİN İHLAS TAMAMLANDI!`;
+  document.getElementById('popup-aciklama').innerHTML =
+    `Mâşaallah! 100.000 kez İhlas Sûresi okudun.<br><br>` +
+    `Bu yaklaşık <strong>33.333 hatim</strong> sevabına denktir.<br><br>` +
+    `Toplam <strong>⭐ ${ihlasYildiz} yıldız</strong> kazandın!<br>` +
+    `Sayaç sıfırlandı, yeni tura devam edebilirsin.<br><br>` +
+    `Allah kabul etsin.`;
   document.getElementById('rozet-popup').classList.add('acik');
 }
 
@@ -6799,14 +7478,18 @@ function ezSonGuncelle() {
   });
 }
 
-function konfeti70Bin() {
+function konfeti70Bin(yeniYildiz) {
   // 70.000'e ulaşınca büyük kutlama popup'ı
-  document.getElementById('popup-ikon').textContent = '👑';
-  document.getElementById('popup-baslik').textContent = '70 BİN ZİKİR TAMAMLANDI!';
+  const sıra = zikirYildiz; // mevcut toplam yıldız sayısı
+  const sıraMetin = sıra === 1 ? '1. tur' : `${sıra}. tur`;
+  document.getElementById('popup-ikon').textContent = '⭐';
+  document.getElementById('popup-baslik').textContent = `${sıraMetin.toUpperCase()} — 70 BİN ZİKİR TAMAMLANDI!`;
   document.getElementById('popup-aciklama').innerHTML =
-    'Mâşaallah! 70.000 kez "Lâ ilâhe illallâh" dedin.<br><br>' +
-    'Bu ulvi zikir, tövbeye vesile olan en büyük zikir mertebelerinden biridir.<br><br>' +
-    '<strong>👑 Yetmiş Bin Zikir rozeti</strong> sana verildi. Allah kabul etsin.';
+    `Mâşaallah! 70.000 kez "Lâ ilâhe illallâh" dedin.<br><br>` +
+    `Bu ulvi zikir, tövbeye vesile olan en büyük zikir mertebelerinden biridir.<br><br>` +
+    `Toplam <strong>⭐ ${zikirYildiz} yıldız</strong> kazandın!<br>` +
+    `Sayaç sıfırlandı, yeni tura devam edebilirsin.<br><br>` +
+    `Allah kabul etsin.`;
   document.getElementById('rozet-popup').classList.add('acik');
 }
 
@@ -10033,12 +10716,16 @@ function duaAra(metin) {
 function yedekIndir() {
   const veri = {
     olusturma: new Date().toISOString(),
-    versiyon: 'masaustu_v4',
+    versiyon: 'masaustu_v5',
     borclar: Object.fromEntries(VAKITLER.map(v => [v.id, v.borc])),
     kayitlar: kayitlar,
     rozetler: [...kazanilanRozetler],
     zikir: zikirSayisi,
     ihlas: ihlasSayisi,
+    salavat: salavatSayisi,
+    zikirYildiz: zikirYildiz,
+    ihlasYildiz: ihlasYildiz,
+    salavatYildiz: salavatYildiz,
     esmaZikirleri: esmaZikirleri,
     esmaAktif: aktifEsmaNo,
     esmaTamamlananlar: [...esmaTamamlananlar],
@@ -10046,7 +10733,17 @@ function yedekIndir() {
     streakRekoru: streakRekoru,
     haftalikHedef: haftalikHedef,
     aylikHedef: aylikHedef,
-    gorevTamamlama: gorevTamamlama
+    gorevTamamlama: gorevTamamlama,
+    // Oruç borcu
+    orucBorc: localStorage.getItem(ORUC_BORC_KEY),
+    orucTutulan: localStorage.getItem(ORUC_TUTULAN_KEY),
+    orucSonGun: localStorage.getItem(ORUC_SON_GUN_KEY),
+    // Kuran cüz ilerlemesi + hatim
+    kuranProgress: (typeof kuranProgress !== 'undefined') ? kuranProgress : null,
+    hatimSayisi: localStorage.getItem('kn_hatim_sayisi'),
+    cuzGunler: localStorage.getItem('kn_cuz_gunler'),
+    cuzGeceActi: localStorage.getItem('kn_cuz_gece_acti'),
+    diyanetToken: localStorage.getItem(DIYANET_TOKEN_KEY)
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -10083,9 +10780,32 @@ function iceAktar(event) {
       if (typeof v.aylikHedef === 'number') { aylikHedef = v.aylikHedef; localStorage.setItem(AYLIK_HEDEF_KEY, aylikHedef.toString()); }
       if (typeof v.gorevTamamlama === 'number') { gorevTamamlama = v.gorevTamamlama; localStorage.setItem(GOREV_TAMAMLAMA_KEY, gorevTamamlama.toString()); }
       if (typeof v.ilkKullanim === 'string') localStorage.setItem(ILK_KULLANIM_KEY, v.ilkKullanim);
+      // Yıldız sayaçları
+      if (typeof v.zikirYildiz === 'number') { zikirYildiz = v.zikirYildiz; localStorage.setItem(ZIKIR_YILDIZ_KEY, String(zikirYildiz)); }
+      if (typeof v.ihlasYildiz === 'number') { ihlasYildiz = v.ihlasYildiz; localStorage.setItem(IHLAS_YILDIZ_KEY, String(ihlasYildiz)); }
+      if (typeof v.salavat === 'number') { salavatSayisi = v.salavat; localStorage.setItem(SALAVAT_KEY, String(salavatSayisi)); }
+      if (typeof v.salavatYildiz === 'number') { salavatYildiz = v.salavatYildiz; localStorage.setItem(SALAVAT_YILDIZ_KEY, String(salavatYildiz)); }
+      // Oruç borcu
+      if (v.orucBorc !== undefined && v.orucBorc !== null) localStorage.setItem(ORUC_BORC_KEY, String(v.orucBorc));
+      if (v.orucTutulan !== undefined && v.orucTutulan !== null) localStorage.setItem(ORUC_TUTULAN_KEY, String(v.orucTutulan));
+      if (v.orucSonGun) localStorage.setItem(ORUC_SON_GUN_KEY, v.orucSonGun);
+      // Kuran ilerlemesi
+      if (v.kuranProgress && typeof kuranProgress !== 'undefined') {
+        kuranProgress = v.kuranProgress;
+        localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+      }
+      if (v.hatimSayisi !== undefined && v.hatimSayisi !== null) localStorage.setItem('kn_hatim_sayisi', String(v.hatimSayisi));
+      if (v.cuzGunler) localStorage.setItem('kn_cuz_gunler', v.cuzGunler);
+      if (v.cuzGeceActi) localStorage.setItem('kn_cuz_gece_acti', v.cuzGeceActi);
+      if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
+      try { orucGuncelle(); } catch(e){}
+      try { if (typeof kuranGridCizdir === 'function') kuranGridCizdir(); } catch(e){}
+      try { if (typeof zikirGuncelle === 'function') zikirGuncelle(); } catch(e){}
+      try { if (typeof ihlasGuncelle === 'function') ihlasGuncelle(); } catch(e){}
+      try { if (typeof salavatGuncelle === 'function') salavatGuncelle(); } catch(e){}
     } catch (err) {
       toast('⚠️', 'Dosya okunamadı: ' + err.message, 'hata');
     }
@@ -10095,12 +10815,16 @@ function iceAktar(event) {
 }
 
 function tumunuSifirla() {
-  if (!confirm('TÜM kayıtlar, rozetler, zikir, İhlas ve Esmâ sayaçları silinecek. Devam edilsin mi?')) return;
+  if (!confirm('TÜM kayıtlar, rozetler, zikir, İhlas, Esmâ, oruç ve Kur\'an sayaçları silinecek. Devam edilsin mi?')) return;
   if (!confirm('Emin misin? Bu işlem geri alınamaz.')) return;
   kayitlar = {};
   kazanilanRozetler = new Set();
   zikirSayisi = 0;
   ihlasSayisi = 0;
+  salavatSayisi = 0;
+  zikirYildiz = 0;
+  ihlasYildiz = 0;
+  salavatYildiz = 0;
   esmaZikirleri = {};
   esmaTamamlananlar = new Set();
   aktifEsmaNo = 17;
@@ -10113,6 +10837,22 @@ function tumunuSifirla() {
   localStorage.removeItem(SON_OZET_HAFTA_KEY);
   localStorage.removeItem(SON_OZET_AY_KEY);
   localStorage.removeItem(SON_YILDONUMU_KEY);
+  // Yıldız, oruç ve Kuran sayaçları
+  localStorage.removeItem(ZIKIR_YILDIZ_KEY);
+  localStorage.removeItem(IHLAS_YILDIZ_KEY);
+  localStorage.removeItem(SALAVAT_KEY);
+  localStorage.removeItem(SALAVAT_YILDIZ_KEY);
+  localStorage.removeItem(ORUC_BORC_KEY);
+  localStorage.removeItem(ORUC_TUTULAN_KEY);
+  localStorage.removeItem(ORUC_SON_GUN_KEY);
+  localStorage.removeItem('kn_hatim_sayisi');
+  localStorage.removeItem('kn_cuz_gunler');
+  localStorage.removeItem('kn_cuz_gece_acti');
+  try {
+    if (typeof kuranProgress !== 'undefined') { kuranProgress = {}; localStorage.removeItem(KURAN_PROGRESS_KEY); }
+  } catch(e){}
+  try { orucGuncelle(); } catch(e){}
+  try { if (typeof kuranGridCizdir === 'function') kuranGridCizdir(); } catch(e){}
   kaydet();
   toast('🔄', 'Her şey sıfırlandı');
   herseyGuncelle();
@@ -12902,23 +13642,25 @@ async function cuzJsdelivrFallback(cuzNo) {
   return ayetler;
 }
 
-// Asıl cüz yükleme fonksiyonu: Diyanet → fallback → cache
+// Asıl cüz yükleme fonksiyonu: jsdelivr birincil (Diyanet CORS engelli)
+// Not: jsdelivr de aynı Diyanet mealini ('tur-diyanetisleri' edition) sunuyor — kalite birebir aynı
 async function cuzYukle(cuzNo) {
-  const cacheKey = `cuz-${cuzNo}-v2`;
+  const cacheKey = `cuz-${cuzNo}-v3`;
   const cached = await kuranSureCek(cacheKey);
   if (cached) return cached;
 
   let ayetler;
-  let kaynak = 'Diyanet';
+  let kaynak = 'Diyanet Meali';
+  // Önce Diyanet'i sessizce dene (ileride CORS açılırsa otomatik geçiş yapsın)
   try {
     ayetler = await cuzDiyanettenCek(cuzNo);
-  } catch (diyanetHata) {
-    console.warn('Diyanet API başarısız, jsdelivr fallback deneniyor:', diyanetHata.message);
-    kaynak = 'jsdelivr (Diyanet erişilemedi)';
+    kaynak = 'Diyanet API';
+  } catch (e) {
+    // Sessizce jsdelivr'a düş — Diyanet CORS engeli normal durum, kullanıcıyı rahatsız etme
     try {
       ayetler = await cuzJsdelivrFallback(cuzNo);
     } catch (fallbackHata) {
-      throw new Error(`Diyanet: ${diyanetHata.message} | Fallback: ${fallbackHata.message}`);
+      throw new Error('Cüz indirilemedi: ' + fallbackHata.message);
     }
   }
 
@@ -12992,9 +13734,14 @@ function kuranGridCizdir() {
   }
   grid.innerHTML = html;
 
-  // Üst rozet + hatim ilerleme
+  // Üst rozet + hatim ilerleme + tamamlanmış hatim sayacı
+  const hatimSayisi = parseInt(localStorage.getItem('kn_hatim_sayisi') || '0');
   const rozet = document.getElementById('kuran-rozet');
-  if (rozet) rozet.textContent = `${okunan} / 30 cüz`;
+  if (rozet) {
+    let metin = `${okunan} / 30 cüz`;
+    if (hatimSayisi > 0) metin += ` · ${hatimSayisi} hatim 🕋`;
+    rozet.textContent = metin;
+  }
   const bar = document.getElementById('hatim-bar');
   const yuzde = document.getElementById('hatim-yuzde');
   const pct = Math.round((okunan / 30) * 100);
@@ -13006,8 +13753,48 @@ function kuranGridCizdir() {
 let aktifCuzNo = null;
 let aktifCuzAyetListesi = []; // [{sure, ayet, arapca, meal}]
 
+// Cüz açma günü takibi (streak için) + gece açma kontrolü
+function cuzAcmaKaydet() {
+  const bugun = new Date().toISOString().split('T')[0];
+  let gunler = [];
+  try { gunler = JSON.parse(localStorage.getItem('kn_cuz_gunler') || '[]'); } catch(e) {}
+  if (!gunler.includes(bugun)) {
+    gunler.push(bugun);
+    if (gunler.length > 400) gunler = gunler.slice(-400); // hafıza yönetimi
+    localStorage.setItem('kn_cuz_gunler', JSON.stringify(gunler));
+  }
+  // Gece (03:00-05:00) açma kontrolü — teheccüd rozeti
+  const saat = new Date().getHours();
+  if (saat >= 3 && saat < 5) {
+    localStorage.setItem('kn_cuz_gece_acti', '1');
+  }
+}
+
+function cuzAcmaStreak() {
+  let gunler = [];
+  try { gunler = JSON.parse(localStorage.getItem('kn_cuz_gunler') || '[]'); } catch(e) { return 0; }
+  if (!gunler.length) return 0;
+  gunler.sort();
+  // Bugünden geriye doğru ardışık günleri say
+  const bugun = new Date();
+  let streak = 0;
+  for (let i = 0; i < 400; i++) {
+    const tarih = new Date(bugun);
+    tarih.setDate(tarih.getDate() - i);
+    const str = tarih.toISOString().split('T')[0];
+    if (gunler.includes(str)) {
+      streak++;
+    } else {
+      if (i === 0) continue; // Bugün henüz açmamış olabilir, ama dünden başla
+      break;
+    }
+  }
+  return streak;
+}
+
 async function cuzAc(cuzNo) {
   aktifCuzNo = cuzNo;
+  cuzAcmaKaydet(); // Streak & gece takibi
   const modal = document.getElementById('kuran-modal');
   const baslik = document.getElementById('kuran-modal-cuz');
   const aciklama = document.getElementById('kuran-modal-aciklama');
@@ -13082,12 +13869,7 @@ async function cuzAc(cuzNo) {
         </div>`;
     }
 
-    // Kaynak göstergesi (üstte)
-    if (cuzVeri.kaynak && cuzVeri.kaynak !== 'Diyanet') {
-      html = `<div style="font-size:11px; color:var(--orta); padding:6px 10px; background:#fff3cd; border-radius:6px; margin-bottom:10px; text-align:center;">
-        ℹ️ Kaynak: ${cuzVeri.kaynak}
-      </div>` + html;
-    }
+    // Kaynak göstergesi gizli — kullanıcı sadece çalışan sonucu görsün
 
     yukleniyorEl.classList.remove('gosterilsin');
     ayetlerEl.innerHTML = html;
@@ -13129,16 +13911,48 @@ function cuzuOkudumIsaretle() {
   if (kuranProgress[aktifCuzNo].okundu) {
     btn.classList.add('tamamlandi');
     btn.textContent = '✓ Okundu';
-    if (typeof toastGoster === 'function') toastGoster(`Cüz ${aktifCuzNo} tamamlandı! 🕋`, '🎉');
-    // Hatim tamamlandı mı?
+    if (typeof toast === 'function') toast('📖', `Cüz ${aktifCuzNo} tamamlandı! 🕋`, 'basari');
+    // Rozet kontrol — yeni cüz rozetleri kazanılmış olabilir
+    if (typeof rozetKontrol === 'function') setTimeout(rozetKontrol, 200);
+    // 30 cüz tamamlandı mı? → hatim animasyonu
     const okunan = Object.values(kuranProgress).filter(p => p.okundu).length;
-    if (okunan === 30 && typeof toastGoster === 'function') {
-      setTimeout(() => toastGoster('Tebrikler! Hatim tamamlandı 🕋✨', '🎊'), 600);
+    if (okunan === 30) {
+      const hatimSayisi = parseInt(localStorage.getItem('kn_hatim_sayisi') || '0') + 1;
+      localStorage.setItem('kn_hatim_sayisi', String(hatimSayisi));
+      localStorage.setItem('kn_son_hatim_tarihi', new Date().toISOString());
+      setTimeout(() => hatimTamamlandi(hatimSayisi), 600);
     }
   } else {
     btn.classList.remove('tamamlandi');
     btn.textContent = '✓ Okudum';
   }
+}
+
+// Hatim tamamlama popup — özel animasyon
+function hatimTamamlandi(hatimSayisi) {
+  document.getElementById('popup-ikon').textContent = '🕋';
+  document.getElementById('popup-baslik').textContent = `${hatimSayisi}. HATİM TAMAMLANDI!`;
+  document.getElementById('popup-aciklama').innerHTML =
+    `Mâşaallah! 30 cüzü baştan sona tamamladın.<br><br>` +
+    `Toplam hatim sayın: <strong>🕋 ${hatimSayisi}</strong><br><br>` +
+    `<button onclick="yeniHatimeBasla()" style="margin-top:14px; padding:12px 24px; background:var(--vurgu); color:var(--koyu); border:none; border-radius:10px; font-weight:800; font-size:14px; cursor:pointer;">🔄 Yeni Hatime Başla</button><br><br>` +
+    `<span style="font-size:11px; color:var(--orta);">İstersen cüzleri sıfırlamadan da bırakabilirsin — bu durumda mevcut hatim kaydın korunur.</span>`;
+  document.getElementById('rozet-popup').classList.add('acik');
+  // Konfeti efekti (eğer varsa)
+  if (typeof rozetKontrol === 'function') setTimeout(rozetKontrol, 100);
+}
+
+function yeniHatimeBasla() {
+  // Tüm cüz işaretlerini sıfırla, hatim sayısı korunur
+  Object.keys(kuranProgress).forEach(k => {
+    if (kuranProgress[k]) kuranProgress[k].okundu = false;
+  });
+  localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+  kuranGridCizdir();
+  // Popup'ı kapat
+  const popup = document.getElementById('rozet-popup');
+  if (popup) popup.classList.remove('acik');
+  if (typeof toast === 'function') toast('🕋', 'Yeni hatime başladınız. Allah kabul etsin.', 'basari');
 }
 
 // Audio: cüz boyunca ayet ayet çal
@@ -13231,6 +14045,733 @@ function kuranAyetCal(idx) {
 
 // Sayfa yüklenince grid'i çiz
 setTimeout(() => { try { kuranGridCizdir(); } catch(e) { console.error('Kuran grid:', e); } }, 200);
+
+// ═══════════════════════════════════════
+// ORUÇ BORCU MODÜLÜ
+// ═══════════════════════════════════════
+
+const ORUC_BORC_KEY = 'kn_oruc_borc';
+const ORUC_TUTULAN_KEY = 'kn_oruc_tutulan';
+const ORUC_SON_GUN_KEY = 'kn_oruc_son_gun';
+
+function orucBorcDeger() {
+  const v = localStorage.getItem(ORUC_BORC_KEY);
+  return v === null ? null : parseInt(v) || 0;
+}
+function orucTutulanDeger() {
+  return parseInt(localStorage.getItem(ORUC_TUTULAN_KEY) || '0');
+}
+function orucKalan() {
+  const borc = orucBorcDeger();
+  if (borc === null) return null;
+  return Math.max(0, borc - orucTutulanDeger());
+}
+
+// Ana render fonksiyonu
+function orucGuncelle() {
+  const borc = orucBorcDeger();
+  const tutulan = orucTutulanDeger();
+  const icerikEl = document.getElementById('oruc-icerik');
+  const badgeEl = document.getElementById('oruc-badge');
+  if (!icerikEl) return;
+
+  // Durum 1: Henüz borç girilmemiş
+  if (borc === null) {
+    if (badgeEl) badgeEl.textContent = 'Henüz girilmedi';
+    icerikEl.innerHTML = `
+      <div class="oruc-bos-durum">
+        <p>Henüz oruç borcun girilmemiş.<br>
+          Ramazan kaza orucunu kaydetmek için başla:</p>
+        <button class="oruc-btn oruc-btn-arti" style="padding:12px 24px; font-size:14px;" onclick="orucModalAc()">📝 Borç Sayısını Gir</button>
+      </div>`;
+    return;
+  }
+
+  const kalan = Math.max(0, borc - tutulan);
+  const yuzde = borc > 0 ? Math.round((tutulan / borc) * 100) : 0;
+  const tamamlandi = (kalan === 0 && borc > 0);
+  const bugun = new Date().toISOString().split('T')[0];
+  const sonGun = localStorage.getItem(ORUC_SON_GUN_KEY);
+  const bugunBasilmisMi = (sonGun === bugun);
+
+  // Badge
+  if (badgeEl) {
+    badgeEl.textContent = tamamlandi ? '✓ Borç tamam' : `${kalan} gün kaldı`;
+  }
+
+  // Durum 2: Borç tamamlandı
+  if (tamamlandi) {
+    icerikEl.innerHTML = `
+      <div class="oruc-tamamlandi-kart">
+        <div class="oruc-tamamlandi-ikon">🌙</div>
+        <div class="oruc-tamamlandi-yazi">Mâşaallah!</div>
+        <div class="oruc-tamamlandi-alt">
+          Ramazan kaza orucun tamam.<br>
+          Toplam <strong>${borc}</strong> gün oruç tuttun. Allah kabul etsin. 🤲
+        </div>
+        <button class="oruc-btn oruc-btn-arti" style="padding:10px 18px; font-size:13px;" onclick="orucModalAc()">🔧 Borç Sayısını Düzenle</button>
+      </div>`;
+    return;
+  }
+
+  // Durum 3: Normal — sayaç + butonlar
+  icerikEl.innerHTML = `
+    <div class="oruc-ana-kart">
+      <div class="oruc-sayilar">
+        <div class="oruc-sayi-kart">
+          <div class="oruc-sayi-etiket">Toplam</div>
+          <div class="oruc-sayi-rakam">${borc}</div>
+        </div>
+        <div class="oruc-sayi-kart vurgu">
+          <div class="oruc-sayi-etiket">Kalan</div>
+          <div class="oruc-sayi-rakam">${kalan}</div>
+        </div>
+        <div class="oruc-sayi-kart">
+          <div class="oruc-sayi-etiket">Tutulan</div>
+          <div class="oruc-sayi-rakam">${tutulan}</div>
+        </div>
+      </div>
+      <div class="oruc-progress">
+        <div class="oruc-progress-dolgu" style="width:${yuzde}%"></div>
+      </div>
+      <div class="oruc-progress-bilgi">
+        <span>İlerleme</span>
+        <span><strong>%${yuzde}</strong></span>
+      </div>
+      <div class="oruc-butonlar">
+        <button class="oruc-btn oruc-btn-eksi" onclick="orucGeriAl()" title="Yanlış basmışsan geri al">−1</button>
+        <button class="oruc-btn oruc-btn-arti" onclick="orucBugunTuttum()" ${bugunBasilmisMi ? 'disabled' : ''}>
+          ${bugunBasilmisMi ? '✓ Bugün kaydedildi' : '✓ Bugün Tuttum'}
+        </button>
+        <button class="oruc-btn oruc-btn-geri" onclick="orucEkstraGun()" title="Geçmiş bir günü manuel ekle">+1</button>
+      </div>
+      <div class="oruc-alt-aksiyon">
+        <button class="oruc-link-btn" onclick="orucModalAc()">🔧 Borç sayısını düzenle</button>
+      </div>
+    </div>`;
+}
+
+// Modal aç (yeni giriş veya düzenleme)
+function orucModalAc() {
+  const inp = document.getElementById('oruc-borc-input');
+  const baslik = document.getElementById('oruc-modal-baslik-yazi');
+  const mesaj = document.getElementById('oruc-modal-mesaj');
+  const mevcut = orucBorcDeger();
+  if (inp) inp.value = mevcut !== null ? mevcut : '';
+  if (baslik) baslik.textContent = (mevcut !== null) ? 'Borç Sayısını Düzenle' : 'Oruç Borcunu Gir';
+  if (mesaj) mesaj.textContent = '';
+  document.getElementById('oruc-modal').classList.add('acik');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => inp && inp.focus(), 100);
+}
+
+function orucModalKapat() {
+  document.getElementById('oruc-modal').classList.remove('acik');
+  document.body.style.overflow = '';
+}
+
+function orucBorcKaydet() {
+  const inp = document.getElementById('oruc-borc-input');
+  const mesaj = document.getElementById('oruc-modal-mesaj');
+  if (!inp) return;
+  const deger = parseInt(inp.value);
+  if (isNaN(deger) || deger < 0) {
+    if (mesaj) mesaj.innerHTML = '<span style="color:#c00;">Lütfen geçerli bir sayı gir (0 veya üstü).</span>';
+    return;
+  }
+  const eskiBorc = orucBorcDeger();
+  localStorage.setItem(ORUC_BORC_KEY, String(deger));
+  // İlk kez giriliyor ve tutulan henüz tanımlı değilse 0 olarak başlat
+  if (eskiBorc === null) {
+    localStorage.setItem(ORUC_TUTULAN_KEY, '0');
+  }
+  if (mesaj) mesaj.innerHTML = '<span style="color:#2d8a4f;">✓ Kaydedildi</span>';
+  setTimeout(() => {
+    orucModalKapat();
+    orucGuncelle();
+  }, 700);
+}
+
+function orucBugunTuttum() {
+  const borc = orucBorcDeger();
+  if (borc === null) return;
+  const bugun = new Date().toISOString().split('T')[0];
+  const sonGun = localStorage.getItem(ORUC_SON_GUN_KEY);
+  if (sonGun === bugun) {
+    if (typeof toast === 'function') toast('🌙', 'Bugün için zaten kaydedildi. Yarın tekrar gel.', 'hata');
+    return;
+  }
+  const tutulan = orucTutulanDeger();
+  const yeni = tutulan + 1;
+  localStorage.setItem(ORUC_TUTULAN_KEY, String(yeni));
+  localStorage.setItem(ORUC_SON_GUN_KEY, bugun);
+  if (typeof toast === 'function') toast('🌙', `Bugünkü oruç kaydedildi. Kalan: ${Math.max(0, borc - yeni)} gün`, 'basari');
+  orucGuncelle();
+  // Borç tamamlandı mı?
+  if (yeni >= borc) setTimeout(orucBittiKutla, 600);
+}
+
+function orucEkstraGun() {
+  const borc = orucBorcDeger();
+  if (borc === null) return;
+  const tutulan = orucTutulanDeger();
+  if (tutulan >= borc) {
+    if (typeof toast === 'function') toast('🌙', 'Tüm borç zaten tamamlandı.', 'hata');
+    return;
+  }
+  const yeni = tutulan + 1;
+  localStorage.setItem(ORUC_TUTULAN_KEY, String(yeni));
+  if (typeof toast === 'function') toast('🌙', `+1 gün eklendi. Kalan: ${Math.max(0, borc - yeni)} gün`, 'basari');
+  orucGuncelle();
+  if (yeni >= borc) setTimeout(orucBittiKutla, 600);
+}
+
+function orucGeriAl() {
+  const tutulan = orucTutulanDeger();
+  if (tutulan <= 0) {
+    if (typeof toast === 'function') toast('🌙', 'Geri alınacak gün yok.', 'hata');
+    return;
+  }
+  const yeni = tutulan - 1;
+  localStorage.setItem(ORUC_TUTULAN_KEY, String(yeni));
+  // Eğer bugün basıldıysa, son gün kaydını da sil
+  const bugun = new Date().toISOString().split('T')[0];
+  if (localStorage.getItem(ORUC_SON_GUN_KEY) === bugun) {
+    localStorage.removeItem(ORUC_SON_GUN_KEY);
+  }
+  if (typeof toast === 'function') toast('↩️', `1 gün geri alındı. Tutulan: ${yeni}`);
+  orucGuncelle();
+}
+
+function orucBittiKutla() {
+  // Tebrik popup'ı — mevcut rozet-popup elementini kullan
+  const popup = document.getElementById('rozet-popup');
+  if (!popup) {
+    if (typeof toast === 'function') toast('🌙', 'Mâşaallah! Oruç borcun tamam. Allah kabul etsin.', 'basari');
+    return;
+  }
+  document.getElementById('popup-ikon').textContent = '🌙';
+  document.getElementById('popup-baslik').textContent = 'BORÇ TAMAMLANDI!';
+  document.getElementById('popup-aciklama').innerHTML =
+    `Mâşaallah! Ramazan kaza orucun tamam.<br><br>` +
+    `Toplam <strong>${orucBorcDeger()}</strong> gün oruç tuttun.<br><br>` +
+    `Allah kabul etsin. 🤲`;
+  popup.classList.add('acik');
+}
+
+// Yedek JSON entegrasyonu — yedek alınırken oruç verisi de dahil olsun
+// Bunu mevcut yedekIndir / iceAktar fonksiyonlarına entegre etmek için
+// localStorage'dan otomatik okunduğu için ek bir şey yapmaya gerek yok,
+// ancak yedek fonksiyonu spesifik anahtarları sayıyorsa onu güncelleyelim.
+
+// Sayfa yüklenince oruç bölümünü çiz
+setTimeout(() => { try { orucGuncelle(); } catch(e) { console.error('Oruç:', e); } }, 250);
+
+// ═══════════════════════════════════════
+// YILLIK MANEVİ RAPOR
+// ═══════════════════════════════════════
+
+let raporAktifYil = new Date().getFullYear();
+
+function yillikRaporAc() {
+  raporAktifYil = new Date().getFullYear();
+  raporCizdir();
+  document.getElementById('rapor-modal').classList.add('acik');
+  document.body.style.overflow = 'hidden';
+}
+function yillikRaporKapat() {
+  document.getElementById('rapor-modal').classList.remove('acik');
+  document.body.style.overflow = '';
+}
+function raporOncekiYil() { raporAktifYil--; raporCizdir(); }
+function raporSonrakiYil() {
+  const buYil = new Date().getFullYear();
+  if (raporAktifYil < buYil) { raporAktifYil++; raporCizdir(); }
+}
+
+function raporIstatistikleri(yil) {
+  // Yıla ait namaz toplamları
+  let namazToplam = 0, aktifGun = 0;
+  const aylik = new Array(12).fill(0);
+  const tarihler = Object.keys(kayitlar || {}).filter(t => t.startsWith(yil + '-'));
+  tarihler.forEach(t => {
+    const k = kayitlar[t];
+    const gunToplam = (k.imsak || 0) + (k.ogle || 0) + (k.ikindi || 0) + (k.aksam || 0) + (k.yatsi || 0) + (k.vitir || 0);
+    if (gunToplam > 0) {
+      namazToplam += gunToplam;
+      aktifGun++;
+      const ay = parseInt(t.split('-')[1]) - 1;
+      if (ay >= 0 && ay < 12) aylik[ay] += gunToplam;
+    }
+  });
+  // En aktif ay
+  let enAktifAy = 0, enAktifAyDeger = 0;
+  aylik.forEach((v, i) => { if (v > enAktifAyDeger) { enAktifAyDeger = v; enAktifAy = i; } });
+  const ayAdlari = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+
+  // En uzun streak (yıl içinde)
+  const siraliGunler = tarihler.filter(t => {
+    const k = kayitlar[t];
+    return (k.imsak || 0) + (k.ogle || 0) + (k.ikindi || 0) + (k.aksam || 0) + (k.yatsi || 0) + (k.vitir || 0) > 0;
+  }).sort();
+  let maxStreak = 0, mevcutStreak = 0, oncekiTarih = null;
+  siraliGunler.forEach(t => {
+    if (oncekiTarih) {
+      const fark = (new Date(t) - new Date(oncekiTarih)) / (1000 * 60 * 60 * 24);
+      if (fark === 1) mevcutStreak++;
+      else mevcutStreak = 1;
+    } else mevcutStreak = 1;
+    if (mevcutStreak > maxStreak) maxStreak = mevcutStreak;
+    oncekiTarih = t;
+  });
+
+  return {
+    yil: yil,
+    namazToplam,
+    aktifGun,
+    enAktifAy: ayAdlari[enAktifAy],
+    enAktifAyDeger,
+    maxStreak,
+    aylik,
+    zikirToplam: zikirSayisi + (zikirYildiz * ZIKIR_HEDEF),
+    ihlasToplam: ihlasSayisi + (ihlasYildiz * IHLAS_HEDEF),
+    salavatToplam: salavatSayisi + (salavatYildiz * SALAVAT_HEDEF),
+    zikirYildiz, ihlasYildiz, salavatYildiz,
+    esmaTamamlanan: esmaTamamlananlar.size,
+    hatimSayisi: parseInt(localStorage.getItem('kn_hatim_sayisi') || '0'),
+    okunanCuz: (typeof kuranProgress !== 'undefined') ? Object.values(kuranProgress).filter(p => p && p.okundu).length : 0,
+    orucTutulan: parseInt(localStorage.getItem(ORUC_TUTULAN_KEY) || '0'),
+    orucBorc: parseInt(localStorage.getItem(ORUC_BORC_KEY) || '0'),
+    rozetSayisi: kazanilanRozetler.size,
+    toplamRozet: ROZETLER.length
+  };
+}
+
+function raporCizdir() {
+  const ist = raporIstatistikleri(raporAktifYil);
+  document.getElementById('rapor-yil').textContent = raporAktifYil + ' Manevi Bilanço';
+
+  const onceki = document.getElementById('rapor-onceki');
+  const sonraki = document.getElementById('rapor-sonraki');
+  const buYil = new Date().getFullYear();
+  if (sonraki) sonraki.style.opacity = (raporAktifYil >= buYil) ? '0.3' : '1';
+  if (sonraki) sonraki.style.pointerEvents = (raporAktifYil >= buYil) ? 'none' : 'auto';
+
+  const fmt = n => n.toLocaleString('tr-TR');
+  const html = `
+    <div class="rapor-canvas-konteyner">
+      <canvas id="rapor-canvas" width="540" height="900"></canvas>
+    </div>`;
+  document.getElementById('rapor-icerik').innerHTML = html;
+
+  // Canvas çiz
+  const c = document.getElementById('rapor-canvas');
+  const ctx = c.getContext('2d');
+  const w = c.width, h = c.height;
+
+  // Arka plan — gradyent
+  const grd = ctx.createLinearGradient(0, 0, 0, h);
+  grd.addColorStop(0, '#0f2e1f');
+  grd.addColorStop(0.5, '#1B4332');
+  grd.addColorStop(1, '#1f3a4f');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, w, h);
+
+  // Üst süslemeler
+  ctx.fillStyle = 'rgba(212,175,55,0.15)';
+  ctx.beginPath();
+  ctx.arc(w - 50, 50, 80, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(50, h - 80, 100, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Başlık
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 18px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('İHYÂ — MANEVİ BİLANÇO', w/2, 50);
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 42px system-ui, sans-serif';
+  ctx.fillText(String(raporAktifYil), w/2, 100);
+  ctx.font = '13px system-ui, sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fillText('Bir yıllık manevi yolculuğun', w/2, 124);
+
+  // Ayraç
+  ctx.strokeStyle = 'rgba(212,175,55,0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, 145); ctx.lineTo(w - 80, 145); ctx.stroke();
+
+  // 4 KART (NAMAZ / ZİKİR / KUR'AN / ORUÇ)
+  let y = 175;
+  const kartGenisligi = (w - 80) / 2 - 10;
+  const kartYuksekligi = 88;
+
+  function kart(x, y, baslik, deger, alt) {
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.strokeStyle = 'rgba(212,175,55,0.3)';
+    ctx.lineWidth = 1;
+    const r = 12;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + kartGenisligi - r, y);
+    ctx.quadraticCurveTo(x + kartGenisligi, y, x + kartGenisligi, y + r);
+    ctx.lineTo(x + kartGenisligi, y + kartYuksekligi - r);
+    ctx.quadraticCurveTo(x + kartGenisligi, y + kartYuksekligi, x + kartGenisligi - r, y + kartYuksekligi);
+    ctx.lineTo(x + r, y + kartYuksekligi);
+    ctx.quadraticCurveTo(x, y + kartYuksekligi, x, y + kartYuksekligi - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(212,175,55,0.85)';
+    ctx.font = 'bold 11px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText(baslik, x + 14, y + 22);
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 28px system-ui';
+    ctx.fillText(deger, x + 14, y + 56);
+    ctx.font = '11px system-ui';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText(alt, x + 14, y + 76);
+  }
+
+  kart(40, y, '🕌 NAMAZ', fmt(ist.namazToplam), `${ist.aktifGun} farklı gün`);
+  kart(w/2 + 10, y, '📿 ZİKİR', fmt(ist.zikirToplam), `⭐ ${ist.zikirYildiz} yıldız`);
+  y += kartYuksekligi + 14;
+  kart(40, y, '✨ İHLÂS', fmt(ist.ihlasToplam), `⭐ ${ist.ihlasYildiz} yıldız`);
+  kart(w/2 + 10, y, '🤍 SALAVÂT', fmt(ist.salavatToplam), `⭐ ${ist.salavatYildiz} yıldız`);
+  y += kartYuksekligi + 14;
+  kart(40, y, '🕋 KUR\'AN', `${ist.okunanCuz}/30`, `${ist.hatimSayisi} hatim`);
+  kart(w/2 + 10, y, '🌙 ORUÇ', `${ist.orucTutulan}`, ist.orucBorc > 0 ? `/ ${ist.orucBorc} gün` : 'borç girilmedi');
+  y += kartYuksekligi + 14;
+  kart(40, y, '✨ ESMÂ', `${ist.esmaTamamlanan}/99`, 'isim tamamlandı');
+  kart(w/2 + 10, y, '🏆 ROZET', `${ist.rozetSayisi}`, `/${ist.toplamRozet} kazanıldı`);
+  y += kartYuksekligi + 28;
+
+  // İSTATİSTİK BÖLÜMÜ
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 13px system-ui';
+  ctx.textAlign = 'left';
+  ctx.fillText('📊 YILIN ÖNE ÇIKANLARI', 40, y);
+  y += 22;
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.font = '13px system-ui';
+  const ozetler = [
+    `• En aktif ay: ${ist.enAktifAy} (${fmt(ist.enAktifAyDeger)} namaz)`,
+    `• En uzun aralıksız ardışık seri: ${ist.maxStreak} gün`,
+    `• Aktif gün sayısı: ${ist.aktifGun} gün`,
+    `• Toplam ibadet: ${fmt(ist.namazToplam + ist.zikirToplam + ist.ihlasToplam + ist.salavatToplam)} eylem`
+  ];
+  ozetler.forEach(o => {
+    ctx.fillText(o, 40, y);
+    y += 22;
+  });
+  y += 10;
+
+  // AYLIK NAMAZ BARI
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 13px system-ui';
+  ctx.fillText('📅 AYLIK NAMAZ DAĞILIMI', 40, y);
+  y += 18;
+  const maxAylik = Math.max(...ist.aylik, 1);
+  const barW = (w - 80) / 12 - 3;
+  const ayKisaltma = ['O','Ş','M','N','M','H','T','A','E','E','K','A'];
+  ist.aylik.forEach((v, i) => {
+    const barH = Math.max(2, (v / maxAylik) * 70);
+    const bx = 40 + i * (barW + 3);
+    const by = y + 80 - barH;
+    ctx.fillStyle = v > 0 ? 'rgba(212,175,55,0.85)' : 'rgba(255,255,255,0.12)';
+    ctx.fillRect(bx, by, barW, barH);
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(ayKisaltma[i], bx + barW/2, y + 96);
+  });
+  y += 110;
+
+  // Alt motto
+  ctx.fillStyle = 'rgba(212,175,55,0.85)';
+  ctx.font = 'italic 13px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('"Ameller niyetlere göredir"', w/2, y + 12);
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '11px system-ui';
+  ctx.fillText('— Hadîs-i Şerîf', w/2, y + 30);
+  y += 50;
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.font = '10px system-ui';
+  ctx.fillText('İhyâ — Manevi Yolculuk', w/2, y);
+}
+
+function raporPNGIndir() {
+  const c = document.getElementById('rapor-canvas');
+  if (!c) return;
+  const url = c.toDataURL('image/png');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ihya_manevi_rapor_${raporAktifYil}.png`;
+  a.click();
+  if (typeof toast === 'function') toast('💾', 'Rapor indirildi');
+}
+
+// ═══════════════════════════════════════
+// KANDİL GECESİ MODÜLÜ
+// ═══════════════════════════════════════
+
+const KANDIL_BILGISI = {
+  mevlid: {
+    ad: 'Mevlid Kandili',
+    ikon: '🕌',
+    aciklama: '<strong>Rebî\'ulevvel ayının 11. gününü 12\'sine bağlayan gece</strong> Peygamberimiz Hz. Muhammed (s.a.v.)\'in dünyaya teşrif ettiği mübarek gecedir. Onun ümmeti olmanın şükrünü yerine getirmek için ihyâ edilen bir gecedir.',
+    oneriler: [
+      'Çokça <strong>salavât-ı şerife</strong> getir',
+      'Resûl-i Ekrem\'in sîretini, ahlâkını oku',
+      '<strong>Yâsîn-i Şerîf</strong> oku',
+      'Aile ile beraber zikir/dua meclisi kur',
+      'Komşulara helva, ikram dağıt (sünnet)'
+    ]
+  },
+  regaib: {
+    ad: 'Regâib Kandili',
+    ikon: '🌟',
+    aciklama: '<strong>Receb ayının ilk Cuma gecesi</strong>dir. "Reğaib" çok rağbet edilen, kıymetli demektir. Allah\'ın rahmet kapılarının açıldığı, duaların kabul olduğu gecelerden biridir.',
+    oneriler: [
+      '<strong>Kazâ namazları</strong> kıl — bu gece bereketlidir',
+      'Tövbe-istiğfar et',
+      'Hâcetlerin için samimi dua niyâz et',
+      '<strong>İstihare</strong> namazı kıl',
+      'Bu gecenin kısmen veya tamamen ihyâ et'
+    ]
+  },
+  mirac: {
+    ad: 'Mîrâc Kandili',
+    ikon: '🌌',
+    aciklama: '<strong>Receb ayının 27. gecesi</strong>dir. Peygamberimiz (s.a.v.)\'in Mescid-i Harâm\'dan Mescid-i Aksâ\'ya götürüldüğü (İsrâ), oradan da göklere yükselerek Allah\'ın huzuruna varıldığı (Mîrâc) gecedir. <strong>Beş vakit namazın</strong> da bu gece farz kılındığı rivâyet edilir.',
+    oneriler: [
+      'Bu gece <strong>kazâ namazlarına</strong> özel önem ver',
+      'İsrâ ve Mîrâc kıssasını oku (Necm Sûresi, İsrâ Sûresi)',
+      'Bol bol istiğfar et',
+      'Kandilin değerini muhasebe ile ihyâ et',
+      'Sılarahim — yakınlarını ara, gönlünü al'
+    ]
+  },
+  berat: {
+    ad: 'Berât Kandili',
+    ikon: '🌙',
+    aciklama: '<strong>Şâban ayının 14. gününü 15\'ine bağlayan gece</strong>dir. "Berât" temize çıkma, kurtulma demektir. Kulun, bir yıllık hesabının görüldüğü, kaderlerin tâyin edildiği rivâyet edilen mübarek bir gecedir.',
+    oneriler: [
+      '<strong>Çokça tövbe ve istiğfar</strong> et',
+      '<strong>Yâsîn-i Şerîf</strong>, <strong>Duhân Sûresi</strong> oku',
+      'Kazâ namazlarını ihyâ et',
+      'Ölmüş yakınların için Fâtiha oku, dua et',
+      'Sadaka ver — fakir ve yetimleri gözet'
+    ]
+  },
+  kadir: {
+    ad: 'Kadir Gecesi',
+    ikon: '✨',
+    aciklama: '<strong>Ramazan ayının son 10 gününde, tek gecelerden birinde</strong> olduğu rivâyet edilir. Geleneksel olarak <strong>Ramazan\'ın 27. gecesi</strong> olarak ihyâ edilir. Kur\'an-ı Kerîm\'in indirildiği bu gece, <strong>"bin aydan daha hayırlıdır"</strong> (Kadr Sûresi, 3).',
+    oneriler: [
+      '<strong>"Allâhumme inneke afüvvün tuhibbu\'l-afve fa\'fü annî"</strong> duâsını çokça oku',
+      'Bütün kazâ namazlarını ihyâ et',
+      'Kur\'an okumaya öncelik ver',
+      'Tövbe et, ümmet için dua et',
+      'Sabaha kadar zikir, niyâz ve tefekkür'
+    ]
+  }
+};
+
+// ═══ DİNAMİK HİCRİ-GREGORYEN DÖNÜŞÜM ═══
+// JS yerleşik Intl API'si "islamic-umalqura" takvimini destekler (Suudi/Diyanet standardı)
+// Bu sayede 2026 ve sonrası sınırsız yıl için kandil tarihleri otomatik hesaplanır
+
+// Gregoryen tarihten hicri tarihi al
+function gregToHicri(tarih) {
+  try {
+    const f = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', {
+      day: 'numeric', month: 'numeric', year: 'numeric'
+    });
+    const parts = f.formatToParts(tarih);
+    const obj = { day: 0, month: 0, year: 0 };
+    parts.forEach(p => {
+      if (p.type === 'day') obj.day = parseInt(p.value);
+      else if (p.type === 'month') obj.month = parseInt(p.value);
+      else if (p.type === 'year') obj.year = parseInt(p.value);
+    });
+    return obj;
+  } catch (e) {
+    console.warn('Intl islamic-umalqura desteklenmiyor:', e);
+    return null;
+  }
+}
+
+// Hicri tarihi Gregoryen tarihe çevir (yaklaşık + arama)
+function hicriToGreg(hicriYil, hicriAy, hicriGun) {
+  // Yaklaşık başlangıç: 1 Muharrem 1 ≈ 16 Temmuz 622 (Jülyen)
+  // Hicri yıl ≈ 354.367 gün
+  const epoch = new Date(Date.UTC(622, 6, 16));
+  const tahminiGun = (hicriYil - 1) * 354.367 + (hicriAy - 1) * 29.5 + hicriGun;
+  const tahminiTarih = new Date(epoch.getTime() + tahminiGun * 86400000);
+
+  // ±5 gün civarında ince arama
+  for (let offset = -5; offset <= 5; offset++) {
+    const test = new Date(tahminiTarih.getTime() + offset * 86400000);
+    const h = gregToHicri(test);
+    if (h && h.year === hicriYil && h.month === hicriAy && h.day === hicriGun) {
+      return test;
+    }
+  }
+  return null;
+}
+
+// Bir hicri ay/gün'ü Gregoryen tarihe formatla — local timezone'a göre YYYY-MM-DD
+function tarihiISOFormatla(tarih) {
+  const y = tarih.getFullYear();
+  const m = String(tarih.getMonth() + 1).padStart(2, '0');
+  const d = String(tarih.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+// Bir Gregoryen yıl için tüm kandil tarihlerini hesapla (cache'lenir)
+function kandilTarihleriniHesapla(gregYil) {
+  // Cache kontrolü
+  const cacheKey = `kn_kandil_cache_${gregYil}_v2`;
+  const cached = localStorage.getItem(cacheKey);
+  if (cached) {
+    try { return JSON.parse(cached); } catch(e) {}
+  }
+
+  const sonuc = {};
+
+  // Hangi hicri yıllar bu Gregoryen yıla denk gelir?
+  const ocakBir = new Date(gregYil, 0, 1);
+  const aralikSon = new Date(gregYil, 11, 31);
+  const hicriBaslangic = gregToHicri(ocakBir);
+  const hicriBitis = gregToHicri(aralikSon);
+  if (!hicriBaslangic || !hicriBitis) return sonuc;
+
+  // İlgili hicri yılları toplama (genelde 2 yıl bir Gregoryen yıla denk gelir)
+  const hicriYillar = new Set();
+  for (let hy = hicriBaslangic.year; hy <= hicriBitis.year; hy++) hicriYillar.add(hy);
+
+  hicriYillar.forEach(hy => {
+    // Mevlid Kandili: Rebî'ulevvel (ay 3) 11/12 gecesi → 12. günün bir önceki Gregoryen günü akşamı
+    const mevlid = hicriToGreg(hy, 3, 12);
+    if (mevlid && mevlid.getFullYear() === gregYil) {
+      const gece = new Date(mevlid.getTime() - 86400000);
+      if (gece.getFullYear() === gregYil) sonuc[tarihiISOFormatla(gece)] = 'mevlid';
+    }
+
+    // Mîrâc Kandili: Receb (ay 7) 27. gecesi
+    const mirac = hicriToGreg(hy, 7, 27);
+    if (mirac) {
+      const gece = new Date(mirac.getTime() - 86400000);
+      if (gece.getFullYear() === gregYil) sonuc[tarihiISOFormatla(gece)] = 'mirac';
+    }
+
+    // Berât Kandili: Şâban (ay 8) 14/15 gecesi
+    const berat = hicriToGreg(hy, 8, 15);
+    if (berat) {
+      const gece = new Date(berat.getTime() - 86400000);
+      if (gece.getFullYear() === gregYil) sonuc[tarihiISOFormatla(gece)] = 'berat';
+    }
+
+    // Kadir Gecesi: Ramazan (ay 9) 27. gecesi (geleneksel)
+    const kadir = hicriToGreg(hy, 9, 27);
+    if (kadir) {
+      const gece = new Date(kadir.getTime() - 86400000);
+      if (gece.getFullYear() === gregYil) sonuc[tarihiISOFormatla(gece)] = 'kadir';
+    }
+
+    // Regâib Kandili: Receb (ay 7) ayının ilk Cuma gününe bağlanan Perşembe gecesi
+    for (let g = 1; g <= 7; g++) {
+      const recebGun = hicriToGreg(hy, 7, g);
+      if (recebGun && recebGun.getDay() === 5) { // 5 = Cuma
+        const gece = new Date(recebGun.getTime() - 86400000); // Perşembe gecesi
+        if (gece.getFullYear() === gregYil) sonuc[tarihiISOFormatla(gece)] = 'regaib';
+        break;
+      }
+    }
+  });
+
+  // Cache'le (her yıl için sadece 1 kez hesaplanır)
+  try { localStorage.setItem(cacheKey, JSON.stringify(sonuc)); } catch(e) {}
+  return sonuc;
+}
+
+function bugunKandilMi() {
+  const bugun = new Date();
+  const buYil = bugun.getFullYear();
+  // Bu yıl + sonraki yılın başlangıcını birleştir (Aralık'ta Ocak'taki bir kandili görmek için)
+  const buYilKandiller = kandilTarihleriniHesapla(buYil);
+  const sonrakiYilKandiller = kandilTarihleriniHesapla(buYil + 1);
+  const tum = Object.assign({}, buYilKandiller, sonrakiYilKandiller);
+
+  const bugunStr = tarihiISOFormatla(bugun);
+  const yarin = new Date(bugun.getTime() + 86400000);
+  const yarinStr = tarihiISOFormatla(yarin);
+
+  if (tum[bugunStr]) return { tip: tum[bugunStr], tarih: bugunStr, gun: 'bugün' };
+  if (tum[yarinStr]) return { tip: tum[yarinStr], tarih: yarinStr, gun: 'yarın' };
+  return null;
+}
+
+// İleride yıldönümü kontrolü için: bir yılın tüm kandillerini listeyle döndür
+function buYilKandilleriGetir() {
+  return kandilTarihleriniHesapla(new Date().getFullYear());
+}
+
+function kandilGuncelle() {
+  const kandil = bugunKandilMi();
+  const konteyner = document.getElementById('kandil-banner-konteyner');
+  if (!konteyner) return;
+  if (!kandil) { konteyner.innerHTML = ''; return; }
+  const bilgi = KANDIL_BILGISI[kandil.tip];
+  if (!bilgi) { konteyner.innerHTML = ''; return; }
+  const gunMetin = kandil.gun === 'bugün' ? '🌟 Bu gece' : '🌟 Yarın gece';
+  konteyner.innerHTML = `
+    <div class="kandil-banner" onclick="kandilModalAc('${kandil.tip}')">
+      <span class="kandil-banner-ikon">${bilgi.ikon}</span>
+      <span class="kandil-banner-baslik">
+        <div class="kandil-banner-ad">${bilgi.ad}</div>
+        <div class="kandil-banner-alt">${gunMetin} — detaylar için tıkla</div>
+      </span>
+    </div>`;
+  // Bugün için otomatik popup (günde 1 kez)
+  if (kandil.gun === 'bugün') {
+    const bugunGosterildi = localStorage.getItem('kn_kandil_gosterildi') === kandil.tarih;
+    if (!bugunGosterildi) {
+      setTimeout(() => {
+        kandilModalAc(kandil.tip);
+        localStorage.setItem('kn_kandil_gosterildi', kandil.tarih);
+      }, 1500);
+    }
+  }
+}
+
+function kandilModalAc(tip) {
+  const bilgi = KANDIL_BILGISI[tip];
+  if (!bilgi) return;
+  document.getElementById('kandil-modal-ikon').textContent = bilgi.ikon;
+  document.getElementById('kandil-modal-ad').textContent = bilgi.ad;
+  const kandil = bugunKandilMi();
+  document.getElementById('kandil-modal-tarih').textContent = (kandil && kandil.gun === 'bugün') ? 'Bu Gece' : 'Yarın Gece';
+  document.getElementById('kandil-modal-aciklama').innerHTML = bilgi.aciklama;
+  const liste = document.getElementById('kandil-modal-oneri-liste');
+  liste.innerHTML = bilgi.oneriler.map(o => `<li>${o}</li>`).join('');
+  document.getElementById('kandil-modal').classList.add('acik');
+  document.body.style.overflow = 'hidden';
+}
+
+function kandilModalKapat() {
+  document.getElementById('kandil-modal').classList.remove('acik');
+  document.body.style.overflow = '';
+}
+
+// Sayfa yüklendiğinde kandil kontrolü
+setTimeout(() => { try { kandilGuncelle(); } catch(e) { console.error('Kandil:', e); } }, 500);
 
 </script>
 
