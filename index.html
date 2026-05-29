@@ -4896,6 +4896,68 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 
 /* Kuran cüz rozetleri için ufak yıldız sistemi (zm ile aynı) */
+/* Kaldığın yerden devam et kartı */
+.kuran-devam-kart {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.08));
+  border: 1.5px solid var(--vurgu);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  -webkit-tap-highlight-color: rgba(212,175,55,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.kuran-devam-kart::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.15), transparent);
+  animation: kuranDevamPulse 3s ease-in-out infinite;
+}
+@keyframes kuranDevamPulse {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
+}
+.kuran-devam-kart:hover, .kuran-devam-kart:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212,175,55,0.25);
+}
+.kuran-devam-ikon {
+  font-size: 28px;
+  flex-shrink: 0;
+  position: relative;
+}
+.kuran-devam-icerik {
+  flex: 1;
+  position: relative;
+}
+.kuran-devam-etiket {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--vurgu);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.kuran-devam-cuz {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--koyu);
+  line-height: 1.3;
+}
+.kuran-devam-ok {
+  font-size: 20px;
+  color: var(--vurgu);
+  flex-shrink: 0;
+  position: relative;
+}
+
 .kuran-hatim-sayac {
   display: inline-flex;
   align-items: center;
@@ -5784,6 +5846,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
               <span id="hatim-yuzde" style="font-size:13px; font-weight:700; color:var(--vurgu); min-width:42px; text-align:right;">%0</span>
             </div>
           </div>
+          <div id="kuran-devam-konteyner"></div>
           <div id="kuran-cuz-grid" class="kuran-cuz-grid"></div>
           <div style="text-align:center; padding:10px 8px; margin-top:8px;">
             <div style="color:var(--orta); font-size:12px; margin-bottom:6px;">
@@ -10795,6 +10858,7 @@ function yedekIndir() {
     hatimSayisi: localStorage.getItem('kn_hatim_sayisi'),
     cuzGunler: localStorage.getItem('kn_cuz_gunler'),
     cuzGeceActi: localStorage.getItem('kn_cuz_gece_acti'),
+    sonOkunanCuz: localStorage.getItem(SON_OKUNAN_CUZ_KEY),
     diyanetToken: localStorage.getItem(DIYANET_TOKEN_KEY)
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
@@ -10849,6 +10913,7 @@ function iceAktar(event) {
       if (v.hatimSayisi !== undefined && v.hatimSayisi !== null) localStorage.setItem('kn_hatim_sayisi', String(v.hatimSayisi));
       if (v.cuzGunler) localStorage.setItem('kn_cuz_gunler', v.cuzGunler);
       if (v.cuzGeceActi) localStorage.setItem('kn_cuz_gece_acti', v.cuzGeceActi);
+      if (v.sonOkunanCuz) localStorage.setItem(SON_OKUNAN_CUZ_KEY, v.sonOkunanCuz);
       if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
       kaydet();
       toast('📤', 'Yedek yüklendi');
@@ -10900,6 +10965,7 @@ function tumunuSifirla() {
   localStorage.removeItem('kn_hatim_sayisi');
   localStorage.removeItem('kn_cuz_gunler');
   localStorage.removeItem('kn_cuz_gece_acti');
+  localStorage.removeItem(SON_OKUNAN_CUZ_KEY);
   try {
     if (typeof kuranProgress !== 'undefined') { kuranProgress = {}; localStorage.removeItem(KURAN_PROGRESS_KEY); }
   } catch(e){}
@@ -13764,6 +13830,54 @@ function diyanetTokenVarsayilanaDon() {
   if (msg) msg.innerHTML = '<span style="color:#2d8a4f;">✓ Uygulama varsayılan anahtarına dönüldü.</span>';
 }
 
+// Kaldığın yerden devam — son okunan cüz takibi
+const SON_OKUNAN_CUZ_KEY = 'kn_son_okunan_cuz';
+
+function sonOkunanCuzKaydet(cuzNo, ayetIdx) {
+  try {
+    localStorage.setItem(SON_OKUNAN_CUZ_KEY, JSON.stringify({
+      cuzNo: cuzNo,
+      ayetIdx: ayetIdx || 0,
+      tarih: new Date().toISOString()
+    }));
+    if (!kuranProgress[cuzNo]) kuranProgress[cuzNo] = {};
+    kuranProgress[cuzNo].sonAyetIdx = ayetIdx || 0;
+    localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+  } catch(e) { console.warn('Son okunan kaydedilemedi:', e); }
+}
+
+function sonOkunanCuzAl() {
+  try {
+    const v = localStorage.getItem(SON_OKUNAN_CUZ_KEY);
+    if (!v) return null;
+    return JSON.parse(v);
+  } catch(e) { return null; }
+}
+
+// Devam et kartını render et — son okunan cüz varsa görünür
+function kuranDevamKartCiz() {
+  const konteyner = document.getElementById('kuran-devam-konteyner');
+  if (!konteyner) return;
+  const son = sonOkunanCuzAl();
+  if (!son || !son.cuzNo) { konteyner.innerHTML = ''; return; }
+  const cuzNo = son.cuzNo;
+  if (cuzNo < 1 || cuzNo > 30) { konteyner.innerHTML = ''; return; }
+  const [bs, , bt] = CUZ_HARITASI[cuzNo - 1];
+  const sureAd = SURE_ADLARI[bs - 1] + (bs !== bt ? ' — ' + SURE_ADLARI[bt - 1] : '');
+  const ayetBilgi = (typeof son.ayetIdx === 'number' && son.ayetIdx > 0)
+    ? ` · ${son.ayetIdx + 1}. ayetten devam`
+    : '';
+  konteyner.innerHTML = `
+    <div class="kuran-devam-kart" onclick="cuzAc(${cuzNo})">
+      <div class="kuran-devam-ikon">📍</div>
+      <div class="kuran-devam-icerik">
+        <div class="kuran-devam-etiket">Kaldığın yerden devam et</div>
+        <div class="kuran-devam-cuz">Cüz ${cuzNo} · ${sureAd}${ayetBilgi}</div>
+      </div>
+      <div class="kuran-devam-ok">→</div>
+    </div>`;
+}
+
 // 30 cüz grid'ini çiz
 function kuranGridCizdir() {
   const grid = document.getElementById('kuran-cuz-grid');
@@ -13799,6 +13913,8 @@ function kuranGridCizdir() {
   const pct = Math.round((okunan / 30) * 100);
   if (bar) bar.style.width = pct + '%';
   if (yuzde) yuzde.textContent = '%' + pct;
+  // Devam et kartını da güncelle
+  try { kuranDevamKartCiz(); } catch(e){}
 }
 
 // Modal aç + cüz yükle
@@ -13925,14 +14041,32 @@ async function cuzAc(cuzNo) {
 
     yukleniyorEl.classList.remove('gosterilsin');
     ayetlerEl.innerHTML = html;
-    // Kaldığı yere scroll
+
+    // Kaldığın yere scroll — render bitiminden sonra (rAF + setTimeout güvenli)
     const son = kuranProgress[cuzNo] && kuranProgress[cuzNo].sonAyetIdx;
-    if (typeof son === 'number' && son > 0) {
-      setTimeout(() => {
-        const el = document.getElementById('kuran-ayet-' + son);
-        if (el) el.scrollIntoView({ block: 'center' });
-      }, 100);
+    if (typeof son === 'number' && son > 0 && son < aktifCuzAyetListesi.length) {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const el = document.getElementById('kuran-ayet-' + son);
+          if (el) {
+            el.scrollIntoView({ block: 'center', behavior: 'auto' });
+            // Vurgu efekti — kullanıcı kaldığı yeri net görsün
+            el.style.transition = 'background 0.5s';
+            el.style.background = 'linear-gradient(90deg, rgba(212,175,55,0.18), rgba(212,175,55,0.08))';
+            setTimeout(() => {
+              if (!el.classList.contains('aktif')) el.style.background = '';
+            }, 2000);
+          }
+        }, 250);
+      });
     }
+
+    // Mevcut cüzü "son okunan cüz" olarak işaretle
+    sonOkunanCuzKaydet(cuzNo, (typeof son === 'number') ? son : 0);
+    kuranDevamKartCiz();
+
+    // IntersectionObserver — kullanıcı scroll yaptıkça merkezdeki ayeti kaydet (sessiz okuma için)
+    kuranScrollObserverKur();
   } catch (err) {
     yukleniyorEl.classList.remove('gosterilsin');
     console.error('Cüz yükleme hatası:', err);
@@ -13948,9 +14082,66 @@ async function cuzAc(cuzNo) {
 
 function kuranModalKapat() {
   kuranDurdur();
+  if (kuranScrollObserver) {
+    try { kuranScrollObserver.disconnect(); } catch(e){}
+    kuranScrollObserver = null;
+  }
   const modal = document.getElementById('kuran-modal');
   modal.classList.remove('acik');
   document.body.style.overflow = '';
+  // Devam kartını da yenile (yeni kayıt görünür olsun)
+  try { kuranDevamKartCiz(); } catch(e){}
+}
+
+// Görünür ayeti otomatik takip eden observer — sessiz okumada bile çalışır
+let kuranScrollObserver = null;
+let kuranScrollKaydetTimer = null;
+function kuranScrollObserverKur() {
+  // Önceki observer'ı temizle
+  if (kuranScrollObserver) {
+    try { kuranScrollObserver.disconnect(); } catch(e){}
+  }
+  if (!window.IntersectionObserver || !aktifCuzNo) return;
+
+  const ayetlerEl = document.getElementById('kuran-ayetler');
+  if (!ayetlerEl) return;
+
+  let enYakinIdx = 0;
+
+  kuranScrollObserver = new IntersectionObserver((entries) => {
+    // Görünen ayetlerden en üstte/merkeze yakın olanı bul
+    let enYakinMesafe = Infinity;
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = parseInt(entry.target.dataset.idx);
+        if (!isNaN(idx)) {
+          const rect = entry.boundingClientRect;
+          const merkez = window.innerHeight / 2;
+          const mesafe = Math.abs(rect.top + rect.height / 2 - merkez);
+          if (mesafe < enYakinMesafe) {
+            enYakinMesafe = mesafe;
+            enYakinIdx = idx;
+          }
+        }
+      }
+    });
+    // Debounce — kullanıcı durduğunda kaydet (500ms)
+    clearTimeout(kuranScrollKaydetTimer);
+    kuranScrollKaydetTimer = setTimeout(() => {
+      if (aktifCuzNo && typeof enYakinIdx === 'number') {
+        sonOkunanCuzKaydet(aktifCuzNo, enYakinIdx);
+      }
+    }, 500);
+  }, {
+    root: ayetlerEl,
+    rootMargin: '-30% 0px -50% 0px', // Üst %30 ve alt %50 görmezden gel — odakta tut
+    threshold: 0.1
+  });
+
+  // Tüm ayet elementlerini gözle
+  ayetlerEl.querySelectorAll('.kuran-ayet').forEach(el => {
+    kuranScrollObserver.observe(el);
+  });
 }
 
 function cuzuOkudumIsaretle() {
@@ -14059,11 +14250,12 @@ function kuranAyetCal(idx) {
   const ayet = aktifCuzAyetListesi[idx];
   kuranAktifAyetIdx = idx;
 
-  // İlerleme kaydet
+  // İlerleme kaydet (audio çalma sırasında — global pointer'a da yaz)
   if (aktifCuzNo) {
     if (!kuranProgress[aktifCuzNo]) kuranProgress[aktifCuzNo] = {};
     kuranProgress[aktifCuzNo].sonAyetIdx = idx;
     localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+    try { sonOkunanCuzKaydet(aktifCuzNo, idx); } catch(e){}
   }
 
   // Aktif ayeti vurgula + scroll
