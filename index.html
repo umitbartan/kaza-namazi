@@ -14,6 +14,32 @@
 <link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon-precomposed" href="icon-180.png">
+
+<!-- iPhone PWA Splash Screens (Apple-touch-startup-image) -->
+<!-- iPhone 17 Pro Max / 16 Pro Max alternatif (~440x956) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1320x2868.png" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone 15-17 Pro Max / 14 Pro Max (430x932) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone 16-17 Pro (402x874) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1206x2622.png" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone 12-13 Pro Max (428x926) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone XS Max / 11 Pro Max (414x896 @3x) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone 14-15 Pro (393x852) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone 12-14 (390x844) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone X/XS/11 Pro (375x812 @3x) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone XR / 11 (414x896 @2x) -->
+<link rel="apple-touch-startup-image" href="splash/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<!-- iPhone Plus (414x736 @3x) -->
+<link rel="apple-touch-startup-image" href="splash/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<!-- iPhone 6/7/8 (375x667 @2x) -->
+<link rel="apple-touch-startup-image" href="splash/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<!-- iPhone SE 1.gen (320x568 @2x) -->
+<link rel="apple-touch-startup-image" href="splash/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -5281,6 +5307,253 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 
 /* Kuran cüz rozetleri için ufak yıldız sistemi (zm ile aynı) */
+/* iOS PWA Yönlendirme Popup'ı */
+.ios-pwa-prompt {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.85);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 9800;
+  padding: 0;
+  animation: rozetFade 0.35s;
+}
+.ios-pwa-prompt.acik { display: flex; }
+.ios-pwa-icerik {
+  background: linear-gradient(135deg, #fff, var(--bej, #FAF7F0));
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 480px;
+  padding: 28px 22px 24px;
+  padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px));
+  position: relative;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+  animation: iosPwaSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes iosPwaSlide {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.ios-pwa-kapat {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.08);
+  border: none;
+  font-size: 22px;
+  color: var(--orta);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+}
+.ios-pwa-baslik {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-right: 40px;
+}
+.ios-pwa-ikon {
+  font-size: 40px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 8px rgba(212,175,55,0.3));
+}
+.ios-pwa-ad {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--koyu);
+  letter-spacing: 0.3px;
+}
+.ios-pwa-alt {
+  font-size: 12px;
+  color: var(--orta);
+  margin-top: 3px;
+}
+.ios-pwa-adimlar {
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.ios-pwa-adim {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--koyu);
+  padding: 8px 0;
+}
+.ios-pwa-adim:not(:last-child) {
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+}
+.ios-pwa-adim-no {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--vurgu), #f4d03f);
+  color: var(--koyu);
+  font-weight: 900;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(212,175,55,0.4);
+}
+.ios-pwa-share-ikon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: #007AFF;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 700;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+.ios-pwa-ipucu {
+  background: var(--altin-bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 11.5px;
+  color: var(--orta);
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.ios-pwa-tamam {
+  width: 100%;
+  background: linear-gradient(135deg, var(--koyu), #2d5a44);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: rgba(255,255,255,0.2);
+  touch-action: manipulation;
+}
+.ios-pwa-tamam:active { transform: scale(0.97); }
+
+/* Esmâ tamamlananlar grid */
+.esma-tamamlanan-bolum {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.esma-tamamlanan-baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--orta);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.esma-tamamlanan-sayac {
+  background: var(--altin-bg);
+  color: var(--vurgu);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.esma-tamamlanan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 4px;
+  background: rgba(0,0,0,0.02);
+  border-radius: 10px;
+}
+.esma-chip {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 10.5px;
+  text-align: center;
+  color: var(--orta);
+  font-weight: 600;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(212,175,55,0.3);
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+.esma-chip:hover {
+  border-color: var(--vurgu);
+  transform: translateY(-1px);
+}
+.esma-chip.tamamlandi {
+  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.12));
+  border-color: var(--vurgu);
+  color: var(--koyu);
+  font-weight: 800;
+}
+.esma-chip.tamamlandi::before {
+  content: '✓';
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  color: var(--vurgu);
+  font-size: 9px;
+  font-weight: 900;
+}
+.esma-chip.aktif {
+  border-color: var(--koyu);
+  border-width: 2px;
+  box-shadow: 0 0 0 2px rgba(27,67,50,0.15);
+}
+.esma-chip.aktif.tamamlandi {
+  background: linear-gradient(135deg, var(--koyu), #2d5a44);
+  color: white;
+  border-color: var(--koyu);
+}
+.esma-chip.aktif.tamamlandi::before { color: var(--vurgu); }
+.esma-chip-no {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-size: 8px;
+  opacity: 0.5;
+}
+
+/* Disabled buton — tamamlandı durumu */
+.ez-mini-btn:disabled,
+.ez-mini-btn.tamamlandi {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: rgba(212,175,55,0.15) !important;
+  color: var(--vurgu) !important;
+}
+.ez-mini-btn.tamamlandi::before {
+  content: '✓ ';
+}
+
 /* Kaldığın yerden devam et kartı */
 .kuran-devam-kart {
   display: flex;
@@ -6144,7 +6417,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         <div class="ez-bolum">
           <div class="ez-baslik">
             <span class="ez-baslik-ikon">✨</span>
-            <span class="ez-baslik-ad">Esmâü'l-Hüsnâ Zikri</span>
+            <span class="ez-baslik-ad">Esmâü'l-Hüsnâ Zikri <span class="zm-yildiz" id="esma-yildiz"></span></span>
             <span class="ez-baslik-sayi" id="ez-tamamlanan-badge">0 / 99</span>
           </div>
 
@@ -6172,7 +6445,16 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
           <div class="ez-altbtn">
             <button class="ez-mini-btn" onclick="esmaZikirSifirla()">🔄 Sıfırla</button>
-            <button class="ez-mini-btn ez-tamamla-btn" onclick="esmaZikirTamamla()">✓ Tamamla</button>
+            <button class="ez-mini-btn ez-tamamla-btn" id="esma-tamamla-btn" onclick="esmaZikirTamamla()">✓ Tamamla</button>
+          </div>
+
+          <!-- Tamamlananlar Grid — küçük chip'ler -->
+          <div class="esma-tamamlanan-bolum">
+            <div class="esma-tamamlanan-baslik">
+              <span>📋 Tamamladıkların</span>
+              <span class="esma-tamamlanan-sayac" id="esma-tamamlanan-sayac">0 / 99</span>
+            </div>
+            <div class="esma-tamamlanan-grid" id="esma-tamamlanan-grid"></div>
           </div>
 
           <div class="ez-son" id="ez-son-konteyner" style="display:none;">
@@ -6918,6 +7200,9 @@ let salavatYildiz = parseInt(localStorage.getItem(SALAVAT_YILDIZ_KEY) || '0');
 let esmaZikirleri = JSON.parse(localStorage.getItem(ESMA_ZIKIR_KEY) || '{}');
 let aktifEsmaNo = parseInt(localStorage.getItem(ESMA_AKTIF_KEY) || '17');
 let esmaTamamlananlar = new Set(JSON.parse(localStorage.getItem(ESMA_TAMAMLANAN_KEY) || '[]'));
+// Esmâ tamamlama yıldız sayacı — her 99 esmâ tamamlandığında +1
+const ESMA_YILDIZ_KEY = 'kn_esma_yildiz_v1';
+let esmaYildiz = parseInt(localStorage.getItem(ESMA_YILDIZ_KEY) || '0');
 
 // Yaşayan uygulama değişkenleri (rozetDurum içinde kullanıldığı için erken tanımlanmalı — TDZ önlenir)
 let streakRekoru = parseInt(localStorage.getItem('kn_streak_rekor_v1') || '0');
@@ -7439,6 +7724,22 @@ function istatistikleriGuncelle() {
 }
 
 let ilkYuklemeBitti = false;
+// Hafif anlık güncelleme — bir sayaç değiştiğinde çağrılır
+// Sayaç + rozet + mertebe + istatistik (heatmap/grafik gibi ağırları atla)
+function anlikSayacGuncelle() {
+  try { zikirGuncelle(); } catch(e){}
+  try { ihlasGuncelle(); } catch(e){}
+  try { salavatGuncelle(); } catch(e){}
+  try { esmaZikirGuncelle(); } catch(e){}
+  try { orucGuncelle(); } catch(e){}
+  try { kuranGridCizdir(); } catch(e){}
+  try { kuranDevamKartCiz(); } catch(e){}
+  try { rozetleriCizdir(); } catch(e){}
+  try { istatistikleriGuncelle(); } catch(e){}
+  try { mertebeBannerGuncelle(); } catch(e){}
+  try { yolculukHaritasiCizdir(); } catch(e){}
+}
+
 function herseyGuncelle() {
   vakitleriCizdir();
   istatistikleriGuncelle();
@@ -7450,6 +7751,11 @@ function herseyGuncelle() {
   ihlasGuncelle();
   try { salavatGuncelle(); } catch(e){}
   esmaZikirGuncelle();
+  try { orucGuncelle(); } catch(e){}
+  try { kuranGridCizdir(); } catch(e){}
+  try { kuranDevamKartCiz(); } catch(e){}
+  try { mertebeBannerGuncelle(); } catch(e){}
+  try { yolculukHaritasiCizdir(); } catch(e){}
   // İlk yüklemede zaten kazanılmış rozetleri sessizce işaretle (popup spam'ı önle)
   if (!ilkYuklemeBitti) {
     ROZETLER.forEach(r => {
@@ -7711,6 +8017,7 @@ function zikirDegistir(miktar) {
     }
   }
   rozetleriCizdir();
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 function zikirSifirla() {
@@ -7749,6 +8056,8 @@ function degistir(vakitId, miktar) {
   }
   herseyGuncelle();
   if (miktar > 0) rozetKontrol();
+  // Rozet popup'ından sonra mertebe ve diğer banner'lar tazelensin (XP artmış olabilir)
+  setTimeout(() => { try { anlikSayacGuncelle(); } catch(e){} }, 300);
 }
 
 // =========================================================
@@ -7785,6 +8094,7 @@ function ihlasDegistir(miktar) {
     if (kazaniilanYildiz > 0) setTimeout(() => konfeti100Bin(kazaniilanYildiz), 800);
   }
   rozetleriCizdir();
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 function ihlasSifirla() {
@@ -7824,7 +8134,9 @@ function salavatDegistir(miktar) {
   salavatGuncelle(kazaniilanYildiz > 0);
   if (miktar > 0) {
     if (kazaniilanYildiz > 0) setTimeout(() => konfetiSalavat(kazaniilanYildiz), 800);
+    try { rozetKontrol(); } catch(e){}
   }
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 function konfetiSalavat(yeniYildiz) {
@@ -7864,7 +8176,7 @@ function esmaToplamZikir() {
   return t;
 }
 
-function esmaZikirGuncelle() {
+function esmaZikirGuncelle(yeniYildizMi) {
   const aktif = (typeof ESMA !== 'undefined') ? ESMA.find(e => e.no === aktifEsmaNo) : null;
   if (!aktif) return;
   const sayi = esmaZikirleri[aktif.no] || 0;
@@ -7887,7 +8199,49 @@ function esmaZikirGuncelle() {
   if (dolguEl) dolguEl.style.width = yuzde + '%';
   if (badgeEl) badgeEl.textContent = `${esmaTamamlananlar.size} / 99`;
 
+  // Tamamla butonu — aktif esmâ zaten tamamlanmışsa disabled
+  const tamamlaBtn = document.getElementById('esma-tamamla-btn');
+  if (tamamlaBtn) {
+    if (esmaTamamlananlar.has(aktif.no)) {
+      tamamlaBtn.disabled = true;
+      tamamlaBtn.classList.add('tamamlandi');
+      tamamlaBtn.innerHTML = '✓ Tamamlandı';
+    } else {
+      tamamlaBtn.disabled = false;
+      tamamlaBtn.classList.remove('tamamlandi');
+      tamamlaBtn.innerHTML = '✓ Tamamla';
+    }
+  }
+
+  // Yıldız render
+  yildizCizdir('esma-yildiz', esmaYildiz, yeniYildizMi);
+
+  // Tamamlananlar grid'i çiz
+  esmaTamamlananlarGridCiz();
+
   ezSonGuncelle();
+}
+
+// 99 esmâ chip — tamamlananlar altın, diğerleri gri
+function esmaTamamlananlarGridCiz() {
+  if (typeof ESMA === 'undefined') return;
+  const grid = document.getElementById('esma-tamamlanan-grid');
+  const sayac = document.getElementById('esma-tamamlanan-sayac');
+  if (!grid) return;
+  let html = '';
+  ESMA.forEach(e => {
+    const tamamMi = esmaTamamlananlar.has(e.no);
+    const aktifMi = (e.no === aktifEsmaNo);
+    const klaslar = ['esma-chip'];
+    if (tamamMi) klaslar.push('tamamlandi');
+    if (aktifMi) klaslar.push('aktif');
+    html += `<div class="${klaslar.join(' ')}" onclick="esmaZikirSec(${e.no})" title="${e.ad} — ${e.anlam}">
+      <span class="esma-chip-no">${e.no}</span>
+      ${e.ad}
+    </div>`;
+  });
+  grid.innerHTML = html;
+  if (sayac) sayac.textContent = `${esmaTamamlananlar.size} / 99`;
 }
 
 function esmaZikirDegistir(miktar) {
@@ -7917,11 +8271,13 @@ function esmaZikirDegistir(miktar) {
     setTimeout(() => {
       toast('🌟', `Mâşaallah! ${aktif.ad} ebced sayısına ulaştın`, 'basari');
       rozetKontrol();
+      esmaTamamCheckHepsi(); // 99 tamam mı kontrol
     }, 400);
   } else if (miktar > 0) {
     rozetKontrol();
   }
   rozetleriCizdir();
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 function esmaZikirSifirla() {
@@ -7939,25 +8295,52 @@ function esmaZikirSifirla() {
   toast('🔄', `${aktif.ad} sıfırlandı`);
   esmaZikirGuncelle();
   rozetleriCizdir();
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 function esmaZikirTamamla() {
   if (typeof ESMA === 'undefined') return;
   const aktif = ESMA.find(e => e.no === aktifEsmaNo);
   if (!aktif) return;
-  if (esmaTamamlananlar.has(aktif.no)) {
-    if (!confirm(`${aktif.ad} zaten tamamlanmış. Tamamlanmış işaretini kaldırmak ister misin?`)) return;
-    esmaTamamlananlar.delete(aktif.no);
-    kaydet();
-    toast('↩️', `${aktif.ad} işareti kaldırıldı`);
-  } else {
-    esmaTamamlananlar.add(aktif.no);
-    kaydet();
-    toast('✓', `${aktif.ad} tamamlandı olarak işaretlendi`, 'basari');
-    rozetKontrol();
-  }
+  // Zaten tamamlanmışsa hiçbir şey yapma (buton da disabled — koruma)
+  if (esmaTamamlananlar.has(aktif.no)) return;
+  esmaTamamlananlar.add(aktif.no);
+  kaydet();
+  toast('✓', `${aktif.ad} tamamlandı olarak işaretlendi`, 'basari');
+  rozetKontrol();
+  esmaTamamCheckHepsi(); // 99 tamam mı?
   esmaZikirGuncelle();
   rozetleriCizdir();
+  try { anlikSayacGuncelle(); } catch(e){}
+}
+
+// 99 esmâ tamam mı kontrolü → otomatik sıfırla + yıldız +1 + tebrik
+function esmaTamamCheckHepsi() {
+  if (esmaTamamlananlar.size < 99) return;
+  // Tüm 99 esmâ tamamlandı!
+  esmaYildiz++;
+  localStorage.setItem(ESMA_YILDIZ_KEY, String(esmaYildiz));
+  // Sayaçları sıfırla — yeni tura başla
+  esmaTamamlananlar.clear();
+  esmaZikirleri = {};
+  kaydet();
+  setTimeout(() => konfetiEsma99(esmaYildiz), 500);
+}
+
+function konfetiEsma99(yildizSayisi) {
+  const sıraMetin = yildizSayisi === 1 ? '1. tur' : `${yildizSayisi}. tur`;
+  document.getElementById('popup-ikon').textContent = '⭐';
+  document.getElementById('popup-baslik').textContent = `${sıraMetin.toUpperCase()} — 99 ESMÂ TAMAMLANDI!`;
+  document.getElementById('popup-aciklama').innerHTML =
+    `Mâşaallah! Allah'ın 99 güzel ismini ebced sayılarıyla zikrettin.<br><br>` +
+    `"En güzel isimler Allah'ındır. O'na o isimlerle dua edin." — <em>A'râf, 180</em><br><br>` +
+    `Toplam <strong>⭐ ${esmaYildiz} yıldız</strong> kazandın!<br>` +
+    `Sayaç sıfırlandı, yeni tura devam edebilirsin.<br><br>` +
+    `Allah kabul etsin.`;
+  document.getElementById('rozet-popup').classList.add('acik');
+  // Konfeti
+  if (typeof cuzKonfetiBaslat === 'function') cuzKonfetiBaslat();
+  if (navigator.vibrate) navigator.vibrate([100, 60, 100, 60, 200, 60, 300]);
 }
 
 function esmaZikirSec(no) {
@@ -11296,6 +11679,7 @@ function yedekIndir() {
     esmaZikirleri: esmaZikirleri,
     esmaAktif: aktifEsmaNo,
     esmaTamamlananlar: [...esmaTamamlananlar],
+    esmaYildiz: esmaYildiz,
     ilkKullanim: ILK_KULLANIM,
     streakRekoru: streakRekoru,
     haftalikHedef: haftalikHedef,
@@ -11342,6 +11726,7 @@ function iceAktar(event) {
       if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
       if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
       if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
+      if (typeof v.esmaYildiz === 'number') { esmaYildiz = v.esmaYildiz; localStorage.setItem(ESMA_YILDIZ_KEY, String(esmaYildiz)); }
       if (v.borclar && typeof v.borclar === 'object') vakitBorclariUygula(v.borclar);
       if (typeof v.streakRekoru === 'number') { streakRekoru = v.streakRekoru; localStorage.setItem(STREAK_REKOR_KEY, streakRekoru.toString()); }
       if (typeof v.haftalikHedef === 'number') { haftalikHedef = v.haftalikHedef; localStorage.setItem(HAFTALIK_HEDEF_KEY, haftalikHedef.toString()); }
@@ -11375,6 +11760,8 @@ function iceAktar(event) {
       try { if (typeof zikirGuncelle === 'function') zikirGuncelle(); } catch(e){}
       try { if (typeof ihlasGuncelle === 'function') ihlasGuncelle(); } catch(e){}
       try { if (typeof salavatGuncelle === 'function') salavatGuncelle(); } catch(e){}
+      // Tüm modülleri tek seferde tazele
+      try { anlikSayacGuncelle(); } catch(e){}
     } catch (err) {
       toast('⚠️', 'Dosya okunamadı: ' + err.message, 'hata');
     }
@@ -11396,6 +11783,8 @@ function tumunuSifirla() {
   salavatYildiz = 0;
   esmaZikirleri = {};
   esmaTamamlananlar = new Set();
+  esmaYildiz = 0;
+  localStorage.removeItem(ESMA_YILDIZ_KEY);
   aktifEsmaNo = 17;
   streakRekoru = 0;
   gorevTamamlama = 0;
@@ -13013,6 +13402,7 @@ function setupYedekYukle(event) {
       if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
       if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
       if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
+      if (typeof v.esmaYildiz === 'number') { esmaYildiz = v.esmaYildiz; localStorage.setItem(ESMA_YILDIZ_KEY, String(esmaYildiz)); }
       if (v.borclar && typeof v.borclar === 'object') vakitBorclariUygula(v.borclar);
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
@@ -14645,6 +15035,8 @@ function cuzuOkudumIsaretle() {
     if (yaziEl) yaziEl.textContent = 'Okudum';
     else btn.textContent = '✓ Okudum';
   }
+  // Anlık güncelleme — diğer modüller de tazelensin
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 // Hatim tamamlama popup — özel animasyon
@@ -15090,6 +15482,7 @@ function orucBorcKaydet() {
   setTimeout(() => {
     orucModalKapat();
     orucGuncelle();
+    try { anlikSayacGuncelle(); } catch(e){}
   }, 700);
 }
 
@@ -15108,6 +15501,7 @@ function orucBugunTuttum() {
   localStorage.setItem(ORUC_SON_GUN_KEY, bugun);
   if (typeof toast === 'function') toast('🌙', `Bugünkü oruç kaydedildi. Kalan: ${Math.max(0, borc - yeni)} gün`, 'basari');
   orucGuncelle();
+  try { anlikSayacGuncelle(); } catch(e){}
   // Borç tamamlandı mı?
   if (yeni >= borc) setTimeout(orucBittiKutla, 600);
 }
@@ -15124,6 +15518,7 @@ function orucEkstraGun() {
   localStorage.setItem(ORUC_TUTULAN_KEY, String(yeni));
   if (typeof toast === 'function') toast('🌙', `+1 gün eklendi. Kalan: ${Math.max(0, borc - yeni)} gün`, 'basari');
   orucGuncelle();
+  try { anlikSayacGuncelle(); } catch(e){}
   if (yeni >= borc) setTimeout(orucBittiKutla, 600);
 }
 
@@ -15142,6 +15537,7 @@ function orucGeriAl() {
   }
   if (typeof toast === 'function') toast('↩️', `1 gün geri alındı. Tutulan: ${yeni}`);
   orucGuncelle();
+  try { anlikSayacGuncelle(); } catch(e){}
 }
 
 function orucBittiKutla() {
@@ -15674,6 +16070,56 @@ function kandilModalKapat() {
 // Sayfa yüklendiğinde kandil kontrolü
 setTimeout(() => { try { kandilGuncelle(); } catch(e) { console.error('Kandil:', e); } }, 500);
 
+// ═══════════════════════════════════════
+// iOS PWA Yönlendirme — Safari'de "Ana Ekrana Ekle" hatırlatma
+// ═══════════════════════════════════════
+
+function isIOS() {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent || '';
+  return /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPad iOS 13+
+}
+
+function isStandaloneMode() {
+  // Safari ana ekrandan açıldı mı?
+  return ('standalone' in window.navigator && window.navigator.standalone) ||
+    window.matchMedia('(display-mode: standalone)').matches;
+}
+
+function iosPwaPromptAc() {
+  document.getElementById('ios-pwa-prompt').classList.add('acik');
+  document.body.style.overflow = 'hidden';
+}
+
+function iosPwaPromptKapat(kalici) {
+  document.getElementById('ios-pwa-prompt').classList.remove('acik');
+  document.body.style.overflow = '';
+  if (kalici) {
+    // Bu cihazda bir daha gösterme (kullanıcı "Anladım" dediğinde)
+    localStorage.setItem('kn_ios_pwa_uyari_gizli', '1');
+  } else {
+    // X ile kapatınca 7 gün sonra tekrar göster (hatırlatıcı)
+    const yarin = Date.now() + 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem('kn_ios_pwa_uyari_sonra', String(yarin));
+  }
+}
+
+function iosPwaKontrol() {
+  if (!isIOS()) return;          // iPhone/iPad değil → geç
+  if (isStandaloneMode()) return; // Zaten yüklü → geç
+  if (localStorage.getItem('kn_ios_pwa_uyari_gizli') === '1') return;
+  const sonra = parseInt(localStorage.getItem('kn_ios_pwa_uyari_sonra') || '0');
+  if (sonra && Date.now() < sonra) return;
+  // Sayfa biraz oturduktan sonra göster (3.5 sn)
+  setTimeout(iosPwaPromptAc, 3500);
+}
+
+// Sayfa açıldıktan sonra iOS PWA kontrolü yap
+window.addEventListener('load', () => {
+  setTimeout(iosPwaKontrol, 1000);
+});
+
 </script>
 
 <!-- SETUP WIZARD -->
@@ -15801,6 +16247,39 @@ setTimeout(() => { try { kandilGuncelle(); } catch(e) { console.error('Kandil:',
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- iOS PWA Kurulum Yönlendirici -->
+<div id="ios-pwa-prompt" class="ios-pwa-prompt">
+  <div class="ios-pwa-icerik">
+    <button class="ios-pwa-kapat" onclick="iosPwaPromptKapat()" aria-label="Kapat">×</button>
+    <div class="ios-pwa-baslik">
+      <div class="ios-pwa-ikon">📱</div>
+      <div>
+        <div class="ios-pwa-ad">İhyâ'yı Ana Ekrana Ekle</div>
+        <div class="ios-pwa-alt">Tam ekran ve hızlı erişim için</div>
+      </div>
+    </div>
+    <div class="ios-pwa-adimlar">
+      <div class="ios-pwa-adim">
+        <span class="ios-pwa-adim-no">1</span>
+        <span>Aşağıda <span class="ios-pwa-share-ikon">⎙</span> <strong>Paylaş</strong> butonuna dokun</span>
+      </div>
+      <div class="ios-pwa-adim">
+        <span class="ios-pwa-adim-no">2</span>
+        <span><strong>"Ana Ekrana Ekle"</strong> seçeneğini bul ve seç</span>
+      </div>
+      <div class="ios-pwa-adim">
+        <span class="ios-pwa-adim-no">3</span>
+        <span>Sağ üstte <strong>"Ekle"</strong>ye dokun → Bitti! 🕋</span>
+      </div>
+    </div>
+    <div class="ios-pwa-ipucu">
+      💡 Uygulamayı ana ekrandan açtığında tam ekran çalışır,<br>
+      İhyâ logosuyla güzel bir açılış görürsün.
+    </div>
+    <button class="ios-pwa-tamam" onclick="iosPwaPromptKapat(true)">Anladım, sonra yaparım</button>
   </div>
 </div>
 
