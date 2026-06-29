@@ -5449,6 +5449,361 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 .ios-pwa-tamam:active { transform: scale(0.97); }
 
+/* ═══════════════════════════════════════
+   MANEVİ BAHÇE
+   ═══════════════════════════════════════ */
+.bahce-kart {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 60%, #a5d6a7 100%);
+  border: 2px solid #66bb6a;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(76,175,80,0.18);
+}
+.bahce-kart::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 90% 20%, rgba(255,235,59,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+.bahce-baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.bahce-baslik-sol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bahce-baslik-yazi {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1b5e20;
+  letter-spacing: 0.3px;
+}
+.bahce-asama {
+  background: rgba(46,125,50,0.9);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.bahce-gorsel {
+  height: 130px;
+  background: linear-gradient(180deg, #b3e5fc 0%, #e1f5fe 50%, #8d6e63 100%);
+  border-radius: 12px;
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.1);
+}
+.bahce-gorsel::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30px;
+  background: linear-gradient(180deg, transparent, #6d4c41 30%, #5d4037 100%);
+}
+.bahce-svg {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 5px;
+  animation: bahceSway 4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes bahceSway {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+.bahce-progress-konteyner { position: relative; z-index: 1; }
+.bahce-progress-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.bahce-progress-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  width: 0%;
+  transition: width 0.6s ease;
+  border-radius: 4px;
+}
+.bahce-progress-bilgi {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════
+   LİG SİSTEMİ
+   ═══════════════════════════════════════ */
+.lig-kart {
+  background: linear-gradient(135deg, #fff 0%, var(--altin-bg) 100%);
+  border: 2px solid var(--vurgu);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 18px rgba(212,175,55,0.18);
+  position: relative;
+}
+.lig-kart.bronz   { background: linear-gradient(135deg, #fff7ed, #fed7aa); border-color: #c2410c; box-shadow: 0 6px 18px rgba(194,65,12,0.2); }
+.lig-kart.gumus   { background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-color: #64748b; box-shadow: 0 6px 18px rgba(100,116,139,0.2); }
+.lig-kart.altin   { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #d4af37; box-shadow: 0 6px 18px rgba(212,175,55,0.25); }
+.lig-kart.elmas   { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-color: #0284c7; box-shadow: 0 6px 18px rgba(2,132,199,0.25); }
+.lig-kart.zumrut  { background: linear-gradient(135deg, #d1fae5, #6ee7b7); border-color: #059669; box-shadow: 0 6px 18px rgba(5,150,105,0.25); }
+.lig-kart.vasil   { background: linear-gradient(135deg, #1b4332, #2d5a44); border-color: #d4af37; box-shadow: 0 6px 18px rgba(27,67,50,0.4); color: white; }
+.lig-kart.vasil .lig-tier, .lig-kart.vasil .lig-puan-rakam { color: #d4af37; }
+.lig-kart.vasil .lig-tier-alt, .lig-kart.vasil .lig-puan-etiket, .lig-kart.vasil .lig-progress-bilgi { color: rgba(255,255,255,0.8); }
+.lig-kart.vasil .lig-progress-bar { background: rgba(255,255,255,0.15); }
+
+.lig-baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.lig-baslik-sol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lig-rozet {
+  font-size: 32px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+}
+.lig-tier {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--koyu);
+  letter-spacing: 0.3px;
+}
+.lig-tier-alt {
+  font-size: 11px;
+  color: var(--orta);
+  margin-top: 2px;
+}
+.lig-info-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  border: none;
+  color: var(--orta);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.lig-puan-bolum {
+  text-align: center;
+  margin: 14px 0;
+}
+.lig-puan-rakam {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--koyu);
+  line-height: 1;
+}
+.lig-puan-etiket {
+  font-size: 11px;
+  color: var(--orta);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.lig-progress-bar {
+  height: 10px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.lig-progress-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu), #f4d03f);
+  width: 0%;
+  transition: width 0.6s ease;
+  border-radius: 5px;
+}
+.lig-progress-bilgi {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--orta);
+  font-weight: 700;
+}
+.lig-istikrar {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  font-size: 11px;
+  color: var(--orta);
+  text-align: center;
+}
+.lig-istikrar.terfi-yakin {
+  color: #2d8a4f;
+  font-weight: 800;
+}
+.lig-istikrar.dusus-riski {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+.lig-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,46,31,0.8);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5600;
+  padding: 16px;
+}
+.lig-modal.acik { display: flex; animation: rozetFade 0.25s; }
+.lig-modal-icerik {
+  background: white;
+  border-radius: 18px;
+  max-width: 460px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 22px;
+  animation: rozetPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lig-modal-baslik {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--koyu);
+  margin-bottom: 14px;
+}
+.lig-modal-kapat {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+.lig-modal-aciklama p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--orta);
+  margin: 0 0 12px;
+}
+.lig-puan-tablosu, .lig-tier-tablosu {
+  background: var(--altin-bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.lig-puan-baslik {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.lig-puan-satir, .lig-tier-satir {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+}
+.lig-puan-satir:last-child, .lig-tier-satir:last-child { border-bottom: none; }
+.lig-puan-satir strong { color: var(--koyu); }
+.lig-modal-not {
+  font-size: 11px;
+  color: var(--orta);
+  line-height: 1.6;
+  padding: 10px;
+  background: rgba(212,175,55,0.08);
+  border-radius: 8px;
+  border-left: 3px solid var(--vurgu);
+}
+
+/* Gelişmiş İstatistik */
+.gelismis-istat {
+  margin-top: 12px;
+  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.04));
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 12px;
+  padding: 14px;
+}
+.gelismis-baslik {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--vurgu);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.gelismis-satir-grid { display: flex; flex-direction: column; gap: 8px; }
+.gelismis-satir {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: white;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.gelismis-etiket { color: var(--orta); font-weight: 600; }
+.gelismis-deger { color: var(--koyu); font-weight: 800; font-size: 14px; }
+.gelismis-deger.up { color: #2d8a4f; }
+.gelismis-deger.down { color: #c0392b; }
+
+.gun-dagilim-bolum { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(212,175,55,0.2); }
+.gun-dagilim-baslik {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orta);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.gun-dagilim-grid { display: flex; flex-direction: column; gap: 4px; }
+.gun-dagilim-satir { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.gun-dagilim-ad { width: 32px; color: var(--orta); font-weight: 700; }
+.gun-dagilim-bar-konteyner {
+  flex: 1; height: 14px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 7px; overflow: hidden;
+}
+.gun-dagilim-bar-dolgu {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vurgu), #f4d03f);
+  border-radius: 7px;
+  transition: width 0.6s ease;
+}
+.gun-dagilim-deger { width: 38px; text-align: right; color: var(--koyu); font-weight: 700; font-size: 11px; }
+.gun-dagilim-satir.en-iyi .gun-dagilim-ad { color: var(--vurgu); }
+.gun-dagilim-satir.en-iyi .gun-dagilim-deger { color: var(--vurgu); }
+
 /* Esmâ tamamlananlar grid */
 .esma-tamamlanan-bolum {
   margin-top: 16px;
@@ -6758,9 +7113,116 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
           <div class="bitis-kart-etiket">Bu Hızla Tahmini Bitiş</div>
           <div class="bitis-kart-rakam" id="bitis-tarih">— veri gelmeden tahmin yok —</div>
         </div>
+
+        <!-- Gelişmiş İstatistik (haftalık ortalama, kıyas, gün dağılımı) -->
+        <div class="gelismis-istat" id="gelismis-istat">
+          <div class="gelismis-baslik">📈 Gelişmiş İstatistik</div>
+          <div class="gelismis-satir-grid">
+            <div class="gelismis-satir">
+              <span class="gelismis-etiket">🔥 Son 7 gün ortalama</span>
+              <span class="gelismis-deger" id="g-ort-7">—</span>
+            </div>
+            <div class="gelismis-satir">
+              <span class="gelismis-etiket">📅 Son 30 gün ortalama</span>
+              <span class="gelismis-deger" id="g-ort-30">—</span>
+            </div>
+            <div class="gelismis-satir">
+              <span class="gelismis-etiket">🌟 En iyi 7 günlük periyot</span>
+              <span class="gelismis-deger" id="g-en-iyi-7">—</span>
+            </div>
+            <div class="gelismis-satir">
+              <span class="gelismis-etiket">📊 Geçen haftaya kıyas</span>
+              <span class="gelismis-deger" id="g-kiyas">—</span>
+            </div>
+          </div>
+
+          <div class="gun-dagilim-bolum" id="gun-dagilim-bolum">
+            <div class="gun-dagilim-baslik">📅 Günlerin Dağılımı (son 8 hafta ortalama)</div>
+            <div class="gun-dagilim-grid" id="gun-dagilim-grid"></div>
+          </div>
+        </div>
       </div>
 
-      
+
+      <!-- 🌳 MANEVİ BAHÇE -->
+      <div class="bahce-kart" id="bahce-kart">
+        <div class="bahce-baslik">
+          <div class="bahce-baslik-sol">
+            <span style="font-size:22px;">🌳</span>
+            <span class="bahce-baslik-yazi">Manevi Bahçen</span>
+          </div>
+          <span class="bahce-asama" id="bahce-asama">—</span>
+        </div>
+        <div class="bahce-gorsel" id="bahce-gorsel"></div>
+        <div class="bahce-progress-konteyner">
+          <div class="bahce-progress-bar"><div class="bahce-progress-dolgu" id="bahce-progress-dolgu"></div></div>
+          <div class="bahce-progress-bilgi">
+            <span id="bahce-mesaj">İlk tohumu ek</span>
+            <span id="bahce-hedef">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🏆 LİG SİSTEMİ -->
+      <div class="lig-kart" id="lig-kart">
+        <div class="lig-baslik">
+          <div class="lig-baslik-sol">
+            <span class="lig-rozet" id="lig-rozet">🥉</span>
+            <div>
+              <div class="lig-tier" id="lig-tier">Bronz Lig</div>
+              <div class="lig-tier-alt" id="lig-tier-alt">Bu hafta başla</div>
+            </div>
+          </div>
+          <button class="lig-info-btn" onclick="ligBilgiAc()" title="Lig sistemi nasıl çalışır?">ℹ</button>
+        </div>
+        <div class="lig-puan-bolum">
+          <div class="lig-puan-rakam" id="lig-puan">0</div>
+          <div class="lig-puan-etiket">Bu hafta puanı</div>
+        </div>
+        <div class="lig-progress-bar"><div class="lig-progress-dolgu" id="lig-progress-dolgu"></div></div>
+        <div class="lig-progress-bilgi">
+          <span id="lig-bilgi-sol">Terfi için: —</span>
+          <span id="lig-bilgi-sag">—</span>
+        </div>
+        <div class="lig-istikrar" id="lig-istikrar"></div>
+      </div>
+
+      <!-- Lig Bilgi Modal -->
+      <div class="lig-modal" id="lig-modal" onclick="if(event.target.id==='lig-modal') ligBilgiKapat()">
+        <div class="lig-modal-icerik">
+          <div class="lig-modal-baslik">
+            <span style="font-size:24px;">🏆</span>
+            <span>Lig Sistemi</span>
+            <button class="lig-modal-kapat" onclick="ligBilgiKapat()">×</button>
+          </div>
+          <div class="lig-modal-aciklama">
+            <p>Her hafta yaptığın ibadetler <strong>puana</strong> dönüşür. Hafta sonunda puana göre lig belirlenir.</p>
+          </div>
+          <div class="lig-puan-tablosu">
+            <div class="lig-puan-baslik">📊 Puan Tablosu</div>
+            <div class="lig-puan-satir"><span>🕌 Kıldığın her kaza namaz</span><strong>+10</strong></div>
+            <div class="lig-puan-satir"><span>📿 Her 100 Lâ İlâhe / İhlâs / Salavât</span><strong>+5</strong></div>
+            <div class="lig-puan-satir"><span>✨ Her tamamlanan Esmâ</span><strong>+50</strong></div>
+            <div class="lig-puan-satir"><span>🕋 Her okunan cüz</span><strong>+30</strong></div>
+            <div class="lig-puan-satir"><span>🌙 Her tutulan oruç</span><strong>+20</strong></div>
+            <div class="lig-puan-satir"><span>🎯 Günlük görev tamam</span><strong>+15</strong></div>
+            <div class="lig-puan-satir"><span>🔥 Her gün üst üste (streak)</span><strong>+2</strong></div>
+          </div>
+          <div class="lig-tier-tablosu">
+            <div class="lig-puan-baslik">🏆 Lig Seviyeleri</div>
+            <div class="lig-tier-satir"><span>🥉 Bronz</span><span>0+</span></div>
+            <div class="lig-tier-satir"><span>🥈 Gümüş</span><span>250+</span></div>
+            <div class="lig-tier-satir"><span>🥇 Altın</span><span>700+</span></div>
+            <div class="lig-tier-satir"><span>💎 Elmas</span><span>1.500+</span></div>
+            <div class="lig-tier-satir"><span>💚 Zümrüt</span><span>3.000+</span></div>
+            <div class="lig-tier-satir"><span>👑 Vâsıl Ligi</span><span>5.000+</span></div>
+          </div>
+          <div class="lig-modal-not">
+            💡 <strong>İstikrar bonusu:</strong> Tier'ında 4 hafta üst üste kalırsan <strong>bir üst lig</strong> önerilir. 2 hafta üst üste hedefin altında kalırsan bir alt lige düşersin (manevi yumuşaklıkla).
+          </div>
+        </div>
+      </div>
+
       <!-- Esnek Madalyalar (haftalık döngü) -->
       <div class="esnek-madalya-bolum">
         <div class="em-baslik">🎖️ Bu Haftanın Onurları</div>
@@ -7255,12 +7717,120 @@ function genelToplamBorc() { return VAKITLER.reduce((s,v) => s + v.borc, 0); }
 function streakHesapla() {
   let streak = 0;
   let t = bugunTarih();
+  // Maks 10.000 gün = ~27 yıl (uzun vade için güvenli üst sınır)
   while (gunToplam(t) > 0) {
     streak++;
     t = nDays(t, -1);
-    if (streak > 365) break;
+    if (streak > 10000) break;
   }
   return streak;
+}
+
+// ═══════════════════════════════════════
+// UZUN YIL KULLANIM — DAYANIKLILIK / CLEANUP
+// ═══════════════════════════════════════
+
+// localStorage'da biriken eski snapshot/cache anahtarlarını temizler.
+// Yılda 52 hafta × N yıl → uzun vadede şişer. Sadece son 12 haftayı tut.
+function localStorageBakim() {
+  try {
+    const simdi = new Date();
+    const buyilKey = simdi.getFullYear();
+
+    const silinecekler = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k) continue;
+
+      // Eski hafta başlangıç snapshot'ları — sadece son 12 haftayı tut
+      // Format: kn_hafta_baslangic_2026-06-23 (Pazartesi tarihli)
+      if (k.startsWith('kn_hafta_baslangic_')) {
+        const tarihStr = k.replace('kn_hafta_baslangic_', '');
+        try {
+          const t = new Date(tarihStr);
+          if (!isNaN(t.getTime())) {
+            const gunFark = Math.floor((simdi - t) / (1000 * 60 * 60 * 24));
+            if (gunFark > 12 * 7) silinecekler.push(k); // 12 haftadan eski
+          }
+        } catch(e) {}
+      }
+      // Eski Cuma key'leri (kn_kehf_2026-MM-DD, kn_salavat_2026-MM-DD)
+      else if (k.startsWith('kn_kehf_') || k.startsWith('kn_salavat_')) {
+        const tarihStr = k.substring(k.lastIndexOf('_') + 1);
+        try {
+          const t = new Date(tarihStr);
+          if (!isNaN(t.getTime())) {
+            const gunFark = Math.floor((simdi - t) / (1000 * 60 * 60 * 24));
+            if (gunFark > 30) silinecekler.push(k); // 30 günden eski Cuma kayıtları
+          }
+        } catch(e) {}
+      }
+      // Eski Kandil cache (sadece son 3 yılı tut)
+      else if (k.startsWith('kn_kandil_cache_')) {
+        const m = k.match(/kn_kandil_cache_(\d{4})/);
+        if (m) {
+          const y = parseInt(m[1]);
+          if (y < buyilKey - 3) silinecekler.push(k);
+        }
+      }
+      // Eski "son yıldönümü" gibi tek seferlik flag'lar (1 yıldan eski)
+      else if (k.startsWith('kn_son_ozet_') || k.startsWith('kn_yildonumu_')) {
+        // Bunlar genelde küçük, sorun değil ama yine de eskileri temizleyelim
+        const tarihStr = k.substring(k.lastIndexOf('_') + 1);
+        try {
+          const t = new Date(tarihStr);
+          if (!isNaN(t.getTime())) {
+            const gunFark = Math.floor((simdi - t) / (1000 * 60 * 60 * 24));
+            if (gunFark > 400) silinecekler.push(k);
+          }
+        } catch(e) {}
+      }
+    }
+
+    // Toplu silme
+    silinecekler.forEach(k => {
+      try { localStorage.removeItem(k); } catch(e) {}
+    });
+
+    if (silinecekler.length > 0) {
+      console.log(`[İhyâ Bakım] ${silinecekler.length} eski anahtar temizlendi.`);
+    }
+  } catch (e) {
+    console.warn('[İhyâ Bakım] hata:', e);
+  }
+}
+
+// Sayfa yüklendiğinde günde bir kez bakım yap (son bakım tarihi ile karşılaştır)
+function localStorageBakimKontrol() {
+  try {
+    const bugun = bugunTarih();
+    const son = localStorage.getItem('kn_son_bakim');
+    if (son !== bugun) {
+      localStorageBakim();
+      localStorage.setItem('kn_son_bakim', bugun);
+    }
+  } catch (e) {}
+}
+
+// Güvenli localStorage yazma — quota exceeded olursa eski veri sil ve tekrar dene
+function lsYaz(key, value) {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch (e) {
+    if (e && e.name === 'QuotaExceededError') {
+      console.warn('[İhyâ] localStorage dolu, eski veriler temizleniyor...');
+      localStorageBakim();
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch (e2) {
+        console.error('[İhyâ] Yine yazılamadı:', e2);
+        return false;
+      }
+    }
+    return false;
+  }
 }
 
 // =========================================================
@@ -7721,6 +8291,413 @@ function istatistikleriGuncelle() {
   } else {
     bitisEl.innerHTML = `${bitis.tarih}<br><span style="font-size:11px; color:var(--soft); font-weight:600;">${bitis.yil} yıl ${bitis.ay} ay ${bitis.gun} gün • Ort. ${bitis.gunlukOrt}/gün</span>`;
   }
+
+  // Gelişmiş istatistik
+  try { gelismisIstatGuncelle(); } catch(e){ console.warn('Gelişmiş istat:', e); }
+}
+
+// ─── Gelişmiş İstatistik (haftalık ortalama, kıyas, gün dağılımı) ───
+function gelismisIstatGuncelle() {
+  const bugun = bugunTarih();
+
+  // Son 7 gün toplam + ortalama
+  let toplam7 = 0;
+  for (let i = 0; i < 7; i++) toplam7 += gunToplam(nDays(bugun, -i));
+  const ort7 = (toplam7 / 7).toFixed(1);
+  const el7 = document.getElementById('g-ort-7');
+  if (el7) el7.textContent = `${ort7} / gün (toplam ${toplam7})`;
+
+  // Son 30 gün ortalama
+  let toplam30 = 0;
+  for (let i = 0; i < 30; i++) toplam30 += gunToplam(nDays(bugun, -i));
+  const ort30 = (toplam30 / 30).toFixed(1);
+  const el30 = document.getElementById('g-ort-30');
+  if (el30) el30.textContent = `${ort30} / gün (toplam ${toplam30})`;
+
+  // En iyi 7 günlük periyot (rolling window)
+  let enIyi7 = 0, enIyi7Tarih = '';
+  Object.keys(kayitlar).forEach(t => {
+    let pencere = 0;
+    for (let i = 0; i < 7; i++) pencere += gunToplam(nDays(t, -i));
+    if (pencere > enIyi7) { enIyi7 = pencere; enIyi7Tarih = t; }
+  });
+  const elEnIyi7 = document.getElementById('g-en-iyi-7');
+  if (elEnIyi7) {
+    if (enIyi7 > 0) {
+      const ortPeriyot = (enIyi7 / 7).toFixed(1);
+      elEnIyi7.textContent = `${enIyi7} (ort. ${ortPeriyot}/gün)`;
+    } else {
+      elEnIyi7.textContent = '—';
+    }
+  }
+
+  // Geçen haftaya kıyas (son 7 gün vs. önceki 7 gün)
+  let oncekiHafta = 0;
+  for (let i = 7; i < 14; i++) oncekiHafta += gunToplam(nDays(bugun, -i));
+  const kiyasEl = document.getElementById('g-kiyas');
+  if (kiyasEl) {
+    if (oncekiHafta === 0 && toplam7 === 0) {
+      kiyasEl.textContent = '—';
+      kiyasEl.classList.remove('up', 'down');
+    } else if (oncekiHafta === 0) {
+      kiyasEl.textContent = `↑ ${toplam7} (ilk hafta)`;
+      kiyasEl.classList.add('up');
+      kiyasEl.classList.remove('down');
+    } else {
+      const fark = toplam7 - oncekiHafta;
+      const yuzde = Math.round((fark / oncekiHafta) * 100);
+      if (fark > 0) {
+        kiyasEl.textContent = `↑ %${yuzde} (geçen hafta ${oncekiHafta})`;
+        kiyasEl.classList.add('up');
+        kiyasEl.classList.remove('down');
+      } else if (fark < 0) {
+        kiyasEl.textContent = `↓ %${Math.abs(yuzde)} (geçen hafta ${oncekiHafta})`;
+        kiyasEl.classList.add('down');
+        kiyasEl.classList.remove('up');
+      } else {
+        kiyasEl.textContent = `↔ aynı (${toplam7})`;
+        kiyasEl.classList.remove('up', 'down');
+      }
+    }
+  }
+
+  // Manevi Bahçe + Lig güncellesi (aynı çağrı içinde olsun)
+  try { bahceGuncelle(); } catch(e){ console.warn('Bahçe:', e); }
+  try { ligGuncelle(); } catch(e){ console.warn('Lig:', e); }
+
+  // Günlerin Dağılımı (son 8 hafta = 56 gün)
+  const gunAdlari = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+  const gunlukToplam = [0, 0, 0, 0, 0, 0, 0]; // Pazartesi = 0
+  const gunlukSayi = [0, 0, 0, 0, 0, 0, 0];
+  for (let i = 0; i < 56; i++) {
+    const tarih = nDays(bugun, -i);
+    const tot = gunToplam(tarih);
+    if (tot === 0) continue;
+    const d = new Date(tarih);
+    const gunIdx = (d.getDay() + 6) % 7; // 0 = Pzt, 6 = Paz
+    gunlukToplam[gunIdx] += tot;
+    gunlukSayi[gunIdx] += 1;
+  }
+  const gunlukOrtalama = gunlukToplam.map((t, i) => gunlukSayi[i] > 0 ? t / gunlukSayi[i] : 0);
+  const maxOrt = Math.max(...gunlukOrtalama, 1);
+  const grid = document.getElementById('gun-dagilim-grid');
+  if (grid) {
+    if (Object.keys(kayitlar).length < 5) {
+      grid.innerHTML = '<div style="text-align:center; color:var(--orta); font-size:11px; padding:8px;">5+ gün veri biriktiğinde dağılım gözükür</div>';
+    } else {
+      let html = '';
+      gunlukOrtalama.forEach((ort, idx) => {
+        const yuzde = (ort / maxOrt) * 100;
+        const enIyi = (ort === maxOrt && ort > 0);
+        const klas = enIyi ? 'gun-dagilim-satir en-iyi' : 'gun-dagilim-satir';
+        const ortText = ort > 0 ? ort.toFixed(1) : '—';
+        const yildiz = enIyi ? ' ⭐' : '';
+        html += `
+          <div class="${klas}">
+            <span class="gun-dagilim-ad">${gunAdlari[idx]}${yildiz}</span>
+            <div class="gun-dagilim-bar-konteyner">
+              <div class="gun-dagilim-bar-dolgu" style="width:${yuzde}%"></div>
+            </div>
+            <span class="gun-dagilim-deger">${ortText}</span>
+          </div>`;
+      });
+      grid.innerHTML = html;
+    }
+  }
+}
+
+// ═══════════════════════════════════════
+// 🌳 MANEVİ BAHÇE
+// ═══════════════════════════════════════
+// 7 aşamalı görsel ağaç — streak ve toplam ibadetle büyür
+const BAHCE_ASAMALAR = [
+  {
+    seviye: 0, ad: 'Çorak Toprak', minStreak: 0, minIbadet: 0,
+    svg: '<svg class="bahce-svg" width="80" height="60" viewBox="0 0 80 60"><circle cx="40" cy="55" r="3" fill="#8d6e63"/></svg>',
+    mesaj: 'İlk niyet, bir tohumdur'
+  },
+  {
+    seviye: 1, ad: 'Tohum', minStreak: 1, minIbadet: 10,
+    svg: '<svg class="bahce-svg" width="80" height="60" viewBox="0 0 80 60"><ellipse cx="40" cy="55" rx="6" ry="4" fill="#5d4037"/><line x1="40" y1="52" x2="40" y2="45" stroke="#388e3c" stroke-width="2" stroke-linecap="round"/></svg>',
+    mesaj: 'Niyet ektin, sabret'
+  },
+  {
+    seviye: 2, ad: 'Fide', minStreak: 3, minIbadet: 50,
+    svg: '<svg class="bahce-svg" width="80" height="70" viewBox="0 0 80 70"><line x1="40" y1="65" x2="40" y2="35" stroke="#6d4c41" stroke-width="3" stroke-linecap="round"/><ellipse cx="32" cy="40" rx="8" ry="5" fill="#66bb6a" transform="rotate(-25 32 40)"/><ellipse cx="48" cy="40" rx="8" ry="5" fill="#66bb6a" transform="rotate(25 48 40)"/><ellipse cx="40" cy="30" rx="6" ry="4" fill="#81c784"/></svg>',
+    mesaj: 'Yapraklar açıyor'
+  },
+  {
+    seviye: 3, ad: 'Genç Ağaç', minStreak: 7, minIbadet: 200,
+    svg: '<svg class="bahce-svg" width="100" height="90" viewBox="0 0 100 90"><rect x="46" y="50" width="8" height="40" fill="#6d4c41" rx="2"/><circle cx="50" cy="40" r="22" fill="#4caf50"/><circle cx="35" cy="35" r="14" fill="#66bb6a"/><circle cx="65" cy="35" r="14" fill="#66bb6a"/><circle cx="50" cy="20" r="14" fill="#81c784"/></svg>',
+    mesaj: 'Dalların güçleniyor'
+  },
+  {
+    seviye: 4, ad: 'Olgun Ağaç', minStreak: 14, minIbadet: 500,
+    svg: '<svg class="bahce-svg" width="110" height="105" viewBox="0 0 110 105"><rect x="50" y="55" width="10" height="50" fill="#5d4037" rx="2"/><circle cx="55" cy="45" r="28" fill="#388e3c"/><circle cx="35" cy="40" r="18" fill="#4caf50"/><circle cx="75" cy="40" r="18" fill="#4caf50"/><circle cx="55" cy="20" r="18" fill="#66bb6a"/><circle cx="42" cy="55" r="3" fill="#fff59d"/><circle cx="68" cy="55" r="3" fill="#fff59d"/><circle cx="55" cy="30" r="3" fill="#fff59d"/></svg>',
+    mesaj: 'Allah verdi, çiçek açıyor'
+  },
+  {
+    seviye: 5, ad: 'Çiçek Açan Ağaç', minStreak: 30, minIbadet: 1500,
+    svg: '<svg class="bahce-svg" width="120" height="115" viewBox="0 0 120 115"><rect x="55" y="60" width="10" height="55" fill="#4e342e" rx="2"/><circle cx="60" cy="50" r="32" fill="#2e7d32"/><circle cx="35" cy="45" r="20" fill="#388e3c"/><circle cx="85" cy="45" r="20" fill="#388e3c"/><circle cx="60" cy="20" r="20" fill="#4caf50"/><g fill="#ec407a"><circle cx="45" cy="55" r="4"/><circle cx="75" cy="50" r="4"/><circle cx="60" cy="35" r="4"/><circle cx="40" cy="35" r="4"/><circle cx="80" cy="60" r="4"/><circle cx="55" cy="62" r="4"/></g><g fill="#fff" opacity="0.8"><circle cx="45" cy="55" r="1.5"/><circle cx="75" cy="50" r="1.5"/><circle cx="60" cy="35" r="1.5"/></g></svg>',
+    mesaj: 'Bahçen yeşeriyor, mâşaallah'
+  },
+  {
+    seviye: 6, ad: 'Meyve Veren Ağaç', minStreak: 60, minIbadet: 3500,
+    svg: '<svg class="bahce-svg" width="130" height="120" viewBox="0 0 130 120"><rect x="60" y="65" width="10" height="55" fill="#3e2723" rx="2"/><circle cx="65" cy="55" r="36" fill="#1b5e20"/><circle cx="35" cy="50" r="22" fill="#2e7d32"/><circle cx="95" cy="50" r="22" fill="#2e7d32"/><circle cx="65" cy="20" r="22" fill="#388e3c"/><g fill="#d32f2f"><circle cx="50" cy="55" r="5"/><circle cx="80" cy="50" r="5"/><circle cx="65" cy="35" r="5"/><circle cx="40" cy="40" r="5"/><circle cx="90" cy="60" r="5"/><circle cx="55" cy="65" r="5"/><circle cx="75" cy="30" r="5"/></g><g fill="#fff" opacity="0.5"><circle cx="48" cy="53" r="1.5"/><circle cx="78" cy="48" r="1.5"/><circle cx="63" cy="33" r="1.5"/></g></svg>',
+    mesaj: 'Meyveni topla, helâl rızık'
+  },
+  {
+    seviye: 7, ad: 'Sidre-i Müntehâ', minStreak: 90, minIbadet: 7500,
+    svg: '<svg class="bahce-svg" width="140" height="130" viewBox="0 0 140 130"><defs><radialGradient id="halo"><stop offset="0%" stop-color="#fff59d" stop-opacity="0.6"/><stop offset="100%" stop-color="#fff59d" stop-opacity="0"/></radialGradient></defs><circle cx="70" cy="55" r="65" fill="url(#halo)"/><rect x="65" y="70" width="10" height="60" fill="#3e2723" rx="2"/><circle cx="70" cy="55" r="40" fill="#1b5e20"/><circle cx="35" cy="50" r="24" fill="#2e7d32"/><circle cx="105" cy="50" r="24" fill="#2e7d32"/><circle cx="70" cy="18" r="24" fill="#388e3c"/><g fill="#d4af37"><circle cx="50" cy="55" r="5"/><circle cx="90" cy="55" r="5"/><circle cx="70" cy="35" r="5"/><circle cx="40" cy="40" r="5"/><circle cx="100" cy="60" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="30" r="5"/><circle cx="55" cy="40" r="5"/></g><g fill="#fff"><circle cx="50" cy="53" r="2"/><circle cx="90" cy="53" r="2"/><circle cx="70" cy="33" r="2"/></g></svg>',
+    mesaj: 'Cennet bahçelerinden bir köşe'
+  }
+];
+
+function bahceAsamaBul(streak, toplamIbadet) {
+  let aktif = BAHCE_ASAMALAR[0];
+  for (let i = BAHCE_ASAMALAR.length - 1; i >= 0; i--) {
+    const a = BAHCE_ASAMALAR[i];
+    if (streak >= a.minStreak && toplamIbadet >= a.minIbadet) {
+      aktif = a;
+      break;
+    }
+  }
+  return aktif;
+}
+
+function bahceGuncelle() {
+  const gorselEl = document.getElementById('bahce-gorsel');
+  if (!gorselEl) return;
+
+  const streak = streakHesapla();
+  // "Toplam ibadet" = namaz + zikir/100 ölçüsünde (basit, hızlı)
+  let toplamIbadet = 0;
+  try {
+    toplamIbadet = genelToplamKildi();
+    if (typeof zikirSayisi !== 'undefined') toplamIbadet += Math.floor((zikirSayisi + (zikirYildiz || 0) * 70000) / 100);
+    if (typeof ihlasSayisi !== 'undefined') toplamIbadet += Math.floor((ihlasSayisi + (ihlasYildiz || 0) * 100000) / 100);
+    if (typeof salavatSayisi !== 'undefined') toplamIbadet += Math.floor((salavatSayisi + (salavatYildiz || 0) * 100000) / 100);
+  } catch(e) {}
+
+  const aktif = bahceAsamaBul(streak, toplamIbadet);
+  const sonraki = BAHCE_ASAMALAR[aktif.seviye + 1] || null;
+
+  gorselEl.innerHTML = aktif.svg;
+
+  const asamaEl = document.getElementById('bahce-asama');
+  if (asamaEl) asamaEl.textContent = aktif.ad;
+
+  const mesajEl = document.getElementById('bahce-mesaj');
+  if (mesajEl) mesajEl.textContent = aktif.mesaj;
+
+  const dolguEl = document.getElementById('bahce-progress-dolgu');
+  const hedefEl = document.getElementById('bahce-hedef');
+  if (sonraki) {
+    // Streak ve ibadet kriterlerinden hangisinde daha geri ise göster
+    const streakIlerleme = aktif.minStreak === sonraki.minStreak ? 1 :
+      (streak - aktif.minStreak) / (sonraki.minStreak - aktif.minStreak);
+    const ibadetIlerleme = aktif.minIbadet === sonraki.minIbadet ? 1 :
+      (toplamIbadet - aktif.minIbadet) / (sonraki.minIbadet - aktif.minIbadet);
+    const yuzde = Math.min(streakIlerleme, ibadetIlerleme);
+    if (dolguEl) dolguEl.style.width = (Math.max(0, Math.min(1, yuzde)) * 100) + '%';
+    if (hedefEl) {
+      const streakKalan = Math.max(0, sonraki.minStreak - streak);
+      const ibadetKalan = Math.max(0, sonraki.minIbadet - toplamIbadet);
+      if (streakKalan > 0 && ibadetKalan > 0) {
+        hedefEl.textContent = `→ ${sonraki.ad}: ${streakKalan} gün streak + ${ibadetKalan} ibadet`;
+      } else if (streakKalan > 0) {
+        hedefEl.textContent = `→ ${sonraki.ad}: ${streakKalan} gün streak`;
+      } else if (ibadetKalan > 0) {
+        hedefEl.textContent = `→ ${sonraki.ad}: ${ibadetKalan} ibadet daha`;
+      } else {
+        hedefEl.textContent = `${sonraki.ad}'ya yakın`;
+      }
+    }
+  } else {
+    if (dolguEl) dolguEl.style.width = '100%';
+    if (hedefEl) hedefEl.textContent = '👑 En yüce mertebe';
+  }
+}
+
+// ═══════════════════════════════════════
+// 🏆 LİG SİSTEMİ
+// ═══════════════════════════════════════
+const LIG_TIERS = [
+  { ad: 'Bronz Lig',  sinif: 'bronz',  rozet: '🥉', min: 0,    sonraki: 250 },
+  { ad: 'Gümüş Lig',  sinif: 'gumus',  rozet: '🥈', min: 250,  sonraki: 700 },
+  { ad: 'Altın Lig',  sinif: 'altin',  rozet: '🥇', min: 700,  sonraki: 1500 },
+  { ad: 'Elmas Lig',  sinif: 'elmas',  rozet: '💎', min: 1500, sonraki: 3000 },
+  { ad: 'Zümrüt Lig', sinif: 'zumrut', rozet: '💚', min: 3000, sonraki: 5000 },
+  { ad: 'Vâsıl Ligi', sinif: 'vasil',  rozet: '👑', min: 5000, sonraki: null }
+];
+
+function ligTierBul(puan) {
+  for (let i = LIG_TIERS.length - 1; i >= 0; i--) {
+    if (puan >= LIG_TIERS[i].min) return { tier: LIG_TIERS[i], idx: i };
+  }
+  return { tier: LIG_TIERS[0], idx: 0 };
+}
+
+function ligHaftalikPuanHesapla() {
+  // Bu haftanın puanı = haftaBaşı snapshot'ından bu yana kazanılan miktarlar
+  let puan = 0;
+  try {
+    const baslangic = haftaBaslangicAl();
+    const bugun = bugunTarih();
+
+    // Bu hafta kıldığı namaz (Pazartesi'den bugüne)
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    const gunOffset = (d.getDay() + 6) % 7;
+    let buHaftaNamaz = 0;
+    for (let i = 0; i <= gunOffset; i++) {
+      const t = new Date(d);
+      t.setDate(t.getDate() - gunOffset + i);
+      buHaftaNamaz += gunToplam(t.toISOString().split('T')[0]);
+    }
+    puan += buHaftaNamaz * 10;
+
+    // Bu hafta zikir artışı
+    const zikirArtis = buHaftaZikirArtisi();
+    puan += Math.floor(zikirArtis / 100) * 5;
+
+    // İhlâs artışı
+    const ihlasMevcut = (typeof ihlasSayisi !== 'undefined' ? ihlasSayisi : 0) +
+                       (typeof ihlasYildiz !== 'undefined' ? ihlasYildiz : 0) * 100000;
+    const ihlasArtis = Math.max(0, ihlasMevcut - (baslangic.ihlasToplam || 0));
+    puan += Math.floor(ihlasArtis / 100) * 5;
+
+    // Salavât artışı
+    const salavatMevcut = (typeof salavatSayisi !== 'undefined' ? salavatSayisi : 0) +
+                         (typeof salavatYildiz !== 'undefined' ? salavatYildiz : 0) * 100000;
+    const salavatArtis = Math.max(0, salavatMevcut - (baslangic.salavatToplam || 0));
+    puan += Math.floor(salavatArtis / 100) * 5;
+
+    // Esmâ artışı
+    puan += buHaftaEsmaArtisi() * 50;
+
+    // Streak bonusu (her gün üst üste +2)
+    puan += streakHesapla() * 2;
+
+  } catch(e) { console.warn('Lig puan:', e); }
+  return puan;
+}
+
+const LIG_STATE_KEY = 'kn_lig_state_v1';
+
+function ligIstikrarKaydet(puan, tier) {
+  try {
+    const isoKey = isoHaftaKey(); // ISO hafta anahtarı yeniden kullanılır
+    let state = {};
+    try { state = JSON.parse(localStorage.getItem(LIG_STATE_KEY) || '{}'); } catch(e) {}
+    if (!state.haftalar) state.haftalar = [];
+    // Bu hafta için varsa güncelle, yoksa ekle
+    const mevcutIdx = state.haftalar.findIndex(h => h.key === isoKey);
+    const entry = { key: isoKey, puan: puan, tier: tier.sinif, tarih: new Date().toISOString() };
+    if (mevcutIdx >= 0) state.haftalar[mevcutIdx] = entry;
+    else state.haftalar.push(entry);
+    // Son 8 haftayı tut
+    if (state.haftalar.length > 8) state.haftalar = state.haftalar.slice(-8);
+    localStorage.setItem(LIG_STATE_KEY, JSON.stringify(state));
+  } catch(e) {}
+}
+
+function ligIstikrarOku() {
+  try { return JSON.parse(localStorage.getItem(LIG_STATE_KEY) || '{"haftalar":[]}'); }
+  catch(e) { return { haftalar: [] }; }
+}
+
+function ligGuncelle() {
+  const kart = document.getElementById('lig-kart');
+  if (!kart) return;
+
+  const puan = ligHaftalikPuanHesapla();
+  const { tier, idx } = ligTierBul(puan);
+
+  // Kart class
+  kart.className = 'lig-kart ' + tier.sinif;
+
+  // Tier görüntü
+  const rozetEl = document.getElementById('lig-rozet');
+  if (rozetEl) rozetEl.textContent = tier.rozet;
+  const tierEl = document.getElementById('lig-tier');
+  if (tierEl) tierEl.textContent = tier.ad;
+
+  // Puan
+  const puanEl = document.getElementById('lig-puan');
+  if (puanEl) puanEl.textContent = puan.toLocaleString('tr-TR');
+
+  // Progress
+  const dolguEl = document.getElementById('lig-progress-dolgu');
+  const bilgiSolEl = document.getElementById('lig-bilgi-sol');
+  const bilgiSagEl = document.getElementById('lig-bilgi-sag');
+  if (tier.sonraki) {
+    const aralik = tier.sonraki - tier.min;
+    const yuzde = Math.min(100, ((puan - tier.min) / aralik) * 100);
+    if (dolguEl) dolguEl.style.width = yuzde + '%';
+    const sonrakiTier = LIG_TIERS[idx + 1];
+    if (bilgiSolEl) bilgiSolEl.textContent = `${sonrakiTier ? sonrakiTier.ad + ' için' : 'Sonraki'}: ${(tier.sonraki - puan).toLocaleString('tr-TR')} puan`;
+    if (bilgiSagEl) bilgiSagEl.textContent = `${puan.toLocaleString('tr-TR')} / ${tier.sonraki.toLocaleString('tr-TR')}`;
+  } else {
+    if (dolguEl) dolguEl.style.width = '100%';
+    if (bilgiSolEl) bilgiSolEl.textContent = '🌟 En yüce lig';
+    if (bilgiSagEl) bilgiSagEl.textContent = puan.toLocaleString('tr-TR') + '+';
+  }
+
+  // Alt başlık — bu haftaki çabaya göre kısa mesaj
+  const altEl = document.getElementById('lig-tier-alt');
+  if (altEl) {
+    if (puan === 0) altEl.textContent = 'Bu haftaki ilk amele bekliyor';
+    else if (tier.sonraki && (tier.sonraki - puan) < 100) altEl.textContent = '🔥 Bir üst lige çok yakınsın!';
+    else if (puan >= 5000) altEl.textContent = 'Mâşaallah — en yüce mertebe';
+    else altEl.textContent = 'Bu hafta hayırla devam';
+  }
+
+  // İstikrar (son 8 haftadan istatistik)
+  ligIstikrarKaydet(puan, tier);
+  const state = ligIstikrarOku();
+  const sonHaftalar = state.haftalar.filter(h => h.key !== isoHaftaKey());
+  const istikrarEl = document.getElementById('lig-istikrar');
+  if (istikrarEl) {
+    if (sonHaftalar.length === 0) {
+      istikrarEl.textContent = 'İlk haftan — sebatla devam';
+      istikrarEl.className = 'lig-istikrar';
+    } else {
+      // Son 4 haftada bu tier'da kalmış mı?
+      const son4 = sonHaftalar.slice(-4);
+      const ayniTierdeKaldi = son4.length >= 4 && son4.every(h => h.tier === tier.sinif);
+      const altTierdeMi = son4.length >= 2 && son4.slice(-2).every(h => {
+        const ht = LIG_TIERS.find(t => t.sinif === h.tier);
+        return ht && ht.min < tier.min;
+      });
+      if (ayniTierdeKaldi && tier.sonraki) {
+        istikrarEl.textContent = `✨ 4 hafta üst üste ${tier.ad}! Bir üst lige meylediyorsun`;
+        istikrarEl.className = 'lig-istikrar terfi-yakin';
+      } else if (altTierdeMi) {
+        istikrarEl.textContent = `📉 Son 2 hafta düşük — Allah hayrı yaz`;
+        istikrarEl.className = 'lig-istikrar dusus-riski';
+      } else {
+        // Genel ortalama
+        const ortalama = sonHaftalar.reduce((s, h) => s + h.puan, 0) / sonHaftalar.length;
+        const fark = puan - ortalama;
+        if (fark > 0) {
+          istikrarEl.textContent = `📈 Son ${sonHaftalar.length} hafta ortalaması: ${Math.round(ortalama)} (↑ %${Math.round((fark/Math.max(1,ortalama))*100)})`;
+        } else {
+          istikrarEl.textContent = `📊 Son ${sonHaftalar.length} hafta ortalaması: ${Math.round(ortalama)} puan`;
+        }
+        istikrarEl.className = 'lig-istikrar';
+      }
+    }
+  }
+}
+
+function ligBilgiAc() {
+  document.getElementById('lig-modal').classList.add('acik');
+  document.body.style.overflow = 'hidden';
+}
+function ligBilgiKapat() {
+  document.getElementById('lig-modal').classList.remove('acik');
+  document.body.style.overflow = '';
 }
 
 let ilkYuklemeBitti = false;
@@ -11822,6 +12799,8 @@ function tumunuSifirla() {
 // =========================================================
 duaCizdir();
 herseyGuncelle();
+// Uzun yıl kullanım için günde 1 kez localStorage bakım
+try { localStorageBakimKontrol(); } catch(e){}
 
 
 
@@ -12484,6 +13463,55 @@ function mertebeBul(xp) {
   return MERTEBELER[0];
 }
 
+// ─── Vâsıl Prestij Sistemi (Vâsıl sonrası sınırsız ilerleme) ───
+// Her 10.000 XP üzerinde yeni bir "Vâsıl alt başlığı" + yıldız eklenir.
+const VASIL_ALT_SEVIYELER = [
+  { ad: 'Vâsıl',                xp: 15000,  yildiz: 0 },
+  { ad: 'Vâsıl-ı Sâdık',        xp: 25000,  yildiz: 1 },
+  { ad: 'Vâsıl-ı Râsih',        xp: 40000,  yildiz: 2 },
+  { ad: 'Vâsıl-ı Muhakkık',     xp: 60000,  yildiz: 3 },
+  { ad: 'Sıddîk',               xp: 85000,  yildiz: 4 },
+  { ad: 'Mukîm',                xp: 120000, yildiz: 5 },
+  { ad: 'Hatemü\'l-Vâsılîn',    xp: 200000, yildiz: 6 }  // En üst — sonsuz pile devam ederse buraya kilitlenir
+];
+
+function vasilSeviyesi(xp) {
+  // Mevcut alt seviyeyi bul
+  let aktif = VASIL_ALT_SEVIYELER[0];
+  let sonraki = null;
+  for (let i = 0; i < VASIL_ALT_SEVIYELER.length; i++) {
+    if (xp >= VASIL_ALT_SEVIYELER[i].xp) {
+      aktif = VASIL_ALT_SEVIYELER[i];
+      sonraki = VASIL_ALT_SEVIYELER[i + 1] || null;
+    } else {
+      break;
+    }
+  }
+  const yildizGorsel = aktif.yildiz > 0 ? '⭐'.repeat(aktif.yildiz) : '';
+  let yuzde = 100, mevcutAralikIci = 0, aralikXP = 1, kalan = 0;
+  if (sonraki) {
+    aralikXP = sonraki.xp - aktif.xp;
+    mevcutAralikIci = xp - aktif.xp;
+    kalan = sonraki.xp - xp;
+    yuzde = Math.min(100, Math.max(0, (mevcutAralikIci / aralikXP) * 100));
+  } else {
+    // Hatemü'l-Vâsılîn — en üst
+    yuzde = 100;
+    mevcutAralikIci = xp - aktif.xp;
+    aralikXP = mevcutAralikIci || 1;
+  }
+  return {
+    adAlt: aktif.ad,
+    yildiz: aktif.yildiz,
+    yildizGorsel,
+    sonrakiAd: sonraki ? sonraki.ad : null,
+    yuzde,
+    mevcutAralikIci,
+    aralikXP,
+    kalan
+  };
+}
+
 function temelXP() {
   // State-based hesaplama
   let xp = 0;
@@ -12606,11 +13634,17 @@ function mertebeBannerGuncelle() {
     document.getElementById('mertebe-progress-sonraki').textContent = `${sonraki.ad}'e ${kalan.toLocaleString('tr-TR')} XP`;
     document.getElementById('mertebe-xp-alt').textContent = `${sonraki.ad}'e doğru`;
   } else {
-    // Vâsıl - max
-    document.getElementById('mertebe-progress-dolgu').style.width = '100%';
-    document.getElementById('mertebe-progress-mevcut').textContent = 'Ulaştın';
-    document.getElementById('mertebe-progress-sonraki').textContent = 'En yüksek mertebede';
-    document.getElementById('mertebe-xp-alt').textContent = 'Zirve';
+    // Vâsıl — sınırsız prestij sistemi (her +10K XP = 1 yıldız + alt başlık)
+    const v = vasilSeviyesi(xp);
+    document.getElementById('mertebe-ad').innerHTML =
+      `${v.adAlt} ${v.yildizGorsel} <span id="carpan-rozet-konteyner"></span>`;
+    document.getElementById('mertebe-progress-dolgu').style.width = v.yuzde + '%';
+    document.getElementById('mertebe-progress-mevcut').textContent =
+      `${v.mevcutAralikIci.toLocaleString('tr-TR')} / ${v.aralikXP.toLocaleString('tr-TR')}`;
+    document.getElementById('mertebe-progress-sonraki').textContent =
+      v.sonrakiAd ? `${v.sonrakiAd}'e ${v.kalan.toLocaleString('tr-TR')} XP` : 'Hatemü\'l-Vâsılîn ⭐⭐⭐⭐⭐';
+    document.getElementById('mertebe-xp-alt').textContent =
+      v.sonrakiAd ? `${v.sonrakiAd}'e doğru` : 'Zirve — Hatemü\'l-Vâsılîn';
   }
 
   // Carpan rozeti
@@ -13788,22 +14822,81 @@ setTimeout(() => {
 const SES_AKTIF_KEY = 'kn_ses_aktif_v1';
 const BILDIRIM_AKTIF_KEY = 'kn_bildirim_aktif_v1';
 
+// ─── Haftalık Snapshot Sistemi (Onurlar için Pazartesi 00:00 reset) ───
+// Her hafta için o anki kümülatif değerleri kaydeder, kazanım = (mevcut - haftaBaşı)
+function isoHaftaKey() {
+  // Pazartesi başlangıçlı ISO haftası (YYYY-Www)
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  // ISO: Pazartesi = 0 olacak şekilde
+  const gunOffset = (d.getDay() + 6) % 7; // Pzt=0, Sal=1, ..., Paz=6
+  d.setDate(d.getDate() - gunOffset); // Bu haftanın Pazartesi'si
+  const yy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `kn_hafta_baslangic_${yy}-${mm}-${dd}`;
+}
+
+function haftaBaslangicAl() {
+  const key = isoHaftaKey();
+  let snapshot = null;
+  try { snapshot = JSON.parse(localStorage.getItem(key) || 'null'); } catch(e) { snapshot = null; }
+  if (!snapshot) {
+    // Bu hafta ilk açılış: o anki değerleri snapshot olarak yaz
+    snapshot = {
+      zikirToplam: (typeof zikirSayisi !== 'undefined' ? zikirSayisi : 0) +
+                   (typeof zikirYildiz !== 'undefined' ? zikirYildiz : 0) * 70000,
+      ihlasToplam: (typeof ihlasSayisi !== 'undefined' ? ihlasSayisi : 0) +
+                   (typeof ihlasYildiz !== 'undefined' ? ihlasYildiz : 0) * 100000,
+      salavatToplam: (typeof salavatSayisi !== 'undefined' ? salavatSayisi : 0) +
+                     (typeof salavatYildiz !== 'undefined' ? salavatYildiz : 0) * 100000,
+      esmaToplamlanan: (typeof esmaTamamlananlar !== 'undefined' ? esmaTamamlananlar.size : 0),
+      namazToplam: (typeof genelToplamKildi === 'function' ? genelToplamKildi() : 0),
+      gunlukGorevToplam: (typeof gorevTamamlama !== 'undefined' ? gorevTamamlama : 0)
+    };
+    localStorage.setItem(key, JSON.stringify(snapshot));
+  }
+  return snapshot;
+}
+
+function buHaftaZikirArtisi() {
+  const baslangic = haftaBaslangicAl();
+  const mevcut = (typeof zikirSayisi !== 'undefined' ? zikirSayisi : 0) +
+                 (typeof zikirYildiz !== 'undefined' ? zikirYildiz : 0) * 70000;
+  return Math.max(0, mevcut - baslangic.zikirToplam);
+}
+function buHaftaEsmaArtisi() {
+  const baslangic = haftaBaslangicAl();
+  const mevcut = (typeof esmaTamamlananlar !== 'undefined' ? esmaTamamlananlar.size : 0);
+  return Math.max(0, mevcut - baslangic.esmaToplamlanan);
+}
+
 // ─── Esnek Madalyalar ───
 const ESNEK_MADALYALAR = [
   { id:'gunun-yildizi', ikon:'🌟', ad:'Günün Yıldızı', aciklama:'Bugün 10+ namaz', kontrol: () => gunToplam(bugunTarih()) >= 10 },
   { id:'zakir-mahir', ikon:'📿', ad:'Zâkir-i Mâhir', aciklama:'Bu hafta +500 zikir', kontrol: () => {
-      // Bu haftadaki zikir artışı (yaklaşık) - basit kontrol: toplam zikir 500+ ise
-      return zikirSayisi >= 500;
+      // Hafta başından beri eklenen zikir
+      return buHaftaZikirArtisi() >= 500;
     }},
   { id:'mudavim', ikon:'🕌', ad:'Müdâvim', aciklama:'Bu hafta her gün namaz', kontrol: () => {
-      const bugun = bugunTarih();
-      let aktifSayi = 0;
-      for (let i = 0; i < 7; i++) {
-        if (gunToplam(nDays(bugun, -i)) > 0) aktifSayi++;
+      // ISO haftası: Pazartesi'den BUGÜNE kadar HER GÜN namaz kılındı mı?
+      const d = new Date();
+      d.setHours(0,0,0,0);
+      const gunOffset = (d.getDay() + 6) % 7; // 0=Pzt
+      let hepsiVarMi = true;
+      for (let i = 0; i <= gunOffset; i++) {
+        const t = new Date(d);
+        t.setDate(t.getDate() - gunOffset + i);
+        const tarihStr = t.toISOString().split('T')[0];
+        if (gunToplam(tarihStr) === 0) { hepsiVarMi = false; break; }
       }
-      return aktifSayi >= 7;
+      // En az 7 gün geçmediyse haftalık tamamlanmadı sayılır
+      return hepsiVarMi && gunOffset === 6; // Sadece Pazar günü kontrol et
     }},
-  { id:'hafiz', ikon:'📖', ad:'Hâfız', aciklama:'Bu hafta 3+ Esmâ tamam', kontrol: () => esmaTamamlananlar.size >= 3 },
+  { id:'hafiz', ikon:'📖', ad:'Hâfız', aciklama:'Bu hafta 3+ Esmâ tamam', kontrol: () => {
+      // Hafta başından beri tamamlanan yeni Esmâ sayısı
+      return buHaftaEsmaArtisi() >= 3;
+    }},
   { id:'hizli-salik', ikon:'⚡', ad:'Hızlı Sâlik', aciklama:'7+ gün streak', kontrol: () => streakHesapla() >= 7 },
   { id:'cuma-ehli', ikon:'🕊️', ad:'Cuma Ehli', aciklama:'Cuma Kehf+salavât tam', kontrol: () => {
       const kehfOkunan = JSON.parse(localStorage.getItem(cumaKey('kehf')) || '[]').length;
@@ -14050,6 +15143,21 @@ if (typeof ihlasDegistir === 'function') {
   const _eskiIhl = ihlasDegistir;
   ihlasDegistir = function(miktar) {
     _eskiIhl(miktar);
+    if (miktar > 0) sesCal('zikir');
+  };
+}
+if (typeof salavatDegistir === 'function') {
+  const _eskiSal = salavatDegistir;
+  salavatDegistir = function(miktar) {
+    _eskiSal(miktar);
+    if (miktar > 0) sesCal('zikir');
+  };
+}
+if (typeof esmaZikirDegistir === 'function') {
+  // Esmâ +/- de ses çıkarsın (tutarlılık için)
+  const _eskiEsma = esmaZikirDegistir;
+  esmaZikirDegistir = function(miktar) {
+    _eskiEsma(miktar);
     if (miktar > 0) sesCal('zikir');
   };
 }
