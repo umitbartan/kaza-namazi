@@ -5499,34 +5499,65 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   text-transform: uppercase;
 }
 .bahce-gorsel {
-  height: 130px;
-  background: linear-gradient(180deg, #b3e5fc 0%, #e1f5fe 50%, #8d6e63 100%);
+  height: 180px;
+  background: transparent;
   border-radius: 12px;
   margin: 10px 0;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.1);
-}
-.bahce-gorsel::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 30px;
-  background: linear-gradient(180deg, transparent, #6d4c41 30%, #5d4037 100%);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 .bahce-svg {
   position: relative;
   z-index: 2;
-  margin-bottom: 5px;
-  animation: bahceSway 4s ease-in-out infinite;
-  transform-origin: bottom center;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.bahce-svg .bahce-agac {
+  animation: bahceSway 5s ease-in-out infinite;
+  transform-origin: 50% 95%;
+}
+.bahce-svg .bahce-kelebek {
+  animation: bahceUcus 6s ease-in-out infinite;
+}
+.bahce-svg .bahce-kus {
+  animation: bahceKusUcus 8s linear infinite;
+}
+.bahce-svg .bahce-yildiz {
+  animation: bahceYildiz 3s ease-in-out infinite alternate;
+}
+.bahce-svg .bahce-halo {
+  animation: bahceNurPulse 4s ease-in-out infinite;
+  transform-origin: center;
 }
 @keyframes bahceSway {
-  0%, 100% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
+  0%, 100% { transform: rotate(-1.2deg); }
+  50% { transform: rotate(1.2deg); }
+}
+@keyframes bahceUcus {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(8px,-6px); }
+  50% { transform: translate(14px,2px); }
+  75% { transform: translate(6px,-4px); }
+  100% { transform: translate(0,0); }
+}
+@keyframes bahceKusUcus {
+  0% { transform: translateX(-30px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(280px); opacity: 0; }
+}
+@keyframes bahceYildiz {
+  0% { opacity: 0.4; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.08); }
+}
+@keyframes bahceNurPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.06); }
 }
 .bahce-progress-konteyner { position: relative; z-index: 1; }
 .bahce-progress-bar {
@@ -5549,201 +5580,6 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   font-size: 11px;
   color: #1b5e20;
   font-weight: 700;
-}
-
-/* ═══════════════════════════════════════
-   LİG SİSTEMİ
-   ═══════════════════════════════════════ */
-.lig-kart {
-  background: linear-gradient(135deg, #fff 0%, var(--altin-bg) 100%);
-  border: 2px solid var(--vurgu);
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 6px 18px rgba(212,175,55,0.18);
-  position: relative;
-}
-.lig-kart.bronz   { background: linear-gradient(135deg, #fff7ed, #fed7aa); border-color: #c2410c; box-shadow: 0 6px 18px rgba(194,65,12,0.2); }
-.lig-kart.gumus   { background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-color: #64748b; box-shadow: 0 6px 18px rgba(100,116,139,0.2); }
-.lig-kart.altin   { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #d4af37; box-shadow: 0 6px 18px rgba(212,175,55,0.25); }
-.lig-kart.elmas   { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border-color: #0284c7; box-shadow: 0 6px 18px rgba(2,132,199,0.25); }
-.lig-kart.zumrut  { background: linear-gradient(135deg, #d1fae5, #6ee7b7); border-color: #059669; box-shadow: 0 6px 18px rgba(5,150,105,0.25); }
-.lig-kart.vasil   { background: linear-gradient(135deg, #1b4332, #2d5a44); border-color: #d4af37; box-shadow: 0 6px 18px rgba(27,67,50,0.4); color: white; }
-.lig-kart.vasil .lig-tier, .lig-kart.vasil .lig-puan-rakam { color: #d4af37; }
-.lig-kart.vasil .lig-tier-alt, .lig-kart.vasil .lig-puan-etiket, .lig-kart.vasil .lig-progress-bilgi { color: rgba(255,255,255,0.8); }
-.lig-kart.vasil .lig-progress-bar { background: rgba(255,255,255,0.15); }
-
-.lig-baslik {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.lig-baslik-sol {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.lig-rozet {
-  font-size: 32px;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
-}
-.lig-tier {
-  font-size: 17px;
-  font-weight: 900;
-  color: var(--koyu);
-  letter-spacing: 0.3px;
-}
-.lig-tier-alt {
-  font-size: 11px;
-  color: var(--orta);
-  margin-top: 2px;
-}
-.lig-info-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.06);
-  border: none;
-  color: var(--orta);
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
-}
-.lig-puan-bolum {
-  text-align: center;
-  margin: 14px 0;
-}
-.lig-puan-rakam {
-  font-size: 38px;
-  font-weight: 900;
-  color: var(--koyu);
-  line-height: 1;
-}
-.lig-puan-etiket {
-  font-size: 11px;
-  color: var(--orta);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 700;
-  margin-top: 2px;
-}
-.lig-progress-bar {
-  height: 10px;
-  background: rgba(0,0,0,0.06);
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.lig-progress-dolgu {
-  height: 100%;
-  background: linear-gradient(90deg, var(--vurgu), #f4d03f);
-  width: 0%;
-  transition: width 0.6s ease;
-  border-radius: 5px;
-}
-.lig-progress-bilgi {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: var(--orta);
-  font-weight: 700;
-}
-.lig-istikrar {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  font-size: 11px;
-  color: var(--orta);
-  text-align: center;
-}
-.lig-istikrar.terfi-yakin {
-  color: #2d8a4f;
-  font-weight: 800;
-}
-.lig-istikrar.dusus-riski {
-  color: #c0392b;
-  font-weight: 700;
-}
-
-.lig-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(15,46,31,0.8);
-  backdrop-filter: blur(8px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 5600;
-  padding: 16px;
-}
-.lig-modal.acik { display: flex; animation: rozetFade 0.25s; }
-.lig-modal-icerik {
-  background: white;
-  border-radius: 18px;
-  max-width: 460px;
-  width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 22px;
-  animation: rozetPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.lig-modal-baslik {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 17px;
-  font-weight: 900;
-  color: var(--koyu);
-  margin-bottom: 14px;
-}
-.lig-modal-kapat {
-  margin-left: auto;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.06);
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-.lig-modal-aciklama p {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--orta);
-  margin: 0 0 12px;
-}
-.lig-puan-tablosu, .lig-tier-tablosu {
-  background: var(--altin-bg);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-}
-.lig-puan-baslik {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--vurgu);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.lig-puan-satir, .lig-tier-satir {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 12px;
-  border-bottom: 1px solid rgba(212,175,55,0.15);
-}
-.lig-puan-satir:last-child, .lig-tier-satir:last-child { border-bottom: none; }
-.lig-puan-satir strong { color: var(--koyu); }
-.lig-modal-not {
-  font-size: 11px;
-  color: var(--orta);
-  line-height: 1.6;
-  padding: 10px;
-  background: rgba(212,175,55,0.08);
-  border-radius: 8px;
-  border-left: 3px solid var(--vurgu);
 }
 
 /* Gelişmiş İstatistik */
@@ -7163,66 +6999,6 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
 
-      <!-- 🏆 LİG SİSTEMİ -->
-      <div class="lig-kart" id="lig-kart">
-        <div class="lig-baslik">
-          <div class="lig-baslik-sol">
-            <span class="lig-rozet" id="lig-rozet">🥉</span>
-            <div>
-              <div class="lig-tier" id="lig-tier">Bronz Lig</div>
-              <div class="lig-tier-alt" id="lig-tier-alt">Bu hafta başla</div>
-            </div>
-          </div>
-          <button class="lig-info-btn" onclick="ligBilgiAc()" title="Lig sistemi nasıl çalışır?">ℹ</button>
-        </div>
-        <div class="lig-puan-bolum">
-          <div class="lig-puan-rakam" id="lig-puan">0</div>
-          <div class="lig-puan-etiket">Bu hafta puanı</div>
-        </div>
-        <div class="lig-progress-bar"><div class="lig-progress-dolgu" id="lig-progress-dolgu"></div></div>
-        <div class="lig-progress-bilgi">
-          <span id="lig-bilgi-sol">Terfi için: —</span>
-          <span id="lig-bilgi-sag">—</span>
-        </div>
-        <div class="lig-istikrar" id="lig-istikrar"></div>
-      </div>
-
-      <!-- Lig Bilgi Modal -->
-      <div class="lig-modal" id="lig-modal" onclick="if(event.target.id==='lig-modal') ligBilgiKapat()">
-        <div class="lig-modal-icerik">
-          <div class="lig-modal-baslik">
-            <span style="font-size:24px;">🏆</span>
-            <span>Lig Sistemi</span>
-            <button class="lig-modal-kapat" onclick="ligBilgiKapat()">×</button>
-          </div>
-          <div class="lig-modal-aciklama">
-            <p>Her hafta yaptığın ibadetler <strong>puana</strong> dönüşür. Hafta sonunda puana göre lig belirlenir.</p>
-          </div>
-          <div class="lig-puan-tablosu">
-            <div class="lig-puan-baslik">📊 Puan Tablosu</div>
-            <div class="lig-puan-satir"><span>🕌 Kıldığın her kaza namaz</span><strong>+10</strong></div>
-            <div class="lig-puan-satir"><span>📿 Her 100 Lâ İlâhe / İhlâs / Salavât</span><strong>+5</strong></div>
-            <div class="lig-puan-satir"><span>✨ Her tamamlanan Esmâ</span><strong>+50</strong></div>
-            <div class="lig-puan-satir"><span>🕋 Her okunan cüz</span><strong>+30</strong></div>
-            <div class="lig-puan-satir"><span>🌙 Her tutulan oruç</span><strong>+20</strong></div>
-            <div class="lig-puan-satir"><span>🎯 Günlük görev tamam</span><strong>+15</strong></div>
-            <div class="lig-puan-satir"><span>🔥 Her gün üst üste (streak)</span><strong>+2</strong></div>
-          </div>
-          <div class="lig-tier-tablosu">
-            <div class="lig-puan-baslik">🏆 Lig Seviyeleri</div>
-            <div class="lig-tier-satir"><span>🥉 Bronz</span><span>0+</span></div>
-            <div class="lig-tier-satir"><span>🥈 Gümüş</span><span>250+</span></div>
-            <div class="lig-tier-satir"><span>🥇 Altın</span><span>700+</span></div>
-            <div class="lig-tier-satir"><span>💎 Elmas</span><span>1.500+</span></div>
-            <div class="lig-tier-satir"><span>💚 Zümrüt</span><span>3.000+</span></div>
-            <div class="lig-tier-satir"><span>👑 Vâsıl Ligi</span><span>5.000+</span></div>
-          </div>
-          <div class="lig-modal-not">
-            💡 <strong>İstikrar bonusu:</strong> Tier'ında 4 hafta üst üste kalırsan <strong>bir üst lig</strong> önerilir. 2 hafta üst üste hedefin altında kalırsan bir alt lige düşersin (manevi yumuşaklıkla).
-          </div>
-        </div>
-      </div>
-
       <!-- Esnek Madalyalar (haftalık döngü) -->
       <div class="esnek-madalya-bolum">
         <div class="em-baslik">🎖️ Bu Haftanın Onurları</div>
@@ -7744,6 +7520,9 @@ function localStorageBakim() {
   try {
     const simdi = new Date();
     const buyilKey = simdi.getFullYear();
+
+    // Eski lig state'ini sil (lig sistemi kaldırıldı)
+    try { localStorage.removeItem('kn_lig_state_v1'); } catch(e) {}
 
     const silinecekler = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -8369,9 +8148,8 @@ function gelismisIstatGuncelle() {
     }
   }
 
-  // Manevi Bahçe + Lig güncellesi (aynı çağrı içinde olsun)
+  // Manevi Bahçe güncellesi
   try { bahceGuncelle(); } catch(e){ console.warn('Bahçe:', e); }
-  try { ligGuncelle(); } catch(e){ console.warn('Lig:', e); }
 
   // Günlerin Dağılımı (son 8 hafta = 56 gün)
   const gunAdlari = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
@@ -8417,47 +8195,528 @@ function gelismisIstatGuncelle() {
 // ═══════════════════════════════════════
 // 🌳 MANEVİ BAHÇE
 // ═══════════════════════════════════════
-// 7 aşamalı görsel ağaç — streak ve toplam ibadetle büyür
+// 8 aşamalı atmosferik manzara — streak ve toplam ibadetle büyür
+// Her SVG 240x180 viewBox, full manzara: gökyüzü + dağ + toprak + ağaç + detaylar
 const BAHCE_ASAMALAR = [
   {
     seviye: 0, ad: 'Çorak Toprak', minStreak: 0, minIbadet: 0,
-    svg: '<svg class="bahce-svg" width="80" height="60" viewBox="0 0 80 60"><circle cx="40" cy="55" r="3" fill="#8d6e63"/></svg>',
-    mesaj: 'İlk niyet, bir tohumdur'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b0-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#cfd8dc"/>
+          <stop offset="100%" stop-color="#eceff1"/>
+        </linearGradient>
+        <linearGradient id="b0-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8d6e63"/>
+          <stop offset="100%" stop-color="#5d4037"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b0-sky)"/>
+      <!-- Uzak tepe (loş) -->
+      <path d="M0,135 Q60,118 120,130 T240,128 L240,150 L0,150 Z" fill="#b0bec5" opacity="0.6"/>
+      <!-- Toprak -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b0-soil)"/>
+      <!-- Çatlaklar -->
+      <path d="M40,160 L50,170 M120,155 L115,170 M180,162 L188,172" stroke="#3e2723" stroke-width="1" opacity="0.4"/>
+      <!-- Taşlar -->
+      <ellipse cx="60" cy="158" rx="6" ry="3" fill="#757575"/>
+      <ellipse cx="170" cy="162" rx="5" ry="2.5" fill="#616161"/>
+      <ellipse cx="200" cy="155" rx="3" ry="1.5" fill="#757575"/>
+    </svg>`,
+    mesaj: 'İlk niyet — toprak hazırlanıyor'
   },
   {
     seviye: 1, ad: 'Tohum', minStreak: 1, minIbadet: 10,
-    svg: '<svg class="bahce-svg" width="80" height="60" viewBox="0 0 80 60"><ellipse cx="40" cy="55" rx="6" ry="4" fill="#5d4037"/><line x1="40" y1="52" x2="40" y2="45" stroke="#388e3c" stroke-width="2" stroke-linecap="round"/></svg>',
-    mesaj: 'Niyet ektin, sabret'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b1-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b3e5fc"/>
+          <stop offset="100%" stop-color="#e1f5fe"/>
+        </linearGradient>
+        <linearGradient id="b1-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#795548"/>
+          <stop offset="100%" stop-color="#4e342e"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b1-sky)"/>
+      <!-- Bulutlar -->
+      <ellipse cx="40" cy="40" rx="20" ry="6" fill="#fff" opacity="0.8"/>
+      <ellipse cx="180" cy="30" rx="25" ry="7" fill="#fff" opacity="0.7"/>
+      <!-- Uzak tepeler -->
+      <path d="M0,130 Q70,115 140,125 T240,123 L240,150 L0,150 Z" fill="#90a4ae" opacity="0.6"/>
+      <!-- Toprak -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b1-soil)"/>
+      <!-- Su damlası animasyonlu -->
+      <ellipse cx="120" cy="60" rx="2.5" ry="4" fill="#4fc3f7" opacity="0.8">
+        <animate attributeName="cy" values="60;140;60" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;0;0" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
+      <!-- Tohum yuvası (kepçe çukuru) -->
+      <ellipse cx="120" cy="145" rx="10" ry="3" fill="#3e2723"/>
+      <!-- Filiz -->
+      <path d="M120,145 Q119,135 120,128" stroke="#66bb6a" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <ellipse cx="117" cy="129" rx="3" ry="2" fill="#81c784" transform="rotate(-30 117 129)"/>
+      <ellipse cx="123" cy="129" rx="3" ry="2" fill="#81c784" transform="rotate(30 123 129)"/>
+    </svg>`,
+    mesaj: 'Niyet ekildi, su damlaları yağıyor'
   },
   {
     seviye: 2, ad: 'Fide', minStreak: 3, minIbadet: 50,
-    svg: '<svg class="bahce-svg" width="80" height="70" viewBox="0 0 80 70"><line x1="40" y1="65" x2="40" y2="35" stroke="#6d4c41" stroke-width="3" stroke-linecap="round"/><ellipse cx="32" cy="40" rx="8" ry="5" fill="#66bb6a" transform="rotate(-25 32 40)"/><ellipse cx="48" cy="40" rx="8" ry="5" fill="#66bb6a" transform="rotate(25 48 40)"/><ellipse cx="40" cy="30" rx="6" ry="4" fill="#81c784"/></svg>',
-    mesaj: 'Yapraklar açıyor'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b2-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#81d4fa"/>
+          <stop offset="100%" stop-color="#e1f5fe"/>
+        </linearGradient>
+        <linearGradient id="b2-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8d6e63"/>
+          <stop offset="100%" stop-color="#5d4037"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b2-sky)"/>
+      <!-- Bulutlar -->
+      <ellipse cx="50" cy="35" rx="22" ry="7" fill="#fff" opacity="0.85"/>
+      <ellipse cx="170" cy="25" rx="18" ry="5" fill="#fff" opacity="0.8"/>
+      <ellipse cx="195" cy="45" rx="14" ry="4" fill="#fff" opacity="0.7"/>
+      <!-- Güneş -->
+      <circle cx="200" cy="40" r="14" fill="#fff59d" opacity="0.85"/>
+      <!-- Uzak tepeler -->
+      <path d="M0,125 Q60,108 120,120 T240,117 L240,150 L0,150 Z" fill="#a5d6a7" opacity="0.7"/>
+      <!-- Toprak -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b2-soil)"/>
+      <!-- Çimen tutamları -->
+      <g stroke="#66bb6a" stroke-width="1.5" stroke-linecap="round" fill="none">
+        <path d="M30,140 Q31,134 32,138"/><path d="M50,140 Q52,132 54,138"/>
+        <path d="M75,140 Q76,135 77,139"/><path d="M165,140 Q167,133 169,138"/>
+        <path d="M195,140 Q196,135 197,139"/><path d="M215,140 Q217,132 219,138"/>
+      </g>
+      <!-- Fide -->
+      <g class="bahce-agac">
+        <line x1="120" y1="142" x2="120" y2="115" stroke="#6d4c41" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="111" cy="120" rx="8" ry="4" fill="#66bb6a" transform="rotate(-25 111 120)"/>
+        <ellipse cx="129" cy="120" rx="8" ry="4" fill="#66bb6a" transform="rotate(25 129 120)"/>
+        <ellipse cx="120" cy="108" rx="6" ry="4" fill="#81c784"/>
+      </g>
+    </svg>`,
+    mesaj: 'Yapraklar açıyor — rahmetle besleniyor'
   },
   {
     seviye: 3, ad: 'Genç Ağaç', minStreak: 7, minIbadet: 200,
-    svg: '<svg class="bahce-svg" width="100" height="90" viewBox="0 0 100 90"><rect x="46" y="50" width="8" height="40" fill="#6d4c41" rx="2"/><circle cx="50" cy="40" r="22" fill="#4caf50"/><circle cx="35" cy="35" r="14" fill="#66bb6a"/><circle cx="65" cy="35" r="14" fill="#66bb6a"/><circle cx="50" cy="20" r="14" fill="#81c784"/></svg>',
-    mesaj: 'Dalların güçleniyor'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b3-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4fc3f7"/>
+          <stop offset="100%" stop-color="#b3e5fc"/>
+        </linearGradient>
+        <linearGradient id="b3-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8d6e63"/>
+          <stop offset="100%" stop-color="#5d4037"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b3-sky)"/>
+      <!-- Güneş -->
+      <circle cx="200" cy="35" r="16" fill="#fff59d"/>
+      <circle cx="200" cy="35" r="22" fill="#fff59d" opacity="0.3"/>
+      <!-- Bulutlar -->
+      <ellipse cx="45" cy="30" rx="22" ry="7" fill="#fff" opacity="0.9"/>
+      <ellipse cx="60" cy="25" rx="14" ry="5" fill="#fff" opacity="0.8"/>
+      <ellipse cx="155" cy="50" rx="20" ry="6" fill="#fff" opacity="0.75"/>
+      <!-- Uzak dağlar -->
+      <path d="M0,115 L40,90 L80,110 L130,85 L180,105 L240,95 L240,140 L0,140 Z" fill="#90a4ae" opacity="0.5"/>
+      <!-- Yakın tepe -->
+      <path d="M0,128 Q70,112 140,122 T240,120 L240,150 L0,150 Z" fill="#a5d6a7" opacity="0.8"/>
+      <!-- Toprak + çim -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b3-soil)"/>
+      <rect x="0" y="138" width="240" height="6" fill="#7cb342"/>
+      <!-- Çiçekler -->
+      <g><circle cx="40" cy="138" r="2" fill="#fff"/><circle cx="40" cy="138" r="0.8" fill="#fdd835"/></g>
+      <g><circle cx="75" cy="139" r="2" fill="#fff"/><circle cx="75" cy="139" r="0.8" fill="#fdd835"/></g>
+      <g><circle cx="190" cy="139" r="2" fill="#ec407a"/></g>
+      <g><circle cx="215" cy="138" r="2" fill="#fff"/><circle cx="215" cy="138" r="0.8" fill="#fdd835"/></g>
+      <!-- Kelebek -->
+      <g class="bahce-kelebek" transform="translate(70,90)">
+        <ellipse cx="-3" cy="0" rx="3" ry="4" fill="#ce93d8" opacity="0.9" transform="rotate(-20)"/>
+        <ellipse cx="3" cy="0" rx="3" ry="4" fill="#ce93d8" opacity="0.9" transform="rotate(20)"/>
+        <line x1="0" y1="-3" x2="0" y2="3" stroke="#4a148c" stroke-width="0.8"/>
+      </g>
+      <!-- Genç ağaç -->
+      <g class="bahce-agac">
+        <rect x="116" y="100" width="8" height="40" fill="#6d4c41" rx="2"/>
+        <circle cx="120" cy="92" r="20" fill="#388e3c"/>
+        <circle cx="105" cy="88" r="13" fill="#4caf50"/>
+        <circle cx="135" cy="88" r="13" fill="#4caf50"/>
+        <circle cx="120" cy="75" r="12" fill="#66bb6a"/>
+      </g>
+    </svg>`,
+    mesaj: 'Dalların güçleniyor — yolun açılıyor'
   },
   {
     seviye: 4, ad: 'Olgun Ağaç', minStreak: 14, minIbadet: 500,
-    svg: '<svg class="bahce-svg" width="110" height="105" viewBox="0 0 110 105"><rect x="50" y="55" width="10" height="50" fill="#5d4037" rx="2"/><circle cx="55" cy="45" r="28" fill="#388e3c"/><circle cx="35" cy="40" r="18" fill="#4caf50"/><circle cx="75" cy="40" r="18" fill="#4caf50"/><circle cx="55" cy="20" r="18" fill="#66bb6a"/><circle cx="42" cy="55" r="3" fill="#fff59d"/><circle cx="68" cy="55" r="3" fill="#fff59d"/><circle cx="55" cy="30" r="3" fill="#fff59d"/></svg>',
-    mesaj: 'Allah verdi, çiçek açıyor'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b4-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#29b6f6"/>
+          <stop offset="60%" stop-color="#81d4fa"/>
+          <stop offset="100%" stop-color="#fff9c4"/>
+        </linearGradient>
+        <linearGradient id="b4-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#795548"/>
+          <stop offset="100%" stop-color="#3e2723"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b4-sky)"/>
+      <!-- Güneş + ışınlar -->
+      <circle cx="190" cy="40" r="20" fill="#fff176"/>
+      <circle cx="190" cy="40" r="28" fill="#fff59d" opacity="0.4"/>
+      <!-- Bulutlar -->
+      <ellipse cx="50" cy="35" rx="24" ry="8" fill="#fff" opacity="0.92"/>
+      <ellipse cx="65" cy="28" rx="14" ry="5" fill="#fff" opacity="0.88"/>
+      <ellipse cx="130" cy="55" rx="18" ry="5" fill="#fff" opacity="0.78"/>
+      <!-- Uzak dağlar -->
+      <path d="M0,108 L35,82 L75,102 L120,75 L165,98 L210,80 L240,90 L240,140 L0,140 Z" fill="#78909c" opacity="0.55"/>
+      <path d="M0,118 L50,98 L100,115 L150,95 L200,112 L240,108 L240,140 L0,140 Z" fill="#90a4ae" opacity="0.7"/>
+      <!-- Yakın çayır -->
+      <path d="M0,128 Q70,115 140,122 T240,120 L240,150 L0,150 Z" fill="#9ccc65"/>
+      <!-- Toprak + çim -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b4-soil)"/>
+      <rect x="0" y="138" width="240" height="6" fill="#7cb342"/>
+      <!-- Çiçekler kümeleri -->
+      <g>
+        <circle cx="30" cy="138" r="2.5" fill="#fff"/><circle cx="30" cy="138" r="1" fill="#fdd835"/>
+        <circle cx="36" cy="139" r="2" fill="#ec407a"/>
+        <circle cx="55" cy="138" r="2.2" fill="#fff"/><circle cx="55" cy="138" r="0.8" fill="#fdd835"/>
+        <circle cx="195" cy="139" r="2" fill="#ec407a"/>
+        <circle cx="205" cy="138" r="2.5" fill="#fff"/><circle cx="205" cy="138" r="1" fill="#fdd835"/>
+        <circle cx="220" cy="139" r="2.3" fill="#ab47bc"/>
+      </g>
+      <!-- Uçan kuş -->
+      <g class="bahce-kus" transform="translate(0,60)">
+        <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0" stroke="#37474f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- Olgun ağaç -->
+      <g class="bahce-agac">
+        <rect x="115" y="85" width="10" height="55" fill="#5d4037" rx="2"/>
+        <!-- gölge tonları için katmanlı -->
+        <circle cx="120" cy="75" r="26" fill="#2e7d32"/>
+        <circle cx="100" cy="78" r="17" fill="#388e3c"/>
+        <circle cx="140" cy="78" r="17" fill="#388e3c"/>
+        <circle cx="120" cy="58" r="17" fill="#4caf50"/>
+        <!-- Parlama -->
+        <circle cx="113" cy="68" r="3" fill="#a5d6a7" opacity="0.5"/>
+        <!-- Birkaç sarı çiçek -->
+        <circle cx="108" cy="80" r="2.2" fill="#fff59d"/>
+        <circle cx="132" cy="78" r="2.2" fill="#fff59d"/>
+        <circle cx="120" cy="62" r="2.2" fill="#fff59d"/>
+      </g>
+    </svg>`,
+    mesaj: 'Allah berekete açtı — gölge veriyor'
   },
   {
     seviye: 5, ad: 'Çiçek Açan Ağaç', minStreak: 30, minIbadet: 1500,
-    svg: '<svg class="bahce-svg" width="120" height="115" viewBox="0 0 120 115"><rect x="55" y="60" width="10" height="55" fill="#4e342e" rx="2"/><circle cx="60" cy="50" r="32" fill="#2e7d32"/><circle cx="35" cy="45" r="20" fill="#388e3c"/><circle cx="85" cy="45" r="20" fill="#388e3c"/><circle cx="60" cy="20" r="20" fill="#4caf50"/><g fill="#ec407a"><circle cx="45" cy="55" r="4"/><circle cx="75" cy="50" r="4"/><circle cx="60" cy="35" r="4"/><circle cx="40" cy="35" r="4"/><circle cx="80" cy="60" r="4"/><circle cx="55" cy="62" r="4"/></g><g fill="#fff" opacity="0.8"><circle cx="45" cy="55" r="1.5"/><circle cx="75" cy="50" r="1.5"/><circle cx="60" cy="35" r="1.5"/></g></svg>',
-    mesaj: 'Bahçen yeşeriyor, mâşaallah'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b5-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4fc3f7"/>
+          <stop offset="50%" stop-color="#b3e5fc"/>
+          <stop offset="100%" stop-color="#ffe0b2"/>
+        </linearGradient>
+        <linearGradient id="b5-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#795548"/>
+          <stop offset="100%" stop-color="#3e2723"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b5-sky)"/>
+      <!-- Güneş -->
+      <circle cx="195" cy="38" r="20" fill="#fff176"/>
+      <circle cx="195" cy="38" r="32" fill="#fff59d" opacity="0.35"/>
+      <!-- Bulutlar -->
+      <ellipse cx="40" cy="28" rx="24" ry="7" fill="#fff" opacity="0.92"/>
+      <ellipse cx="55" cy="22" rx="14" ry="5" fill="#fff" opacity="0.85"/>
+      <ellipse cx="135" cy="48" rx="20" ry="6" fill="#fff" opacity="0.82"/>
+      <!-- Dağlar -->
+      <path d="M0,108 L40,80 L80,102 L130,72 L175,95 L220,78 L240,88 L240,135 L0,135 Z" fill="#78909c" opacity="0.55"/>
+      <path d="M0,118 L60,95 L110,112 L160,92 L210,108 L240,105 L240,140 L0,140 Z" fill="#9e9e9e" opacity="0.45"/>
+      <!-- Çayır -->
+      <path d="M0,128 Q70,114 140,122 T240,118 L240,150 L0,150 Z" fill="#aed581"/>
+      <rect x="0" y="138" width="240" height="6" fill="#8bc34a"/>
+      <!-- Toprak -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b5-soil)"/>
+      <!-- Çiçek tarlası -->
+      <g>
+        <circle cx="20" cy="138" r="2.5" fill="#fff"/><circle cx="20" cy="138" r="1" fill="#fdd835"/>
+        <circle cx="28" cy="139" r="2.3" fill="#ec407a"/>
+        <circle cx="38" cy="138" r="2" fill="#fff"/>
+        <circle cx="48" cy="139" r="2.3" fill="#ab47bc"/>
+        <circle cx="58" cy="138" r="2.4" fill="#fff"/><circle cx="58" cy="138" r="0.8" fill="#fdd835"/>
+        <circle cx="70" cy="139" r="2" fill="#ec407a"/>
+        <circle cx="180" cy="139" r="2.3" fill="#ab47bc"/>
+        <circle cx="192" cy="138" r="2.3" fill="#fff"/><circle cx="192" cy="138" r="0.9" fill="#fdd835"/>
+        <circle cx="204" cy="139" r="2.4" fill="#ec407a"/>
+        <circle cx="216" cy="138" r="2" fill="#fff"/>
+        <circle cx="226" cy="139" r="2.5" fill="#ab47bc"/>
+      </g>
+      <!-- Kelebek -->
+      <g class="bahce-kelebek" transform="translate(55,85)">
+        <ellipse cx="-3.5" cy="0" rx="3.5" ry="5" fill="#f48fb1" opacity="0.92" transform="rotate(-20)"/>
+        <ellipse cx="3.5" cy="0" rx="3.5" ry="5" fill="#f48fb1" opacity="0.92" transform="rotate(20)"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#4a148c" stroke-width="0.8"/>
+      </g>
+      <!-- Uçan kuş -->
+      <g class="bahce-kus" transform="translate(0,50)">
+        <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0" stroke="#37474f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M16,2 Q19,-1 22,2 Q25,-1 28,2" stroke="#37474f" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- Çiçek açan ağaç -->
+      <g class="bahce-agac">
+        <rect x="113" y="80" width="12" height="60" fill="#4e342e" rx="2"/>
+        <!-- Yeşil yapraklar -->
+        <circle cx="120" cy="70" r="30" fill="#2e7d32"/>
+        <circle cx="96" cy="74" r="20" fill="#388e3c"/>
+        <circle cx="144" cy="74" r="20" fill="#388e3c"/>
+        <circle cx="120" cy="50" r="20" fill="#4caf50"/>
+        <!-- Pembe çiçekler -->
+        <g fill="#ec407a">
+          <circle cx="100" cy="80" r="4"/>
+          <circle cx="138" cy="76" r="4"/>
+          <circle cx="120" cy="58" r="4"/>
+          <circle cx="92" cy="68" r="4"/>
+          <circle cx="148" cy="65" r="4"/>
+          <circle cx="110" cy="50" r="4"/>
+          <circle cx="130" cy="45" r="4"/>
+          <circle cx="115" cy="80" r="4"/>
+          <circle cx="132" cy="85" r="4"/>
+        </g>
+        <!-- Çiçek merkezleri -->
+        <g fill="#fff" opacity="0.95">
+          <circle cx="100" cy="80" r="1.5"/><circle cx="138" cy="76" r="1.5"/>
+          <circle cx="120" cy="58" r="1.5"/><circle cx="92" cy="68" r="1.5"/>
+          <circle cx="148" cy="65" r="1.5"/><circle cx="130" cy="45" r="1.5"/>
+        </g>
+        <!-- Polen taneleri -->
+        <g fill="#fdd835" opacity="0.8">
+          <circle cx="100" cy="80" r="0.7"/><circle cx="120" cy="58" r="0.7"/>
+        </g>
+      </g>
+    </svg>`,
+    mesaj: 'Bahçen çiçek açtı, mâşaallah'
   },
   {
     seviye: 6, ad: 'Meyve Veren Ağaç', minStreak: 60, minIbadet: 3500,
-    svg: '<svg class="bahce-svg" width="130" height="120" viewBox="0 0 130 120"><rect x="60" y="65" width="10" height="55" fill="#3e2723" rx="2"/><circle cx="65" cy="55" r="36" fill="#1b5e20"/><circle cx="35" cy="50" r="22" fill="#2e7d32"/><circle cx="95" cy="50" r="22" fill="#2e7d32"/><circle cx="65" cy="20" r="22" fill="#388e3c"/><g fill="#d32f2f"><circle cx="50" cy="55" r="5"/><circle cx="80" cy="50" r="5"/><circle cx="65" cy="35" r="5"/><circle cx="40" cy="40" r="5"/><circle cx="90" cy="60" r="5"/><circle cx="55" cy="65" r="5"/><circle cx="75" cy="30" r="5"/></g><g fill="#fff" opacity="0.5"><circle cx="48" cy="53" r="1.5"/><circle cx="78" cy="48" r="1.5"/><circle cx="63" cy="33" r="1.5"/></g></svg>',
-    mesaj: 'Meyveni topla, helâl rızık'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b6-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb74d"/>
+          <stop offset="40%" stop-color="#ffe082"/>
+          <stop offset="100%" stop-color="#ffccbc"/>
+        </linearGradient>
+        <linearGradient id="b6-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6d4c41"/>
+          <stop offset="100%" stop-color="#3e2723"/>
+        </linearGradient>
+        <linearGradient id="b6-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4fc3f7"/>
+          <stop offset="100%" stop-color="#0277bd"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b6-sky)"/>
+      <!-- Akşam güneşi -->
+      <circle cx="200" cy="55" r="22" fill="#ffab40"/>
+      <circle cx="200" cy="55" r="32" fill="#ffcc80" opacity="0.5"/>
+      <!-- Bulutlar (akşam pembe) -->
+      <ellipse cx="50" cy="32" rx="26" ry="8" fill="#fce4ec" opacity="0.92"/>
+      <ellipse cx="68" cy="26" rx="14" ry="5" fill="#fff" opacity="0.85"/>
+      <ellipse cx="130" cy="48" rx="20" ry="6" fill="#fce4ec" opacity="0.8"/>
+      <!-- Dağlar -->
+      <path d="M0,100 L35,72 L75,95 L120,68 L165,92 L210,75 L240,85 L240,140 L0,140 Z" fill="#5d4037" opacity="0.45"/>
+      <path d="M0,112 L60,90 L110,108 L160,88 L210,105 L240,102 L240,140 L0,140 Z" fill="#8d6e63" opacity="0.55"/>
+      <!-- Su birikintisi -->
+      <ellipse cx="200" cy="148" rx="32" ry="6" fill="url(#b6-water)" opacity="0.9"/>
+      <ellipse cx="200" cy="146" rx="32" ry="2" fill="#fff" opacity="0.4"/>
+      <!-- Çayır -->
+      <path d="M0,128 Q60,114 120,120 Q180,128 240,118 L240,150 L0,150 Z" fill="#9ccc65"/>
+      <rect x="0" y="138" width="240" height="6" fill="#7cb342"/>
+      <!-- Toprak -->
+      <rect x="0" y="140" width="240" height="40" fill="url(#b6-soil)"/>
+      <!-- Düşmüş meyveler -->
+      <g>
+        <circle cx="80" cy="143" r="3" fill="#d32f2f"/>
+        <circle cx="79" cy="142" r="0.8" fill="#fff" opacity="0.6"/>
+        <circle cx="160" cy="142" r="3" fill="#d32f2f"/>
+        <circle cx="159" cy="141" r="0.8" fill="#fff" opacity="0.6"/>
+        <circle cx="100" cy="144" r="2.5" fill="#c62828"/>
+      </g>
+      <!-- Çiçekler -->
+      <g>
+        <circle cx="30" cy="139" r="2.3" fill="#fff"/><circle cx="30" cy="139" r="0.9" fill="#fdd835"/>
+        <circle cx="50" cy="139" r="2.2" fill="#ec407a"/>
+        <circle cx="218" cy="139" r="2.2" fill="#ab47bc"/>
+        <circle cx="228" cy="138" r="2.3" fill="#fff"/>
+      </g>
+      <!-- Kelebek -->
+      <g class="bahce-kelebek" transform="translate(60,75)">
+        <ellipse cx="-3.5" cy="0" rx="3.5" ry="5" fill="#f06292" opacity="0.92" transform="rotate(-20)"/>
+        <ellipse cx="3.5" cy="0" rx="3.5" ry="5" fill="#f06292" opacity="0.92" transform="rotate(20)"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#4a148c" stroke-width="0.8"/>
+      </g>
+      <!-- Kuşlar -->
+      <g class="bahce-kus" transform="translate(0,45)">
+        <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0" stroke="#37474f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M16,3 Q19,0 22,3 Q25,0 28,3" stroke="#37474f" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M32,1 Q35,-2 38,1 Q41,-2 44,1" stroke="#37474f" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- Meyveli ağaç (büyük) -->
+      <g class="bahce-agac">
+        <rect x="110" y="75" width="14" height="65" fill="#3e2723" rx="2"/>
+        <!-- Dal detayı -->
+        <line x1="117" y1="100" x2="100" y2="90" stroke="#3e2723" stroke-width="3" stroke-linecap="round"/>
+        <line x1="117" y1="95" x2="135" y2="83" stroke="#3e2723" stroke-width="3" stroke-linecap="round"/>
+        <!-- Yapraklar -->
+        <circle cx="117" cy="62" r="34" fill="#1b5e20"/>
+        <circle cx="92" cy="68" r="22" fill="#2e7d32"/>
+        <circle cx="142" cy="68" r="22" fill="#2e7d32"/>
+        <circle cx="117" cy="40" r="22" fill="#388e3c"/>
+        <!-- Kırmızı meyveler -->
+        <g fill="#d32f2f">
+          <circle cx="97" cy="70" r="5"/>
+          <circle cx="138" cy="65" r="5"/>
+          <circle cx="117" cy="50" r="5"/>
+          <circle cx="86" cy="60" r="4.5"/>
+          <circle cx="148" cy="80" r="5"/>
+          <circle cx="105" cy="85" r="4.5"/>
+          <circle cx="128" cy="85" r="4.5"/>
+          <circle cx="130" cy="45" r="5"/>
+          <circle cx="108" cy="38" r="4.5"/>
+        </g>
+        <!-- Yansımalar -->
+        <g fill="#fff" opacity="0.5">
+          <circle cx="96" cy="68" r="1.5"/>
+          <circle cx="137" cy="63" r="1.5"/>
+          <circle cx="116" cy="48" r="1.5"/>
+          <circle cx="129" cy="43" r="1.5"/>
+        </g>
+      </g>
+    </svg>`,
+    mesaj: 'Meyveni topla — helâl rızıkla cömert ol'
   },
   {
     seviye: 7, ad: 'Sidre-i Müntehâ', minStreak: 90, minIbadet: 7500,
-    svg: '<svg class="bahce-svg" width="140" height="130" viewBox="0 0 140 130"><defs><radialGradient id="halo"><stop offset="0%" stop-color="#fff59d" stop-opacity="0.6"/><stop offset="100%" stop-color="#fff59d" stop-opacity="0"/></radialGradient></defs><circle cx="70" cy="55" r="65" fill="url(#halo)"/><rect x="65" y="70" width="10" height="60" fill="#3e2723" rx="2"/><circle cx="70" cy="55" r="40" fill="#1b5e20"/><circle cx="35" cy="50" r="24" fill="#2e7d32"/><circle cx="105" cy="50" r="24" fill="#2e7d32"/><circle cx="70" cy="18" r="24" fill="#388e3c"/><g fill="#d4af37"><circle cx="50" cy="55" r="5"/><circle cx="90" cy="55" r="5"/><circle cx="70" cy="35" r="5"/><circle cx="40" cy="40" r="5"/><circle cx="100" cy="60" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="30" r="5"/><circle cx="55" cy="40" r="5"/></g><g fill="#fff"><circle cx="50" cy="53" r="2"/><circle cx="90" cy="53" r="2"/><circle cx="70" cy="33" r="2"/></g></svg>',
-    mesaj: 'Cennet bahçelerinden bir köşe'
+    svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="b7-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a237e"/>
+          <stop offset="40%" stop-color="#5e35b1"/>
+          <stop offset="80%" stop-color="#ec407a"/>
+          <stop offset="100%" stop-color="#ffe082"/>
+        </linearGradient>
+        <radialGradient id="b7-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff59d" stop-opacity="0.85"/>
+          <stop offset="40%" stop-color="#ffeb3b" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#fff59d" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="b7-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#81d4fa"/>
+          <stop offset="100%" stop-color="#0277bd"/>
+        </linearGradient>
+        <linearGradient id="b7-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6d4c41"/>
+          <stop offset="100%" stop-color="#3e2723"/>
+        </linearGradient>
+      </defs>
+      <rect width="240" height="180" fill="url(#b7-sky)"/>
+      <!-- Yıldızlar -->
+      <g fill="#fff">
+        <circle class="bahce-yildiz" cx="20" cy="22" r="1.2"/>
+        <circle class="bahce-yildiz" cx="45" cy="14" r="0.9" style="animation-delay:0.5s"/>
+        <circle class="bahce-yildiz" cx="80" cy="25" r="1.4" style="animation-delay:1s"/>
+        <circle class="bahce-yildiz" cx="115" cy="18" r="1.0" style="animation-delay:1.5s"/>
+        <circle class="bahce-yildiz" cx="150" cy="28" r="1.2" style="animation-delay:0.2s"/>
+        <circle class="bahce-yildiz" cx="180" cy="14" r="0.9" style="animation-delay:0.8s"/>
+        <circle class="bahce-yildiz" cx="220" cy="22" r="1.3" style="animation-delay:1.2s"/>
+        <circle class="bahce-yildiz" cx="60" cy="40" r="0.8" style="animation-delay:0.4s"/>
+        <circle class="bahce-yildiz" cx="200" cy="42" r="0.8" style="animation-delay:1.6s"/>
+      </g>
+      <!-- Hilal -->
+      <g transform="translate(195,32)">
+        <circle cx="0" cy="0" r="14" fill="#fff59d"/>
+        <circle cx="5" cy="-2" r="13" fill="#5e35b1"/>
+      </g>
+      <!-- Nur halesi (ağacın arkasında) -->
+      <circle class="bahce-halo" cx="120" cy="85" r="62" fill="url(#b7-halo)"/>
+      <!-- Uzak dağlar (mistik mavi) -->
+      <path d="M0,100 L35,68 L75,92 L120,60 L165,88 L210,70 L240,82 L240,135 L0,135 Z" fill="#3f51b5" opacity="0.55"/>
+      <path d="M0,115 L55,92 L110,110 L160,90 L210,105 L240,100 L240,140 L0,140 Z" fill="#7986cb" opacity="0.6"/>
+      <!-- Nehir / su -->
+      <path d="M0,138 Q60,135 120,138 Q180,141 240,137 L240,150 L0,150 Z" fill="url(#b7-water)" opacity="0.9"/>
+      <!-- Su yansıması -->
+      <path d="M0,138 Q60,135 120,138 Q180,141 240,137" stroke="#fff" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <!-- Toprak / kıyı -->
+      <rect x="0" y="148" width="240" height="32" fill="url(#b7-soil)"/>
+      <rect x="0" y="146" width="240" height="4" fill="#8bc34a"/>
+      <!-- Altın çiçekler -->
+      <g>
+        <circle cx="20" cy="146" r="2.5" fill="#fff"/><circle cx="20" cy="146" r="1" fill="#d4af37"/>
+        <circle cx="32" cy="147" r="2.3" fill="#fff59d"/>
+        <circle cx="44" cy="146" r="2.5" fill="#fff"/><circle cx="44" cy="146" r="1" fill="#d4af37"/>
+        <circle cx="56" cy="147" r="2.3" fill="#ec407a"/>
+        <circle cx="200" cy="146" r="2.5" fill="#fff"/><circle cx="200" cy="146" r="1" fill="#d4af37"/>
+        <circle cx="212" cy="147" r="2.4" fill="#fff59d"/>
+        <circle cx="224" cy="146" r="2.5" fill="#fff"/>
+      </g>
+      <!-- Kelebek -->
+      <g class="bahce-kelebek" transform="translate(55,75)">
+        <ellipse cx="-3.5" cy="0" rx="3.5" ry="5" fill="#d4af37" opacity="0.95" transform="rotate(-20)"/>
+        <ellipse cx="3.5" cy="0" rx="3.5" ry="5" fill="#d4af37" opacity="0.95" transform="rotate(20)"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#3e2723" stroke-width="0.8"/>
+      </g>
+      <!-- Kuşlar (çift) -->
+      <g class="bahce-kus" transform="translate(0,35)">
+        <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M16,3 Q19,0 22,3 Q25,0 28,3" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- Görkemli ağaç -->
+      <g class="bahce-agac">
+        <rect x="113" y="78" width="14" height="68" fill="#3e2723" rx="2"/>
+        <!-- Dallar -->
+        <line x1="117" y1="105" x2="98" y2="92" stroke="#3e2723" stroke-width="3" stroke-linecap="round"/>
+        <line x1="118" y1="98" x2="138" y2="85" stroke="#3e2723" stroke-width="3" stroke-linecap="round"/>
+        <line x1="120" y1="115" x2="100" y2="125" stroke="#3e2723" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Yapraklar (yoğun) -->
+        <circle cx="120" cy="65" r="40" fill="#1b5e20"/>
+        <circle cx="88" cy="72" r="24" fill="#2e7d32"/>
+        <circle cx="152" cy="72" r="24" fill="#2e7d32"/>
+        <circle cx="120" cy="38" r="24" fill="#388e3c"/>
+        <circle cx="100" cy="50" r="16" fill="#43a047"/>
+        <circle cx="140" cy="50" r="16" fill="#43a047"/>
+        <!-- Altın meyveler -->
+        <g fill="#d4af37">
+          <circle cx="96" cy="70" r="5"/>
+          <circle cx="142" cy="68" r="5"/>
+          <circle cx="120" cy="48" r="5"/>
+          <circle cx="86" cy="80" r="4.5"/>
+          <circle cx="152" cy="82" r="4.5"/>
+          <circle cx="108" cy="38" r="4.5"/>
+          <circle cx="132" cy="36" r="4.5"/>
+          <circle cx="110" cy="85" r="4.5"/>
+          <circle cx="128" cy="88" r="4.5"/>
+          <circle cx="103" cy="60" r="4"/>
+          <circle cx="135" cy="58" r="4"/>
+        </g>
+        <!-- Beyaz parıltı -->
+        <g fill="#fff">
+          <circle cx="95" cy="68" r="1.8"/>
+          <circle cx="141" cy="66" r="1.8"/>
+          <circle cx="119" cy="46" r="1.8"/>
+          <circle cx="131" cy="34" r="1.5"/>
+        </g>
+        <!-- Beyaz çiçekler (cennet) -->
+        <g fill="#fff" opacity="0.95">
+          <circle cx="78" cy="62" r="2"/>
+          <circle cx="160" cy="62" r="2"/>
+          <circle cx="120" cy="22" r="2"/>
+        </g>
+      </g>
+    </svg>`,
+    mesaj: 'Cennet bahçelerinden bir köşe — Allah\'a hamdolsun'
   }
 ];
 
@@ -8525,187 +8784,6 @@ function bahceGuncelle() {
     if (dolguEl) dolguEl.style.width = '100%';
     if (hedefEl) hedefEl.textContent = '👑 En yüce mertebe';
   }
-}
-
-// ═══════════════════════════════════════
-// 🏆 LİG SİSTEMİ
-// ═══════════════════════════════════════
-const LIG_TIERS = [
-  { ad: 'Bronz Lig',  sinif: 'bronz',  rozet: '🥉', min: 0,    sonraki: 250 },
-  { ad: 'Gümüş Lig',  sinif: 'gumus',  rozet: '🥈', min: 250,  sonraki: 700 },
-  { ad: 'Altın Lig',  sinif: 'altin',  rozet: '🥇', min: 700,  sonraki: 1500 },
-  { ad: 'Elmas Lig',  sinif: 'elmas',  rozet: '💎', min: 1500, sonraki: 3000 },
-  { ad: 'Zümrüt Lig', sinif: 'zumrut', rozet: '💚', min: 3000, sonraki: 5000 },
-  { ad: 'Vâsıl Ligi', sinif: 'vasil',  rozet: '👑', min: 5000, sonraki: null }
-];
-
-function ligTierBul(puan) {
-  for (let i = LIG_TIERS.length - 1; i >= 0; i--) {
-    if (puan >= LIG_TIERS[i].min) return { tier: LIG_TIERS[i], idx: i };
-  }
-  return { tier: LIG_TIERS[0], idx: 0 };
-}
-
-function ligHaftalikPuanHesapla() {
-  // Bu haftanın puanı = haftaBaşı snapshot'ından bu yana kazanılan miktarlar
-  let puan = 0;
-  try {
-    const baslangic = haftaBaslangicAl();
-    const bugun = bugunTarih();
-
-    // Bu hafta kıldığı namaz (Pazartesi'den bugüne)
-    const d = new Date();
-    d.setHours(0,0,0,0);
-    const gunOffset = (d.getDay() + 6) % 7;
-    let buHaftaNamaz = 0;
-    for (let i = 0; i <= gunOffset; i++) {
-      const t = new Date(d);
-      t.setDate(t.getDate() - gunOffset + i);
-      buHaftaNamaz += gunToplam(t.toISOString().split('T')[0]);
-    }
-    puan += buHaftaNamaz * 10;
-
-    // Bu hafta zikir artışı
-    const zikirArtis = buHaftaZikirArtisi();
-    puan += Math.floor(zikirArtis / 100) * 5;
-
-    // İhlâs artışı
-    const ihlasMevcut = (typeof ihlasSayisi !== 'undefined' ? ihlasSayisi : 0) +
-                       (typeof ihlasYildiz !== 'undefined' ? ihlasYildiz : 0) * 100000;
-    const ihlasArtis = Math.max(0, ihlasMevcut - (baslangic.ihlasToplam || 0));
-    puan += Math.floor(ihlasArtis / 100) * 5;
-
-    // Salavât artışı
-    const salavatMevcut = (typeof salavatSayisi !== 'undefined' ? salavatSayisi : 0) +
-                         (typeof salavatYildiz !== 'undefined' ? salavatYildiz : 0) * 100000;
-    const salavatArtis = Math.max(0, salavatMevcut - (baslangic.salavatToplam || 0));
-    puan += Math.floor(salavatArtis / 100) * 5;
-
-    // Esmâ artışı
-    puan += buHaftaEsmaArtisi() * 50;
-
-    // Streak bonusu (her gün üst üste +2)
-    puan += streakHesapla() * 2;
-
-  } catch(e) { console.warn('Lig puan:', e); }
-  return puan;
-}
-
-const LIG_STATE_KEY = 'kn_lig_state_v1';
-
-function ligIstikrarKaydet(puan, tier) {
-  try {
-    const isoKey = isoHaftaKey(); // ISO hafta anahtarı yeniden kullanılır
-    let state = {};
-    try { state = JSON.parse(localStorage.getItem(LIG_STATE_KEY) || '{}'); } catch(e) {}
-    if (!state.haftalar) state.haftalar = [];
-    // Bu hafta için varsa güncelle, yoksa ekle
-    const mevcutIdx = state.haftalar.findIndex(h => h.key === isoKey);
-    const entry = { key: isoKey, puan: puan, tier: tier.sinif, tarih: new Date().toISOString() };
-    if (mevcutIdx >= 0) state.haftalar[mevcutIdx] = entry;
-    else state.haftalar.push(entry);
-    // Son 8 haftayı tut
-    if (state.haftalar.length > 8) state.haftalar = state.haftalar.slice(-8);
-    localStorage.setItem(LIG_STATE_KEY, JSON.stringify(state));
-  } catch(e) {}
-}
-
-function ligIstikrarOku() {
-  try { return JSON.parse(localStorage.getItem(LIG_STATE_KEY) || '{"haftalar":[]}'); }
-  catch(e) { return { haftalar: [] }; }
-}
-
-function ligGuncelle() {
-  const kart = document.getElementById('lig-kart');
-  if (!kart) return;
-
-  const puan = ligHaftalikPuanHesapla();
-  const { tier, idx } = ligTierBul(puan);
-
-  // Kart class
-  kart.className = 'lig-kart ' + tier.sinif;
-
-  // Tier görüntü
-  const rozetEl = document.getElementById('lig-rozet');
-  if (rozetEl) rozetEl.textContent = tier.rozet;
-  const tierEl = document.getElementById('lig-tier');
-  if (tierEl) tierEl.textContent = tier.ad;
-
-  // Puan
-  const puanEl = document.getElementById('lig-puan');
-  if (puanEl) puanEl.textContent = puan.toLocaleString('tr-TR');
-
-  // Progress
-  const dolguEl = document.getElementById('lig-progress-dolgu');
-  const bilgiSolEl = document.getElementById('lig-bilgi-sol');
-  const bilgiSagEl = document.getElementById('lig-bilgi-sag');
-  if (tier.sonraki) {
-    const aralik = tier.sonraki - tier.min;
-    const yuzde = Math.min(100, ((puan - tier.min) / aralik) * 100);
-    if (dolguEl) dolguEl.style.width = yuzde + '%';
-    const sonrakiTier = LIG_TIERS[idx + 1];
-    if (bilgiSolEl) bilgiSolEl.textContent = `${sonrakiTier ? sonrakiTier.ad + ' için' : 'Sonraki'}: ${(tier.sonraki - puan).toLocaleString('tr-TR')} puan`;
-    if (bilgiSagEl) bilgiSagEl.textContent = `${puan.toLocaleString('tr-TR')} / ${tier.sonraki.toLocaleString('tr-TR')}`;
-  } else {
-    if (dolguEl) dolguEl.style.width = '100%';
-    if (bilgiSolEl) bilgiSolEl.textContent = '🌟 En yüce lig';
-    if (bilgiSagEl) bilgiSagEl.textContent = puan.toLocaleString('tr-TR') + '+';
-  }
-
-  // Alt başlık — bu haftaki çabaya göre kısa mesaj
-  const altEl = document.getElementById('lig-tier-alt');
-  if (altEl) {
-    if (puan === 0) altEl.textContent = 'Bu haftaki ilk amele bekliyor';
-    else if (tier.sonraki && (tier.sonraki - puan) < 100) altEl.textContent = '🔥 Bir üst lige çok yakınsın!';
-    else if (puan >= 5000) altEl.textContent = 'Mâşaallah — en yüce mertebe';
-    else altEl.textContent = 'Bu hafta hayırla devam';
-  }
-
-  // İstikrar (son 8 haftadan istatistik)
-  ligIstikrarKaydet(puan, tier);
-  const state = ligIstikrarOku();
-  const sonHaftalar = state.haftalar.filter(h => h.key !== isoHaftaKey());
-  const istikrarEl = document.getElementById('lig-istikrar');
-  if (istikrarEl) {
-    if (sonHaftalar.length === 0) {
-      istikrarEl.textContent = 'İlk haftan — sebatla devam';
-      istikrarEl.className = 'lig-istikrar';
-    } else {
-      // Son 4 haftada bu tier'da kalmış mı?
-      const son4 = sonHaftalar.slice(-4);
-      const ayniTierdeKaldi = son4.length >= 4 && son4.every(h => h.tier === tier.sinif);
-      const altTierdeMi = son4.length >= 2 && son4.slice(-2).every(h => {
-        const ht = LIG_TIERS.find(t => t.sinif === h.tier);
-        return ht && ht.min < tier.min;
-      });
-      if (ayniTierdeKaldi && tier.sonraki) {
-        istikrarEl.textContent = `✨ 4 hafta üst üste ${tier.ad}! Bir üst lige meylediyorsun`;
-        istikrarEl.className = 'lig-istikrar terfi-yakin';
-      } else if (altTierdeMi) {
-        istikrarEl.textContent = `📉 Son 2 hafta düşük — Allah hayrı yaz`;
-        istikrarEl.className = 'lig-istikrar dusus-riski';
-      } else {
-        // Genel ortalama
-        const ortalama = sonHaftalar.reduce((s, h) => s + h.puan, 0) / sonHaftalar.length;
-        const fark = puan - ortalama;
-        if (fark > 0) {
-          istikrarEl.textContent = `📈 Son ${sonHaftalar.length} hafta ortalaması: ${Math.round(ortalama)} (↑ %${Math.round((fark/Math.max(1,ortalama))*100)})`;
-        } else {
-          istikrarEl.textContent = `📊 Son ${sonHaftalar.length} hafta ortalaması: ${Math.round(ortalama)} puan`;
-        }
-        istikrarEl.className = 'lig-istikrar';
-      }
-    }
-  }
-}
-
-function ligBilgiAc() {
-  document.getElementById('lig-modal').classList.add('acik');
-  document.body.style.overflow = 'hidden';
-}
-function ligBilgiKapat() {
-  document.getElementById('lig-modal').classList.remove('acik');
-  document.body.style.overflow = '';
 }
 
 let ilkYuklemeBitti = false;
@@ -14867,6 +14945,14 @@ function haftaBaslangicAl() {
   try { snapshot = JSON.parse(localStorage.getItem(key) || 'null'); } catch(e) { snapshot = null; }
   if (!snapshot) {
     // Bu hafta ilk açılış: o anki değerleri snapshot olarak yaz
+    let cuzToplam = 0;
+    try {
+      if (typeof kuranProgress !== 'undefined' && kuranProgress) {
+        cuzToplam = Object.values(kuranProgress).filter(v => v === true || (v && v.tamamlandi)).length;
+      }
+    } catch(e) {}
+    let orucToplam = 0;
+    try { orucToplam = parseInt(localStorage.getItem('kn_oruc_tutulan') || '0') || 0; } catch(e) {}
     snapshot = {
       zikirToplam: (typeof zikirSayisi !== 'undefined' ? zikirSayisi : 0) +
                    (typeof zikirYildiz !== 'undefined' ? zikirYildiz : 0) * 70000,
@@ -14876,11 +14962,59 @@ function haftaBaslangicAl() {
                      (typeof salavatYildiz !== 'undefined' ? salavatYildiz : 0) * 100000,
       esmaToplamlanan: (typeof esmaTamamlananlar !== 'undefined' ? esmaTamamlananlar.size : 0),
       namazToplam: (typeof genelToplamKildi === 'function' ? genelToplamKildi() : 0),
-      gunlukGorevToplam: (typeof gorevTamamlama !== 'undefined' ? gorevTamamlama : 0)
+      gunlukGorevToplam: (typeof gorevTamamlama !== 'undefined' ? gorevTamamlama : 0),
+      cuzToplam: cuzToplam,
+      orucToplam: orucToplam,
+      olusturuldu: new Date().toISOString()
     };
-    localStorage.setItem(key, JSON.stringify(snapshot));
+    try { localStorage.setItem(key, JSON.stringify(snapshot)); } catch(e) {
+      // Quota dolu — bakım yap ve tekrar dene
+      try { localStorageBakim(); localStorage.setItem(key, JSON.stringify(snapshot)); } catch(e2) {}
+    }
   }
   return snapshot;
+}
+
+// Bu haftaki cüz / oruç / görev artışları
+function buHaftaCuzArtisi() {
+  try {
+    const b = haftaBaslangicAl();
+    let mevcut = 0;
+    if (typeof kuranProgress !== 'undefined' && kuranProgress) {
+      mevcut = Object.values(kuranProgress).filter(v => v === true || (v && v.tamamlandi)).length;
+    }
+    return Math.max(0, mevcut - (b.cuzToplam || 0));
+  } catch(e) { return 0; }
+}
+function buHaftaOrucArtisi() {
+  try {
+    const b = haftaBaslangicAl();
+    const mevcut = parseInt(localStorage.getItem('kn_oruc_tutulan') || '0') || 0;
+    return Math.max(0, mevcut - (b.orucToplam || 0));
+  } catch(e) { return 0; }
+}
+function buHaftaGorevArtisi() {
+  try {
+    const b = haftaBaslangicAl();
+    const mevcut = (typeof gorevTamamlama !== 'undefined' ? gorevTamamlama : 0);
+    return Math.max(0, mevcut - (b.gunlukGorevToplam || 0));
+  } catch(e) { return 0; }
+}
+function buHaftaIhlasArtisi() {
+  try {
+    const b = haftaBaslangicAl();
+    const mevcut = (typeof ihlasSayisi !== 'undefined' ? ihlasSayisi : 0) +
+                   (typeof ihlasYildiz !== 'undefined' ? ihlasYildiz : 0) * 100000;
+    return Math.max(0, mevcut - (b.ihlasToplam || 0));
+  } catch(e) { return 0; }
+}
+function buHaftaSalavatArtisi() {
+  try {
+    const b = haftaBaslangicAl();
+    const mevcut = (typeof salavatSayisi !== 'undefined' ? salavatSayisi : 0) +
+                   (typeof salavatYildiz !== 'undefined' ? salavatYildiz : 0) * 100000;
+    return Math.max(0, mevcut - (b.salavatToplam || 0));
+  } catch(e) { return 0; }
 }
 
 function buHaftaZikirArtisi() {
