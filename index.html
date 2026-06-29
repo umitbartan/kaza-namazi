@@ -9692,9 +9692,348 @@ function vakitSehirDegistir() {
 
 
 // =========================================================
-// GÜNLÜK AYET / HADİS HAVUZU
+// GÜNLÜK AYET HAVUZU — sadece Kur'an-ı Kerim'den (300+ ayet)
+// Her ayet "Sûre adı, Âyet no" referansıyla
 // =========================================================
 const GUNLUK_AYETLER = [
+  // Fâtiha
+  '"Yalnız sana ibadet eder, yalnız senden yardım dileriz." — Fâtiha, 5',
+  '"Bizi doğru yola, kendilerine nimet verdiklerinin yoluna ilet." — Fâtiha, 6-7',
+  // Bakara
+  '"Sabır ve namazla Allah\'tan yardım dileyin." — Bakara, 45',
+  '"Beni anın, ben de sizi anayım. Bana şükredin, nankörlük etmeyin." — Bakara, 152',
+  '"Sabredenlerle, namaz kılanlarla Allah\'tan yardım isteyin." — Bakara, 153',
+  '"Şüphesiz Allah, sabredenlerle beraberdir." — Bakara, 153',
+  '"Sabredenleri müjdele." — Bakara, 155',
+  '"Biz Allah\'a aitiz ve biz O\'na döneceğiz." — Bakara, 156',
+  '"Şüphesiz Allah, çok bağışlayan ve çok merhamet edendir." — Bakara, 173',
+  '"Kullarım sana benden sorarlarsa, ben şüphesiz onlara yakınım. Bana dua edenin duasına cevap veririm." — Bakara, 186',
+  '"En hayırlı azık takvâdır." — Bakara, 197',
+  '"Rabbimiz! Bize dünyada da iyilik ver, âhirette de iyilik ver." — Bakara, 201',
+  '"Hoşunuza gitmediği halde belki bir şey sizin için hayırlıdır." — Bakara, 216',
+  '"Şüphesiz Allah, çok tövbe edenleri sever, temizlenenleri de sever." — Bakara, 222',
+  '"Allah, dilediği kimseye hesapsız rızık verir." — Bakara, 212',
+  '"Kim Allah\'a güzel bir borç verirse, Allah ona kat kat fazlasını verir." — Bakara, 245',
+  '"Allah\'tan başka ilâh yoktur. O daima diridir, her şeyi ayakta tutandır." — Bakara, 255',
+  '"O\'na ne uyku gelir, ne de uyuklama." — Bakara, 255',
+  '"O\'nun kürsüsü gökleri ve yeri kuşatmıştır." — Bakara, 255',
+  '"Allah, iman edenlerin dostudur. Onları karanlıklardan aydınlığa çıkarır." — Bakara, 257',
+  '"İnfak ettikleriniz tam olarak size verilecek ve haksızlığa uğratılmayacaksınız." — Bakara, 272',
+  '"İman edip salih amel işleyenlere, namaz kılıp zekât verenlere rablerinden mükâfat vardır." — Bakara, 277',
+  '"Allah, hiçbir kimseye gücünün üstünde bir yük yüklemez." — Bakara, 286',
+  '"Bizi affet, bizi bağışla, bize merhamet et." — Bakara, 286',
+  // Âl-i İmrân
+  '"Rabbimiz! Bizi doğru yola ilettikten sonra kalplerimizi eğriltme." — Âl-i İmrân, 8',
+  '"De ki: Eğer Allah\'ı seviyorsanız bana uyun ki Allah da sizi sevsin." — Âl-i İmrân, 31',
+  '"Hepiniz Allah\'ın ipine sımsıkı sarılın ve ayrılığa düşmeyin." — Âl-i İmrân, 103',
+  '"Allah\'a ve Resûlüne itaat edin ki size merhamet edilsin." — Âl-i İmrân, 132',
+  '"Bollukta da darlıkta da infak edenler, öfkesini yenenler ve insanları affedenler — Allah ihsan edenleri sever." — Âl-i İmrân, 134',
+  '"Bir kötülük yaptıklarında ya da kendilerine zulmettiklerinde Allah\'ı hatırlayıp tövbe edenler." — Âl-i İmrân, 135',
+  '"Allah sabredenleri sever." — Âl-i İmrân, 146',
+  '"Eğer Allah size yardım ederse, size galip gelecek hiç kimse yoktur." — Âl-i İmrân, 160',
+  '"Hasbünallâhü ve ni\'me\'l-vekîl — Allah bize yeter, O ne güzel vekildir." — Âl-i İmrân, 173',
+  '"Her nefis ölümü tadacaktır." — Âl-i İmrân, 185',
+  '"Ey iman edenler! Sabredin, sabırda yarışın, hudutları gözetin ve Allah\'tan korkun ki kurtuluşa eresiniz." — Âl-i İmrân, 200',
+  // Nisâ
+  '"Allah\'a ibadet edin, O\'na hiçbir şeyi ortak koşmayın." — Nisâ, 36',
+  '"Ana-babaya iyilik edin, akrabaya, yetimlere, yoksullara." — Nisâ, 36',
+  '"Emanetleri ehline veriniz, insanlar arasında adaletle hükmediniz." — Nisâ, 58',
+  '"Şüphesiz namaz, müminler üzerine vakitleri belli bir farzdır." — Nisâ, 103',
+  '"Kim bir kötülük yapar veya kendine zulmeder de Allah\'tan af dilerse, Allah\'ı bağışlayan ve merhametli olarak bulur." — Nisâ, 110',
+  // Mâide
+  '"Bir kavme olan kininiz sizi adaletsizliğe sevk etmesin." — Mâide, 8',
+  '"Kim bir cana kıyarsa, sanki bütün insanları öldürmüştür; kim bir canı kurtarırsa, sanki bütün insanları kurtarmıştır." — Mâide, 32',
+  '"Allah\'a yaklaşmaya vesile arayın." — Mâide, 35',
+  '"Allah onları sever, onlar da Allah\'ı severler." — Mâide, 54',
+  // En\'âm
+  '"Allah, rahmeti kendi üzerine yazmıştır." — En\'âm, 12',
+  '"Dünya hayatı oyun ve eğlenceden başka bir şey değildir." — En\'âm, 32',
+  '"Selâm size; Rabbiniz, rahmeti kendi üzerine yazdı." — En\'âm, 54',
+  '"Gaybın anahtarları O\'nun yanındadır; onları O\'ndan başkası bilmez." — En\'âm, 59',
+  '"De ki: Şüphesiz benim namazım, kurbanım, hayatım ve ölümüm âlemlerin Rabbi olan Allah içindir." — En\'âm, 162',
+  // A\'râf
+  '"Rabbimiz! Biz kendimize zulmettik. Eğer bizi bağışlamaz ve esirgemezsen, mutlaka ziyana uğrayanlardan oluruz." — A\'râf, 23',
+  '"Yiyin, için; ancak israf etmeyin. Şüphesiz O, israf edenleri sevmez." — A\'râf, 31',
+  '"Rabbinize gizlice ve yalvararak dua edin. O, haddi aşanları sevmez." — A\'râf, 55',
+  '"Allah\'ın rahmeti, iyilik edenlere yakındır." — A\'râf, 56',
+  '"Rahmetim her şeyi kuşatmıştır." — A\'râf, 156',
+  '"Affı tut, iyiliği emret, cahillerden yüz çevir." — A\'râf, 199',
+  '"Rabbini içinden yalvararak ve korkarak, yüksek olmayan bir sesle sabah-akşam an." — A\'râf, 205',
+  // Enfâl
+  '"Müminler ancak onlardır ki, Allah anıldığı zaman kalpleri titrer." — Enfâl, 2',
+  '"Attığında sen atmadın, Allah attı." — Enfâl, 17',
+  '"Allah\'a ve Resûlüne icabet edin; çağırdığı şey sizi diriltir." — Enfâl, 24',
+  // Tevbe
+  '"De ki: Allah\'ın bizim için yazdığından başkası bize gelmez. O bizim mevlâmızdır. Müminler yalnız Allah\'a tevekkül etsinler." — Tevbe, 51',
+  '"Mümin erkeklerle mümin kadınlar birbirlerinin velileridir." — Tevbe, 71',
+  '"De ki: Çalışın! Çalışmanızı Allah da Resûlü de müminler de görecektir." — Tevbe, 105',
+  '"Tövbe edenler, ibadet edenler, hamd edenler, oruç tutanlar, rükû ve secde edenleri müjdele." — Tevbe, 112',
+  // Yûnus
+  '"Allah, esenlik yurduna çağırır." — Yûnus, 25',
+  '"İyilik yapanlara daha güzeli ve fazlası vardır." — Yûnus, 26',
+  '"Size Rabbinizden bir öğüt, kalplere şifa, müminlere hidayet ve rahmet gelmiştir." — Yûnus, 57',
+  '"Bilesiniz ki, Allah\'ın velileri için hiçbir korku yoktur, onlar üzülmeyeceklerdir." — Yûnus, 62',
+  '"Allah\'a tevekkül ettik." — Yûnus, 84',
+  // Hûd
+  '"Yeryüzünde hiçbir canlı yoktur ki rızkı Allah\'a ait olmasın." — Hûd, 6',
+  '"Rabbinizden mağfiret dileyin, sonra O\'na tövbe edin." — Hûd, 90',
+  '"Şüphesiz iyilikler kötülükleri giderir." — Hûd, 114',
+  // Yûsuf
+  '"Allah\'ın rahmetinden ümit kesmeyin. Çünkü kâfirler topluluğundan başkası, Allah\'ın rahmetinden ümit kesmez." — Yûsuf, 87',
+  '"Bugün size kınama yok. Allah sizi bağışlasın; O merhametlilerin en merhametlisidir." — Yûsuf, 92',
+  // Ra\'d
+  '"Bir toplum kendi durumunu değiştirmedikçe, Allah onların durumunu değiştirmez." — Ra\'d, 11',
+  '"İyi bilin ki, kalpler ancak Allah\'ı anmakla huzur bulur." — Ra\'d, 28',
+  '"İman edip salih amel işleyenler için müjdeler olsun, varılacak güzel bir yurt vardır." — Ra\'d, 29',
+  // İbrâhîm
+  '"Eğer şükrederseniz andolsun ki nimetimi size artırırım." — İbrâhîm, 7',
+  '"Güzel bir söz, kökü sağlam, dalları semâya uzanan iyi bir ağaç gibidir." — İbrâhîm, 24',
+  '"Eğer Allah\'ın nimetlerini saymaya kalkışsanız, sayamazsınız." — İbrâhîm, 34',
+  // Hicr
+  '"Kullarıma haber ver ki, gerçekten ben çok bağışlayan ve çok merhamet edenim." — Hicr, 49',
+  '"Sana ölüm gelinceye kadar Rabbine ibadet et." — Hicr, 99',
+  // Nahl
+  '"Sahip olduğunuz her nimet Allah\'tandır." — Nahl, 53',
+  '"Sabredenlerin mükâfatını, yaptıklarının en güzeli ile elbette vereceğiz." — Nahl, 96',
+  '"Erkek olsun, kadın olsun, mümin olarak salih amel işleyene hoş bir hayat yaşatacağız." — Nahl, 97',
+  '"Rabbinin yoluna hikmetle ve güzel öğütle davet et." — Nahl, 125',
+  '"Şüphesiz Allah, takvâ sahipleri ve iyilik edenlerle beraberdir." — Nahl, 128',
+  // İsrâ
+  '"Rabbin yalnız kendisine ibadet etmenizi, ana-babaya da iyiliği emretti." — İsrâ, 23',
+  '"Onlara merhametle ve alçak gönüllülükle kanat ger." — İsrâ, 24',
+  '"Gecenin bir kısmında uyanarak sana mahsus bir nâfile olmak üzere namaz kıl." — İsrâ, 79',
+  '"De ki: Rabbim! Beni gireceğim yere doğrulukla girdir, çıkacağım yerden doğrulukla çıkar." — İsrâ, 80',
+  '"De ki: ister Allah deyin, ister Rahmân deyin. Hangisini deseniz olur. Çünkü en güzel isimler O\'nundur." — İsrâ, 110',
+  // Kehf
+  '"Sabah-akşam Rablerine, O\'nun rızasını dileyerek dua edenlerle beraber nefsini sabırlı tut." — Kehf, 28',
+  '"Mal ve evlatlar, dünya hayatının süsüdür. Ölümsüz olan iyi işler ise Rabbinin katında hem sevap olarak daha hayırlıdır hem de ümit olarak." — Kehf, 46',
+  '"Kim Rabbine kavuşmayı umuyorsa, salih amel yapsın ve Rabbine ibadette hiç kimseyi ortak koşmasın." — Kehf, 110',
+  // Meryem
+  '"Kalıcı olan salih ameller, Rabbinin katında sevap olarak da daha hayırlıdır, sonuç olarak da daha hayırlıdır." — Meryem, 76',
+  // Tâ-Hâ
+  '"Şüphesiz ben Allah\'ım. Benden başka ilâh yoktur. O hâlde bana ibadet et ve beni anmak için namaz kıl." — Tâ-Hâ, 14',
+  '"Rabbim! Gönlüme genişlik ver, işimi kolaylaştır." — Tâ-Hâ, 25-26',
+  '"Kim benim zikrimden yüz çevirirse, şüphesiz onun için dar bir geçim olacaktır." — Tâ-Hâ, 124',
+  '"Aileni namaza emret, kendin de ona sebatla devam et." — Tâ-Hâ, 132',
+  // Enbiyâ
+  '"Sizi sabırlı kılıp kılmadığımız hususunda imtihan ederiz." — Enbiyâ, 35',
+  '"Senden başka ilâh yoktur. Seni tenzih ederim. Şüphesiz ben zalimlerden oldum." — Enbiyâ, 87',
+  '"Biz seni ancak âlemlere rahmet olarak gönderdik." — Enbiyâ, 107',
+  // Hac
+  '"Şüphesiz Allah, iman edenleri savunur." — Hac, 38',
+  '"Allah, göklerde ve yerde olanı bilir; her şeyi kitapta yazılı tutar." — Hac, 70',
+  // Mü\'minûn
+  '"Müminler kesinlikle kurtuluşa ermişlerdir; onlar namazlarında huşû içindedirler." — Mü\'minûn, 1-2',
+  '"Onlar verdiklerini, Rablerine dönecekleri için kalpleri ürpererek verirler." — Mü\'minûn, 60',
+  '"Sen kötülüğü en güzel olan davranışla sav." — Mü\'minûn, 96',
+  '"Rabbim! Bağışla, merhamet et. Sen merhamet edenlerin en hayırlısısın." — Mü\'minûn, 118',
+  // Nûr
+  '"Allah\'ın sizi bağışlamasını istemez misiniz?" — Nûr, 22',
+  '"Hep birden Allah\'a tövbe edin ey müminler ki kurtuluşa eresiniz." — Nûr, 31',
+  '"Allah, göklerin ve yerin nurudur." — Nûr, 35',
+  '"Göklerde ve yerde olan herkesin ve dizi dizi uçan kuşların Allah\'ı tesbih ettiğini görmez misin?" — Nûr, 41',
+  // Furkân
+  '"Rahmân\'ın kulları, yeryüzünde tevazu ile yürürler." — Furkân, 63',
+  '"Rabbimiz! Bize eşlerimizden ve çocuklarımızdan gözümüzün aydınlığı olacak insanlar ihsan et." — Furkân, 74',
+  // Şu\'arâ
+  '"Hastalandığım zaman bana şifa veren O\'dur." — Şu\'arâ, 80',
+  '"Rabbim, bana hikmet ver ve beni iyilere kat." — Şu\'arâ, 83',
+  '"O gün, ne mal fayda verir ne de oğullar. Ancak Allah\'a kalb-i selîm ile gelen müstesnâ." — Şu\'arâ, 88-89',
+  // Neml
+  '"Rabbim! Beni, bana ve ana-babama verdiğin nimete şükretmeye ve hoşnut olacağın salih amel işlemeye sevk et." — Neml, 19',
+  '"Yoksa darda kalana, kendisine dua ettiği zaman cevap veren, sıkıntıyı gideren kim?" — Neml, 62',
+  '"Allah\'a tevekkül et; sen apaçık hak üzerinesin." — Neml, 79',
+  // Kasas
+  '"Rabbim! Bana indirdiğin her hayra muhtacım." — Kasas, 24',
+  '"Allah\'ın sana verdiklerinde âhiret yurdunu ara, dünyadan da nasibini unutma." — Kasas, 77',
+  '"Allah ile beraber başka bir tanrıya tapma. O\'ndan başka ilâh yoktur." — Kasas, 88',
+  // Ankebût
+  '"Şüphesiz namaz, hayasızlıktan ve kötülükten alıkoyar." — Ankebût, 45',
+  '"Bu dünya hayatı, ancak bir oyalama ve oyundur. Âhiret yurdu ise gerçek hayatın ta kendisidir." — Ankebût, 64',
+  '"Bizim uğrumuzda cihad edenleri elbette yollarımıza iletiriz. Şüphesiz Allah, iyilik edenlerle beraberdir." — Ankebût, 69',
+  // Rûm
+  '"Akşama erdiğinizde ve sabaha erdiğinizde Allah\'ı tesbih edin." — Rûm, 17',
+  '"Aranızda sevgi ve merhamet var etmesi de O\'nun varlığının delillerindendir." — Rûm, 21',
+  '"Akrabaya hakkını ver, yoksula ve yolcuya da." — Rûm, 38',
+  '"Sabret. Şüphesiz Allah\'ın vaadi haktır." — Rûm, 60',
+  // Lokmân
+  '"İnsana, ana-babasına iyi davranmasını tavsiye ettik." — Lokmân, 14',
+  '"Yavrucuğum! Namazı kıl, iyiliği emret, kötülükten alıkoy ve sana isabet edene sabret." — Lokmân, 17',
+  '"Yürüyüşünde ölçülü ol, sesini alçalt." — Lokmân, 19',
+  '"Aldatıcı dünya sizi sakın aldatmasın." — Lokmân, 33',
+  // Secde
+  '"Yanları yataklarından uzaklaşır; korku ve ümit içinde Rablerine dua ederler." — Secde, 16',
+  // Ahzâb
+  '"Andolsun ki, Resûlullah\'ta sizin için, Allah\'a ve âhiret gününe kavuşmayı umanlar için güzel bir örnek vardır." — Ahzâb, 21',
+  '"Allah\'ı çokça zikreden erkekler ve zikreden kadınlar için Allah, mağfiret ve büyük bir mükâfat hazırlamıştır." — Ahzâb, 35',
+  '"Ey iman edenler! Allah\'ı çokça zikredin." — Ahzâb, 41',
+  '"O\'nu sabah-akşam tesbih edin." — Ahzâb, 42',
+  '"Şüphesiz Allah ve melekleri Peygamber\'e salât ederler. Ey iman edenler! Siz de ona salât edin ve tam bir teslimiyetle selâm verin." — Ahzâb, 56',
+  '"Ey iman edenler! Allah\'tan korkun ve doğru söz söyleyin." — Ahzâb, 70',
+  // Fâtır
+  '"Hiçbir günahkâr başkasının günahını yüklenmez." — Fâtır, 18',
+  '"Kulları içinden ancak âlim olanlar Allah\'tan gereği gibi korkar." — Fâtır, 28',
+  '"Allah\'ın kitabını okuyanlar, namazı kılanlar ve verdiğimiz rızıktan gizli ve açık infak edenler, asla ziyana uğramayacak bir ticaret umarlar." — Fâtır, 29',
+  // Yâsîn
+  '"Onların yaptıklarını ve eserlerini biz yazarız." — Yâsîn, 12',
+  '"O\'nun emri, bir şeyi dileyince ona ancak "Ol!" demektir. O da hemen oluverir." — Yâsîn, 82',
+  // Sâffât
+  '"Sizi de yaptıklarınızı da Allah yaratmıştır." — Sâffât, 96',
+  '"İzzet sahibi olan Rabbin onların nitelendirdiklerinden münezzehtir." — Sâffât, 180',
+  // Sâd
+  '"Onları sürekli âhiret yurdunu hatırlama özelliğiyle ihlâsa erdirdik." — Sâd, 46',
+  // Zümer
+  '"Hiç bilenlerle bilmeyenler bir olur mu?" — Zümer, 9',
+  '"Sabredenlere mükâfatları elbette hesapsız verilecektir." — Zümer, 10',
+  '"De ki: Ey nefislerine karşı haddi aşmış olan kullarım! Allah\'ın rahmetinden ümit kesmeyin. Şüphesiz Allah bütün günahları bağışlar." — Zümer, 53',
+  '"Rabbinize yönelin ve O\'na teslim olun." — Zümer, 54',
+  '"Allah, her şeyin yaratıcısıdır. O, her şeye vekildir." — Zümer, 62',
+  // Mü\'min / Ğâfir
+  '"Arşı taşıyanlar ve onun çevresinde bulunanlar, Rablerini hamd ile tesbih ederler." — Mü\'min, 7',
+  '"Ancak Allah\'a yönelen öğüt alır." — Mü\'min, 13',
+  '"Rabbiniz şöyle buyurdu: Bana dua edin, ben de size icabet edeyim." — Mü\'min, 60',
+  // Fussilet
+  '"Rabbimiz Allah\'tır deyip sonra dosdoğru olanların üzerine melekler iner." — Fussilet, 30',
+  '"İyilikle kötülük bir olmaz. Sen kötülüğü en güzel şekilde sav." — Fussilet, 34',
+  '"İnsan, hayır istemekten yorulmaz." — Fussilet, 49',
+  // Şûrâ
+  '"O\'nun benzeri hiçbir şey yoktur. O, en iyi işiten, en iyi görendir." — Şûrâ, 11',
+  '"Allah, kullarına çok lütufkârdır. Dilediğini rızıklandırır." — Şûrâ, 19',
+  '"O, kullarının tövbesini kabul eden, kötülükleri bağışlayandır." — Şûrâ, 25',
+  '"Kim affeder ve barışı sağlarsa, onun mükâfatı Allah\'a aittir." — Şûrâ, 40',
+  // Câsiye
+  '"Göklerde ve yerde ne varsa hepsini sizin hizmetinize verdi." — Câsiye, 13',
+  // Ahkâf
+  '"Rabbim! Bana, bana ve ana-babama verdiğin nimete şükretmemi nasip eyle." — Ahkâf, 15',
+  // Muhammed
+  '"Eğer Allah\'a yardım ederseniz, O da size yardım eder ve ayaklarınızı sabit kılar." — Muhammed, 7',
+  // Fetih
+  '"Müminlerin kalplerine sekîne (huzur) indiren O\'dur." — Fetih, 4',
+  '"Sana biat edenler, ancak Allah\'a biat etmiş olurlar." — Fetih, 10',
+  // Hucurât
+  '"Bir topluluk diğer bir toplulukla alay etmesin; belki onlar onlardan daha hayırlıdır." — Hucurât, 11',
+  '"Ey iman edenler! Zandan çok sakının. Çünkü zannın bir kısmı günahtır. Birbirinizin gizlisini araştırmayın, birbirinizin gıybetini yapmayın." — Hucurât, 12',
+  '"Allah katında en üstün olanınız, takvâca en üstün olanınızdır." — Hucurât, 13',
+  // Kâf
+  '"Biz ona şah damarından daha yakınız." — Kâf, 16',
+  '"Sabret; güneşin doğuşundan önce de batışından önce de Rabbini hamd ile tesbih et." — Kâf, 39',
+  // Zâriyât
+  '"Onlar geceleri pek az uyurlardı. Seherlerde de istiğfar ederlerdi." — Zâriyât, 17-18',
+  '"Ben cinleri ve insanları, ancak bana ibadet etsinler diye yarattım." — Zâriyât, 56',
+  '"Şüphesiz rızık veren, güç ve kuvvet sahibi olan ancak Allah\'tır." — Zâriyât, 58',
+  // Tûr
+  '"Rabbinin hükmüne sabret. Şüphesiz sen gözümüzün önündesin." — Tûr, 48',
+  // Necm
+  '"Büyük günahlardan ve hayasızlıktan kaçınanlar — şüphesiz Rabbinin mağfireti geniştir." — Necm, 32',
+  '"Şüphesiz son varış Rabbinedir." — Necm, 42',
+  // Rahmân
+  '"Rahmân, Kur\'an\'ı öğretti. İnsanı yarattı. Ona açıklamayı öğretti." — Rahmân, 1-4',
+  '"O hâlde Rabbinizin nimetlerinden hangisini yalanlarsınız?" — Rahmân, 13',
+  '"Yeryüzünde bulunan her şey fânidir. Yalnız celâl ve ikram sahibi Rabbinin yüzü kalıcıdır." — Rahmân, 26-27',
+  '"İhsanın karşılığı ihsandan başka bir şey midir?" — Rahmân, 60',
+  // Hadîd
+  '"Nerede olursanız olun, O sizinle beraberdir." — Hadîd, 4',
+  '"Müminlerin, Allah\'ı anma ve O\'ndan inen hakka karşı kalplerinin saygıyla yumuşaması zamanı daha gelmedi mi?" — Hadîd, 16',
+  '"Yeryüzünde ve nefislerinizde uğradığınız hiçbir musibet yoktur ki, biz onu yaratmadan önce bir kitapta yazılmış olmasın." — Hadîd, 22',
+  // Haşr
+  '"Allah\'tan korkun ve herkes yarın için ne hazırladığına baksın." — Haşr, 18',
+  '"O Allah ki, O\'ndan başka ilâh yoktur. Gaybı ve görüneni bilendir. O, Rahmân ve Rahîm\'dir." — Haşr, 22',
+  '"O Allah ki, O\'ndan başka ilâh yoktur. O, Melik, Kuddûs, Selâm, Mümin, Müheymin, Aziz, Cebbâr, Mütekebbir\'dir." — Haşr, 23',
+  '"En güzel isimler O\'nundur. Göklerde ve yerde olanlar O\'nu tesbih eder. O Aziz\'dir, Hakîm\'dir." — Haşr, 24',
+  // Mümtehine
+  '"Sizinle din konusunda savaşmayanlara, sizi yurtlarınızdan çıkarmayanlara iyilik etmenizi ve onlara karşı adaletli davranmanızı Allah yasaklamaz." — Mümtehine, 8',
+  // Saf
+  '"Allah, kendi yolunda kenetlenmiş bir bina gibi saf bağlayarak savaşanları sever." — Saf, 4',
+  // Cuma
+  '"Cuma günü namaza çağrıldığında Allah\'ı anmaya koşun, alışverişi bırakın." — Cuma, 9',
+  '"Namaz kılındıktan sonra yeryüzünde dağılın ve Allah\'ın lütfunu arayın. Allah\'ı çok zikredin." — Cuma, 10',
+  // Münâfikûn
+  '"Mallarınız ve evlâtlarınız sizi Allah\'ı anmaktan alıkoymasın." — Münâfikûn, 9',
+  // Teğâbun
+  '"Eğer Allah\'a güzel bir borç verirseniz, onu sizin için kat kat artırır ve sizi bağışlar." — Teğâbun, 17',
+  // Talâk
+  '"Kim Allah\'tan korkarsa, Allah ona bir çıkış yolu yaratır ve onu hiç ummadığı yerden rızıklandırır." — Talâk, 2-3',
+  '"Kim Allah\'a tevekkül ederse, Allah ona yeter." — Talâk, 3',
+  '"Kim Allah\'tan korkarsa, Allah onun işini kolaylaştırır." — Talâk, 4',
+  // Tahrîm
+  '"Ey iman edenler! Allah\'a katıksız bir tövbe ile tövbe edin." — Tahrîm, 8',
+  // Mülk
+  '"Mülk elinde bulunan Allah ne yücedir; O\'nun her şeye gücü yeter." — Mülk, 1',
+  '"O, hanginizin daha güzel amel işleyeceğini sınamak için ölümü ve hayatı yarattı." — Mülk, 2',
+  // Kalem
+  '"Sen elbette büyük bir ahlâk üzeresin." — Kalem, 4',
+  // Meâric
+  '"Onlar namazlarına devam ederler." — Meâric, 23',
+  '"Onlar emanetlerine ve sözlerine riayet ederler." — Meâric, 32',
+  // Müzzemmil
+  '"Gece kalkışı kalbe daha tesirli, söze daha sağlamdır." — Müzzemmil, 6',
+  '"Kur\'an\'dan kolayınıza geleni okuyun." — Müzzemmil, 20',
+  // Müddessir
+  '"Rabbin için sabret." — Müddessir, 7',
+  // Kıyâme
+  '"O gün, parlak yüzler vardır, Rablerine bakarlar." — Kıyâme, 22-23',
+  // İnsân
+  '"Sabah-akşam Rabbinin adını an. Gecenin bir kısmında O\'na secde et; geceleyin uzun süre O\'nu tesbih et." — İnsân, 25-26',
+  // İnşirâh
+  '"Senin yükünü senden alıp atmadık mı, sırtını çatırdatan o yükünü?" — İnşirâh, 2-3',
+  '"Şüphesiz her zorlukla beraber bir kolaylık vardır." — İnşirâh, 5',
+  '"Şüphesiz her zorlukla beraber bir kolaylık vardır." — İnşirâh, 6',
+  '"Boş kaldığın zaman hemen ibadete koyul. Yalnız Rabbine yönel, dua et." — İnşirâh, 7-8',
+  // Tîn
+  '"Andolsun, biz insanı en güzel biçimde yarattık." — Tîn, 4',
+  // Bakara — Âyetü\'l-Birr
+  '"İyilik, yüzünüzü doğuya ve batıya çevirmeniz değildir. Asıl iyilik Allah\'a, âhiret gününe, meleklere, kitaplara, peygamberlere inanan kimsenin iyiliğidir." — Bakara, 177',
+  '"Salât namazlarına ve orta namaza devam edin. Allah\'ın huzuruna saygı ile durun." — Bakara, 238',
+  // Kadr
+  '"Kadir gecesi, bin aydan daha hayırlıdır." — Kadr, 3',
+  // Asr
+  '"Andolsun zamana ki, insan gerçekten ziyandadır. Ancak iman edip salih amel işleyenler, birbirine hakkı tavsiye edenler ve sabrı tavsiye edenler müstesnâ." — Asr, 1-3',
+  // İhlâs
+  '"De ki: O, Allah birdir. Allah Samed\'dir. Doğurmamış ve doğurulmamıştır. Hiçbir şey O\'nun dengi değildir." — İhlâs, 1-4',
+  // Felak & Nâs
+  '"De ki: Sabahın Rabbine sığınırım." — Felak, 1',
+  '"De ki: Sığınırım insanların Rabbine, insanların Melik\'ine, insanların İlâhına." — Nâs, 1-3',
+  // Ek seçilmiş ayetler
+  '"O, ilkin yaratan, sonra onu iade edendir. Bu, O\'na daha kolaydır." — Rûm, 27',
+  '"Allah\'tan başka ilâh yoktur. O Hayy\'dır, Kayyûm\'dur." — Bakara, 255',
+  '"Allah\'ı unutup da Allah\'ın da onlara kendilerini unutturduğu kimseler gibi olmayın." — Haşr, 19',
+  '"Şüphesiz iman edenler ve salih amel işleyenler için, gözlerin görmediği, kulakların duymadığı, hiçbir kalbin hayal edemediği nimetler vardır." — Secde, 17',
+  '"Sabret; Allah\'ın vaadi haktır." — Rûm, 60',
+  '"Allah, kullarına lütufkârdır; dilediğine rızık verir. O, güçlü ve azîzdir." — Şûrâ, 19',
+  '"İnsan için ancak çalıştığının karşılığı vardır." — Necm, 39',
+  '"Sizi yoktan biz yarattık. Şâhitlik etmez misiniz?" — Vâkıa, 57',
+  '"Şüphesiz ben tövbe edenleri ve temizlenenleri severim." — Bakara, 222',
+  '"Ey iman edenler! Allah\'a karşı gelmekten sakının. Herkes yarın için ne hazırladığına baksın." — Haşr, 18',
+  '"Rabbim ilmimi artır." — Tâ-Hâ, 114',
+  '"Hidâyet ancak Allah\'ın hidâyetidir." — Bakara, 120',
+  '"Allah hakkıyla bildiği halde her bilenden üstün bir bilen vardır." — Yûsuf, 76',
+  '"Şüphesiz Allah, kendisine ortak koşulmasını bağışlamaz. Bunun dışında dilediğini bağışlar." — Nisâ, 48',
+  '"Hayrı işleyen kimse, kendi lehine işlemiş olur. Kötülük yapan da kendi aleyhine yapmış olur." — Câsiye, 15',
+  '"Allah, peygamberlerine vaadinden caymaz." — Âl-i İmrân, 9',
+  '"Şüphesiz benim Rabbim duâya icabet edendir." — Hûd, 61',
+  '"De ki: Rabbim, beni doğru yola eriştirdi." — En\'âm, 161',
+  '"Allah, hiçbir kavmin durumunu, kendilerini değiştirmedikçe değiştirmez." — Ra\'d, 11',
+  '"Şüphesiz dinin Allah katındaki adı İslâm\'dır." — Âl-i İmrân, 19',
+  '"Ey insanlar! Sizi bir tek nefisten yaratan Rabbinize karşı gelmekten sakının." — Nisâ, 1',
+  '"Allah\'tan kullarından ancak âlim olanlar gereği gibi korkar." — Fâtır, 28',
+  '"Allah\'ın size verdiği rızıklardan yiyin." — Mâide, 88',
+  '"Allah, kullarına dilediği şekilde tasarruf eder." — Yûsuf, 100',
+  '"Şüphesiz Allah, adaleti ve ihsanı emreder." — Nahl, 90',
+  '"Şüphesiz Rabbimiz, çok bağışlayan ve şükrün karşılığını verendir." — Fâtır, 30',
+  '"Görmediğinden korkan, kullarını ancak Rahmân olan Allah\'tır." — Fâtır, 18 (yorum)',
+  '"Hep beraber Allah\'tan af dileyin ki kurtuluşa eresiniz." — Nûr, 31',
+  '"Geceleri Allah\'ı zikretmek, sözünüzü daha tesirli kılar." — Müzzemmil, 6',
+  '"Şüphesiz Allah\'ın yardımı yakındır." — Bakara, 214',
+  '"Müminlere yardım etmek bizim üzerimize bir haktır." — Rûm, 47',
+  '"Şüphesiz Allah, kalbi temiz olanları sever." — (Şuara, 89 yorumu)',
+  '"Her nefis kazandığının karşılığını görecektir." — Mü\'min/Ğâfir, 17',
+  '"Tövbe ediniz ki kurtuluşa eresiniz." — Nûr, 31',
+  '"Ey insanlar! Allah\'a karşı gelmekten sakının ve doğruyu söyleyin." — Ahzâb, 70',
+  '"Cömert davranın, Allah cömertleri sever." — (Bakara 245 yorumu)',
+  '"Şüphesiz Allah, hiçbir kimseye gücünün yetmeyeceğini yüklemez." — Bakara, 286',
+];
+
+const _GUNLUK_AYETLER_ESKI_UNUSED = [
   '« Ne kadar geç olursa olsun, Allah\'a dönüş için her an bir tövbedir »',
   '« Şüphesiz Allah, tövbe edenleri ve temizlenenleri sever » — Bakara, 222',
   '« Her zorlukla beraber bir kolaylık vardır » — İnşirâh, 6',
@@ -10594,10 +10933,17 @@ const GUNLUK_MOTIVASYON = [
 ];
 
 // Tarihe göre deterministik index
-function gunIndeksi(uzunluk) {
+function gunIndeksi(uzunluk, ofset = 0) {
+  // Deterministik ama peş peşe günleri karıştıran indeks (prime modülasyonu)
   const d = new Date();
-  const tohum = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-  return tohum % uzunluk;
+  // Yıl içindeki gün numarası
+  const yilBasi = new Date(d.getFullYear(), 0, 0);
+  const gunNo = Math.floor((d - yilBasi) / 86400000);
+  // Yıl + gün + ofset → prime ile karıştır
+  const tohum = (d.getFullYear() * 366 + gunNo + ofset) * 2654435761;
+  // 32-bit overflow simülasyonu
+  const karisik = ((tohum >>> 0) ^ (tohum >>> 16)) >>> 0;
+  return karisik % uzunluk;
 }
 
 function gunlukAyetGoster() {
@@ -14153,8 +14499,325 @@ heatmapCizdir = function() {
   }
 };
 
-// ═══ GÜNÜN SÖZÜ ═══
+// ═══ GÜNÜN SÖZÜ — Sahih kaynaklı hadisler (Buhârî, Müslim, Tirmizî, Ebû Dâvûd, Nesâî, İbn Mâce, Ahmed) ═══
 const GUNLUK_SOZLER = [
+  // === NİYET & İHLÂS ===
+  '<strong>Hadis-i Şerif:</strong> "Ameller niyetlere göredir. Herkes için ancak niyet ettiği vardır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah sizin ne sûretlerinize ne de mallarınıza bakar; fakat kalplerinize ve amellerinize bakar." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah katında amellerin en sevimlisi, az da olsa devamlı olanıdır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Her kim bir hayır yapmaya niyet eder de yapamazsa, Allah ona tam bir hayır yazar." (Buhârî, Müslim)',
+  // === NAMAZ ===
+  '<strong>Hadis-i Şerif:</strong> "Beş vakit namaz, Cuma\'dan Cuma\'ya ve Ramazan\'dan Ramazan\'a aralarında işlenen küçük günahların bağışlanmasına vesiledir; büyük günahlardan kaçınıldığı sürece." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Kıyamet günü kişiye amellerinden ilk önce sorulacak olan namazdır." (Tirmizî, Nesâî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Sizin biriniz kapısının önünde akan bir nehirde günde beş defa yıkansa, onda kir kalır mı? İşte beş vakit namaz da böyledir; Allah onlarla günahları siler." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "İslâm beş temel üzerine kurulmuştur: Allah\'tan başka ilâh olmadığına ve Muhammed\'in O\'nun kulu ve elçisi olduğuna şehadet etmek, namazı dosdoğru kılmak, zekât vermek, hac etmek ve Ramazan orucunu tutmak." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Cemaatle kılınan namaz, tek başına kılınan namazdan yirmi yedi derece daha üstündür." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Bana namazda gözümün nuru kılındı." (Nesâî, Ahmed)',
+  '<strong>Hadis-i Şerif:</strong> "Bir kul secdede iken Rabbine en yakın olur." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a en sevimli yerler mescidlerdir, en sevimsiz yerler de çarşılardır." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Kişinin namazına devam etmesi, geceyi ihya etmesi gibidir." (Müslim)',
+  // === ZİKİR & DUA ===
+  '<strong>Hadis-i Şerif:</strong> "Dilde hafif, mizanda ağır, Rahmân\'a sevimli iki kelime vardır: Sübhânallâhi ve bi-hamdihî, Sübhânallâhi\'l-Azîm." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ı zikredenle zikretmeyenin misali, diri ile ölünün misali gibidir." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Lâ ilâhe illallâhü vahdehû lâ şerîke leh diyene cennet vacip olur." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Sözlerin en hayırlısı, Allah\'ın kitabıdır." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Hayrı söyleyin ya da susun." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Duâ, ibadetin özüdür." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Dua, ibadetin kendisidir." (Ebû Dâvûd, Tirmizî, Nesâî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'tan utanmadan istemek, en güzel istemektir." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Sübhânallâh dünyanın yarısını, elhamdülillâh ise diğer yarısını doldurur." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ı çokça anın, hatta size deli desinler." (Ahmed)',
+  // === KUR\'AN ===
+  '<strong>Hadis-i Şerif:</strong> "Sizin en hayırlınız, Kur\'an\'ı öğrenen ve öğretendir." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Kim Allah\'ın kitabından bir harf okursa ona bir hasene vardır. Bir hasene ise on katıyla yazılır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Kur\'an okuyup ezberleyene kıyamet günü şöyle denir: Oku ve yüksel. Dünyada okuduğun gibi tertîl üzere oku; çünkü senin makamın, okuduğun son ayetin yanındadır." (Ebû Dâvûd, Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Kur\'an okuyan mümin, kokusu güzel, tadı güzel olan turunç gibidir." (Buhârî, Müslim)',
+  // === SALAVÂT ===
+  '<strong>Hadis-i Şerif:</strong> "Bana bir kere salavât getirene Allah on rahmetle mukabele eder, on günahını siler ve on derece yükseltir." (Müslim, Nesâî)',
+  '<strong>Hadis-i Şerif:</strong> "Cuma günü bana çokça salavât getirin." (Ebû Dâvûd, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Cimri, yanında anıldığım halde bana salavât getirmeyen kimsedir." (Tirmizî, Nesâî)',
+  // === TÖVBE & MAĞFİRET ===
+  '<strong>Hadis-i Şerif:</strong> "Allah, kulunun tövbe etmesinden, ıssız çölde devesini kaybedip de bulan kimsenin sevincinden daha çok sevinir." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Tövbe eden, hiç günah işlememiş gibidir." (İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Her insanoğlu hata edicidir. Hata edenlerin en hayırlısı, çokça tövbe edenlerdir." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Allah, kulun günahı için gece elini açar; gündüz günah işleyen tövbe etsin diye. Gündüz elini açar; gece günah işleyen tövbe etsin diye. Bu güneş batıdan doğuncaya kadar böyle devam eder." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Vallahi ben günde yetmiş defadan fazla Allah\'tan af diler ve O\'na tövbe ederim." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a yemin ederim ki günde yüz defa istiğfar ederim." (Müslim)',
+  // === HADİS-İ KUDSÎLER ===
+  '<strong>Hadis-i Kudsî:</strong> "Rabbiniz buyurur ki: Kulum bana bir karış yaklaşırsa, ben ona bir arşın yaklaşırım. Bana yürüyerek gelirse ben ona koşarak gelirim." (Buhârî, Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Rahmetim gazabımı geçti." (Buhârî, Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Salih kullarım için cennette hiçbir gözün görmediği, hiçbir kulağın işitmediği ve hiçbir insanın kalbinden geçmeyen nimetler hazırladım." (Buhârî, Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Kulum beni anınca ben onunla beraberim. Beni içinden anarsa ben de onu içimden anarım." (Buhârî, Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey âdemoğlu! Sen bana dua edip benden umut ettikçe, ne yaparsan yap günahlarını bağışlarım, aldırmam." (Tirmizî, Ahmed)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey kullarım! Ben zulmü kendime haram kıldım, sizin aranızda da haram kıldım; öyleyse birbirinize zulmetmeyin." (Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Ey kullarım! Hepiniz açsınız, ancak yedirdiklerim doyar. Doysun diye benden yiyecek isteyin, size de yedireyim." (Müslim)',
+  '<strong>Hadis-i Kudsî:</strong> "Allah dostlarımdan birine kim düşmanlık ederse ben ona savaş ilan ederim." (Buhârî)',
+  // === SABIR ===
+  '<strong>Hadis-i Şerif:</strong> "Müminin işi pek tuhaftır. Her işi onun için bir hayırdır. Bu da yalnız mümine mahsustur. Çünkü sevinince şükreder; bu onun için hayır olur. Üzülünce sabreder; bu da onun için hayır olur." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sabır, müminin parlayan nurudur." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Asıl sabır, musibetin ilk vurduğu anda gösterilen sabırdır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah bir kuluna hayır murat ederse, ona derhal dünyada sıkıntılar verir." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "En çetin imtihana uğrayanlar peygamberlerdir, sonra onlara benzerleri, sonra onlara benzerleridir." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Asıl pehlivan, güreşte rakibini yenen değil, öfkelendiği zaman kendine hâkim olabilendir." (Buhârî, Müslim)',
+  // === İLİM ===
+  '<strong>Hadis-i Şerif:</strong> "İlim talep etmek her Müslümana farzdır." (İbn Mâce, Beyhakî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah, kimin için hayır murat ederse, onu dinde anlayışlı kılar." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Kim ilim öğrenmek için bir yola koyulursa, Allah ona cennete giden bir yolu kolaylaştırır." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Âlimler, peygamberlerin vârisleridir." (Tirmizî, Ebû Dâvûd)',
+  // === İBADET & İHYA ===
+  '<strong>Hadis-i Şerif:</strong> "Bana en sevimli olanı, az da olsa devamlı yapılan ameldir." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Cennet kılıçların gölgesi altındadır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Cuma günü içinde öyle bir saat vardır ki, bir Müslüman o saatte namaz kılıp Allah\'tan bir şey isterse, Allah ona dileğini mutlaka verir." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım! Yardımın olmaksızın seni hakkıyla zikretmeye, sana şükretmeye ve sana güzel ibadet etmeye gücüm yetmez." (Ebû Dâvûd, Nesâî)',
+  // === ANA-BABA ===
+  '<strong>Hadis-i Şerif:</strong> "Cennet, annelerin ayakları altındadır." (Nesâî, İbn Mâce, Ahmed)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ın rızası, ana-babanın rızasındadır. Allah\'ın gazabı, ana-babanın gazabındadır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Adamın biri Resûlullah\'a "Kime iyilik edeyim?" diye sordu. O: "Annene" dedi. "Sonra kime?" dedi. "Annene" dedi. "Sonra kime?" dedi. "Annene" dedi. "Sonra kime?" dedi. "Babana" dedi." (Buhârî, Müslim)',
+  // === KOMŞU & MÜSLÜMAN HAKKI ===
+  '<strong>Hadis-i Şerif:</strong> "Müslüman, dilinden ve elinden Müslümanların selâmette olduğu kimsedir." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sizden biriniz, kendisi için arzu ettiğini din kardeşi için de arzu etmedikçe iman etmiş olmaz." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Komşusu açken tok yatan bizden değildir." (Hâkim, Buhârî\'nin Edebü\'l-Müfred)',
+  '<strong>Hadis-i Şerif:</strong> "Kim Allah\'a ve âhiret gününe iman ediyorsa, komşusuna iyilik etsin." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Mü\'min mü\'minin aynasıdır." (Ebû Dâvûd)',
+  '<strong>Hadis-i Şerif:</strong> "Hiç biriniz benim kardeşime üç günden fazla küsmesin." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Bizi aldatan bizden değildir." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Müslümanın Müslümana zulmetmesi, onu yardımsız bırakması veya onu küçük görmesi haramdır." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Bir Müslümanın bir Müslümana üç günden fazla küs durması helâl değildir." (Buhârî, Müslim)',
+  // === İYİLİK & SADAKA ===
+  '<strong>Hadis-i Şerif:</strong> "Tebessümün, kardeşin için sadakadır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Sadaka, malı eksiltmez." (Müslim, Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Her iyilik sadakadır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "İnsanlara teşekkür etmeyen, Allah\'a şükretmemiştir." (Ebû Dâvûd, Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Bir iyilik gösteren kimse, onu yapan gibidir." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "İyilikleri kötülüklerden sonra yap, onları siler. İnsanlara güzel ahlâkla muamele et." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Veren el, alan elden hayırlıdır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Adaletle hüküm verene Allah karşılık olarak cenneti verir." (Tirmizî)',
+  // === GÜZEL AHLAK ===
+  '<strong>Hadis-i Şerif:</strong> "Sizin en hayırlınız, ahlâkı en güzel olanınızdır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Müminlerin imanca en kâmil olanı, ahlâkça en güzel olanıdır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a ve âhiret gününe inanan ya hayır söylesin ya sussun." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Tatlı söz bir sadakadır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Hayâ ancak hayır getirir." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Hayâ imandandır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Müslüman müslümanın kardeşidir; ona zulmetmez, onu yalnız bırakmaz, onu hor görmez." (Müslim)',
+  // === HAYIR İŞLEMEK ===
+  '<strong>Hadis-i Şerif:</strong> "İnsanların en hayırlısı, insanlara en faydalı olandır." (Beyhakî)',
+  '<strong>Hadis-i Şerif:</strong> "Kolaylaştırın, zorlaştırmayın; müjdeleyin, nefret ettirmeyin." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah çok bağışlayıcıdır, affı sever; siz de affedin." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Kim bir Müslümanın bir sıkıntısını giderirse, Allah da kıyamet günü o kişinin bir sıkıntısını giderir." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Birinizin bir hayrı kalp atışı süresince işlemesi, dünya ve içindekilerden daha hayırlıdır." (Buhârî)',
+  // === ALLAH KORKUSU & TAKVÂ ===
+  '<strong>Hadis-i Şerif:</strong> "Kalbinde zerre kadar kibir bulunan kişi cennete giremez." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Tevazu gösterene Allah yücelik verir." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Hesaba çekilmeden önce kendinizi hesaba çekin." (Tirmizî — Hz. Ömer\'in rivayetiyle)',
+  '<strong>Hadis-i Şerif:</strong> "Nerede olursan ol, Allah\'tan kork. Bir kötülüğün ardından iyilik yap ki, onu silsin. İnsanlarla güzel ahlâkla geçin." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Müslüman, ölümü çokça hatırlayandır." (İbn Mâce)',
+  // === RIZIK & TEVEKKÜL ===
+  '<strong>Hadis-i Şerif:</strong> "Eğer siz Allah\'a hakkıyla tevekkül etseydiniz, kuşları rızıklandırdığı gibi sizi de rızıklandırırdı: Sabah aç giderler, akşam tok dönerler." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Kim bir tek geceyi sabaha kadar Allah\'a ibadetle geçirirse, Allah o kişinin bir hafta yapacağı duâlarını kabul eder." (Hadis genel)',
+  '<strong>Hadis-i Şerif:</strong> "Hiçbiriniz, kendi elinin emeğinden daha hayırlı bir yemek yememiştir. Allah\'ın peygamberi Davud da kendi elinin emeğinden yerdi." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Helâl rızık aramak, farzdan sonra gelen bir farzdır." (Beyhakî)',
+  // === CENNET & ÂHİRET ===
+  '<strong>Hadis-i Şerif:</strong> "Cennet, hoşa gitmeyen şeylerle kuşatılmıştır; cehennem ise nefsin arzularıyla kuşatılmıştır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Cennette öyle köşkler var ki, dışı içinden, içi dışından görünür." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Lâ ilâhe illallâh diyen ve bunun gereğini yapan cennete girer." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "İlk Müslümanlar gibi öl: Lâ ilâhe illallâh diyerek." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a kavuşmayı arzulayan kişi ile Allah da kavuşmayı arzular." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sizin biriniz mutlaka kabir azabını bilir." (Buhârî)',
+  // === ORUÇ ===
+  '<strong>Hadis-i Şerif:</strong> "Oruç bir kalkandır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah Teâlâ buyuruyor ki: Oruç benim içindir, mükâfatını ben veririm." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Cennette Reyyân isimli bir kapı vardır, oruç tutanlar oradan girerler." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sahur yemeği yiyiniz; çünkü onda bereket vardır." (Buhârî, Müslim)',
+  // === GECE NAMAZI ===
+  '<strong>Hadis-i Şerif:</strong> "Rabbiniz her gece dünya semasına iner ve şöyle buyurur: Bana dua eden yok mu, ona icabet edeyim. Benden isteyen yok mu, ona vereyim. Benden bağışlanma dileyen yok mu, ona mağfiret edeyim." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Farz namazlardan sonra en faziletli namaz, gece namazıdır." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Geceleyin uyanan, eşini de uyandırıp birlikte iki rekât namaz kılan kadın ve erkeği, çok zikreden erkekler ve kadınlar arasında Allah yazar." (Ebû Dâvûd)',
+  // === ANNE-BABA, AKRABALIK ===
+  '<strong>Hadis-i Şerif:</strong> "Akrabalık bağını kesen cennete giremez." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Rızkının genişlemesini ve ömrünün uzamasını isteyen, akrabalarına iyilik etsin." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a yemin ederim ki iman etmiş olmaz, Allah\'a yemin ederim ki iman etmiş olmaz, Allah\'a yemin ederim ki iman etmiş olmaz. Denildi: O kimdir? Şöyle buyurdu: Şerrinden komşusunun emin olmadığı kimsedir." (Buhârî, Müslim)',
+  // === GIYBET & DİL ===
+  '<strong>Hadis-i Şerif:</strong> "Müslümanın Müslümana karşı duyduğu zan, çoğu zaman yalandır. Birbirinizin arkasından konuşmayın, bireinizin gıybetini yapmayın." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a ve âhiret gününe iman eden ya hayır söylesin ya sussun." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "İnsanları cehenneme yüz üstü düşüren, dillerinin kazandıklarından başka bir şey değildir." (Tirmizî)',
+  // === HEDİYELEŞMEK ===
+  '<strong>Hadis-i Şerif:</strong> "Hediyeleşin ki sevgi artsın." (Buhârî, Beyhakî)',
+  '<strong>Hadis-i Şerif:</strong> "Az olsa bile hediyeyi kabul ediniz, hediye vermeyi reddetmeyin." (Tirmizî)',
+  // === KOMŞU & MİSAFİR ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a ve âhiret gününe iman eden, misafirine ikram etsin." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Cebrâil komşu hakkında bana o kadar tavsiyede bulundu ki, komşunun komşuya mirasçı olacağını sandım." (Buhârî, Müslim)',
+  // === YETİM & MİSKİN ===
+  '<strong>Hadis-i Şerif:</strong> "Ben ve yetimi himaye eden, cennette böyle yan yana olacağız." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Müslümanlar arasında en hayırlı ev, içinde iyi davranılan bir yetimin bulunduğu evdir; en kötü ev ise içinde yetimden zulmedilen evdir." (İbn Mâce)',
+  // === SADAKA ===
+  '<strong>Hadis-i Şerif:</strong> "Kendinizi cehennem ateşinden koruyun, yarım hurma sadaka vermekle olsa bile." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Sadaka olarak verilen şey eksilmez, aksine artar." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Yedi sınıf insan vardır ki Allah onları, kendi gölgesinden başka gölgenin bulunmadığı bir günde, gölgesinde gölgelendirir... Bir de sağ elinin verdiğini sol eli bilmeyecek şekilde gizlice sadaka veren kimsedir." (Buhârî, Müslim)',
+  // === TEVEKKÜL & DUA ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'tan başka rızık verecek hiç kimse yoktur." (Sahih hadis)',
+  '<strong>Hadis-i Şerif:</strong> "Mü\'minin duası, ya istediği zaman verilir, ya da onun yerine kötülük uzaklaştırılır, ya da âhirete saklanır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Duâda acele eden değil, sürekli isteyen kabul edilir." (Müslim)',
+  // === KARDEŞLİK ===
+  '<strong>Hadis-i Şerif:</strong> "Müminler birbirini sevmekte, birbirine merhamet etmekte ve birbirini korumakta bir vücut gibidirler." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Birbirinize hased etmeyin, birbirinize sırt çevirmeyin. Allah\'ın kulları kardeş olunuz." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Mü\'min mü\'mine, parçaları birbirine bağlayan duvar gibidir. Parmaklarını birbirine geçirdi (Hz. Peygamber)." (Buhârî, Müslim)',
+  // === HASTA ZİYARETİ ===
+  '<strong>Hadis-i Şerif:</strong> "Hasta ziyaret eden kişiyi, yetmiş bin melek istiğfar ederek karşılar." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Müslümanın Müslüman üzerindeki hakkı beştir: Selâm vermek, hastayı ziyaret etmek, cenazeyi takip etmek, davete icabet etmek, aksırana hayır duâ etmek." (Buhârî, Müslim)',
+  // === SELÂMLAŞMAK ===
+  '<strong>Hadis-i Şerif:</strong> "Selâmı yayın, yemek yedirin, akrabalık bağlarını koruyun, herkes uyurken namaz kılın; selâmetle cennete girersiniz." (Tirmizî, İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Cennete giremezsiniz, iman etmedikçe; birbirinizi sevmedikçe iman etmiş olmazsınız. Size aranızdaki sevgiyi artıracak bir şeyi söyleyeyim mi? Selâmı aranızda yayın." (Müslim)',
+  // === ŞÜKÜR & HAMD ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a şükredin; çünkü O\'na şükür çoktur." (Hadis genel)',
+  '<strong>Hadis-i Şerif:</strong> "Üç şey kabir azabını uzaklaştırır: Çok yardım eden, az konuşan, Rabbinden çok korkan." (Hadis sahih)',
+  '<strong>Hadis-i Şerif:</strong> "İki nimet vardır ki insanların çoğu onların kıymetini bilmez: Sağlık ve boş vakit." (Buhârî)',
+  // === HZ. PEYGAMBER\'in AHLAKI ===
+  '<strong>Hadis-i Şerif:</strong> "Ben ancak güzel ahlâkı tamamlamak için gönderildim." (Muvattâ, Ahmed)',
+  '<strong>Hz. Aişe (r.a.):</strong> "Resûlullah\'ın ahlâkı Kur\'an idi." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Resûlullah aslâ kötü söz söyleyen, kaba ve çarşı-pazarda bağıran biri değildi. Kötülüğe kötülükle karşılık vermezdi; affeder ve bağışlardı." (Tirmizî)',
+  // === EŞ HAKKI ===
+  '<strong>Hadis-i Şerif:</strong> "Mü\'minlerin imanca en kâmil olanı, ahlâkça en güzel olanı ve hanımlarına en iyi davrananıdır." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Sizin en hayırlınız, ailesine en hayırlı olanınızdır. Ben de ailesine sizin en hayırlınızım." (Tirmizî, İbn Mâce)',
+  // === ZÜHD & DUNYA ===
+  '<strong>Hadis-i Şerif:</strong> "Dünyada bir yolcu yahut bir garip gibi ol." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Dünya cennetin ekim yeridir." (Müsned-i Şihab)',
+  '<strong>Hadis-i Şerif:</strong> "İnsanların en akıllısı, ölümü en çok hatırlayan ve ona hazırlananıdır." (İbn Mâce)',
+  '<strong>Hadis-i Şerif:</strong> "Ölümü çokça hatırlayın, çünkü o lezzetlerin tadını kaçırır." (Tirmizî, Nesâî)',
+  // === GENÇLİK ===
+  '<strong>Hadis-i Şerif:</strong> "Beş şeyden önce beş şeyin değerini bilin: İhtiyarlamadan önce gençliğin, hastalanmadan önce sağlığın, fakirleşmeden önce zenginliğin, meşgul olmadan önce boş vaktin, ölmeden önce hayatın." (Hâkim)',
+  // === KALPLERİN HALİ ===
+  '<strong>Hadis-i Şerif:</strong> "İnsan vücudunda bir et parçası vardır; eğer o sağlam olursa bütün vücut sağlam olur, bozulursa bütün vücut bozulur. İşte o, kalptir." (Buhârî, Müslim)',
+  // === İSTİKAMET ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a iman ettim de, sonra dosdoğru ol." (Müslim)',
+  // === RAHMET ===
+  '<strong>Hadis-i Şerif:</strong> "Allah merhameti yüz parçaya böldü. Doksan dokuzunu kendi yanında tuttu, bir parçayı dünyaya indirdi. Bu bir parçayla yaratılmışlar birbirine merhamet eder." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "İnsanlara merhamet etmeyene Allah da merhamet etmez." (Buhârî, Müslim)',
+  // === KORKU & ÜMİT ===
+  '<strong>Hadis-i Şerif:</strong> "Eğer bilseydiniz, biliyor olsaydınız az güler, çok ağlardınız." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Ben size, eğer benim bildiğimi bilseydiniz az güler, çok ağlardınız; yataklarda eşlerinizle gönlünüz hoş olmayarak yola çıkar Allah\'a yalvarırdınız." (Buhârî, Müslim — kısaltılmış)',
+  // === ALLAH KORKUSU ===
+  '<strong>Hadis-i Şerif:</strong> "Allah korkusundan ağlayan bir kimse, sağılan süt memeye dönmedikçe cehenneme girmez." (Tirmizî, Nesâî)',
+  // === GÜZEL SÖZ ===
+  '<strong>Hadis-i Şerif:</strong> "Güzel söz sadakadır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Aranızda selâmı yayın." (Buhârî, Müslim)',
+  // === TEMİZLİK ===
+  '<strong>Hadis-i Şerif:</strong> "Temizlik imanın yarısıdır." (Müslim)',
+  // === MİSVAK ===
+  '<strong>Hadis-i Şerif:</strong> "Ümmetime zor gelmeseydi, her namazda misvak kullanmalarını emrederdim." (Buhârî, Müslim)',
+  // === KARDEŞLİK ===
+  '<strong>Hadis-i Şerif:</strong> "Mü\'min mü\'minin kardeşidir. Ona zulmetmez, onu satmaz. Bir kardeşinin ihtiyacını gideren kimsenin ihtiyacını Allah giderir." (Buhârî, Müslim)',
+  // === YOLCULUK & İBADET ===
+  '<strong>Hadis-i Şerif:</strong> "Üç dua makbuldür, bunda şüphe yoktur: Mazlumun duası, yolcunun duası, babanın çocuğuna olan duası." (Tirmizî, Ebû Dâvûd)',
+  '<strong>Hadis-i Şerif:</strong> "İftar eden orucu açan kişinin, müezzinin ve oruçlunun duası geri çevrilmez." (İbn Mâce)',
+  // === MÜCAHADE-İ NEFS ===
+  '<strong>Hadis-i Şerif:</strong> "En büyük cihad, kişinin kendi nefsiyle yaptığı cihaddır." (Beyhakî)',
+  // === SUSMAK ===
+  '<strong>Hadis-i Şerif:</strong> "Susan kurtulur." (Tirmizî, Dârimî)',
+  // === DUA ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a O\'nun kabulüne kesin inanarak duâ edin." (Tirmizî, Hâkim)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım! Sana hamd olsun. Senden hidayet, takvâ, iffet ve gönül zenginliği isterim." (Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Allâhumme innî es\'elüke\'l-afve ve\'l-âfiyete fi\'d-dünyâ ve\'l-âhireh." (İbn Mâce)',
+  // === SEHER & TEHECCÜD ===
+  '<strong>Hadis-i Şerif:</strong> "Geceleyin bir saat vardır ki, hangi Müslüman ona rast getirip Allah\'tan dünya veya âhirete dair bir şey isterse, Allah ona dileğini mutlaka verir." (Müslim)',
+  // === İLM-İ HAL ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a en sevimli iş, vaktinde kılınan namazdır. Sonra ana-babaya iyilik. Sonra Allah yolunda cihad." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Aklını kim kullanmazsa ve aklını yormazsa şüphesiz hata yapar." (Hadis sahih)',
+  // === RİYÂ ===
+  '<strong>Hadis-i Şerif:</strong> "Ümmetim için en çok korktuğum şey, küçük şirktir." Sahabe sordu: "Küçük şirk nedir ey Allah\'ın elçisi?" Buyurdu: "Riyâdır." (Ahmed)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a en sevimli olan ameller, Allah için yapılanlardır." (Buhârî)',
+  // === ÜMMETİN BİRLİĞİ ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ın eli cemaatle beraberdir." (Tirmizî, Nesâî)',
+  // === İBADET & VAKİT ===
+  '<strong>Hadis-i Şerif:</strong> "İki günü eşit olan zarardadır." (Beyhakî, Deylemî)',
+  // === SAĞLIK & SIHHAT ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım! Sıhhat içinde bir hayat yaşamamı, hidayet üzere ve afiyet içinde olmamı nasip et." (Tirmizî)',
+  // === ALLAH SEVGİSİ ===
+  '<strong>Hadis-i Kudsî:</strong> "Kulum, ben onu sevdim mi onun işiten kulağı, gören gözü, tutan eli ve yürüyen ayağı olurum." (Buhârî)',
+  '<strong>Hadis-i Kudsî:</strong> "Allah, sevdiği bir kulu hakkında Cebrâil\'e şöyle hitap eder: Ben filân kulu seviyorum, sen de sev. Cebrâil de onu sever ve gök ehline ilan eder." (Buhârî, Müslim)',
+  // === HAYIR EHLİ ===
+  '<strong>Hadis-i Şerif:</strong> "Müslümanın Müslüman üzerindeki hakkı altıdır: Karşılaştığında selâm ver, dâvet ederse icabet et, nasihat isterse nasihat et, aksırıp Elhamdülillâh derse Yerhamukallâh de, hastalandığında ziyaret et, öldüğünde cenazesine katıl." (Müslim)',
+  // === TEMEL DUALAR ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım, kalplerin tek çevireni! Kalbimi senin dininde sabit kıl." (Tirmizî)',
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım! Senin senâna ulaşamam; sen kendini nasıl övdüysen öylesin." (Müslim)',
+  // === ZAMAN ===
+  '<strong>Hadis-i Şerif:</strong> "İnsanlar, helâk olmadıkça mallarını, evlatlarını, eşlerini ve dünyalarını sevmediler." (Hadis genel)',
+  // === SEFER & DUA ===
+  '<strong>Hadis-i Şerif:</strong> "Yola çıkacak olduğun zaman binitine bin ve şöyle de: Bismillâhi tevekkeltü alallâh." (Tirmizî)',
+  // === İSTİĞFAR ===
+  '<strong>Hadis-i Şerif:</strong> "Kim çok istiğfar ederse, Allah ona her sıkıntıdan bir çıkış, her dertten bir ferahlık verir, hiç ummadığı yerden rızıklandırır." (Ebû Dâvûd, Ahmed)',
+  '<strong>Hadis-i Şerif:</strong> "Estağfirullâhe\'l-azîm. Bunu söylemek, namazı kasten terk eden hariç her günaha kefarettir." (Hadis sahih)',
+  // === ALLAH\'IN İSİMLERİ ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ın doksan dokuz ismi vardır. Kim onları ezberleyip korursa cennete girer." (Buhârî, Müslim)',
+  // === KUR\'AN ÖĞRENMEK ===
+  '<strong>Hadis-i Şerif:</strong> "Sizin en hayırlınız, Kur\'an\'ı öğrenen ve öğretendir." (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Evlerinizi Kur\'an okumadan boş bırakmayın; içinde Kur\'an okunmayan ev, mezar gibidir." (Müslim, Tirmizî)',
+  // === FATİHA ===
+  '<strong>Hadis-i Şerif:</strong> "Fâtihâ\'sız namaz olmaz." (Buhârî, Müslim)',
+  // === BAKARA SON İKİ ÂYET ===
+  '<strong>Hadis-i Şerif:</strong> "Bakara sûresinin son iki âyetini geceleyin kim okursa, o ona yeter." (Buhârî, Müslim)',
+  // === ÂYETÜL KÜRSÎ ===
+  '<strong>Hadis-i Şerif:</strong> "Her farz namazın ardından Âyetü\'l-Kürsî\'yi okuyana, ölümden başka bir engel cennete girmek için kalmaz." (Nesâî, Taberânî)',
+  // === KEHF SÛRESİ ===
+  '<strong>Hadis-i Şerif:</strong> "Kim Cuma günü Kehf sûresini okursa, iki Cuma arası onun için bir nur olur." (Beyhakî, Hâkim)',
+  '<strong>Hadis-i Şerif:</strong> "Kehf\'in ilk on âyetini ezberleyen, Deccâl\'in fitnesinden korunur." (Müslim, Ebû Dâvûd)',
+  // === İHLÂS ===
+  '<strong>Hadis-i Şerif:</strong> "İhlâs sûresi, Kur\'an\'ın üçte birine denktir." (Buhârî, Müslim)',
+  // === MUAVVİZETEYN ===
+  '<strong>Hadis-i Şerif:</strong> "Felak ve Nâs sûreleri ile Rabbine sığın; çünkü onların benzeri bir şey okunmamıştır." (Müslim, Nesâî)',
+  // === BESMELE ===
+  '<strong>Hadis-i Şerif:</strong> "Besmele ile başlanmayan her iş bereketsizdir." (İbn Mâce, Ebû Dâvûd)',
+  // === SABAH-AKŞAM ZİKİRLERİ ===
+  '<strong>Hadis-i Şerif:</strong> "Sabah-akşam Lâ ilâhe illallâhü vahdehû lâ şerîke leh diyene, on köle azat etme sevabı vardır." (Buhârî, Müslim)',
+  // === BÜYÜK GÜNAHLAR ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a şirk koşmaktan, sihirden, hak yere öldürdüğü hariç bir canı öldürmekten, faiz yemekten, yetim malı yemekten, savaş anında geri dönmekten, namuslu mü\'mine kadınlara iftirâ etmekten sakının." (Buhârî, Müslim)',
+  // === MÜSLÜMAN HUKUKU ===
+  '<strong>Hadis-i Şerif:</strong> "Müslümanın kanı, malı ve şerefi başka bir Müslümana haramdır." (Müslim)',
+  // === SİLE-İ RAHM ===
+  '<strong>Hadis-i Şerif:</strong> "Sıla-ı rahim için ziyaret yapan, akrabasına ziyaretiyle değil, onların ona kesmesine rağmen bağı sürdürmesiyle gerçek anlamda sıla yapmış olur." (Buhârî)',
+  // === TEVEKKÜL & EMEK ===
+  '<strong>Hadis-i Şerif:</strong> "Deveni bağla, sonra tevekkül et." (Tirmizî)',
+  // === ALLAH\'A YAKINLIK ===
+  '<strong>Hadis-i Şerif:</strong> "Kıyamet günü insanların en yakını bana, hayatında bana en çok salavât getirenleri olacak." (Tirmizî)',
+  // === HZ. PEYGAMBER\'in DUASI ===
+  '<strong>Hadis-i Şerif:</strong> "Allâhumme inneke afüvvün tühibbül-afve fa\'fü annî — Allah\'ım, sen affedicisin, affı seversin, beni de affet." (Tirmizî, İbn Mâce — Kadir Gecesinde okunur)',
+  // === SAYGI & KOMŞULUK ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'a yemin ederim, Allah\'a yemin ederim, Allah\'a yemin ederim ki iman etmiş olmaz." Denildi: "Kim, ey Allah\'ın Resulü?" "Şerrinden komşusunun emin olmadığı kimse." (Buhârî)',
+  // === SADAKA-İ CARİYE ===
+  '<strong>Hadis-i Şerif:</strong> "İnsan öldüğünde amel defteri kapanır. Ancak üç şey müstesna: Sadaka-i câriye, kendisinden istifade edilen ilim, ardından kendisine duâ eden hayırlı bir evlâd." (Müslim)',
+  // === HİZMET ===
+  '<strong>Hadis-i Şerif:</strong> "Bir topluluğun efendisi, onlara hizmet edendir." (Beyhakî, Deylemî)',
+  // === ALLAH\'A TESLİMİYET ===
+  '<strong>Hadis-i Şerif:</strong> "Allah benden razı olsun istiyorsan, sen önce Allah\'a teslim ol." (Hadis sahih)',
+  // === TEFEKKÜR ===
+  '<strong>Hadis-i Şerif:</strong> "Bir saat tefekkür, bir sene nâfile ibadetten hayırlıdır." (Beyhakî, Dârimî)',
+  // === ANNELERE SAYGI ===
+  '<strong>Hadis-i Şerif:</strong> "Yâ Resûlallah, iyilik etmemi en çok kim hak ediyor? Annen, dedi. Sonra kim? Annen, dedi. Sonra kim? Annen, dedi. Sonra kim? Baban, dedi." (Buhârî, Müslim)',
+  // === BEREKET ===
+  '<strong>Hadis-i Şerif:</strong> "Allah\'ım! Bizi ümmetiyle beraber günlerimize bereket ver." (Sahih dua)',
+  // === HİDAYET ===
+  '<strong>Hadis-i Şerif:</strong> "Senin vasıtanla bir kişinin hidayete ermesi, dünya ve içindekilerden senin için daha hayırlıdır." (Buhârî, Müslim)',
+  // === DOĞRU SÖZ ===
+  '<strong>Hadis-i Şerif:</strong> "Doğruluk iyiliğe götürür, iyilik de cennete götürür. Kişi doğru söyleye söyleye Allah katında sıddîk yazılır." (Buhârî, Müslim)',
+  '<strong>Hadis-i Şerif:</strong> "Yalan kötülüğe götürür, kötülük de cehenneme götürür. Kişi yalan söyleye söyleye Allah katında yalancı yazılır." (Buhârî, Müslim)',
+  // === GAZAP-ÖFKE ===
+  '<strong>Hadis-i Şerif:</strong> "Öfkelenme!" (defalarca tekrarladı) (Buhârî)',
+  '<strong>Hadis-i Şerif:</strong> "Kişi öfkeyle ayakta ise otursun. Öfke geçmezse uzansın." (Ebû Dâvûd)',
+  // === SAHURLAR & İFTARLAR ===
+  '<strong>Hadis-i Şerif:</strong> "İnsanlar, iftarda acele ettikçe hayır üzere kalmaya devam ederler." (Buhârî, Müslim)',
+  // === İLK ÖĞRENİLECEK ===
+  '<strong>Hadis-i Şerif:</strong> "Cennette doksan dokuz derece vardır. Allah onları kendi yolunda cihad edenler için hazırlamıştır." (Buhârî)',
+  // === İSLÂM\'IN GÜZELLİĞİ ===
+  '<strong>Hadis-i Şerif:</strong> "Kişinin İslâmının güzelliğindendir, kendisini alâkadar etmeyen şeyi terk etmesidir." (Tirmizî, İbn Mâce)',
+  // === KADER ===
+  '<strong>Hadis-i Şerif:</strong> "Sana isabet eden, sana isabet etmemeyecek olan değildir; ve sana isabet etmeyen, isabet edebilecek olan değildi. Kalemler kuruldu, sayfalar kurudu." (Tirmizî)',
+  // === AFFETMEK ===
+  '<strong>Hadis-i Şerif:</strong> "Kim aldığı bir hakkı affederse, Allah onu yüceltir." (Müslim)',
+  // === DUNYA HUZURU ===
+  '<strong>Hadis-i Şerif:</strong> "Kim sabahtan akşama kadar Allah\'a teslim olmuş bir kalp ile yaşarsa, cennete girer." (Tirmizî)',
+];
+
+const _GUNLUK_SOZLER_ESKI_UNUSED = [
   '<strong>Hz. Muhammed (s.a.v.):</strong> "Niyetler ancak amellere göre değer kazanır; herkesin niyet ettiği ne ise eline geçecek olan da odur." (Buhârî, Müslim)',
   '<strong>Hz. Ebû Bekir (r.a.):</strong> "Allah\'ın rahmetinden ümit kesmeyin; çünkü O, gizlide en çok lütfedicidir."',
   '<strong>Hz. Ömer (r.a.):</strong> "Hesaba çekilmeden önce kendinizi hesaba çekin; tartılmadan önce kendinizi tartın."',
@@ -14387,7 +15050,8 @@ const GUNLUK_SOZLER = [
 function gunlukSozGoster() {
   const el = document.getElementById('gs-metin');
   if (!el) return;
-  const idx = gunIndeksi(GUNLUK_SOZLER.length);
+  // Ofset 1 — ayet indeksinden farklı bir hash dolaşımı sağlar
+  const idx = gunIndeksi(GUNLUK_SOZLER.length, 1);
   el.innerHTML = GUNLUK_SOZLER[idx];
 }
 
