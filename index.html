@@ -7678,6 +7678,14 @@ function kaydet() {
   localStorage.setItem(ESMA_ZIKIR_KEY, JSON.stringify(esmaZikirleri));
   localStorage.setItem(ESMA_AKTIF_KEY, aktifEsmaNo.toString());
   localStorage.setItem(ESMA_TAMAMLANAN_KEY, JSON.stringify([...esmaTamamlananlar]));
+  // Tutarlılık için: Salavât + tüm yıldız sayaçları
+  try {
+    if (typeof salavatSayisi !== 'undefined') localStorage.setItem(SALAVAT_KEY, salavatSayisi.toString());
+    if (typeof salavatYildiz !== 'undefined') localStorage.setItem(SALAVAT_YILDIZ_KEY, salavatYildiz.toString());
+    if (typeof zikirYildiz !== 'undefined') localStorage.setItem(ZIKIR_YILDIZ_KEY, zikirYildiz.toString());
+    if (typeof ihlasYildiz !== 'undefined') localStorage.setItem(IHLAS_YILDIZ_KEY, ihlasYildiz.toString());
+    if (typeof esmaYildiz !== 'undefined') localStorage.setItem(ESMA_YILDIZ_KEY, esmaYildiz.toString());
+  } catch(e) {}
 }
 
 // =========================================================
@@ -12698,8 +12706,9 @@ function iceAktar(event) {
       }
       kayitlar = v.kayitlar;
       kazanilanRozetler = new Set(v.rozetler || []);
-      if (typeof v.zikir === 'number') zikirSayisi = v.zikir;
-      if (typeof v.ihlas === 'number') ihlasSayisi = v.ihlas;
+      // Sayaçları HEM global'e HEM localStorage'a yaz (tutarlılık + sayfa yenilemesine dayanıklılık)
+      if (typeof v.zikir === 'number') { zikirSayisi = v.zikir; localStorage.setItem(ZIKIR_KEY, String(zikirSayisi)); }
+      if (typeof v.ihlas === 'number') { ihlasSayisi = v.ihlas; localStorage.setItem(IHLAS_KEY, String(ihlasSayisi)); }
       if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
       if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
       if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
@@ -12732,13 +12741,22 @@ function iceAktar(event) {
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
+      // Render — sayfa yenilenmeden tüm UI'ı güncelle
       try { orucGuncelle(); } catch(e){}
       try { if (typeof kuranGridCizdir === 'function') kuranGridCizdir(); } catch(e){}
       try { if (typeof zikirGuncelle === 'function') zikirGuncelle(); } catch(e){}
       try { if (typeof ihlasGuncelle === 'function') ihlasGuncelle(); } catch(e){}
       try { if (typeof salavatGuncelle === 'function') salavatGuncelle(); } catch(e){}
+      try { if (typeof esmaZikirGuncelle === 'function') esmaZikirGuncelle(); } catch(e){}
       // Tüm modülleri tek seferde tazele
       try { anlikSayacGuncelle(); } catch(e){}
+      // İkinci pas — bazı CSS animasyon/DOM render gecikmelerini ele al
+      setTimeout(() => {
+        try { zikirGuncelle(); } catch(e){}
+        try { ihlasGuncelle(); } catch(e){}
+        try { salavatGuncelle(); } catch(e){}
+        try { esmaZikirGuncelle(); } catch(e){}
+      }, 200);
     } catch (err) {
       toast('⚠️', 'Dosya okunamadı: ' + err.message, 'hata');
     }
@@ -14431,12 +14449,18 @@ function setupYedekYukle(event) {
       if (!v.kayitlar) throw new Error('Geçersiz dosya');
       kayitlar = v.kayitlar;
       kazanilanRozetler = new Set(v.rozetler || []);
-      if (typeof v.zikir === 'number') zikirSayisi = v.zikir;
-      if (typeof v.ihlas === 'number') ihlasSayisi = v.ihlas;
+      // Sayaçları HEM global'e HEM localStorage'a yaz (tutarlılık + sayfa yenilemesine dayanıklılık)
+      if (typeof v.zikir === 'number') { zikirSayisi = v.zikir; localStorage.setItem(ZIKIR_KEY, String(zikirSayisi)); }
+      if (typeof v.ihlas === 'number') { ihlasSayisi = v.ihlas; localStorage.setItem(IHLAS_KEY, String(ihlasSayisi)); }
       if (v.esmaZikirleri && typeof v.esmaZikirleri === 'object') esmaZikirleri = v.esmaZikirleri;
       if (typeof v.esmaAktif === 'number') aktifEsmaNo = v.esmaAktif;
       if (Array.isArray(v.esmaTamamlananlar)) esmaTamamlananlar = new Set(v.esmaTamamlananlar);
       if (typeof v.esmaYildiz === 'number') { esmaYildiz = v.esmaYildiz; localStorage.setItem(ESMA_YILDIZ_KEY, String(esmaYildiz)); }
+      // Yıldız + Salavât (kurulumdan sonra da görünmeli)
+      if (typeof v.zikirYildiz === 'number') { try { zikirYildiz = v.zikirYildiz; } catch(e){} localStorage.setItem(ZIKIR_YILDIZ_KEY, String(v.zikirYildiz)); }
+      if (typeof v.ihlasYildiz === 'number') { try { ihlasYildiz = v.ihlasYildiz; } catch(e){} localStorage.setItem(IHLAS_YILDIZ_KEY, String(v.ihlasYildiz)); }
+      if (typeof v.salavat === 'number') { try { salavatSayisi = v.salavat; } catch(e){} localStorage.setItem(SALAVAT_KEY, String(v.salavat)); }
+      if (typeof v.salavatYildiz === 'number') { try { salavatYildiz = v.salavatYildiz; } catch(e){} localStorage.setItem(SALAVAT_YILDIZ_KEY, String(v.salavatYildiz)); }
       if (v.borclar && typeof v.borclar === 'object') vakitBorclariUygula(v.borclar);
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
