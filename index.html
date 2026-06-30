@@ -390,58 +390,144 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 /* ===== İSTATİSTİK PANEL ===== */
 .istat-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   margin-bottom: 18px;
 }
 .istat-kart {
-  background: var(--bej);
-  border-radius: 14px;
-  padding: 16px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 10px 12px;
   text-align: center;
   border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+}
+.istat-kart::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212,175,55,0.04), transparent 60%);
+  pointer-events: none;
+}
+.istat-kart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(27,67,50,0.10);
+}
+.istat-ikon {
+  font-size: 18px;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  opacity: 0.85;
 }
 .istat-rakam {
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 900;
   color: var(--koyu);
-  letter-spacing: -1px;
+  letter-spacing: -0.6px;
   line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 .istat-etiket {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--soft);
-  margin-top: 8px;
+  margin-top: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-weight: 800;
+  line-height: 1.2;
 }
+.istat-kiyas-ok {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  margin-left: 4px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  vertical-align: middle;
+  opacity: 0.85;
+  background: rgba(0,0,0,0.04);
+}
+.istat-kiyas-ok:empty { display: none; }
+/* Vurgulu kart (Toplam Kıldı) */
 .istat-kart.vurgu {
   background: linear-gradient(135deg, #FFF8E7 0%, #FFFDF5 100%);
-  border: 1px solid var(--vurgu);
+  border: 1.5px solid var(--vurgu);
+  box-shadow: 0 4px 14px rgba(212,175,55,0.18);
+}
+.istat-kart.vurgu::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40px; height: 40px;
+  background: radial-gradient(circle, rgba(212,175,55,0.25), transparent 70%);
+  pointer-events: none;
 }
 .istat-kart.vurgu .istat-rakam { color: #B8941F; }
+.istat-kart.vurgu .istat-ikon { opacity: 1; }
+
+/* Renkli tematik kart aksanları */
+.istat-kart[data-tip="bugun"]  { background: linear-gradient(135deg, #FFF7E0 0%, #FFFDF8 100%); border-color: #F4C95D; }
+.istat-kart[data-tip="bugun"] .istat-rakam { color: #B8861F; }
+.istat-kart[data-tip="hafta"]  { background: linear-gradient(135deg, #E8F1FB 0%, #F8FBFE 100%); border-color: #7FB1E0; }
+.istat-kart[data-tip="hafta"] .istat-rakam { color: #1E5A8F; }
+.istat-kart[data-tip="ay"]     { background: linear-gradient(135deg, #EFE8F7 0%, #FAF8FD 100%); border-color: #A88BD1; }
+.istat-kart[data-tip="ay"] .istat-rakam { color: #5B3A8C; }
+.istat-kart[data-tip="aktif"]  { background: linear-gradient(135deg, #FFEEE6 0%, #FFF8F5 100%); border-color: #F08A5D; }
+.istat-kart[data-tip="aktif"] .istat-rakam { color: #C04A1C; }
+.istat-kart[data-tip="rekor"]  { background: linear-gradient(135deg, #E8F5E9 0%, #F8FCF8 100%); border-color: #66BB6A; }
+.istat-kart[data-tip="rekor"] .istat-rakam { color: #1B5E20; }
 
 .bitis-kart {
   background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
   border: 1px solid var(--yesil);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 16px 18px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.bitis-kart::before {
+  content: '🎯';
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 18px;
+  opacity: 0.5;
+}
+.bitis-kart::after {
+  content: '🏁';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 18px;
+  opacity: 0.5;
 }
 .bitis-kart-etiket {
   font-size: 10px;
-  color: var(--soft);
+  color: var(--orta);
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: 700;
+  font-weight: 800;
 }
 .bitis-kart-rakam {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--orta);
-  margin-top: 4px;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--koyu);
+  margin-top: 6px;
   letter-spacing: -0.3px;
+  line-height: 1.4;
 }
 
 /* ===== ROZETLER ===== */
@@ -2388,10 +2474,11 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .vakit-butonlar { gap: 6px; }
   .vakit-btn { width: 46px; height: 46px; font-size: 22px; border-radius: 12px; }
 
-  .istat-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .istat-kart { padding: 12px 8px; }
-  .istat-rakam { font-size: 22px; letter-spacing: -0.5px; }
-  .istat-etiket { font-size: 9px; margin-top: 6px; letter-spacing: 0.4px; }
+  .istat-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .istat-kart { padding: 12px 6px 10px; min-height: 88px; }
+  .istat-ikon { font-size: 16px; margin-bottom: 2px; }
+  .istat-rakam { font-size: 19px; letter-spacing: -0.5px; }
+  .istat-etiket { font-size: 9px; margin-top: 5px; letter-spacing: 0.3px; }
 
   .bitis-kart { padding: 14px; }
   .bitis-kart-rakam { font-size: 15px; }
@@ -5581,64 +5668,171 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   color: #1b5e20;
   font-weight: 700;
 }
+/* Bahçe devirli sistem — hasat butonu + tamamlanan ağaçlar */
+.bahce-tamamlananlar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  background: rgba(46,125,50,0.08);
+  border-radius: 10px;
+  border: 1px solid rgba(46,125,50,0.18);
+}
+.bahce-tamamlanan-etiket {
+  font-size: 10px;
+  font-weight: 800;
+  color: #1b5e20;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.bahce-tamamlanan-list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.bahce-ikon {
+  font-size: 16px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+  animation: bahceIkonGir 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes bahceIkonGir {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.bahce-tamamlanan-fazla {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2e7d32;
+  background: rgba(46,125,50,0.15);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.bahce-hasat-btn {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+  color: #fff59d;
+  border: 1px solid #d4af37;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(46,125,50,0.35);
+  width: 100%;
+  margin-top: 4px;
+  animation: bahceHasatPulse 2s ease-in-out infinite;
+}
+.bahce-hasat-btn:hover { transform: translateY(-1px); }
+@keyframes bahceHasatPulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(46,125,50,0.35); }
+  50% { box-shadow: 0 4px 22px rgba(212,175,55,0.55); }
+}
 
 /* Gelişmiş İstatistik */
 .gelismis-istat {
-  margin-top: 12px;
-  background: linear-gradient(135deg, var(--altin-bg), rgba(212,175,55,0.04));
-  border: 1px solid rgba(212,175,55,0.25);
-  border-radius: 12px;
+  margin-top: 14px;
+  background: linear-gradient(135deg, #FFFDF5, #FAF7F0);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 14px;
   padding: 14px;
+  box-shadow: 0 2px 10px rgba(212,175,55,0.06);
 }
 .gelismis-baslik {
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 900;
   color: var(--vurgu);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.gelismis-satir-grid { display: flex; flex-direction: column; gap: 8px; }
+.gelismis-satir-grid { display: flex; flex-direction: column; gap: 6px; }
 .gelismis-satir {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 10px;
+  padding: 10px 12px;
   background: white;
-  border-radius: 8px;
-  font-size: 13px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  border: 1px solid rgba(212,175,55,0.12);
+  transition: border-color 0.2s;
 }
-.gelismis-etiket { color: var(--orta); font-weight: 600; }
-.gelismis-deger { color: var(--koyu); font-weight: 800; font-size: 14px; }
-.gelismis-deger.up { color: #2d8a4f; }
-.gelismis-deger.down { color: #c0392b; }
+.gelismis-satir:hover { border-color: rgba(212,175,55,0.35); }
+.gelismis-etiket { color: var(--orta); font-weight: 600; flex: 1; }
+.gelismis-deger {
+  color: var(--koyu);
+  font-weight: 900;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(212,175,55,0.08);
+}
+.gelismis-deger.up {
+  color: #1B5E20;
+  background: rgba(46,125,50,0.12);
+}
+.gelismis-deger.down {
+  color: #B71C1C;
+  background: rgba(198,40,40,0.10);
+}
 
-.gun-dagilim-bolum { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(212,175,55,0.2); }
+.gun-dagilim-bolum { margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(212,175,55,0.3); }
 .gun-dagilim-baslik {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--orta);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.gun-dagilim-grid { display: flex; flex-direction: column; gap: 4px; }
-.gun-dagilim-satir { display: flex; align-items: center; gap: 8px; font-size: 12px; }
-.gun-dagilim-ad { width: 32px; color: var(--orta); font-weight: 700; }
+.gun-dagilim-grid { display: flex; flex-direction: column; gap: 6px; }
+.gun-dagilim-satir {
+  display: flex; align-items: center; gap: 10px; font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.gun-dagilim-satir:hover { background: rgba(212,175,55,0.06); }
+.gun-dagilim-ad { width: 36px; color: var(--orta); font-weight: 800; font-size: 11.5px; }
 .gun-dagilim-bar-konteyner {
-  flex: 1; height: 14px;
-  background: rgba(0,0,0,0.04);
-  border-radius: 7px; overflow: hidden;
+  flex: 1; height: 16px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 8px; overflow: hidden;
+  position: relative;
 }
 .gun-dagilim-bar-dolgu {
   height: 100%;
-  background: linear-gradient(90deg, var(--vurgu), #f4d03f);
-  border-radius: 7px;
-  transition: width 0.6s ease;
+  background: linear-gradient(90deg, #d4af37, #f4d03f);
+  border-radius: 8px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
 }
-.gun-dagilim-deger { width: 38px; text-align: right; color: var(--koyu); font-weight: 700; font-size: 11px; }
+.gun-dagilim-deger {
+  min-width: 42px;
+  text-align: right;
+  color: var(--koyu);
+  font-weight: 800;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+.gun-dagilim-satir.en-iyi {
+  background: linear-gradient(90deg, rgba(212,175,55,0.10), transparent);
+}
 .gun-dagilim-satir.en-iyi .gun-dagilim-ad { color: var(--vurgu); }
 .gun-dagilim-satir.en-iyi .gun-dagilim-deger { color: var(--vurgu); }
+.gun-dagilim-satir.en-iyi .gun-dagilim-bar-dolgu {
+  background: linear-gradient(90deg, #1B5E20, #66BB6A);
+}
 
 /* Esmâ tamamlananlar grid */
 .esma-tamamlanan-bolum {
@@ -6919,27 +7113,33 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
       <div class="bolum">
         <div class="bolum-baslik">📊 İstatistik</div>
         <div class="istat-grid">
-          <div class="istat-kart vurgu">
+          <div class="istat-kart vurgu" data-tip="toplam">
+            <div class="istat-ikon">🕌</div>
             <div class="istat-rakam" id="s-toplam">0</div>
             <div class="istat-etiket">Toplam Kıldı</div>
           </div>
-          <div class="istat-kart">
+          <div class="istat-kart" data-tip="bugun">
+            <div class="istat-ikon">☀️</div>
             <div class="istat-rakam" id="s-bugun">0</div>
             <div class="istat-etiket">Bugün</div>
           </div>
-          <div class="istat-kart">
+          <div class="istat-kart" data-tip="hafta">
+            <div class="istat-ikon">📅</div>
             <div class="istat-rakam" id="s-hafta">0</div>
             <div class="istat-etiket">Bu Hafta</div>
           </div>
-          <div class="istat-kart">
+          <div class="istat-kart" data-tip="ay">
+            <div class="istat-ikon">🌙</div>
             <div class="istat-rakam" id="s-ay">0</div>
             <div class="istat-etiket">Bu Ay</div>
           </div>
-          <div class="istat-kart">
+          <div class="istat-kart" data-tip="aktif">
+            <div class="istat-ikon">🔥</div>
             <div class="istat-rakam" id="s-aktif">0</div>
             <div class="istat-etiket">Aktif Gün</div>
           </div>
-          <div class="istat-kart">
+          <div class="istat-kart" data-tip="rekor">
+            <div class="istat-ikon">🏆</div>
             <div class="istat-rakam" id="s-rekor">0</div>
             <div class="istat-etiket">En İyi Gün</div>
           </div>
@@ -7501,6 +7701,10 @@ function genelToplamBorc() { return VAKITLER.reduce((s,v) => s + v.borc, 0); }
 function streakHesapla() {
   let streak = 0;
   let t = bugunTarih();
+  // Bug fix: Bugün henüz hiç kılmadıysa streak motivasyon kaybetmesin.
+  // Dün'den itibaren saymaya başla — kullanıcı gün içinde namaz kıldığında
+  // streak otomatik +1 olur (bugün de saydığı için).
+  if (gunToplam(t) === 0) t = nDays(t, -1);
   // Maks 10.000 gün = ~27 yıl (uzun vade için güvenli üst sınır)
   while (gunToplam(t) > 0) {
     streak++;
@@ -8043,30 +8247,52 @@ function istatistikleriGuncelle() {
   document.getElementById('banner-tarih').textContent = tarihYazi(d);
   document.getElementById('aktif-gun').textContent = 'Bugün ' + tarihFormat(bugun);
 
-  // İstatistik kartları
-  document.getElementById('s-toplam').textContent = toplam.toLocaleString('tr-TR');
-  document.getElementById('s-bugun').textContent = bugunSayi;
+  // İstatistik kartları — büyük sayıları kompakt formatla göster
+  // 999 altı: olduğu gibi, 1.000-9.999: 1,2K, 10.000+: 10K, 1M+: 1,2M
+  function kompaktSayi(n) {
+    if (typeof n !== 'number' || !isFinite(n)) return '0';
+    const abs = Math.abs(n);
+    if (abs < 1000) return n.toLocaleString('tr-TR');
+    if (abs < 10000) {
+      const v = (n / 1000).toFixed(1).replace('.', ',');
+      return v.endsWith(',0') ? v.slice(0, -2) + 'K' : v + 'K';
+    }
+    // Bug fix: 999.500-999.999 → "1M" olmalı, "1000K" değil
+    if (abs < 999500) return Math.round(n / 1000) + 'K';
+    const m = (n / 1000000).toFixed(1).replace('.', ',');
+    return (m.endsWith(',0') ? m.slice(0, -2) : m) + 'M';
+  }
+  function setIstat(id, deger) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // 10K+ otomatik kompakt; her durumda title'da tam değer
+    el.textContent = (deger >= 10000 || deger <= -10000) ? kompaktSayi(deger) : deger.toLocaleString('tr-TR');
+    el.setAttribute('title', deger.toLocaleString('tr-TR'));
+  }
+
+  setIstat('s-toplam', toplam);
+  setIstat('s-bugun', bugunSayi);
 
   let hafta = 0;
   for (let i = 0; i < 7; i++) hafta += gunToplam(nDays(bugun, -i));
-  document.getElementById('s-hafta').textContent = hafta;
+  setIstat('s-hafta', hafta);
 
   const ayBasi = bugun.substring(0, 7) + '-01';
   let ay = 0;
   Object.keys(kayitlar).forEach(t => {
     if (t >= ayBasi && t <= bugun) ay += gunToplam(t);
   });
-  document.getElementById('s-ay').textContent = ay;
+  setIstat('s-ay', ay);
 
   const aktifGun = Object.keys(kayitlar).filter(t => gunToplam(t) > 0).length;
-  document.getElementById('s-aktif').textContent = aktifGun;
+  setIstat('s-aktif', aktifGun);
 
   let rekor = 0;
   Object.keys(kayitlar).forEach(t => {
     const x = gunToplam(t);
     if (x > rekor) rekor = x;
   });
-  document.getElementById('s-rekor').textContent = rekor;
+  setIstat('s-rekor', rekor);
 
   // Tahmini bitiş
   const bitis = bitisHesapla();
@@ -8732,10 +8958,56 @@ function bahceAsamaBul(streak, toplamIbadet) {
   return aktif;
 }
 
+// ─── Bahçe Devirli Sistem ───
+const BAHCE_STATE_KEY = 'kn_bahce_state_v1';
+
+function bahceStateOku() {
+  try {
+    const s = JSON.parse(localStorage.getItem(BAHCE_STATE_KEY) || '{}');
+    return {
+      tamamlanan: s.tamamlanan || 0,
+      snapStreak: s.snapStreak || 0,
+      snapIbadet: s.snapIbadet || 0,
+      tamamlanmaTarihleri: s.tamamlanmaTarihleri || []
+    };
+  } catch(e) {
+    return { tamamlanan: 0, snapStreak: 0, snapIbadet: 0, tamamlanmaTarihleri: [] };
+  }
+}
+
+function bahceStateYaz(state) {
+  try { localStorage.setItem(BAHCE_STATE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+// "Bahçemi Hasat Et" — kullanıcı Sidre'ye ulaşınca elle tıklar
+function bahceHasatEt() {
+  if (!confirm('Bu bahçeyi hasat etmek üzeresin. Tamamlanan ağaçlar listesine eklenecek ve yeni bir ağaç başlayacak. Devam edilsin mi?')) return;
+  const state = bahceStateOku();
+  const streak = streakHesapla();
+  let toplamIbadet = 0;
+  try {
+    toplamIbadet = genelToplamKildi();
+    if (typeof zikirSayisi !== 'undefined') toplamIbadet += Math.floor((zikirSayisi + (zikirYildiz || 0) * 70000) / 100);
+    if (typeof ihlasSayisi !== 'undefined') toplamIbadet += Math.floor((ihlasSayisi + (ihlasYildiz || 0) * 100000) / 100);
+    if (typeof salavatSayisi !== 'undefined') toplamIbadet += Math.floor((salavatSayisi + (salavatYildiz || 0) * 100000) / 100);
+  } catch(e) {}
+  state.tamamlanan += 1;
+  state.snapStreak = streak;
+  state.snapIbadet = toplamIbadet;
+  state.tamamlanmaTarihleri.push(new Date().toISOString().split('T')[0]);
+  // Son 50 tamamlama tarihini tut
+  if (state.tamamlanmaTarihleri.length > 50) state.tamamlanmaTarihleri = state.tamamlanmaTarihleri.slice(-50);
+  bahceStateYaz(state);
+  try { toast('🌳', `Bahçen hasat edildi — ${state.tamamlanan}. ağaç tamamlandı!`, 'basari'); } catch(e){}
+  try { sesCal('seviye'); } catch(e){}
+  bahceGuncelle();
+}
+
 function bahceGuncelle() {
   const gorselEl = document.getElementById('bahce-gorsel');
   if (!gorselEl) return;
 
+  const state = bahceStateOku();
   const streak = streakHesapla();
   // "Toplam ibadet" = namaz + zikir/100 ölçüsünde (basit, hızlı)
   let toplamIbadet = 0;
@@ -8746,30 +9018,58 @@ function bahceGuncelle() {
     if (typeof salavatSayisi !== 'undefined') toplamIbadet += Math.floor((salavatSayisi + (salavatYildiz || 0) * 100000) / 100);
   } catch(e) {}
 
-  const aktif = bahceAsamaBul(streak, toplamIbadet);
+  // Effective değerler = son hasat snapshot'ından bu yana
+  const effStreak = Math.max(0, streak - state.snapStreak);
+  const effIbadet = Math.max(0, toplamIbadet - state.snapIbadet);
+
+  const aktif = bahceAsamaBul(effStreak, effIbadet);
   const sonraki = BAHCE_ASAMALAR[aktif.seviye + 1] || null;
 
   gorselEl.innerHTML = aktif.svg;
 
+  // Başlık — tamamlanan sayısıyla birlikte
   const asamaEl = document.getElementById('bahce-asama');
   if (asamaEl) asamaEl.textContent = aktif.ad;
 
   const mesajEl = document.getElementById('bahce-mesaj');
   if (mesajEl) mesajEl.textContent = aktif.mesaj;
 
+  // Tamamlanan ağaç ikonları
+  let ikonRow = document.getElementById('bahce-tamamlananlar');
+  if (!ikonRow && gorselEl.parentNode) {
+    // İlk kez ikon satırı oluştur
+    ikonRow = document.createElement('div');
+    ikonRow.id = 'bahce-tamamlananlar';
+    ikonRow.className = 'bahce-tamamlananlar';
+    gorselEl.parentNode.insertBefore(ikonRow, gorselEl);
+  }
+  if (ikonRow) {
+    if (state.tamamlanan > 0) {
+      const maxGoster = 12; // Çok olursa "+N" şeklinde göster
+      let html = '<span class="bahce-tamamlanan-etiket">🌲 Hasat Edilen Bahçeler:</span><span class="bahce-tamamlanan-list">';
+      const goster = Math.min(state.tamamlanan, maxGoster);
+      for (let i = 0; i < goster; i++) html += '<span class="bahce-ikon">🌳</span>';
+      if (state.tamamlanan > maxGoster) html += `<span class="bahce-tamamlanan-fazla">+${state.tamamlanan - maxGoster}</span>`;
+      html += '</span>';
+      ikonRow.innerHTML = html;
+      ikonRow.style.display = '';
+    } else {
+      ikonRow.style.display = 'none';
+    }
+  }
+
   const dolguEl = document.getElementById('bahce-progress-dolgu');
   const hedefEl = document.getElementById('bahce-hedef');
   if (sonraki) {
-    // Streak ve ibadet kriterlerinden hangisinde daha geri ise göster
     const streakIlerleme = aktif.minStreak === sonraki.minStreak ? 1 :
-      (streak - aktif.minStreak) / (sonraki.minStreak - aktif.minStreak);
+      (effStreak - aktif.minStreak) / (sonraki.minStreak - aktif.minStreak);
     const ibadetIlerleme = aktif.minIbadet === sonraki.minIbadet ? 1 :
-      (toplamIbadet - aktif.minIbadet) / (sonraki.minIbadet - aktif.minIbadet);
+      (effIbadet - aktif.minIbadet) / (sonraki.minIbadet - aktif.minIbadet);
     const yuzde = Math.min(streakIlerleme, ibadetIlerleme);
     if (dolguEl) dolguEl.style.width = (Math.max(0, Math.min(1, yuzde)) * 100) + '%';
     if (hedefEl) {
-      const streakKalan = Math.max(0, sonraki.minStreak - streak);
-      const ibadetKalan = Math.max(0, sonraki.minIbadet - toplamIbadet);
+      const streakKalan = Math.max(0, sonraki.minStreak - effStreak);
+      const ibadetKalan = Math.max(0, sonraki.minIbadet - effIbadet);
       if (streakKalan > 0 && ibadetKalan > 0) {
         hedefEl.textContent = `→ ${sonraki.ad}: ${streakKalan} gün streak + ${ibadetKalan} ibadet`;
       } else if (streakKalan > 0) {
@@ -8781,8 +9081,11 @@ function bahceGuncelle() {
       }
     }
   } else {
+    // Sidre-i Müntehâ'ya ulaştı — Hasat butonu göster
     if (dolguEl) dolguEl.style.width = '100%';
-    if (hedefEl) hedefEl.textContent = '👑 En yüce mertebe';
+    if (hedefEl) {
+      hedefEl.innerHTML = '<button class="bahce-hasat-btn" onclick="bahceHasatEt()">🌳 Bahçemi Hasat Et &amp; Yeni Ağaca Başla</button>';
+    }
   }
 }
 
@@ -9314,7 +9617,8 @@ function esmaZikirDegistir(miktar) {
   if (!aktif) return;
   const eski = esmaZikirleri[no] || 0;
   const hedef = ESMA_EBCED[no] || 99;
-  esmaZikirleri[no] = Math.max(0, eski + miktar);
+  // Bug fix: hedefi aşmayı engelle, max 9999 (manuel artırma için tolerans)
+  esmaZikirleri[no] = Math.max(0, Math.min(9999, eski + miktar));
 
   // Otomatik tamamlama
   let yeniTamam = false;
@@ -13744,15 +14048,30 @@ function karsilastirmaHesapla(suanki, oncekiToplam) {
 
 function istatistikKarsilastirmaGuncelle() {
   const bugun = bugunTarih();
+  // Bug fix: önceden setIstat'in kompakt formatını/tooltip'ini eziyordu.
+  // Çözüm: ana sayıyı setIstat olduğu gibi bırak; karşılaştırma ok'unu ayrı bir
+  // küçük element olarak ekle (istat-rakam içinde inline span)
+
+  function rakamGuncelle(id, deger, oncekiDeger) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // Ana değer setIstat tarafından yazıldı; biz sadece tooltip + ok ekleyeceğiz.
+    // Mevcut text içeriğini koru, eğer "↑↓" varsa kaldır
+    const mevcut = el.textContent.replace(/\s*[↑↓→].*$/, '').trim();
+    const okSuffix = karsilastirmaHesapla(deger, oncekiDeger) || '';
+    // Tooltip için tam değer
+    el.setAttribute('title', deger.toLocaleString('tr-TR'));
+    // Karşılaştırma ok'u küçük bir span'a koy ki kompakt sayıyı bozmasın
+    if (okSuffix) {
+      el.innerHTML = mevcut + '<span class="istat-kiyas-ok">' + okSuffix.replace(/<[^>]*>/g, '').trim() + '</span>';
+    }
+  }
 
   // Bu hafta vs geçen hafta
   const haftaT = buHaftaToplam();
   let oncekiHafta = 0;
   for (let i = 7; i < 14; i++) oncekiHafta += gunToplam(nDays(bugun, -i));
-  const haftaEl = document.getElementById('s-hafta');
-  if (haftaEl) {
-    haftaEl.innerHTML = `${haftaT.toLocaleString('tr-TR')}${karsilastirmaHesapla(haftaT, oncekiHafta)}`;
-  }
+  rakamGuncelle('s-hafta', haftaT, oncekiHafta);
 
   // Bu ay vs geçen ay
   const ayT = buAyToplam();
@@ -13764,10 +14083,7 @@ function istatistikKarsilastirmaGuncelle() {
   Object.keys(kayitlar).forEach(t => {
     if (t.startsWith(oncekiAyPref)) oncekiAy += gunToplam(t);
   });
-  const ayEl = document.getElementById('s-ay');
-  if (ayEl) {
-    ayEl.innerHTML = `${ayT.toLocaleString('tr-TR')}${karsilastirmaHesapla(ayT, oncekiAy)}`;
-  }
+  rakamGuncelle('s-ay', ayT, oncekiAy);
 }
 
 // =========================================================
@@ -14137,7 +14453,18 @@ function yolculukHaritasiCizdir() {
       const kalan = sonraki.xp_min - xp;
       acElEl.innerHTML = `Şu an <strong>${mertebe.ad}</strong> mertebesindesin. <strong>${sonraki.ad}</strong>'e ${kalan.toLocaleString('tr-TR')} XP kaldı.`;
     } else {
-      acElEl.innerHTML = `Mâşaallah! En yüce mertebe <strong>Vâsıl</strong>\'a ulaştın. Şükür ile devam.`;
+      // Vâsıl'a ulaştı — alt seviyeyi ve yıldızı da göster
+      try {
+        const vasil = vasilSeviyesi(xp);
+        const yldzGorsel = vasil.aktif.yildiz > 0 ? ' ' + '⭐'.repeat(vasil.aktif.yildiz) : '';
+        if (vasil.sonraki) {
+          acElEl.innerHTML = `Mâşaallah! <strong>${vasil.aktif.ad}</strong>${yldzGorsel} mertebesindesin. <strong>${vasil.sonraki.ad}</strong>'e ${(vasil.sonraki.xp - xp).toLocaleString('tr-TR')} XP kaldı.`;
+        } else {
+          acElEl.innerHTML = `Mâşaallah! En yüce mertebe <strong>${vasil.aktif.ad}</strong>${yldzGorsel}'a ulaştın. Şükür ile devam.`;
+        }
+      } catch(e) {
+        acElEl.innerHTML = `Mâşaallah! En yüce mertebe <strong>Vâsıl</strong>'a ulaştın. Şükür ile devam.`;
+      }
     }
   }
 }
@@ -15204,6 +15531,26 @@ function setupYedekYukle(event) {
       if (typeof v.salavat === 'number') { try { salavatSayisi = v.salavat; } catch(e){} localStorage.setItem(SALAVAT_KEY, String(v.salavat)); }
       if (typeof v.salavatYildiz === 'number') { try { salavatYildiz = v.salavatYildiz; } catch(e){} localStorage.setItem(SALAVAT_YILDIZ_KEY, String(v.salavatYildiz)); }
       if (v.borclar && typeof v.borclar === 'object') vakitBorclariUygula(v.borclar);
+      // Bug fix: setup'tan yedek yüklenirken eksik kalan alanlar (streak, hedef, oruç, Kuran)
+      try {
+        if (typeof v.streakRekoru === 'number') { try { streakRekoru = v.streakRekoru; } catch(e){} localStorage.setItem(STREAK_REKOR_KEY, String(v.streakRekoru)); }
+        if (typeof v.haftalikHedef === 'number') { try { haftalikHedef = v.haftalikHedef; } catch(e){} localStorage.setItem(HAFTALIK_HEDEF_KEY, String(v.haftalikHedef)); }
+        if (typeof v.aylikHedef === 'number') { try { aylikHedef = v.aylikHedef; } catch(e){} localStorage.setItem(AYLIK_HEDEF_KEY, String(v.aylikHedef)); }
+        if (typeof v.gorevTamamlama === 'number') { try { gorevTamamlama = v.gorevTamamlama; } catch(e){} localStorage.setItem(GOREV_TAMAMLAMA_KEY, String(v.gorevTamamlama)); }
+        if (typeof v.ilkKullanim === 'string') localStorage.setItem(ILK_KULLANIM_KEY, v.ilkKullanim);
+        if (v.orucBorc !== undefined && v.orucBorc !== null) localStorage.setItem(ORUC_BORC_KEY, String(v.orucBorc));
+        if (v.orucTutulan !== undefined && v.orucTutulan !== null) localStorage.setItem(ORUC_TUTULAN_KEY, String(v.orucTutulan));
+        if (v.orucSonGun) localStorage.setItem(ORUC_SON_GUN_KEY, v.orucSonGun);
+        if (v.kuranProgress && typeof kuranProgress !== 'undefined') {
+          kuranProgress = v.kuranProgress;
+          localStorage.setItem(KURAN_PROGRESS_KEY, JSON.stringify(kuranProgress));
+        }
+        if (v.hatimSayisi !== undefined && v.hatimSayisi !== null) localStorage.setItem('kn_hatim_sayisi', String(v.hatimSayisi));
+        if (v.cuzGunler) localStorage.setItem('kn_cuz_gunler', v.cuzGunler);
+        if (v.cuzGeceActi) localStorage.setItem('kn_cuz_gece_acti', v.cuzGeceActi);
+        if (v.sonOkunanCuz) localStorage.setItem(SON_OKUNAN_CUZ_KEY, v.sonOkunanCuz);
+        if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
+      } catch(e) { console.warn('setupYedekYukle ek alan:', e); }
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
       setupKapat();
@@ -15612,7 +15959,7 @@ function haftaBaslangicAl() {
     let cuzToplam = 0;
     try {
       if (typeof kuranProgress !== 'undefined' && kuranProgress) {
-        cuzToplam = Object.values(kuranProgress).filter(v => v === true || (v && v.tamamlandi)).length;
+        cuzToplam = Object.values(kuranProgress).filter(v => v === true || (v && (v.okundu || v.tamamlandi))).length;
       }
     } catch(e) {}
     let orucToplam = 0;
@@ -15645,7 +15992,7 @@ function buHaftaCuzArtisi() {
     const b = haftaBaslangicAl();
     let mevcut = 0;
     if (typeof kuranProgress !== 'undefined' && kuranProgress) {
-      mevcut = Object.values(kuranProgress).filter(v => v === true || (v && v.tamamlandi)).length;
+      mevcut = Object.values(kuranProgress).filter(v => v === true || (v && (v.okundu || v.tamamlandi))).length;
     }
     return Math.max(0, mevcut - (b.cuzToplam || 0));
   } catch(e) { return 0; }
@@ -15700,20 +16047,22 @@ const ESNEK_MADALYALAR = [
       // Hafta başından beri eklenen zikir
       return buHaftaZikirArtisi() >= 500;
     }},
-  { id:'mudavim', ikon:'🕌', ad:'Müdâvim', aciklama:'Bu hafta her gün namaz', kontrol: () => {
+  { id:'mudavim', ikon:'🕌', ad:'Müdâvim', aciklama:'Pzt-bugün her gün namaz', kontrol: () => {
       // ISO haftası: Pazartesi'den BUGÜNE kadar HER GÜN namaz kılındı mı?
+      // Bug fix: önceden sadece Pazar günü göstergesi vardı — kullanıcı hafta içi
+      // her gün kılsa bile rozet hiç görünmezdi. Şimdi hafta içinde de gösteriyor
+      // (en az 2 günden itibaren — Pzt günü tek başına anlamlı değil)
       const d = new Date();
       d.setHours(0,0,0,0);
       const gunOffset = (d.getDay() + 6) % 7; // 0=Pzt
-      let hepsiVarMi = true;
+      if (gunOffset < 1) return false; // Sadece Pazartesi varsa madalya yok
       for (let i = 0; i <= gunOffset; i++) {
         const t = new Date(d);
         t.setDate(t.getDate() - gunOffset + i);
         const tarihStr = t.toISOString().split('T')[0];
-        if (gunToplam(tarihStr) === 0) { hepsiVarMi = false; break; }
+        if (gunToplam(tarihStr) === 0) return false;
       }
-      // En az 7 gün geçmediyse haftalık tamamlanmadı sayılır
-      return hepsiVarMi && gunOffset === 6; // Sadece Pazar günü kontrol et
+      return true;
     }},
   { id:'hafiz', ikon:'📖', ad:'Hâfız', aciklama:'Bu hafta 3+ Esmâ tamam', kontrol: () => {
       // Hafta başından beri tamamlanan yeni Esmâ sayısı
@@ -17830,6 +18179,13 @@ function gregToHicri(tarih) {
     return obj;
   } catch (e) {
     console.warn('Intl islamic-umalqura desteklenmiyor:', e);
+    // Kullanıcıya bir kerelik bilgi (tarayıcı eski ise)
+    try {
+      if (!localStorage.getItem('kn_hicri_uyari_v1')) {
+        localStorage.setItem('kn_hicri_uyari_v1', '1');
+        setTimeout(() => { try { toast('ℹ️', 'Tarayıcın hicri takvimi desteklemiyor — kandil banner\'ları görünmeyebilir', 'bilgi'); } catch(err){} }, 3000);
+      }
+    } catch(err){}
     return null;
   }
 }
