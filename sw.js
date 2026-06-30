@@ -1,5 +1,5 @@
 // İhyâ Service Worker — Offline destek
-const CACHE_NAME = 'ihya-v25';
+const CACHE_NAME = 'ihya-v27';
 const STATIK_DOSYALAR = [
   './',
   './index.html',
@@ -34,12 +34,15 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-// Aktifleştirme: eski cache'i temizle
+// Aktifleştirme: eski cache'i temizle (suffix'li -api, -kuran ise koru, sadece eski versiyonları sil)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+        keys.filter(k => {
+          // Cari versiyon (ihya-v26, ihya-v26-api, ihya-v26-kuran) tut, diğerlerini sil
+          return !k.startsWith(CACHE_NAME);
+        }).map(k => caches.delete(k))
       );
     })
   );
@@ -50,10 +53,17 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = event.request.url;
 
-  // API çağrıları (aladhan vb.) için network-first
-  if (url.includes('aladhan.com') || url.includes('fonts.googleapis.com') || url.includes('cdnjs.cloudflare.com')) {
+  // API çağrıları (aladhan, open-meteo, fonts, cdn) için network-first + cache fallback
+  if (url.includes('aladhan.com') || url.includes('api.open-meteo.com') || url.includes('fonts.googleapis.com') || url.includes('cdnjs.cloudflare.com')) {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match(event.request))
+      fetch(event.request).then(resp => {
+        // Başarılı yanıtı cache'e koy (offline fallback için)
+        if (resp && resp.status === 200 && url.includes('api.open-meteo.com')) {
+          const cloned = resp.clone();
+          caches.open(CACHE_NAME + '-api').then(cache => cache.put(event.request, cloned));
+        }
+        return resp;
+      }).catch(() => caches.match(event.request))
     );
     return;
   }

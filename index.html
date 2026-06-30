@@ -165,6 +165,192 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 .banner-tarih-buyuk { font-size: 16px; font-weight: 700; }
 
+/* 🌤️ Hava Durumu Kartı */
+.hava-kart {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(212, 175, 55, 0.40);
+  border-radius: 12px;
+  padding: 6px 12px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 110px;
+}
+.hava-kart:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(212, 175, 55, 0.70);
+  transform: translateY(-1px);
+}
+.hava-ust {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFD54F;
+  line-height: 1;
+}
+.hava-ikon { font-size: 20px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25)); }
+.hava-sicaklik { letter-spacing: -0.5px; }
+.hava-detay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.25;
+  font-weight: 600;
+}
+.hava-sehir {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+.hava-nem-ruzgar {
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Hava detay modali */
+.hava-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 46, 31, 0.8);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5600;
+  padding: 16px;
+}
+.hava-modal.acik { display: flex; animation: rozetFade 0.25s; }
+.hava-modal-icerik {
+  background: linear-gradient(135deg, #2D5F3F, #1B4332);
+  color: white;
+  border: 1.5px solid #D4AF37;
+  border-radius: 18px;
+  max-width: 360px;
+  width: 100%;
+  padding: 24px 22px;
+  position: relative;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.4);
+  animation: rozetPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hava-modal-kapat {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+.hava-modal-baslik {
+  font-size: 12px;
+  font-weight: 800;
+  color: #FFD54F;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hava-modal-sehir {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+.hava-modal-ana {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.hava-modal-ikon { font-size: 56px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+.hava-modal-derece {
+  font-size: 48px;
+  font-weight: 900;
+  color: #FFD54F;
+  line-height: 1;
+}
+.hava-modal-aciklama {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 18px;
+  color: rgba(255,255,255,0.88);
+  font-style: italic;
+}
+.hava-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.hava-modal-deger {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(212,175,55,0.20);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.hava-modal-deger-ikon { font-size: 18px; margin-bottom: 3px; }
+.hava-modal-deger-rakam {
+  font-size: 17px;
+  font-weight: 800;
+  color: #FFD54F;
+  font-variant-numeric: tabular-nums;
+}
+.hava-modal-deger-etiket {
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.hava-yenile-btn {
+  width: 100%;
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.4);
+  color: #FFD54F;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 6px;
+  transition: all 0.2s;
+}
+.hava-yenile-btn:hover {
+  background: rgba(212,175,55,0.25);
+  border-color: rgba(212,175,55,0.7);
+}
+.hava-yenile-btn:active { transform: scale(0.98); }
+.hava-modal-kaynak {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 768px) {
+  .hava-kart { padding: 5px 10px; min-width: 100px; }
+  .hava-ust { font-size: 16px; }
+  .hava-ikon { font-size: 18px; }
+  .hava-detay, .hava-sehir, .hava-nem-ruzgar { font-size: 8.5px; }
+}
+
 .hero-rakam-bolum {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -6538,6 +6724,17 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
       <div class="banner-tarih">
+        <!-- 🌤️ Hava Durumu Kartı (İstanbul, Open-Meteo API) -->
+        <div class="hava-kart" id="hava-kart" onclick="havaDetayAc()" title="Hava durumu detayı">
+          <div class="hava-ust">
+            <span class="hava-ikon" id="hava-ikon">⛅</span>
+            <span class="hava-sicaklik" id="hava-sicaklik">—°</span>
+          </div>
+          <div class="hava-detay">
+            <span class="hava-sehir">İstanbul</span>
+            <span class="hava-nem-ruzgar"><span id="hava-nem">—</span>% · <span id="hava-ruzgar">—</span>km/sa</span>
+          </div>
+        </div>
         <div class="banner-tarih-buyuk" id="banner-tarih">—</div>
       </div>
     </div>
@@ -7487,6 +7684,44 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     <div class="rozet-popup-baslik" id="popup-baslik">Rozet Kazandın!</div>
     <div class="rozet-popup-aciklama" id="popup-aciklama">Tebrikler!</div>
     <button class="rozet-popup-kapat" onclick="document.getElementById('rozet-popup').classList.remove('acik')">Devam Et</button>
+  </div>
+</div>
+
+<!-- 🌤️ Hava Durumu Detay Modal -->
+<div class="hava-modal" id="hava-modal" role="dialog" aria-modal="true" aria-labelledby="hava-modal-baslik-id" onclick="if(event.target.id==='hava-modal') havaDetayKapat()">
+  <div class="hava-modal-icerik">
+    <button class="hava-modal-kapat" onclick="havaDetayKapat()" aria-label="Kapat">×</button>
+    <div class="hava-modal-baslik" id="hava-modal-baslik-id">🌍 Anlık Hava Durumu</div>
+    <div class="hava-modal-sehir">İstanbul</div>
+    <div class="hava-modal-ana">
+      <div class="hava-modal-ikon" id="hava-m-ikon">⛅</div>
+      <div class="hava-modal-derece" id="hava-m-sicaklik">—°</div>
+    </div>
+    <div class="hava-modal-aciklama" id="hava-m-aciklama">—</div>
+    <div class="hava-modal-grid">
+      <div class="hava-modal-deger">
+        <div class="hava-modal-deger-ikon">🌡️</div>
+        <div class="hava-modal-deger-rakam" id="hava-m-hissedilen">—°</div>
+        <div class="hava-modal-deger-etiket">Hissedilen</div>
+      </div>
+      <div class="hava-modal-deger">
+        <div class="hava-modal-deger-ikon">💧</div>
+        <div class="hava-modal-deger-rakam" id="hava-m-nem">—%</div>
+        <div class="hava-modal-deger-etiket">Nem</div>
+      </div>
+      <div class="hava-modal-deger">
+        <div class="hava-modal-deger-ikon">💨</div>
+        <div class="hava-modal-deger-rakam" id="hava-m-ruzgar">— km/sa</div>
+        <div class="hava-modal-deger-etiket">Rüzgar</div>
+      </div>
+      <div class="hava-modal-deger">
+        <div class="hava-modal-deger-ikon">🔄</div>
+        <div class="hava-modal-deger-rakam" id="hava-m-guncellendi" style="font-size:12px;">—</div>
+        <div class="hava-modal-deger-etiket">Güncellendi</div>
+      </div>
+    </div>
+    <button class="hava-yenile-btn" onclick="havaDurumuYukle(true)" title="Hava verisini hemen yenile">🔄 Yenile</button>
+    <div class="hava-modal-kaynak">Kaynak: Open-Meteo (ECMWF + GFS modelleri)</div>
   </div>
 </div>
 
@@ -11674,6 +11909,156 @@ function gunlukAyetGoster() {
   const el = document.getElementById('banner-ayet');
   if (el) el.textContent = GUNLUK_AYETLER[gunIndeksi(GUNLUK_AYETLER.length)];
 }
+
+// ═══════════════════════════════════════════════════
+// 🌤️ HAVA DURUMU (İstanbul, Open-Meteo API)
+// ═══════════════════════════════════════════════════
+const HAVA_CACHE_KEY = 'kn_hava_cache_v1';
+const HAVA_API_URL = 'https://api.open-meteo.com/v1/forecast?latitude=41.0082&longitude=28.9784&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Europe%2FIstanbul';
+// Günde 3 yenileme (4-saat cache yeterli) — sabah/öğle/akşam doğal olarak yakalanır
+const HAVA_CACHE_OMUR_MS = 4 * 60 * 60 * 1000;
+
+// WMO weather code → emoji + Türkçe açıklama
+function havaKodAciklama(code) {
+  if (code === 0) return { ikon: '☀️', aciklama: 'Açık' };
+  if (code === 1) return { ikon: '🌤️', aciklama: 'Az bulutlu' };
+  if (code === 2) return { ikon: '⛅', aciklama: 'Parçalı bulutlu' };
+  if (code === 3) return { ikon: '☁️', aciklama: 'Çok bulutlu' };
+  if (code === 45 || code === 48) return { ikon: '🌫️', aciklama: 'Sisli' };
+  if (code >= 51 && code <= 57) return { ikon: '🌦️', aciklama: 'Çisenti' };
+  if (code >= 61 && code <= 67) return { ikon: '🌧️', aciklama: 'Yağmurlu' };
+  if (code >= 71 && code <= 77) return { ikon: '🌨️', aciklama: 'Kar yağışlı' };
+  if (code >= 80 && code <= 82) return { ikon: '🌧️', aciklama: 'Sağanak yağışlı' };
+  if (code === 85 || code === 86) return { ikon: '🌨️', aciklama: 'Sağanak karlı' };
+  if (code === 95) return { ikon: '⛈️', aciklama: 'Gök gürültülü' };
+  if (code === 96 || code === 99) return { ikon: '⛈️', aciklama: 'Şiddetli fırtına' };
+  return { ikon: '🌡️', aciklama: '—' };
+}
+
+function havaCacheOku() {
+  try {
+    const raw = localStorage.getItem(HAVA_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function havaCacheYaz(veri) {
+  try {
+    localStorage.setItem(HAVA_CACHE_KEY, JSON.stringify({
+      veri: veri,
+      timestamp: Date.now()
+    }));
+  } catch(e) {}
+}
+
+function havaRender(d) {
+  // d: { temperature_2m, apparent_temperature, relative_humidity_2m, weather_code, wind_speed_10m, time }
+  if (!d) return;
+  // NaN guard — API null veya eksik alan dönerse "—" göster ("NaN°" görünmesin)
+  const _r = (v) => Number.isFinite(v) ? Math.round(v) : null;
+  const _f = (v, suf) => v === null ? '—' + (suf || '') : v + (suf || '');
+  const sicaklik = _r(d.temperature_2m);
+  const hissedilen = _r(d.apparent_temperature);
+  const nem = _r(d.relative_humidity_2m);
+  const ruzgar = _r(d.wind_speed_10m);
+  const aciklama = havaKodAciklama(d.weather_code);
+
+  // Kart
+  const ikonEl = document.getElementById('hava-ikon');
+  const sicEl = document.getElementById('hava-sicaklik');
+  const nemEl = document.getElementById('hava-nem');
+  const ruzEl = document.getElementById('hava-ruzgar');
+  if (ikonEl) ikonEl.textContent = aciklama.ikon;
+  if (sicEl) sicEl.textContent = _f(sicaklik, '°');
+  if (nemEl) nemEl.textContent = nem === null ? '—' : nem;
+  if (ruzEl) ruzEl.textContent = ruzgar === null ? '—' : ruzgar;
+
+  // Modal
+  const mIkon = document.getElementById('hava-m-ikon');
+  const mSic = document.getElementById('hava-m-sicaklik');
+  const mAci = document.getElementById('hava-m-aciklama');
+  const mHis = document.getElementById('hava-m-hissedilen');
+  const mNem = document.getElementById('hava-m-nem');
+  const mRuz = document.getElementById('hava-m-ruzgar');
+  const mGun = document.getElementById('hava-m-guncellendi');
+  if (mIkon) mIkon.textContent = aciklama.ikon;
+  if (mSic) mSic.textContent = _f(sicaklik, '°C');
+  if (mAci) mAci.textContent = aciklama.aciklama;
+  if (mHis) mHis.textContent = _f(hissedilen, '°C');
+  if (mNem) mNem.textContent = nem === null ? '—' : '%' + nem;
+  if (mRuz) mRuz.textContent = ruzgar === null ? '—' : ruzgar + ' km/sa';
+  if (mGun) {
+    const cache = havaCacheOku();
+    if (cache && cache.timestamp) {
+      const dt = new Date(cache.timestamp);
+      const yas = Date.now() - cache.timestamp;
+      // 24+ saat eski ise "X gün önce" göster (offline kullanıcıyı bilgilendir)
+      if (yas > 24 * 60 * 60 * 1000) {
+        const gun = Math.floor(yas / (24*60*60*1000));
+        mGun.textContent = gun + ' gün önce';
+        mGun.style.color = '#FFB85A'; // turuncu uyarı tonu
+      } else {
+        mGun.textContent = dt.getHours().toString().padStart(2,'0') + ':' + dt.getMinutes().toString().padStart(2,'0');
+        mGun.style.color = '';
+      }
+    } else {
+      mGun.textContent = '—';
+    }
+  }
+}
+
+async function havaDurumuYukle(zorla = false) {
+  // Cache kontrolü — 4 saatten yeni ise API'ye dokunma
+  const cache = havaCacheOku();
+  if (!zorla && cache && cache.veri && cache.timestamp) {
+    const yas = Date.now() - cache.timestamp;
+    if (yas < HAVA_CACHE_OMUR_MS) {
+      havaRender(cache.veri);
+      return;
+    }
+  }
+  // İlk yüklemede önce eski cache'i göster (offline-friendly)
+  if (cache && cache.veri) havaRender(cache.veri);
+  // API isteği
+  try {
+    const resp = await fetch(HAVA_API_URL);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const json = await resp.json();
+    if (!json.current) throw new Error('current alanı yok');
+    havaCacheYaz(json.current);
+    havaRender(json.current);
+  } catch(e) {
+    console.warn('Hava durumu alınamadı:', e.message);
+    // Cache varsa zaten render edildi, yoksa sessiz fallback
+  }
+}
+
+function havaDetayAc() {
+  const modal = document.getElementById('hava-modal');
+  if (modal) {
+    modal.classList.add('acik');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function havaDetayKapat() {
+  const modal = document.getElementById('hava-modal');
+  if (modal) {
+    modal.classList.remove('acik');
+    document.body.style.overflow = '';
+  }
+}
+// ESC tuşu ile modal kapat
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const m = document.getElementById('hava-modal');
+    if (m && m.classList.contains('acik')) havaDetayKapat();
+  }
+});
+
+// İlk yükleme + her 30 dakikada bir kontrol (cache 4 saatlik, tetikleyici dakikalık)
+setTimeout(() => { try { havaDurumuYukle(); } catch(e){} }, 800);
+setInterval(() => { try { havaDurumuYukle(); } catch(e){} }, 30 * 60 * 1000);
 
 // ═══ ALT AYET HAVUZU (Namaz / İbadet / Zikir / Tövbe temalı) ═══
 const ALT_AYETLER = [
