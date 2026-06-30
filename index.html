@@ -129,6 +129,8 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   gap: 16px;
   margin-bottom: 18px;
   position: relative;
+  /* Hava kartı sağ üstte absolute — başlığın hava kartına çakışmaması için sağ boşluk */
+  padding-right: 95px;
   z-index: 1;
 }
 .banner-marka {
@@ -165,58 +167,51 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 .banner-tarih-buyuk { font-size: 16px; font-weight: 700; }
 
-/* 🌤️ Hava Durumu Kartı */
+/* 🌤️ Hava Durumu Kartı — Sağ üst köşe, absolute, kompakt */
+.banner.kompakt { position: relative; }
 .hava-kart {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 2px;
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(212, 175, 55, 0.40);
-  border-radius: 12px;
-  padding: 6px 12px;
-  margin-bottom: 6px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 10px;
+  padding: 5px 9px;
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 110px;
+  z-index: 3;
+  backdrop-filter: blur(4px);
 }
 .hava-kart:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(212, 175, 55, 0.70);
+  background: rgba(0, 0, 0, 0.28);
+  border-color: rgba(212, 175, 55, 0.75);
   transform: translateY(-1px);
 }
 .hava-ust {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 18px;
+  gap: 5px;
+  font-size: 17px;
   font-weight: 800;
   color: #FFD54F;
   line-height: 1;
 }
-.hava-ikon { font-size: 20px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25)); }
+.hava-ikon { font-size: 17px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.30)); }
 .hava-sicaklik { letter-spacing: -0.5px; }
 .hava-detay {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1px;
   font-size: 9px;
-  color: rgba(255,255,255,0.75);
-  line-height: 1.25;
-  font-weight: 600;
-}
-.hava-sehir {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
   color: rgba(255,255,255,0.85);
+  line-height: 1;
+  font-weight: 700;
 }
 .hava-nem-ruzgar {
-  font-size: 9px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  letter-spacing: 0.1px;
 }
 
 /* Hava detay modali */
@@ -345,10 +340,17 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 
 @media (max-width: 768px) {
-  .hava-kart { padding: 5px 10px; min-width: 100px; }
-  .hava-ust { font-size: 16px; }
-  .hava-ikon { font-size: 18px; }
-  .hava-detay, .hava-sehir, .hava-nem-ruzgar { font-size: 8.5px; }
+  .hava-kart { top: 10px; right: 10px; padding: 4px 8px; gap: 1px; }
+  .hava-ust { font-size: 15px; gap: 4px; }
+  .hava-ikon { font-size: 15px; }
+  .hava-detay, .hava-nem-ruzgar { font-size: 8.5px; }
+}
+@media (max-width: 380px) {
+  /* iPhone SE / dar telefon ekranları */
+  .hava-kart { top: 8px; right: 8px; padding: 3px 7px; }
+  .hava-ust { font-size: 14px; }
+  .hava-ikon { font-size: 13px; }
+  .hava-detay { font-size: 8px; }
 }
 
 .hero-rakam-bolum {
@@ -2629,7 +2631,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .konteyner { max-width: 100%; }
 
   .banner { padding: 20px 16px; border-radius: 18px; margin-bottom: 14px; }
-  .banner-ust { gap: 12px; margin-bottom: 16px; }
+  .banner-ust { gap: 12px; margin-bottom: 16px; padding-right: 80px; }
   .banner-ikon { font-size: 28px; width: 48px; height: 48px; border-radius: 12px; }
   .banner-ad { font-size: 20px; letter-spacing: -0.3px; }
   .banner-alt { font-size: 11px; line-height: 1.4; }
@@ -6724,18 +6726,17 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
       <div class="banner-tarih">
-        <!-- 🌤️ Hava Durumu Kartı (İstanbul, Open-Meteo API) -->
-        <div class="hava-kart" id="hava-kart" onclick="havaDetayAc()" title="Hava durumu detayı">
-          <div class="hava-ust">
-            <span class="hava-ikon" id="hava-ikon">⛅</span>
-            <span class="hava-sicaklik" id="hava-sicaklik">—°</span>
-          </div>
-          <div class="hava-detay">
-            <span class="hava-sehir">İstanbul</span>
-            <span class="hava-nem-ruzgar"><span id="hava-nem">—</span>% · <span id="hava-ruzgar">—</span>km/sa</span>
-          </div>
-        </div>
         <div class="banner-tarih-buyuk" id="banner-tarih">—</div>
+      </div>
+    </div>
+    <!-- 🌤️ Hava Durumu Kartı (banner sağ üstte, absolute) -->
+    <div class="hava-kart" id="hava-kart" onclick="havaDetayAc()" title="Hava durumu detayı">
+      <div class="hava-ust">
+        <span class="hava-ikon" id="hava-ikon">⛅</span>
+        <span class="hava-sicaklik" id="hava-sicaklik">—°</span>
+      </div>
+      <div class="hava-detay">
+        <span class="hava-nem-ruzgar">💧<span id="hava-nem">—</span>% · 💨<span id="hava-ruzgar">—</span></span>
       </div>
     </div>
   </div>
