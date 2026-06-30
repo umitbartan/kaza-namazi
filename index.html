@@ -5586,23 +5586,77 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   text-transform: uppercase;
 }
 .bahce-gorsel {
-  height: 180px;
+  height: 200px;
   background: transparent;
-  border-radius: 12px;
+  border-radius: 14px;
   margin: 10px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 18px rgba(27,67,50,0.18);
 }
-.bahce-svg {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: block;
+.bahce-katman {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.bahce-katman.aktif { opacity: 1; }
+.bahce-katman svg { width: 100%; height: 100%; display: block; }
+/* Low-poly animasyon class'ları */
+.lp-cloud { animation: lpCloudDrift 35s linear infinite; }
+.lp-bird { animation: lpBirdFly 12s linear infinite; }
+.lp-butterfly { animation: lpButterfly 5s ease-in-out infinite; }
+.lp-petal { animation: lpPetalFall 8s linear infinite; transform-origin: center; }
+.lp-sun { animation: lpSunGlow 4s ease-in-out infinite; transform-origin: center; }
+.lp-leaf-sway { animation: lpLeafSway 5s ease-in-out infinite; transform-origin: 50% 100%; }
+.lp-particle { animation: lpParticle 6s ease-in-out infinite; }
+.lp-star { animation: lpStarTwinkle 3s ease-in-out infinite alternate; }
+.lp-moon-glow { animation: lpMoonGlow 6s ease-in-out infinite; transform-origin: center; }
+.lp-firefly { animation: lpFirefly 4s ease-in-out infinite; }
+.lp-rain { animation: lpRainFall 0.9s linear infinite; }
+.lp-meteor { animation: lpMeteor 4s linear infinite; }
+.lp-lightning { animation: lpLightning 7s linear infinite; opacity: 0; }
+@keyframes lpCloudDrift { from { transform: translateX(-60px); } to { transform: translateX(380px); } }
+@keyframes lpBirdFly {
+  0% { transform: translateX(-40px) translateY(0); opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(380px) translateY(-12px); opacity: 0; }
+}
+@keyframes lpButterfly {
+  0%, 100% { transform: translate(0,0) rotate(-5deg); }
+  25% { transform: translate(8px,-12px) rotate(8deg); }
+  50% { transform: translate(15px,-4px) rotate(-3deg); }
+  75% { transform: translate(6px,-9px) rotate(10deg); }
+}
+@keyframes lpPetalFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.85; }
+  100% { transform: translateY(140px) rotate(360deg); opacity: 0; }
+}
+@keyframes lpSunGlow { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.06); opacity: 1; } }
+@keyframes lpLeafSway { 0%,100% { transform: rotate(-1deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes lpParticle { 0%,100% { transform: translateY(0) scale(1); opacity: 0; } 50% { transform: translateY(-30px) scale(1.2); opacity: 0.85; } }
+@keyframes lpStarTwinkle { 0% { opacity: 0.4; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1.15); } }
+@keyframes lpMoonGlow { 0%,100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.08); } }
+@keyframes lpFirefly { 0%,100% { transform: translate(0,0); opacity: 0.3; } 50% { transform: translate(8px,-12px); opacity: 1; } }
+@keyframes lpRainFall {
+  0% { transform: translateY(-20px); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(240px); opacity: 0; }
+}
+@keyframes lpMeteor {
+  0% { transform: translate(0,0) rotate(-25deg); opacity: 0; }
+  5%,20% { opacity: 1; }
+  25%,100% { transform: translate(180px, 90px) rotate(-25deg); opacity: 0; }
+}
+@keyframes lpLightning {
+  0%,93%,96%,100% { opacity: 0; }
+  94%,95% { opacity: 0.85; }
+}
+.bahce-svg-eski-unused {
+  /* Eski sistem — kullanılmıyor */
+  display: none;
 }
 .bahce-svg .bahce-agac {
   animation: bahceSway 5s ease-in-out infinite;
@@ -7189,7 +7243,7 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
           </div>
           <span class="bahce-asama" id="bahce-asama">—</span>
         </div>
-        <div class="bahce-gorsel" id="bahce-gorsel"></div>
+        <div class="bahce-gorsel" id="bahce-gorsel"><div class="bahce-katman bahce-katman-a"></div><div class="bahce-katman bahce-katman-b"></div></div>
         <div class="bahce-progress-konteyner">
           <div class="bahce-progress-bar"><div class="bahce-progress-dolgu" id="bahce-progress-dolgu"></div></div>
           <div class="bahce-progress-bilgi">
@@ -8419,11 +8473,360 @@ function gelismisIstatGuncelle() {
 }
 
 // ═══════════════════════════════════════
-// 🌳 MANEVİ BAHÇE
+// 🌳 MANEVİ BAHÇE — DİNAMİK SİSTEM v2
 // ═══════════════════════════════════════
-// 8 aşamalı atmosferik manzara — streak ve toplam ibadetle büyür
-// Her SVG 240x180 viewBox, full manzara: gökyüzü + dağ + toprak + ağaç + detaylar
-const BAHCE_ASAMALAR = [
+// 5 zaman dilimi (sabah/öğle/ikindi/akşam/gece) × 8 aşama × ay fazı × yağmur × kandil
+// Tek bahceSVG(asama, zaman, opts) fonksiyonu — 1.5sn crossfade ile her dakika tetiklenir
+
+// ─── 5 zaman dilimi paletleri ───
+const BAHCE_ZAMAN_PALETI = {
+  sabah: {
+    sky: ['#6B5B9B', '#E89BAA', '#F8C088'],
+    sun: { x: 60, y: 80, r: 18, halo: 50, color: '#FFD980', glow: '#FFEB9C' },
+    moon: null,
+    stars: [{ x: 290, y: 25, r: 0.8 }, { x: 270, y: 18, r: 0.6 }],
+    clouds: [{ x: 180, y: 70, op: 0.85, c: '#FCDEE0' }, { x: 220, y: 60, op: 0.75, c: '#FCDEE0' }],
+    mtFar: ['#6B5B7A', '#9D8AAA'], mtMid: ['#4A4A6A', '#7B7BA0'],
+    hill: ['#5A7A4A', '#7AA068'], grass: ['#8DBD60', '#A8D078'],
+    soil: ['#8D5B3C', '#5D3A24'], grassTop: '#7AAD50',
+    flower: '#FFB8D0', tint: 'rgba(248,180,140,0.10)',
+    particle: '#FFE082', branch: '#5D3A1F', snow: '#E8EEF5'
+  },
+  ogle: {
+    sky: ['#5DC2F0', '#90D5F2', '#C5E5F4'],
+    sun: { x: 260, y: 50, r: 22, halo: 55, color: '#FFE082', glow: '#FFF59D' },
+    moon: null, stars: [],
+    clouds: [{ x: 60, y: 35, op: 0.95, c: '#FFFFFF' }, { x: 200, y: 70, op: 0.92, c: '#FFFFFF' }],
+    mtFar: ['#6B7C9A', '#9DACC2'], mtMid: ['#4A5B7A', '#7B8CAA'],
+    hill: ['#5C8B4A', '#84B870'], grass: ['#9CCB6A', '#B8DA7E'],
+    soil: ['#8D5B3C', '#5D3A24'], grassTop: '#7AAD50',
+    flower: '#FFB8D0', tint: 'transparent',
+    particle: '#FFE082', branch: '#5D3A1F', snow: '#E8EEF5'
+  },
+  ikindi: {
+    sky: ['#3D8DC4', '#F0B870', '#F5D098'],
+    sun: { x: 240, y: 80, r: 25, halo: 65, color: '#FFB85A', glow: '#FFD97A' },
+    moon: null, stars: [],
+    clouds: [{ x: 50, y: 40, op: 0.92, c: '#FFE8C8' }, { x: 180, y: 65, op: 0.88, c: '#FFD8B0' }],
+    mtFar: ['#5B6C8A', '#8D9CB2'], mtMid: ['#3A4B6A', '#6B7C9A'],
+    hill: ['#5A8040', '#7AA058'], grass: ['#94BD58', '#AED070'],
+    soil: ['#7D4B2C', '#4D2A14'], grassTop: '#6A9D40',
+    flower: '#FFB8D0', tint: 'rgba(255,184,90,0.10)',
+    particle: '#FFD54F', branch: '#4D2A1F', snow: '#E0E8F5'
+  },
+  aksam: {
+    sky: ['#4A2B6E', '#D86F4A', '#F5C97A'],
+    sun: { x: 270, y: 130, r: 30, halo: 75, color: '#FF8A4A', glow: '#FFB870' },
+    moon: null,
+    stars: [{ x: 50, y: 25, r: 0.9 }, { x: 80, y: 18, r: 0.7 }],
+    clouds: [{ x: 60, y: 40, op: 0.92, c: '#FCDEE0' }, { x: 180, y: 60, op: 0.88, c: '#FCC5B5' }],
+    mtFar: ['#5A4868', '#8C7AA0'], mtMid: ['#3E3858', '#6B638A'],
+    hill: ['#4A6840', '#6B8B5C'], grass: ['#7AA050', '#94B868'],
+    soil: ['#6B3F26', '#3E2210'], grassTop: '#5A8D3A',
+    flower: '#FFB8D0', tint: 'rgba(255,138,74,0.12)',
+    particle: '#FFD54F', branch: '#3A1F0E', snow: '#D8C8B8'
+  },
+  gece: {
+    sky: ['#0E1340', '#1F2670', '#2E3590'],
+    sun: null,
+    moon: { x: 50, y: 55, r: 18, halo: 38 },
+    stars: [
+      { x: 30, y: 20, r: 1.2 }, { x: 60, y: 35, r: 0.9 }, { x: 95, y: 18, r: 1.4 },
+      { x: 130, y: 30, r: 0.7 }, { x: 165, y: 22, r: 1.0 }, { x: 200, y: 40, r: 0.8 },
+      { x: 230, y: 28, r: 1.1 }, { x: 270, y: 16, r: 0.9 }, { x: 295, y: 35, r: 1.3 },
+      { x: 45, y: 60, r: 0.7 }, { x: 250, y: 55, r: 0.8 }, { x: 155, y: 50, r: 0.6 }
+    ],
+    clouds: [],
+    mtFar: ['#2A3060', '#4A5290'], mtMid: ['#1A1D45', '#363D70'],
+    hill: ['#1F3A2A', '#3A5A48'], grass: ['#2D5238', '#446A4E'],
+    soil: ['#2A1E14', '#1A0F08'], grassTop: '#264430',
+    flower: '#FF6FA0', tint: 'rgba(20,30,80,0.18)',
+    particle: '#9CCBFF', branch: '#1A0E04', snow: '#5A6890',
+    fireflies: true, treeDim: true
+  }
+};
+
+const KANDIL_EKSTRA_YILDIZLAR = [
+  { x: 15, y: 12, r: 1.1 }, { x: 75, y: 8, r: 1.3 }, { x: 110, y: 50, r: 0.9 },
+  { x: 145, y: 12, r: 1.0 }, { x: 180, y: 28, r: 1.2 }, { x: 215, y: 8, r: 0.8 },
+  { x: 250, y: 38, r: 1.1 }, { x: 285, y: 22, r: 1.4 }, { x: 25, y: 45, r: 0.7 },
+  { x: 70, y: 55, r: 0.9 }, { x: 115, y: 32, r: 0.8 }, { x: 195, y: 18, r: 1.0 },
+  { x: 240, y: 10, r: 0.6 }, { x: 305, y: 14, r: 0.7 }, { x: 35, y: 30, r: 0.5 },
+  { x: 90, y: 42, r: 0.6 }, { x: 175, y: 8, r: 0.7 }, { x: 220, y: 50, r: 0.6 },
+  { x: 265, y: 28, r: 0.9 }, { x: 300, y: 50, r: 0.7 }, { x: 50, y: 8, r: 0.5 },
+  { x: 125, y: 5, r: 0.6 }, { x: 200, y: 60, r: 0.5 }
+];
+
+function bahceAktifZaman() {
+  const saat = new Date().getHours();
+  if (saat >= 5 && saat < 9) return 'sabah';
+  if (saat >= 9 && saat < 15) return 'ogle';
+  if (saat >= 15 && saat < 17) return 'ikindi';
+  if (saat >= 17 && saat < 20) return 'aksam';
+  return 'gece';
+}
+
+function bahceAyFaziTipi(hicriGun) {
+  if (hicriGun <= 1 || hicriGun >= 30) return 'yeni';
+  if (hicriGun <= 6) return 'hilal-sag';
+  if (hicriGun <= 9) return 'dordun-ilk';
+  if (hicriGun <= 13) return 'kabarık-artan';
+  if (hicriGun <= 16) return 'dolunay';
+  if (hicriGun <= 21) return 'kabarık-azalan';
+  if (hicriGun <= 24) return 'dordun-son';
+  return 'hilal-sol';
+}
+
+function bahceAySVG(cx, cy, r, faz, haloR, idSfx) {
+  if (faz === 'yeni') {
+    return `<circle class="lp-moon-glow" cx="${cx}" cy="${cy}" r="${haloR*0.5}" fill="url(#lp-moon-halo-${idSfx})" opacity="0.3"/>`;
+  }
+  let s = `<circle class="lp-moon-glow" cx="${cx}" cy="${cy}" r="${haloR}" fill="url(#lp-moon-halo-${idSfx})"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#FFF9C4"/>`;
+  if (faz === 'dolunay') {
+    s += `<circle cx="${cx-4}" cy="${cy-3}" r="2" fill="#E8DAA8" opacity="0.5"/>`;
+    s += `<circle cx="${cx+3}" cy="${cy+4}" r="1.5" fill="#E8DAA8" opacity="0.4"/>`;
+    s += `<circle cx="${cx+5}" cy="${cy-5}" r="1" fill="#E8DAA8" opacity="0.4"/>`;
+    return s;
+  }
+  const isSag = ['hilal-sag', 'dordun-ilk', 'kabarık-artan'].includes(faz);
+  const overlayX = isSag ? cx - r * 0.5 + (faz==='hilal-sag' ? -r*0.1 : faz==='kabarık-artan' ? -r*0.5 : 0) : cx + r * 0.5 - (faz==='hilal-sol' ? -r*0.1 : faz==='kabarık-azalan' ? -r*0.5 : 0);
+  const overlayR = (faz==='hilal-sag' || faz==='hilal-sol') ? r * 0.9 : (faz==='dordun-ilk' || faz==='dordun-son') ? r * 0.95 : r * 0.7;
+  s += `<circle cx="${overlayX}" cy="${cy - r*0.05}" r="${overlayR}" fill="${BAHCE_ZAMAN_PALETI.gece.sky[1]}"/>`;
+  return s;
+}
+
+// ─── 8 aşama için ağaç kompozisyonları ───
+const BAHCE_AGAC = [
+  { ad: 'Çorak Toprak', mesaj: 'İlk niyet — toprak hazırlanıyor', minStreak: 0, minIbadet: 0,
+    seviye: 0,
+    render: (z) => `<g transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="25" ry="5" fill="#000" opacity="${z.treeDim?'0.25':'0.15'}"/>
+      <polygon points="-12,200 10,198 8,205 -10,206" fill="#9CA8B8" opacity="0.8"/>
+      <polygon points="-10,200 6,198 7,202 -8,202" fill="#B5C0CC" opacity="0.8"/>
+      <path d="M-8,205 L-6,210 M2,205 L4,210 M-3,202 L-1,210" stroke="${z.branch}" stroke-width="0.6" opacity="0.5"/>
+    </g>` },
+  { ad: 'Tohum', mesaj: 'Niyet ekildi, su damlaları yağıyor', minStreak: 1, minIbadet: 10,
+    seviye: 1,
+    render: (z) => `<g transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="15" ry="3" fill="#000" opacity="0.2"/>
+      <ellipse cx="0" cy="195" rx="10" ry="2.5" fill="${z.branch}"/>
+      <path d="M0,195 Q-1,185 0,178" stroke="${z.grass[1]}" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <ellipse cx="-3" cy="179" rx="3" ry="2" fill="${z.grass[0]}" transform="rotate(-30 -3 179)"/>
+      <ellipse cx="3" cy="179" rx="3" ry="2" fill="${z.grass[0]}" transform="rotate(30 3 179)"/>
+      <ellipse cx="0" cy="170" rx="2.5" ry="3" fill="${z.grass[1]}"><animate attributeName="cy" values="170;168;170" dur="3s" repeatCount="indefinite"/></ellipse>
+    </g>` },
+  { ad: 'Fide', mesaj: 'Yapraklar açıyor — rahmetle besleniyor', minStreak: 3, minIbadet: 50,
+    seviye: 2,
+    render: (z) => `<g class="lp-leaf-sway" transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="18" ry="4" fill="#000" opacity="0.18"/>
+      <rect x="-2" y="155" width="4" height="42" fill="${z.branch}"/>
+      <polygon points="-2,155 -2,197 0,197 0,156" fill="#7B5234"/>
+      <ellipse cx="-8" cy="158" rx="9" ry="5" fill="${z.grass[0]}" transform="rotate(-25 -8 158)"/>
+      <ellipse cx="8" cy="158" rx="9" ry="5" fill="${z.grass[0]}" transform="rotate(25 8 158)"/>
+      <ellipse cx="0" cy="145" rx="7" ry="5" fill="${z.grass[1]}"/>
+      <circle cx="-7" cy="158" r="1.5" fill="${z.grass[1]}" opacity="0.7"/>
+    </g>` },
+  { ad: 'Genç Ağaç', mesaj: 'Dalların güçleniyor — yolun açılıyor', minStreak: 7, minIbadet: 200,
+    seviye: 3,
+    render: (z) => `<g class="lp-leaf-sway" transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="25" ry="5" fill="#000" opacity="0.18"/>
+      <polygon points="-6,195 6,195 4,140 -4,140" fill="${z.branch}"/>
+      <polygon points="-4,140 -6,195 -2,193 -2,142" fill="#7B5234"/>
+      <polygon points="2,142 2,193 6,195 4,140" fill="#3A2210"/>
+      <polygon points="-22,118 -8,98 4,92 16,98 22,115 14,128 -2,130 -16,125" fill="#1F4A20"/>
+      <polygon points="-18,115 -6,98 4,94 14,100 18,114 8,122 -8,120 -16,115" fill="#2E5D2B"/>
+      <polygon points="-12,108 -2,95 8,100 12,110 4,114 -8,112" fill="#4E8A47"/>
+      <polygon points="-2,95 4,85 10,95" fill="#4E8A47"/>
+    </g>` },
+  { ad: 'Olgun Ağaç', mesaj: 'Allah berekete açtı — gölge veriyor', minStreak: 14, minIbadet: 500,
+    seviye: 4,
+    render: (z) => `<g class="lp-leaf-sway" transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="32" ry="6" fill="#000" opacity="0.18"/>
+      <polygon points="-9,195 9,195 7,135 -7,135" fill="${z.branch}"/>
+      <polygon points="-7,135 -9,195 -3,193 -3,138" fill="#7B5234"/>
+      <polygon points="3,138 3,193 9,195 7,135" fill="#3A2210"/>
+      <polygon points="-7,160 -20,148 -18,145 -7,156" fill="${z.branch}"/>
+      <polygon points="7,158 20,143 22,146 7,154" fill="${z.branch}"/>
+      <polygon points="-28,108 -12,85 0,78 14,82 26,98 28,118 18,128 4,132 -14,128 -26,118" fill="#1F4A20"/>
+      <polygon points="-24,103 -10,85 0,82 14,86 22,100 20,118 8,122 -10,118 -22,108" fill="#2E5D2B"/>
+      <polygon points="-18,100 -6,88 6,84 14,92 16,103 6,108 -8,106 -16,100" fill="#4E8A47"/>
+      <polygon points="-6,88 2,72 12,86 6,90 0,86" fill="#4E8A47"/>
+      <circle cx="-12" cy="105" r="2" fill="#FFE082" opacity="0.7"/>
+      <circle cx="8" cy="98" r="2" fill="#FFE082" opacity="0.7"/>
+      <circle cx="0" cy="90" r="2" fill="#FFE082" opacity="0.7"/>
+    </g>` },
+  { ad: 'Çiçek Açan Ağaç', mesaj: 'Bahçen çiçek açtı, mâşaallah', minStreak: 30, minIbadet: 1500,
+    seviye: 5,
+    render: (z) => `<g class="lp-leaf-sway" transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="35" ry="6" fill="#000" opacity="${z.treeDim?'0.35':'0.18'}"/>
+      <polygon points="-10,195 10,195 8,140 -8,140" fill="${z.branch}"/>
+      <polygon points="-8,140 -10,195 -4,193 -4,142" fill="#7B5234"/>
+      <polygon points="4,142 4,193 10,195 8,140" fill="#3A2210"/>
+      <polygon points="-8,160 -22,148 -20,145 -8,156" fill="${z.branch}"/>
+      <polygon points="8,155 22,140 24,143 8,151" fill="${z.branch}"/>
+      <polygon points="-32,95 -15,75 0,68 18,72 32,90 35,115 25,130 5,135 -18,128 -30,115" fill="#1F4A20"/>
+      <polygon points="-28,90 -10,72 8,65 25,75 30,100 22,118 5,125 -15,120 -28,108" fill="#2E5D2B"/>
+      <polygon points="-15,75 0,55 15,68 8,72 0,68" fill="#2E5D2B"/>
+      <polygon points="-20,95 -8,80 6,75 18,85 22,100 12,110 -5,110 -18,103" fill="#4E8A47"/>
+      <polygon points="-8,80 2,65 14,75 6,80" fill="#4E8A47"/>
+      <polygon points="18,85 28,82 25,98 22,100" fill="#5D9450" opacity="0.7"/>
+      <g>${[[-18,98,4],[-4,82,4.5],[10,92,4],[20,105,3.5],[-10,115,3.5],[6,70,3.5],[-12,76,3],[14,80,3],[0,105,3]].map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="url(#lp-flower-glow)" filter="url(#lp-glow-filt)"/><circle cx="${x}" cy="${y}" r="${(r*0.4).toFixed(1)}" fill="#FFF" opacity="0.9"/>`).join('')}</g>
+      <circle class="lp-particle" cx="-30" cy="120" r="1.5" fill="${z.particle}" style="animation-delay:0s"/>
+      <circle class="lp-particle" cx="30" cy="100" r="1.2" fill="${z.particle}" style="animation-delay:-2s"/>
+      <circle class="lp-particle" cx="-25" cy="85" r="1" fill="${z.particle}" style="animation-delay:-4s"/>
+      <circle class="lp-particle" cx="25" cy="130" r="1.5" fill="${z.particle}" style="animation-delay:-3s"/>
+    </g>` },
+  { ad: 'Meyve Veren Ağaç', mesaj: 'Meyveni topla — helâl rızıkla cömert ol', minStreak: 60, minIbadet: 3500,
+    seviye: 6,
+    render: (z) => `<g class="lp-leaf-sway" transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="38" ry="6" fill="#000" opacity="${z.treeDim?'0.35':'0.2'}"/>
+      <polygon points="-12,195 12,195 10,135 -10,135" fill="${z.branch}"/>
+      <polygon points="-10,135 -12,195 -5,193 -5,138" fill="#7B5234"/>
+      <polygon points="5,138 5,193 12,195 10,135" fill="#3A2210"/>
+      <polygon points="-10,155 -25,138 -23,135 -10,151" fill="${z.branch}"/>
+      <polygon points="10,150 26,135 28,138 10,146" fill="${z.branch}"/>
+      <polygon points="-36,98 -18,72 0,62 18,68 36,88 38,118 28,132 8,138 -20,132 -34,118" fill="#1F4A20"/>
+      <polygon points="-32,93 -14,72 0,68 18,72 30,90 28,118 10,128 -12,122 -30,108" fill="#2E5D2B"/>
+      <polygon points="-22,92 -8,75 10,72 22,82 24,100 12,108 -8,106 -20,98" fill="#4E8A47"/>
+      <polygon points="-8,75 4,58 18,70 10,75 4,72" fill="#4E8A47"/>
+      <g>${[[-22,95,4.5],[-4,82,5],[14,88,5],[24,105,4.5],[-12,115,4],[6,68,4],[-16,80,3.5],[18,75,4],[0,100,4],[-8,105,3.5],[12,115,4]].map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#D32F2F"/><circle cx="${x-1}" cy="${y-1}" r="${(r*0.35).toFixed(1)}" fill="#FF6B6B" opacity="0.7"/>`).join('')}</g>
+    </g>` },
+  { ad: 'Sidre-i Müntehâ', mesaj: "Cennet bahçelerinden bir köşe — Allah'a hamdolsun", minStreak: 90, minIbadet: 7500,
+    seviye: 7,
+    render: (z) => `<g class="lp-leaf-sway" transform="translate(160,0)">
+      <ellipse cx="0" cy="195" rx="42" ry="7" fill="#000" opacity="0.4"/>
+      <circle cx="0" cy="100" r="65" fill="url(#lp-sidre-halo)" opacity="0.6"/>
+      <polygon points="-14,195 14,195 12,130 -12,130" fill="${z.branch}"/>
+      <polygon points="-12,130 -14,195 -6,193 -6,132" fill="#7B5234"/>
+      <polygon points="6,132 6,193 14,195 12,130" fill="#3A2210"/>
+      <polygon points="-12,150 -28,132 -26,128 -12,146" fill="${z.branch}"/>
+      <polygon points="12,148 30,128 32,132 12,144" fill="${z.branch}"/>
+      <polygon points="-10,170 -22,178 -24,182 -10,175" fill="${z.branch}"/>
+      <polygon points="-40,90 -20,62 0,52 22,58 40,80 42,115 30,135 10,142 -22,135 -38,115" fill="#1F4A20"/>
+      <polygon points="-35,85 -16,62 0,58 22,62 34,82 32,115 12,128 -16,122 -33,102" fill="#2E5D2B"/>
+      <polygon points="-25,88 -8,70 12,65 24,78 28,98 14,112 -8,110 -23,98" fill="#4E8A47"/>
+      <polygon points="-8,70 4,48 18,62 10,68 4,65" fill="#4E8A47"/>
+      <polygon points="22,68 32,72 30,82 24,78" fill="#5D9450"/>
+      <g>${[[-25,95,5],[-5,75,5.5],[15,82,5.5],[28,100,5],[-15,115,4.5],[8,60,5],[-12,72,4],[22,68,4.5],[-8,128,4],[14,125,4],[0,55,4.5]].map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#D4AF37" filter="url(#lp-glow-filt)"/><circle cx="${x-1}" cy="${y-1}" r="${(r*0.4).toFixed(1)}" fill="#FFF59D"/>`).join('')}</g>
+      ${[[-35,80],[35,75],[-20,55],[25,55],[0,40]].map(([x,y]) => `<g transform="translate(${x},${y})"><circle r="1.5" fill="#FFF"/><path d="M0,-5 L1,-1 L5,0 L1,1 L0,5 L-1,1 L-5,0 L-1,-1 Z" fill="#FFF" opacity="0.7"/></g>`).join('')}
+    </g>` }
+];
+
+// ─── Ana SVG render fonksiyonu ───
+function bahceSVG(asama, zaman, opts) {
+  opts = opts || {};
+  const z = BAHCE_ZAMAN_PALETI[zaman];
+  const hicriGun = opts.hicriGun || 14;
+  const ayFaz = bahceAyFaziTipi(hicriGun);
+  const kandil = !!opts.kandil;
+  const yagmur = !!opts.yagmur;
+  const idSfx = zaman;
+  let s = `<svg viewBox="0 0 320 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">`;
+  s += `<defs>
+    <linearGradient id="lp-sky-${idSfx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${z.sky[0]}"/><stop offset="50%" stop-color="${z.sky[1]}"/><stop offset="100%" stop-color="${z.sky[2]}"/></linearGradient>`;
+  if (z.sun) s += `<radialGradient id="lp-sun-glow-${idSfx}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="${z.sun.glow}" stop-opacity="1"/><stop offset="50%" stop-color="${z.sun.glow}" stop-opacity="0.4"/><stop offset="100%" stop-color="${z.sun.glow}" stop-opacity="0"/></radialGradient>`;
+  if (z.moon) s += `<radialGradient id="lp-moon-halo-${idSfx}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF9C4" stop-opacity="0.5"/><stop offset="100%" stop-color="#FFF9C4" stop-opacity="0"/></radialGradient>`;
+  s += `<linearGradient id="lp-mtfar-${idSfx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${z.mtFar[0]}"/><stop offset="100%" stop-color="${z.mtFar[1]}"/></linearGradient>
+    <linearGradient id="lp-mtmid-${idSfx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${z.mtMid[0]}"/><stop offset="100%" stop-color="${z.mtMid[1]}"/></linearGradient>
+    <linearGradient id="lp-hill-${idSfx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${z.hill[0]}"/><stop offset="100%" stop-color="${z.hill[1]}"/></linearGradient>
+    <linearGradient id="lp-grass-${idSfx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${z.grass[0]}"/><stop offset="100%" stop-color="${z.grass[1]}"/></linearGradient>
+    <linearGradient id="lp-soil-${idSfx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${z.soil[0]}"/><stop offset="100%" stop-color="${z.soil[1]}"/></linearGradient>
+    <radialGradient id="lp-flower-glow" cx="40%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFCAD8"/><stop offset="100%" stop-color="${z.flower}"/></radialGradient>
+    <radialGradient id="lp-sidre-halo" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE082" stop-opacity="0.6"/><stop offset="100%" stop-color="#FFE082" stop-opacity="0"/></radialGradient>
+    <linearGradient id="lp-meteor-trail"><stop offset="0%" stop-color="#FFE082" stop-opacity="0"/><stop offset="100%" stop-color="#FFE082"/></linearGradient>
+    <filter id="lp-glow-filt" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${zaman==='gece'?'2.5':'1.5'}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+  s += `<rect width="320" height="220" fill="url(#lp-sky-${idSfx})"/>`;
+  // Şimşek en sona taşındı — dağ/çim üstünü örtmesin
+  const yldz = z.stars.concat(kandil ? KANDIL_EKSTRA_YILDIZLAR : []);
+  yldz.forEach((y, i) => { s += `<circle class="lp-star" cx="${y.x}" cy="${y.y}" r="${y.r}" fill="#FFFFFF" style="animation-delay:${(i*0.2).toFixed(1)}s"/>`; });
+  if (kandil && zaman === 'gece') {
+    s += `<g class="lp-meteor"><line x1="0" y1="0" x2="30" y2="14" stroke="url(#lp-meteor-trail)" stroke-width="2" stroke-linecap="round" opacity="0.7"/><circle r="2" fill="#FFF"/></g>`;
+  }
+  // Bug fix: Yağmurda ay görünmesin (bulut yoğunluğu ay halosunu gizlemek için yetersiz olabilir)
+  if (z.moon && !yagmur) s += bahceAySVG(z.moon.x, z.moon.y, z.moon.r, ayFaz, z.moon.halo, idSfx);
+  if (z.sun && !yagmur) {
+    const u = z.sun;
+    s += `<circle class="lp-sun" cx="${u.x}" cy="${u.y}" r="${u.halo}" fill="url(#lp-sun-glow-${idSfx})"/>`;
+    s += `<circle cx="${u.x}" cy="${u.y}" r="${u.r}" fill="${u.color}"/>`;
+    s += `<polygon points="${u.x-5},${u.y-12} ${u.x+3},${u.y-12} ${u.x},${u.y-20}" fill="#FFF59D" opacity="0.7"/>`;
+  }
+  const bulutlar = yagmur ? [{ x:30,y:25,op:0.85,c:'#5A6878' },{ x:130,y:30,op:0.9,c:'#4A5868' },{ x:220,y:20,op:0.85,c:'#5A6878' }] : z.clouds;
+  bulutlar.forEach((c, i) => {
+    s += `<g class="lp-cloud" opacity="${c.op}" style="animation-delay:${-i*15}s"><polygon points="${c.x},${c.y+8} ${c.x+15},${c.y} ${c.x+30},${c.y} ${c.x+38},${c.y+10} ${c.x+30},${c.y+16} ${c.x+10},${c.y+16}" fill="${c.c}"/><polygon points="${c.x+30},${c.y} ${c.x+45},${c.y-4} ${c.x+55},${c.y+4} ${c.x+50},${c.y+12} ${c.x+38},${c.y+10}" fill="${c.c}" opacity="0.92"/></g>`;
+  });
+  if (yagmur) {
+    for (let i = 0; i < 22; i++) {
+      const x = (i * 14) % 320;
+      const delay = ((i * 0.13) % 1).toFixed(2);
+      const yStart = -(20 + (i*7) % 60);
+      s += `<line class="lp-rain" x1="${x}" y1="${yStart}" x2="${x-4}" y2="${yStart+12}" stroke="#A8C8E8" stroke-width="1.5" opacity="0.7" style="animation-delay:${delay}s"/>`;
+    }
+  }
+  s += `<g><polygon points="-10,150 30,100 60,130 90,110 130,150" fill="url(#lp-mtfar-${idSfx})"/><polygon points="30,100 45,110 60,130" fill="${z.mtFar[1]}" opacity="0.7"/><polygon points="90,110 110,125 130,150" fill="${z.mtFar[1]}" opacity="0.7"/><polygon points="170,145 200,105 230,125 270,108 320,145" fill="url(#lp-mtfar-${idSfx})"/><polygon points="200,105 215,118 230,125" fill="${z.mtFar[1]}" opacity="0.7"/><polygon points="270,108 290,122 320,145" fill="${z.mtFar[1]}" opacity="0.7"/></g>`;
+  s += `<g><polygon points="-10,170 20,130 50,150 80,135 110,160 150,140 180,165 220,138 260,158 300,148 320,170" fill="url(#lp-mtmid-${idSfx})"/><polygon points="20,130 35,142 50,150" fill="${z.mtMid[1]}" opacity="0.6"/><polygon points="80,135 95,148 110,160" fill="${z.mtMid[1]}" opacity="0.6"/><polygon points="150,140 165,152 180,165" fill="${z.mtMid[1]}" opacity="0.6"/><polygon points="220,138 240,148 260,158" fill="${z.mtMid[1]}" opacity="0.6"/><polygon points="20,130 25,135 30,132" fill="${z.snow}" opacity="0.7"/><polygon points="150,140 155,145 160,142" fill="${z.snow}" opacity="0.7"/></g>`;
+  s += `<g><polygon points="-10,180 30,155 80,170 130,150 180,165 220,148 270,162 320,155 320,200 -10,200" fill="url(#lp-hill-${idSfx})"/><polygon points="30,155 50,165 80,170" fill="${z.hill[1]}" opacity="0.7"/><polygon points="130,150 155,160 180,165" fill="${z.hill[1]}" opacity="0.7"/><polygon points="220,148 245,155 270,162" fill="${z.hill[1]}" opacity="0.7"/><polygon points="40,168 45,162 50,168" fill="${zaman==='gece'?'#1A2A1F':'#3A5F33'}" opacity="0.8"/><polygon points="155,160 160,154 165,160" fill="${zaman==='gece'?'#1A2A1F':'#3A5F33'}" opacity="0.8"/><polygon points="248,155 253,149 258,155" fill="${zaman==='gece'?'#1A2A1F':'#3A5F33'}" opacity="0.8"/></g>`;
+  s += `<g><polygon points="-10,210 20,180 60,195 110,178 160,192 210,180 270,195 320,182 320,220 -10,220" fill="url(#lp-grass-${idSfx})"/><polygon points="20,180 40,188 60,195" fill="${z.grass[1]}" opacity="0.7"/><polygon points="110,178 135,185 160,192" fill="${z.grass[1]}" opacity="0.7"/><polygon points="210,180 240,188 270,195" fill="${z.grass[1]}" opacity="0.7"/></g>`;
+  s += `<rect x="0" y="200" width="320" height="20" fill="url(#lp-soil-${idSfx})"/>`;
+  s += `<path d="M-10,200 L20,196 L60,201 L100,198 L150,202 L200,197 L260,201 L320,198 L320,205 L-10,205 Z" fill="${z.grassTop}"/>`;
+  if (zaman !== 'gece' && !yagmur && asama >= 5) {
+    s += `<g><circle class="lp-petal" cx="80" cy="60" r="3" fill="#F8A0C0" style="animation-delay:0s"/><circle class="lp-petal" cx="200" cy="40" r="2.5" fill="#FFD0E0" style="animation-delay:-2s"/><circle class="lp-petal" cx="50" cy="80" r="2" fill="#FFB8D0" style="animation-delay:-4s"/><circle class="lp-petal" cx="240" cy="60" r="3" fill="#F8A0C0" style="animation-delay:-6s"/></g>`;
+  }
+  if (zaman !== 'gece' && !yagmur && asama >= 3) {
+    const kc = zaman === 'aksam' ? '#1A1A2E' : '#2E3B4A';
+    s += `<g class="lp-bird"><path d="M0,0 Q4,-4 8,0 Q12,-4 16,0" stroke="${kc}" stroke-width="2" fill="none" stroke-linecap="round" transform="translate(0, 90)"/><path d="M20,4 Q24,0 28,4 Q32,0 36,4" stroke="${kc}" stroke-width="1.5" fill="none" stroke-linecap="round" transform="translate(0, 95)"/></g>`;
+  }
+  if (z.fireflies && !yagmur) {
+    s += `<g><circle class="lp-firefly" cx="100" cy="160" r="1.2" fill="#FFFF99" style="animation-delay:0s"/><circle class="lp-firefly" cx="230" cy="170" r="1.0" fill="#FFFF99" style="animation-delay:-1.5s"/><circle class="lp-firefly" cx="50" cy="175" r="1.1" fill="#FFFF99" style="animation-delay:-2.5s"/><circle class="lp-firefly" cx="280" cy="155" r="1.2" fill="#FFFF99" style="animation-delay:-3s"/></g>`;
+  }
+  s += BAHCE_AGAC[asama].render(z);
+  const cimColor = zaman === 'gece' ? '#2D5238' : '#5D8A3F';
+  s += `<g><polygon points="30,200 33,196 36,200 33,204" fill="#F8A0C0"/><circle cx="33" cy="200" r="1" fill="#FFE082"/><polygon points="48,202 50,199 52,202 50,205" fill="#FFF"/><circle cx="50" cy="202" r="0.8" fill="#FFD54F"/><path d="M40,205 L41,200 L42,205" stroke="${cimColor}" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M60,205 L61,199 L62,205" stroke="${cimColor}" stroke-width="1.2" fill="none" stroke-linecap="round"/><polygon points="105,203 108,199 111,203 108,207" fill="#A88BD1"/><circle cx="108" cy="203" r="1" fill="#FFE082"/><polygon points="270,201 273,197 276,201 273,205" fill="#F8A0C0"/><circle cx="273" cy="201" r="1" fill="#FFE082"/><polygon points="288,203 290,200 292,203 290,206" fill="#FFF"/><circle cx="290" cy="203" r="0.8" fill="#FFD54F"/><path d="M260,206 L261,200 L262,206" stroke="${cimColor}" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M280,206 L281,201 L282,206" stroke="${cimColor}" stroke-width="1.2" fill="none" stroke-linecap="round"/><polygon points="80,210 88,208 92,213 84,215" fill="#9CA8B8"/><polygon points="80,210 88,208 86,210" fill="#B5C0CC"/><polygon points="200,213 207,211 211,215 204,217" fill="#9CA8B8"/><polygon points="200,213 207,211 206,213" fill="#B5C0CC"/></g>`;
+  if (zaman !== 'gece' && !yagmur && asama >= 4) {
+    s += `<g class="lp-butterfly" transform="translate(70, 130)"><polygon points="-4,0 -7,-3 -8,1 -5,3" fill="#F8A0C0"/><polygon points="4,0 7,-3 8,1 5,3" fill="#F8A0C0"/><polygon points="-4,0 -6,2 -4,4 -2,2" fill="#E84A8A" opacity="0.7"/><polygon points="4,0 6,2 4,4 2,2" fill="#E84A8A" opacity="0.7"/><line x1="0" y1="-3" x2="0" y2="4" stroke="#2E2E2E" stroke-width="0.8"/></g>`;
+  }
+  if (z.tint !== 'transparent') s += `<rect width="320" height="220" fill="${z.tint}" pointer-events="none"/>`;
+  if (yagmur) s += `<rect width="320" height="220" fill="rgba(50,60,80,0.15)" pointer-events="none"/>`;
+  // Şimşek en üstte — dağ/çim/ağaç hepsini örtsün, flash efekti görünür
+  if (yagmur) s += `<rect class="lp-lightning" width="320" height="220" fill="#FFFFFF" pointer-events="none"/>`;
+  s += `</svg>`;
+  return s;
+}
+
+// ─── Yağmur: deterministik rastgele (gün bazlı %18) ───
+function bahceYagmurluMu() {
+  try {
+    if (typeof gunIndeksi === 'function') return gunIndeksi(100, 7) < 18;
+  } catch(e) {}
+  return false;
+}
+
+// ─── Crossfade render ───
+function bahceCrossfade(svgHTML) {
+  const c = document.getElementById('bahce-gorsel');
+  if (!c) return;
+  const a = c.querySelector('.bahce-katman-a');
+  const b = c.querySelector('.bahce-katman-b');
+  if (!a || !b) { c.innerHTML = svgHTML; return; }
+  const aktif = c.querySelector('.bahce-katman.aktif');
+  let yeni, eski;
+  if (!aktif) { yeni = a; eski = b; }
+  else { yeni = aktif === a ? b : a; eski = aktif; }
+  yeni.innerHTML = svgHTML;
+  yeni.classList.add('aktif');
+  if (eski && eski !== yeni) eski.classList.remove('aktif');
+}
+
+// Cache key — aynı parametre re-render etmez
+let _bahceSonRenderKey = '';
+
+// ─── Eski uyumluluk için: BAHCE_ASAMALAR ───
+// bahceAsamaBul() bu array'i kullanıyor — BAHCE_AGAC ile aynı meta'yı tutar
+const BAHCE_ASAMALAR = BAHCE_AGAC.map(a => ({ seviye: a.seviye, ad: a.ad, mesaj: a.mesaj, minStreak: a.minStreak, minIbadet: a.minIbadet }));
+
+// ─── ESKİ STATİK SVG'LER (artık kullanılmıyor, sadece yer tutucu) ───
+const _BAHCE_ASAMALAR_ESKI_UNUSED = [
   {
     seviye: 0, ad: 'Çorak Toprak', minStreak: 0, minIbadet: 0,
     svg: `<svg class="bahce-svg" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -9025,7 +9428,24 @@ function bahceGuncelle() {
   const aktif = bahceAsamaBul(effStreak, effIbadet);
   const sonraki = BAHCE_ASAMALAR[aktif.seviye + 1] || null;
 
-  gorselEl.innerHTML = aktif.svg;
+  // ─── Dinamik SVG render: zaman + ay fazı + kandil + yağmur ───
+  const zaman = bahceAktifZaman();
+  let hicriGun = 14;
+  try {
+    if (typeof gregToHicri === 'function') {
+      const h = gregToHicri(new Date());
+      if (h && h.day) hicriGun = h.day;
+    }
+  } catch(e) {}
+  const kandil = (typeof bugunKandilMi === 'function') ? !!bugunKandilMi() : false;
+  const yagmur = bahceYagmurluMu();
+  const renderKey = `${aktif.seviye}|${zaman}|${hicriGun}|${kandil?1:0}|${yagmur?1:0}`;
+  if (renderKey !== _bahceSonRenderKey) {
+    _bahceSonRenderKey = renderKey;
+    try {
+      bahceCrossfade(bahceSVG(aktif.seviye, zaman, { hicriGun, kandil, yagmur }));
+    } catch(e) { console.warn('bahceSVG hata:', e); }
+  }
 
   // Başlık — tamamlanan sayısıyla birlikte
   const asamaEl = document.getElementById('bahce-asama');
@@ -13408,7 +13828,9 @@ function yedekIndir() {
     cuzGunler: localStorage.getItem('kn_cuz_gunler'),
     cuzGeceActi: localStorage.getItem('kn_cuz_gece_acti'),
     sonOkunanCuz: localStorage.getItem(SON_OKUNAN_CUZ_KEY),
-    diyanetToken: localStorage.getItem(DIYANET_TOKEN_KEY)
+    diyanetToken: localStorage.getItem(DIYANET_TOKEN_KEY),
+    // Manevi Bahçe — hasat sistemi state (tamamlanan ağaçlar + snapshot)
+    bahceState: localStorage.getItem(BAHCE_STATE_KEY)
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -13466,6 +13888,7 @@ function iceAktar(event) {
       if (v.cuzGeceActi) localStorage.setItem('kn_cuz_gece_acti', v.cuzGeceActi);
       if (v.sonOkunanCuz) localStorage.setItem(SON_OKUNAN_CUZ_KEY, v.sonOkunanCuz);
       if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
+      if (v.bahceState) localStorage.setItem(BAHCE_STATE_KEY, v.bahceState);
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
@@ -13547,6 +13970,11 @@ duaCizdir();
 herseyGuncelle();
 // Uzun yıl kullanım için günde 1 kez localStorage bakım
 try { localStorageBakimKontrol(); } catch(e){}
+
+// ─── Bahçe: her dakika otomatik yenile (saat geçişlerinde tema değişir) ───
+try {
+  setInterval(() => { try { bahceGuncelle(); } catch(e){} }, 60000);
+} catch(e){}
 
 
 
@@ -15550,6 +15978,7 @@ function setupYedekYukle(event) {
         if (v.cuzGeceActi) localStorage.setItem('kn_cuz_gece_acti', v.cuzGeceActi);
         if (v.sonOkunanCuz) localStorage.setItem(SON_OKUNAN_CUZ_KEY, v.sonOkunanCuz);
         if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
+      if (v.bahceState) localStorage.setItem(BAHCE_STATE_KEY, v.bahceState);
       } catch(e) { console.warn('setupYedekYukle ek alan:', e); }
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
