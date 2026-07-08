@@ -1,5 +1,5 @@
 // İhyâ Service Worker — Offline destek
-const CACHE_NAME = 'ihya-v32';
+const CACHE_NAME = 'ihya-v33';
 const STATIK_DOSYALAR = [
   './',
   './index.html',
@@ -28,7 +28,8 @@ const STATIK_DOSYALAR = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(STATIK_DOSYALAR);
+      // cache:'reload' — HTTP önbelleğini atla, sunucudan taze kopya al
+      return cache.addAll(STATIK_DOSYALAR.map(u => new Request(u, { cache: 'reload' })));
     })
   );
   self.skipWaiting();
@@ -52,6 +53,23 @@ self.addEventListener('activate', event => {
 // Fetch stratejisi: önce cache, sonra ağ (statik için), network-first (API için)
 self.addEventListener('fetch', event => {
   const url = event.request.url;
+
+  // HTML (navigasyon / index.html) — NETWORK-FIRST:
+  // Güncellemeler telefona (iOS/Android PWA) ilk açılışta ulaşsın, offline'da cache'e düş
+  if (event.request.mode === 'navigate' || url.includes('index.html')) {
+    event.respondWith(
+      fetch(event.request).then(resp => {
+        if (resp && resp.status === 200) {
+          const cloned = resp.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, cloned));
+        }
+        return resp;
+      }).catch(() =>
+        caches.match(event.request).then(c => c || caches.match('./index.html'))
+      )
+    );
+    return;
+  }
 
   // API çağrıları (aladhan, open-meteo, fonts, cdn) için network-first + cache fallback
   if (url.includes('aladhan.com') || url.includes('api.open-meteo.com') || url.includes('fonts.googleapis.com') || url.includes('cdnjs.cloudflare.com')) {
