@@ -17607,20 +17607,23 @@ function ayetiCal(duaId) {
   _aktifAudioId++;
   const buAudioId = _aktifAudioId;
 
-  aktifAudio = new Audio();
+  // ─── iOS Fix: Sabit audio instance ile lock screen çalma ───
+  aktifAudio = document.getElementById('dua-audio-el');
+  if (!aktifAudio) {
+    aktifAudio = document.createElement('audio');
+    aktifAudio.id = 'dua-audio-el';
+    aktifAudio.setAttribute('playsinline', 'true');
+    aktifAudio.setAttribute('webkit-playsinline', 'true');
+    aktifAudio.preload = 'auto';
+    aktifAudio.style.display = 'none';
+    document.body.appendChild(aktifAudio);
+  }
   aktifAudio.playbackRate = prefs.hiz || 1.0;
-  aktifAudio.preload = 'auto';
-  // iOS Safari: playsinline + DOM'a ekle (arka plan çalma için)
-  try { aktifAudio.playsInline = true; } catch(e) {}
-  aktifAudio.setAttribute('playsinline', 'true');
-  aktifAudio.setAttribute('webkit-playsinline', 'true');
-  try {
-    if (!aktifAudio._domEkli) {
-      aktifAudio.style.display = 'none';
-      document.body.appendChild(aktifAudio);
-      aktifAudio._domEkli = true;
-    }
-  } catch(e) {}
+  // Eski event listener'ları temizle (dua'da her ayette callback değişebilir)
+  aktifAudio.onended = null;
+  aktifAudio.onerror = null;
+  aktifAudio.ontimeupdate = null;
+  aktifAudio.oncanplaythrough = null;
 
   // Vurgula
   ayetiVurgula(duaId, ayetNo, aktifAyetIdx === 0 && aktifTekrar === 0);
@@ -18521,9 +18524,10 @@ function kuranPlay() {
 
 function kuranDurdur() {
   kuranCaliyorMu = false;
+  // iOS fix: audio elementi silme, sadece durdur (yeniden başlatmak için sabit instance korunmalı)
   if (kuranAudio) {
     try { kuranAudio.pause(); } catch(e){}
-    kuranAudio = null;
+    // src temizlenmez — user tekrar play basınca aynı yerden devam edilebilir olsun
   }
   // MediaSession: playbackState "none" — lock screen kontrolleri kapansın
   try {
@@ -18644,41 +18648,55 @@ function kuranAyetCal(idx) {
   const ayetStr = String(ayet.ayet).padStart(3, '0');
   const url = `https://everyayah.com/data/${kari.yol}/${sureStr}${ayetStr}.mp3`;
 
-  if (kuranAudio) { try { kuranAudio.pause(); kuranAudio.src = ''; } catch(e){} }
-  kuranAudio = new Audio();
-  kuranAudio.preload = 'auto';
-  // iOS Safari için — arka planda çalması için önemli
-  try { kuranAudio.playsInline = true; } catch(e) {}
-  kuranAudio.setAttribute('playsinline', 'true');
-  kuranAudio.setAttribute('webkit-playsinline', 'true');
-  // Audio element'i DOM'a ekle (iOS bazı sürümleri detached audio'yu arka planda durdurur)
-  try {
-    if (!kuranAudio._domEkli) {
+  // ─── iOS Fix: HER ZAMAN aynı audio element'i kullan ───
+  // Yeni Audio() yerine sabit HTML element → iOS lock screen'de kesilmez
+  if (!kuranAudio) {
+    kuranAudio = document.getElementById('kuran-audio-el');
+    if (!kuranAudio) {
+      // Fallback: yoksa oluştur
+      kuranAudio = document.createElement('audio');
+      kuranAudio.id = 'kuran-audio-el';
+      kuranAudio.setAttribute('playsinline', 'true');
+      kuranAudio.setAttribute('webkit-playsinline', 'true');
+      kuranAudio.preload = 'auto';
       kuranAudio.style.display = 'none';
       document.body.appendChild(kuranAudio);
-      kuranAudio._domEkli = true;
     }
-  } catch(e) {}
+  }
+
+  // Sadece src değişir, instance sabit
+  try { kuranAudio.pause(); } catch(e) {}
   kuranAudio.src = url;
-  kuranAudio.onended = () => {
-    setTimeout(() => kuranAyetCal(idx + 1), 400);
-  };
-  kuranAudio.onerror = () => {
-    console.warn('Ayet ses dosyası yüklenemedi:', url);
-    setTimeout(() => kuranAyetCal(idx + 1), 600);
-  };
-  // MediaSession — arka plan/lock screen desteği
+  try { kuranAudio.load(); } catch(e) {}
+
+  // Event listener'lar bir kere kurulsun — kuranAudio sabit instance olduğu için
+  if (!kuranAudio._kuranEventKuruldu) {
+    kuranAudio.addEventListener('ended', () => {
+      const yeniIdx = (kuranAudio._aktifIdx || 0) + 1;
+      // Kısa gecikme — iOS'ta arka planda setTimeout güvenilir değil, direkt çalıştır
+      kuranAyetCal(yeniIdx);
+    });
+    kuranAudio.addEventListener('error', () => {
+      const yeniIdx = (kuranAudio._aktifIdx || 0) + 1;
+      console.warn('Ayet ses dosyası yüklenemedi:', kuranAudio.src);
+      setTimeout(() => kuranAyetCal(yeniIdx), 600);
+    });
+    kuranAudio.addEventListener('play', () => {
+      try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing'; } catch(e){}
+    });
+    kuranAudio.addEventListener('pause', () => {
+      try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused'; } catch(e){}
+    });
+    kuranAudio._kuranEventKuruldu = true;
+  }
+  // Aktif index'i sakla (ended event'inde kullanmak için)
+  kuranAudio._aktifIdx = idx;
+
+  // MediaSession — arka plan/lock screen desteği (her ayette metadata güncellenir)
   try { kuranMediaSessionKur(ayet, kari, aktifCuzNo); } catch(e) {}
   kuranAudio.play().catch(err => {
     console.warn('Audio play hatası:', err);
   });
-  // Play/Pause olay dinleyicileri — MediaSession state sync
-  kuranAudio.onplay = () => {
-    try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing'; } catch(e){}
-  };
-  kuranAudio.onpause = () => {
-    try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused'; } catch(e){}
-  };
 }
 
 // Sayfa yüklenince grid'i çiz
@@ -19804,5 +19822,10 @@ window.addEventListener('load', () => {
     <button class="ios-pwa-tamam" onclick="iosPwaPromptKapat(true)">Anladım, sonra yaparım</button>
   </div>
 </div>
+
+<!-- 🎧 iOS/Android arka plan ses için sabit audio element'ler
+     (JS'de yeni Audio() yerine bu tek instance kullanılır — lock screen'de kesilmez) -->
+<audio id="kuran-audio-el" playsinline webkit-playsinline preload="auto" style="display:none"></audio>
+<audio id="dua-audio-el" playsinline webkit-playsinline preload="auto" style="display:none"></audio>
 
 </body>
