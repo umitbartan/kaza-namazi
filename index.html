@@ -5807,6 +5807,51 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .lp-meteor { animation: lpMeteor 4s linear infinite; }
 .lp-meteor-b { animation: lpMeteor 6.5s linear infinite; animation-delay: -3.2s; }
 .lp-lightning { animation: lpLightning 7s linear infinite; opacity: 0; }
+
+/* ═══ iOS/Mobile Bahçe Optimizasyonu ═══
+   Küçük ekran + iOS Safari için: GPU katman promotion + heavy filter azalt */
+@media (max-width: 768px) {
+  /* will-change: kritik animasyonlu SVG öğeleri GPU'ya alınsın */
+  .bahce-katman .lp-cloud,
+  .bahce-katman .lp-cloud-far,
+  .bahce-katman .lp-bird,
+  .bahce-katman .lp-butterfly,
+  .bahce-katman .lp-petal,
+  .bahce-katman .lp-star,
+  .bahce-katman .lp-firefly,
+  .bahce-katman .lp-firefly2,
+  .bahce-katman .lp-rain,
+  .bahce-katman .lp-meteor,
+  .bahce-katman .lp-meteor-b,
+  .bahce-katman .lp-particle,
+  .bahce-katman .lp-pollen,
+  .bahce-katman .lp-splash,
+  .bahce-katman .lp-sun,
+  .bahce-katman .lp-moon-glow,
+  .bahce-katman .lp-halo,
+  .bahce-katman .lp-halo-soft {
+    will-change: transform, opacity;
+  }
+  /* Bahçe katmanı katman promotion — crossfade GPU'da */
+  .bahce-katman { transform: translateZ(0); }
+  /* Bulut & samanyolu ve arka plan yavaşlatarak repaint frekansı düşür */
+  .bahce-katman .lp-cloud { animation-duration: 55s; }
+  .bahce-katman .lp-cloud-far { animation-duration: 90s; }
+  .bahce-katman .lp-mist, .bahce-katman .lp-mist-b { animation-duration: 20s; }
+}
+
+/* iOS Safari-specific: backdrop-filter ve filter: drop-shadow'u devre dışı bırak
+   (iOS'ta bu iki filtre büyük performans kaybı yaratır) */
+@supports (-webkit-touch-callout: none) {
+  /* iOS'ta bahçe içindeki drop-shadow'ları kaldır — element render'ı hızlanır */
+  .bahce-katman .lp-sun,
+  .bahce-katman .lp-moon,
+  .bahce-katman .lp-ikon {
+    filter: none !important;
+  }
+  /* Kapsamlı SVG feGaussianBlur zaten inline, CSS'ten kaldıramayız ama en azından bunlar hafiflesin */
+  .bahce-katman svg { -webkit-transform: translateZ(0); transform: translateZ(0); }
+}
 .lp-halo { animation: lpHaloSoft 5s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
 /* Yeni: kanopi/çimen/atmosfer animasyonları */
 .lp-canopy { transform-box: fill-box; transform-origin: 50% 100%; animation: lpCanopySway 6.5s ease-in-out infinite; }
@@ -9117,6 +9162,11 @@ function lpCimenler(z) {
 }
 
 // ─── Ana SVG render fonksiyonu ───
+// ─── Cihaz tespiti: mobile & iOS (element sayısı azaltma için) ───
+const _bahceIsIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const _bahceIsMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+const _bahceHafif = _bahceIsIOS || _bahceIsMobile; // "Hafif" mod: daha az element
+
 function bahceSVG(asama, zaman, opts) {
   opts = opts || {};
   const z = Object.assign({ id: zaman }, BAHCE_ZAMAN_PALETI[zaman]);
@@ -9125,6 +9175,7 @@ function bahceSVG(asama, zaman, opts) {
   const kandil = !!opts.kandil;
   const yagmur = !!opts.yagmur;
   const idSfx = zaman;
+  const hafif = _bahceHafif; // iOS + mobile'da element sayısı azalır
   const rimX = z.lightDir < 0 ? { x1: 0, x2: 1 } : { x1: 1, x2: 0 };
   let s = `<svg viewBox="0 0 320 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">`;
   s += `<defs>
@@ -9152,13 +9203,16 @@ function bahceSVG(asama, zaman, opts) {
     s += `<rect x="-60" y="18" width="460" height="46" fill="url(#lp-milky-${idSfx})" transform="rotate(-16 160 45)"/>`;
     s += `<g opacity="0.7">${[[70,52],[105,40],[140,44],[175,32],[210,38],[245,26]].map((p,i) => `<circle class="lp-star" cx="${p[0]}" cy="${p[1]}" r="0.5" fill="#DDE6FF" style="animation-delay:${(i*0.45).toFixed(2)}s"/>`).join('')}</g>`;
   }
-  // 3. Yıldızlar
-  const yldz = z.stars.concat(kandil ? KANDIL_EKSTRA_YILDIZLAR : []);
+  // 3. Yıldızlar — mobile/iOS'ta yıldız sayısı azaltılır (parıldama animasyonu iOS'ta pahalı)
+  let yldz = z.stars.concat(kandil ? KANDIL_EKSTRA_YILDIZLAR : []);
+  if (hafif && yldz.length > 8) yldz = yldz.filter((_, i) => i % 3 !== 2); // ~%67'sini tut
   yldz.forEach((y, i) => { s += `<circle class="lp-star" cx="${y.x}" cy="${y.y}" r="${y.r}" fill="#FFFFFF" style="animation-delay:${(i*0.2).toFixed(1)}s"/>`; });
-  // 4. Meteorlar (kandil gecesi)
+  // 4. Meteorlar (kandil gecesi) — mobile'da sadece 1 meteor
   if (kandil && zaman === 'gece') {
     s += `<g class="lp-meteor"><line x1="0" y1="0" x2="30" y2="14" stroke="url(#lp-meteor-trail-${idSfx})" stroke-width="2" stroke-linecap="round" opacity="0.7"/><circle r="2" fill="#FFF"/></g>`;
-    s += `<g transform="translate(140,-10)"><g class="lp-meteor-b"><line x1="0" y1="0" x2="24" y2="11" stroke="url(#lp-meteor-trail-${idSfx})" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><circle r="1.5" fill="#FFF"/></g></g>`;
+    if (!hafif) {
+      s += `<g transform="translate(140,-10)"><g class="lp-meteor-b"><line x1="0" y1="0" x2="24" y2="11" stroke="url(#lp-meteor-trail-${idSfx})" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><circle r="1.5" fill="#FFF"/></g></g>`;
+    }
   }
   // 5. Ay / Güneş
   if (z.moon && !yagmur) s += bahceAySVG(z.moon.x, z.moon.y, z.moon.r, ayFaz, z.moon.halo, idSfx);
@@ -9214,9 +9268,13 @@ function bahceSVG(asama, zaman, opts) {
   if (z.flock && !yagmur) {
     s += `<g class="lp-flock" opacity="0.85">${[[0,50],[14,44],[28,52],[40,40],[54,48]].map(p => `<path d="M${p[0]},${p[1]} q2.5,-2.5 5,0 q2.5,-2.5 5,0" stroke="#1A1A2E" stroke-width="1.3" fill="none" stroke-linecap="round"/>`).join('')}</g>`;
   }
-  // 16. Ateşböcekleri (gece)
+  // 16. Ateşböcekleri (gece) — mobile'da 7 → 4 (translate animasyonu iOS'ta pahalı)
   if (z.fireflies && !yagmur) {
-    s += `<g><circle class="lp-firefly" cx="100" cy="160" r="1.2" fill="#FFFF99" style="animation-delay:0s"/><circle class="lp-firefly" cx="230" cy="170" r="1.0" fill="#FFFF99" style="animation-delay:-1.5s"/><circle class="lp-firefly" cx="50" cy="175" r="1.1" fill="#FFFF99" style="animation-delay:-2.5s"/><circle class="lp-firefly" cx="280" cy="155" r="1.2" fill="#FFFF99" style="animation-delay:-3s"/><circle class="lp-firefly2" cx="140" cy="168" r="1.0" fill="#D8FF9C" style="animation-delay:-0.8s"/><circle class="lp-firefly2" cx="195" cy="158" r="1.1" fill="#D8FF9C" style="animation-delay:-2.1s"/><circle class="lp-firefly2" cx="75" cy="162" r="0.9" fill="#D8FF9C" style="animation-delay:-4s"/></g>`;
+    if (hafif) {
+      s += `<g><circle class="lp-firefly" cx="100" cy="160" r="1.2" fill="#FFFF99" style="animation-delay:0s"/><circle class="lp-firefly" cx="230" cy="170" r="1.0" fill="#FFFF99" style="animation-delay:-1.5s"/><circle class="lp-firefly" cx="50" cy="175" r="1.1" fill="#FFFF99" style="animation-delay:-2.5s"/><circle class="lp-firefly2" cx="195" cy="158" r="1.1" fill="#D8FF9C" style="animation-delay:-2.1s"/></g>`;
+    } else {
+      s += `<g><circle class="lp-firefly" cx="100" cy="160" r="1.2" fill="#FFFF99" style="animation-delay:0s"/><circle class="lp-firefly" cx="230" cy="170" r="1.0" fill="#FFFF99" style="animation-delay:-1.5s"/><circle class="lp-firefly" cx="50" cy="175" r="1.1" fill="#FFFF99" style="animation-delay:-2.5s"/><circle class="lp-firefly" cx="280" cy="155" r="1.2" fill="#FFFF99" style="animation-delay:-3s"/><circle class="lp-firefly2" cx="140" cy="168" r="1.0" fill="#D8FF9C" style="animation-delay:-0.8s"/><circle class="lp-firefly2" cx="195" cy="158" r="1.1" fill="#D8FF9C" style="animation-delay:-2.1s"/><circle class="lp-firefly2" cx="75" cy="162" r="0.9" fill="#D8FF9C" style="animation-delay:-4s"/></g>`;
+    }
   }
   // 17. Kandil nuru (ağacın ardında)
   if (kandil && asama >= 3) {
@@ -9231,19 +9289,24 @@ function bahceSVG(asama, zaman, opts) {
     s += `<g transform="translate(70, 168)"><g class="lp-butterfly"><polygon points="-4,0 -7,-3 -8,1 -5,3" fill="#F8A0C0"/><polygon points="4,0 7,-3 8,1 5,3" fill="#F8A0C0"/><polygon points="-4,0 -6,2 -4,4 -2,2" fill="#E84A8A" opacity="0.7"/><polygon points="4,0 6,2 4,4 2,2" fill="#E84A8A" opacity="0.7"/><line x1="0" y1="-3" x2="0" y2="4" stroke="#2E2E2E" stroke-width="0.8"/></g></g>`;
     s += `<g transform="translate(245, 172) scale(0.75)"><g class="lp-butterfly" style="animation-delay:-2.5s"><polygon points="-4,0 -7,-3 -8,1 -5,3" fill="#9CC8F0"/><polygon points="4,0 7,-3 8,1 5,3" fill="#9CC8F0"/><line x1="0" y1="-3" x2="0" y2="4" stroke="#2E2E2E" stroke-width="0.8"/></g></g>`;
   }
-  // 21. Polen (ikindi)
+  // 21. Polen (ikindi) — mobile'da 5 → 3
   if (z.pollen && !yagmur) {
-    s += [[250,150],[210,165],[270,130],[190,145],[235,175]].map((p,i) => `<circle class="lp-pollen" cx="${p[0]}" cy="${p[1]}" r="1.1" fill="#FFD54F" style="animation-delay:${(-i*1.4).toFixed(1)}s"/>`).join('');
+    const polenler = hafif ? [[250,150],[210,165],[235,175]] : [[250,150],[210,165],[270,130],[190,145],[235,175]];
+    s += polenler.map((p,i) => `<circle class="lp-pollen" cx="${p[0]}" cy="${p[1]}" r="1.1" fill="#FFD54F" style="animation-delay:${(-i*1.4).toFixed(1)}s"/>`).join('');
   }
   // 22. Yağmur (çizgiler + sıçramalar) — en üst katman
+  // Mobile/iOS'ta 22 damla → 12 damla (44% azalma, akışkanlık iyileşir)
   if (yagmur) {
-    for (let i = 0; i < 22; i++) {
-      const x = (i * 14) % 320;
+    const damlaSayisi = hafif ? 12 : 22;
+    const step = 320 / damlaSayisi;
+    for (let i = 0; i < damlaSayisi; i++) {
+      const x = Math.round((i + 0.5) * step);
       const delay = ((i * 0.13) % 1).toFixed(2);
       const yStart = -(20 + (i*7) % 60);
       s += `<line class="lp-rain" x1="${x}" y1="${yStart}" x2="${x-4}" y2="${yStart+12}" stroke="#A8C8E8" stroke-width="1.5" opacity="0.7" style="animation-delay:${delay}s"/>`;
     }
-    s += [[60,199],[135,201],[215,198],[285,201]].map((p,i) => `<circle class="lp-splash" cx="${p[0]}" cy="${p[1]}" r="2" fill="none" stroke="#A8C8E8" stroke-width="0.8" style="animation-delay:${(i*0.22).toFixed(2)}s"/>`).join('');
+    const splashlar = hafif ? [[135,201],[215,198]] : [[60,199],[135,201],[215,198],[285,201]];
+    s += splashlar.map((p,i) => `<circle class="lp-splash" cx="${p[0]}" cy="${p[1]}" r="2" fill="none" stroke="#A8C8E8" stroke-width="0.8" style="animation-delay:${(i*0.22).toFixed(2)}s"/>`).join('');
   }
   // 23. Renk tonu katmanları
   if (z.tint !== 'transparent') s += `<rect width="320" height="220" fill="${z.tint}" pointer-events="none"/>`;
@@ -17547,6 +17610,17 @@ function ayetiCal(duaId) {
   aktifAudio = new Audio();
   aktifAudio.playbackRate = prefs.hiz || 1.0;
   aktifAudio.preload = 'auto';
+  // iOS Safari: playsinline + DOM'a ekle (arka plan çalma için)
+  try { aktifAudio.playsInline = true; } catch(e) {}
+  aktifAudio.setAttribute('playsinline', 'true');
+  aktifAudio.setAttribute('webkit-playsinline', 'true');
+  try {
+    if (!aktifAudio._domEkli) {
+      aktifAudio.style.display = 'none';
+      document.body.appendChild(aktifAudio);
+      aktifAudio._domEkli = true;
+    }
+  } catch(e) {}
 
   // Vurgula
   ayetiVurgula(duaId, ayetNo, aktifAyetIdx === 0 && aktifTekrar === 0);
@@ -18451,6 +18525,13 @@ function kuranDurdur() {
     try { kuranAudio.pause(); } catch(e){}
     kuranAudio = null;
   }
+  // MediaSession: playbackState "none" — lock screen kontrolleri kapansın
+  try {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = 'none';
+      navigator.mediaSession.metadata = null;
+    }
+  } catch(e) {}
   const btn = document.getElementById('kuran-play-btn');
   if (btn) {
     btn.classList.remove('calıyor');
@@ -18459,6 +18540,70 @@ function kuranDurdur() {
     if (ikon) ikon.textContent = '▶';
     if (yazi) yazi.textContent = 'Tümünü Çal';
   }
+}
+
+// ─── MediaSession Kurulumu (iOS/Android arka plan çalma + lock screen kontrolleri) ───
+let _mediaSessionKuruldu = false;
+function kuranMediaSessionKur(ayet, kari, cuzNo) {
+  if (!('mediaSession' in navigator)) return;
+  try {
+    const sureAdi = (typeof SURE_ADLARI !== 'undefined' && SURE_ADLARI[ayet.sure]) ? SURE_ADLARI[ayet.sure] :
+                    (typeof SURELER !== 'undefined' && SURELER[ayet.sure] && SURELER[ayet.sure].adi) ? SURELER[ayet.sure].adi :
+                    `Sûre ${ayet.sure}`;
+    // Metadata: lock screen'de gözükecek
+    if (typeof MediaMetadata !== 'undefined') {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: `${sureAdi} — ${ayet.ayet}. âyet`,
+        artist: (kari && kari.ad) || 'Kâri',
+        album: cuzNo ? `İhyâ · Cüz ${cuzNo}` : 'İhyâ · Kur\'an-ı Kerîm',
+        artwork: [
+          { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+        ]
+      });
+    }
+    // Action handlers — bir kere kurulsun (idempotent)
+    if (!_mediaSessionKuruldu) {
+      navigator.mediaSession.setActionHandler('play', () => {
+        if (kuranAudio && kuranAudio.paused) {
+          kuranAudio.play().catch(() => {});
+          navigator.mediaSession.playbackState = 'playing';
+        }
+      });
+      navigator.mediaSession.setActionHandler('pause', () => {
+        if (kuranAudio && !kuranAudio.paused) {
+          kuranAudio.pause();
+          navigator.mediaSession.playbackState = 'paused';
+        }
+      });
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        if (typeof kuranAktifAyetIdx === 'number' && kuranAktifAyetIdx > 0) {
+          kuranAyetCal(kuranAktifAyetIdx - 1);
+        }
+      });
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        if (typeof kuranAktifAyetIdx === 'number') {
+          kuranAyetCal(kuranAktifAyetIdx + 1);
+        }
+      });
+      try {
+        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+          if (kuranAudio) {
+            const offset = (details && details.seekOffset) || 10;
+            kuranAudio.currentTime = Math.max(0, kuranAudio.currentTime - offset);
+          }
+        });
+        navigator.mediaSession.setActionHandler('seekforward', (details) => {
+          if (kuranAudio) {
+            const offset = (details && details.seekOffset) || 10;
+            kuranAudio.currentTime = Math.min(kuranAudio.duration || Infinity, kuranAudio.currentTime + offset);
+          }
+        });
+      } catch(e) { /* Bazı tarayıcılar seek desteklemez */ }
+      _mediaSessionKuruldu = true;
+    }
+    navigator.mediaSession.playbackState = 'playing';
+  } catch(e) { console.warn('MediaSession kur:', e); }
 }
 
 function kuranAyetCal(idx) {
@@ -18499,8 +18644,22 @@ function kuranAyetCal(idx) {
   const ayetStr = String(ayet.ayet).padStart(3, '0');
   const url = `https://everyayah.com/data/${kari.yol}/${sureStr}${ayetStr}.mp3`;
 
-  if (kuranAudio) { try { kuranAudio.pause(); } catch(e){} }
-  kuranAudio = new Audio(url);
+  if (kuranAudio) { try { kuranAudio.pause(); kuranAudio.src = ''; } catch(e){} }
+  kuranAudio = new Audio();
+  kuranAudio.preload = 'auto';
+  // iOS Safari için — arka planda çalması için önemli
+  try { kuranAudio.playsInline = true; } catch(e) {}
+  kuranAudio.setAttribute('playsinline', 'true');
+  kuranAudio.setAttribute('webkit-playsinline', 'true');
+  // Audio element'i DOM'a ekle (iOS bazı sürümleri detached audio'yu arka planda durdurur)
+  try {
+    if (!kuranAudio._domEkli) {
+      kuranAudio.style.display = 'none';
+      document.body.appendChild(kuranAudio);
+      kuranAudio._domEkli = true;
+    }
+  } catch(e) {}
+  kuranAudio.src = url;
   kuranAudio.onended = () => {
     setTimeout(() => kuranAyetCal(idx + 1), 400);
   };
@@ -18508,9 +18667,18 @@ function kuranAyetCal(idx) {
     console.warn('Ayet ses dosyası yüklenemedi:', url);
     setTimeout(() => kuranAyetCal(idx + 1), 600);
   };
+  // MediaSession — arka plan/lock screen desteği
+  try { kuranMediaSessionKur(ayet, kari, aktifCuzNo); } catch(e) {}
   kuranAudio.play().catch(err => {
     console.warn('Audio play hatası:', err);
   });
+  // Play/Pause olay dinleyicileri — MediaSession state sync
+  kuranAudio.onplay = () => {
+    try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing'; } catch(e){}
+  };
+  kuranAudio.onpause = () => {
+    try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused'; } catch(e){}
+  };
 }
 
 // Sayfa yüklenince grid'i çiz
