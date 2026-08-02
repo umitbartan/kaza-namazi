@@ -3288,7 +3288,550 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 12px rgba(212,175,55,0.4); }
 }
 
-/* ═══ YOLCULUK HARİTASI ═══ */
+/* ═══ ✨ VAKİT TAMAMLAMA KUTLAMA MODAL (sıcak-manevi) ═══ */
+.vt-modal {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(15,46,31,0.85), rgba(0,0,0,0.92));
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9800;
+  padding: 16px;
+  animation: vtBgFade 0.6s ease;
+}
+.vt-modal.acik { display: flex; }
+@keyframes vtBgFade { from { opacity: 0; } to { opacity: 1; } }
+.vt-modal-icerik {
+  background: linear-gradient(135deg, #1F5F42 0%, #0F2E1F 100%);
+  color: #FFF;
+  border: 2px solid #D4AF37;
+  border-radius: 22px;
+  max-width: 380px;
+  width: 100%;
+  padding: 28px 24px 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(212,175,55,0.35);
+  animation: vtIcerikGir 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+}
+@keyframes vtIcerikGir {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.vt-nur-dalga {
+  position: absolute;
+  top: -100px; left: 50%;
+  width: 400px; height: 400px;
+  margin-left: -200px;
+  background: radial-gradient(circle, rgba(255,224,130,0.35) 0%, rgba(255,224,130,0.15) 30%, transparent 60%);
+  border-radius: 50%;
+  animation: vtNurDalga 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes vtNurDalga {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.vt-parilti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.vt-parilti::before, .vt-parilti::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(6px);
+  animation: vtParilti 5s ease-in-out infinite;
+}
+.vt-parilti::before {
+  top: 15%; left: 12%;
+  width: 8px; height: 8px;
+  background: #FFE082;
+}
+.vt-parilti::after {
+  bottom: 20%; right: 15%;
+  width: 10px; height: 10px;
+  background: #FFD54F;
+  animation-delay: -2.5s;
+}
+@keyframes vtParilti {
+  0%, 100% { opacity: 0.4; transform: translateY(0) scale(1); }
+  50% { opacity: 0.9; transform: translateY(-8px) scale(1.3); }
+}
+.vt-ikon {
+  font-size: 60px;
+  line-height: 1;
+  filter: drop-shadow(0 0 20px rgba(255,224,130,0.6));
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+  animation: vtIkonGir 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes vtIkonGir {
+  from { transform: scale(0) rotate(-30deg); }
+  to { transform: scale(1) rotate(0); }
+}
+.vt-baslik {
+  font-size: 16px;
+  font-weight: 900;
+  color: #FFD54F;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+  position: relative; z-index: 2;
+  text-shadow: 0 0 20px rgba(255,213,79,0.5);
+}
+.vt-alt-baslik {
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 18px;
+  position: relative; z-index: 2;
+  letter-spacing: -0.3px;
+}
+.vt-istatistik {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,175,55,0.35);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  text-align: left;
+  position: relative; z-index: 2;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.vt-istatistik .vt-stat-satir {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.vt-istatistik .vt-stat-satir + .vt-stat-satir {
+  border-top: 1px dashed rgba(212,175,55,0.20);
+  padding-top: 6px;
+  margin-top: 6px;
+}
+.vt-istatistik .vt-stat-etiket {
+  color: rgba(255,255,255,0.75);
+  font-weight: 600;
+}
+.vt-istatistik .vt-stat-deger {
+  color: #FFD54F;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.vt-ayet {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.90);
+  font-style: italic;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-left: 3px solid #D4AF37;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  text-align: left;
+  position: relative; z-index: 2;
+}
+.vt-sonraki {
+  font-size: 12px;
+  color: #FFD54F;
+  font-weight: 700;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  background: rgba(212,175,55,0.10);
+  border-radius: 10px;
+  position: relative; z-index: 2;
+}
+.vt-sonraki:empty { display: none; }
+.vt-buton {
+  width: 100%;
+  background: linear-gradient(135deg, #D4AF37, #F4D03F);
+  color: #1B4332;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+  transition: transform 0.2s;
+  position: relative; z-index: 2;
+}
+.vt-buton:hover { transform: translateY(-1px); }
+.vt-buton:active { transform: scale(0.97); }
+.vt-buton-ikinci {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  color: #F4D03F;
+  border: 1px solid rgba(244,208,63,0.35);
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+  position: relative; z-index: 2;
+  margin-top: 8px;
+}
+.vt-buton-ikinci:hover { background: rgba(255,255,255,0.14); border-color: rgba(244,208,63,0.6); }
+.vt-buton-ikinci:active { transform: scale(0.97); }
+.vt-butonlar { display: flex; flex-direction: column; gap: 0; width: 100%; }
+/* Anıyı sakla — temiz mod (butonlar gizlenir, kullanıcı SS alır) */
+.vt-modal.temiz-mod .vt-butonlar { opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.vt-modal.temiz-mod .vt-ss-hint { opacity: 1; }
+.vt-ss-hint {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: rgba(244,208,63,0.75); text-align: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px;
+  white-space: nowrap; letter-spacing: 0.3px;
+}
+/* Kaza Berâtı için de aynı sistem */
+.kb-buton-ikinci {
+  background: rgba(255,255,255,0.08); color: #FFD700;
+  border: 1px solid rgba(255,215,0,0.4); padding: 11px 20px;
+  border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: inherit; margin-top: 10px; transition: all 0.2s;
+}
+.kb-buton-ikinci:hover { background: rgba(255,255,255,0.15); }
+.kb-buton-ikinci:active { transform: scale(0.97); }
+.kb-modal.temiz-mod .kb-butonlar { opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.kb-modal.temiz-mod .kb-ss-hint { opacity: 1; }
+.kb-butonlar { display: flex; flex-direction: column; gap: 0; }
+.kb-ss-hint {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: rgba(255,215,0,0.8); text-align: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  background: rgba(0,0,0,0.5); padding: 6px 12px; border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ═══ 🌟 KAZA BERÂTI (5/5 Efsanevi Ekran) ═══ */
+.kb-modal {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #0F2E1F 0%, #000 90%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9900;
+  padding: 12px;
+  animation: vtBgFade 0.8s ease;
+}
+.kb-modal.acik { display: flex; }
+.kb-modal-icerik {
+  background: linear-gradient(180deg, #0F2E1F 0%, #1F5F42 100%);
+  color: #FFF;
+  border: 3px solid #D4AF37;
+  border-radius: 24px;
+  max-width: 420px;
+  width: 100%;
+  padding: 32px 26px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(212,175,55,0.6), inset 0 0 30px rgba(255,224,130,0.15);
+  animation: vtIcerikGir 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+}
+.kb-nur {
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.15) 45deg, transparent 90deg, rgba(255,224,130,0.20) 135deg, transparent 180deg, rgba(212,175,55,0.15) 225deg, transparent 270deg, rgba(255,224,130,0.20) 315deg, transparent 360deg);
+  animation: kbNur 20s linear infinite;
+  pointer-events: none;
+}
+@keyframes kbNur { to { transform: rotate(360deg); } }
+.kb-yildizlar { position: absolute; inset: 0; pointer-events: none; }
+.kb-yildizlar::before, .kb-yildizlar::after {
+  content: '✦';
+  position: absolute;
+  color: #FFE082;
+  animation: kbYildiz 3s ease-in-out infinite;
+}
+.kb-yildizlar::before { top: 20%; left: 10%; font-size: 16px; }
+.kb-yildizlar::after { top: 30%; right: 12%; font-size: 12px; animation-delay: -1.5s; }
+@keyframes kbYildiz { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+.kb-ikon {
+  font-size: 80px;
+  line-height: 1;
+  filter: drop-shadow(0 0 30px rgba(255,224,130,0.8));
+  margin-bottom: 10px;
+  position: relative; z-index: 2;
+  animation: kbIkonPulse 3s ease-in-out infinite;
+}
+@keyframes kbIkonPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.kb-baslik {
+  font-size: 22px;
+  font-weight: 900;
+  color: #FFD54F;
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+  position: relative; z-index: 2;
+  text-shadow: 0 0 30px rgba(255,213,79,0.7);
+}
+.kb-alt {
+  font-size: 14px;
+  color: rgba(255,255,255,0.90);
+  margin-bottom: 20px;
+  position: relative; z-index: 2;
+}
+.kb-istatistik {
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(212,175,55,0.40);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.90);
+  line-height: 1.8;
+  position: relative; z-index: 2;
+}
+.kb-istatistik strong { color: #FFD54F; font-weight: 900; }
+.kb-mesaj {
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.90);
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid #D4AF37;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  text-align: left;
+  position: relative; z-index: 2;
+}
+.kb-tebrik {
+  font-size: 13px;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.7;
+  margin-bottom: 18px;
+  position: relative; z-index: 2;
+}
+.kb-tebrik strong { color: #FFD54F; font-weight: 800; }
+.kb-buton {
+  width: 100%;
+  background: linear-gradient(135deg, #FFD54F, #D4AF37);
+  color: #0F2E1F;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.7px;
+  box-shadow: 0 5px 20px rgba(212,175,55,0.5);
+  position: relative; z-index: 2;
+}
+
+/* İbadet Karnem'de ✓ onay ikonu (vakit tamam olduğunda) */
+.ik-vakit.tamam { position: relative; }
+.ik-vakit.tamam::after {
+  content: '✓';
+  position: absolute;
+  top: 2px; right: 3px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #2E7D32;
+  background: #FFF;
+  border: 1.5px solid #2E7D32;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.ik-vakit.tamam .ik-vakit-sayi { color: #2E7D32; }
+
+/* Ana kaza sayaç kartı — vakit tamamlandığında */
+.vakit-karti.tamamlandi {
+  background: linear-gradient(135deg, #E8F5E9 0%, #FFF8E7 100%) !important;
+  border: 1.5px solid #66BB6A !important;
+  position: relative;
+}
+.vakit-karti.tamamlandi::before {
+  content: '✓ TAMAMLANDI';
+  position: absolute;
+  top: 8px; right: 8px;
+  font-size: 9px;
+  font-weight: 900;
+  color: #1B5E20;
+  background: rgba(102,187,106,0.20);
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+/* Rehber kartı — İbadet Karnem üstünde */
+.rehber-kart {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFFDF5 100%);
+  border: 1.5px dashed #D4AF37;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  color: #1B4332;
+  line-height: 1.55;
+}
+.rehber-kart-baslik {
+  font-size: 10px;
+  font-weight: 900;
+  color: #B8941F;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.rehber-kart .tamam-liste {
+  color: #1B5E20; font-weight: 700;
+  margin-bottom: 4px;
+}
+.rehber-kart .sonraki-hedef {
+  font-weight: 800; color: #1B4332;
+}
+.rehber-kart .rehber-taktik {
+  font-size: 11.5px;
+  color: #2D5F3F;
+  margin-top: 6px;
+  font-style: italic;
+}
+.rehber-kart:empty { display: none; }
+
+/* ═══ İBADET KARNEM (yolculuk haritası yerine) ═══ */
+.ibadet-karne-kart {
+  background: linear-gradient(135deg, #FFFDF5 0%, #FAF7F0 100%);
+  border: 1.5px solid var(--vurgu);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(212,175,55,0.14);
+  position: relative;
+  overflow: hidden;
+}
+.ibadet-karne-kart::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%);
+  pointer-events: none;
+}
+.ibadet-karne-baslik {
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--vurgu);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.ibadet-karne-toplam {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 4px;
+}
+.ibadet-karne-rakam {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--koyu);
+  letter-spacing: -1px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.ibadet-karne-etiket {
+  font-size: 10px;
+  color: var(--orta);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.ibadet-karne-esdeger {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #B8941F;
+  margin: 6px 0 10px;
+  padding: 6px 10px;
+  background: rgba(212,175,55,0.10);
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+}
+.ibadet-karne-vakitler {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  margin: 8px 0;
+  position: relative;
+  z-index: 1;
+}
+.ik-vakit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  background: white;
+  border: 1px solid rgba(212,175,55,0.20);
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.ik-vakit:hover {
+  border-color: rgba(212,175,55,0.55);
+  transform: translateY(-1px);
+}
+.ik-vakit.en-cok {
+  background: linear-gradient(135deg, #FFF8E7, #FFFDF5);
+  border-color: var(--vurgu);
+  box-shadow: 0 2px 8px rgba(212,175,55,0.20);
+}
+.ik-vakit-ikon { font-size: 15px; line-height: 1; }
+.ik-vakit-ad {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--soft);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.ik-vakit-sayi {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--koyu);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.ik-vakit.en-cok .ik-vakit-sayi { color: #B8941F; }
+.ibadet-karne-not {
+  font-size: 11px;
+  color: var(--orta);
+  text-align: center;
+  margin-top: 6px;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 380px) {
+  .ibadet-karne-rakam { font-size: 28px; }
+  .ik-vakit { padding: 6px 3px; }
+  .ik-vakit-ikon { font-size: 13px; }
+  .ik-vakit-ad { font-size: 7.5px; }
+  .ik-vakit-sayi { font-size: 12px; }
+}
+
+/* ═══ YOLCULUK HARİTASI (eski, artık kullanılmıyor ama CSS backward compat) ═══ */
 .yh-kart {
   background: var(--kart);
   border: 1px solid var(--border);
@@ -7414,18 +7957,25 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         </div>
       </div>
 
-      <div class="yh-kart">
-        <div class="yh-baslik">🛤️ Manevi Yolculuk Haritası</div>
-        <div class="yh-yol" id="yh-yol">
-          <div class="yh-cizgi"><div class="yh-cizgi-dolgu" id="yh-cizgi-dolgu" style="width:0%"></div></div>
-          <div class="yh-nokta" data-mid="0" onclick="yhNoktaTikla(0)"><div class="yh-nokta-yuvarlak">🌱</div><div class="yh-nokta-ad">Müptedi</div></div>
-          <div class="yh-nokta" data-mid="1" onclick="yhNoktaTikla(1)"><div class="yh-nokta-yuvarlak">🌿</div><div class="yh-nokta-ad">Mürid</div></div>
-          <div class="yh-nokta" data-mid="2" onclick="yhNoktaTikla(2)"><div class="yh-nokta-yuvarlak">🌳</div><div class="yh-nokta-ad">Tâlib</div></div>
-          <div class="yh-nokta" data-mid="3" onclick="yhNoktaTikla(3)"><div class="yh-nokta-yuvarlak">⭐</div><div class="yh-nokta-ad">Sâlik</div></div>
-          <div class="yh-nokta" data-mid="4" onclick="yhNoktaTikla(4)"><div class="yh-nokta-yuvarlak">🏆</div><div class="yh-nokta-ad">Müntehî</div></div>
-          <div class="yh-nokta" data-mid="5" onclick="yhNoktaTikla(5)"><div class="yh-nokta-yuvarlak">👑</div><div class="yh-nokta-ad">Vâsıl</div></div>
+      <!-- 🧭 Sonraki Adım Rehberi (vakit tamamlandığında görünür) -->
+      <div class="rehber-kart" id="rehber-kart"></div>
+
+      <!-- 📿 İbadet Karnem — Yolculuk Haritası yerine namaz istatistikleri -->
+      <div class="ibadet-karne-kart" id="ibadet-karne">
+        <div class="ibadet-karne-baslik">📿 İbadet Karnem</div>
+        <div class="ibadet-karne-toplam">
+          <div class="ibadet-karne-rakam" id="ik-toplam">0</div>
+          <div class="ibadet-karne-etiket">toplam namaz</div>
         </div>
-        <div class="yh-aciklama" id="yh-aciklama">Yolculuğa başla — her amel seni bir adım ileri taşır.</div>
+        <div class="ibadet-karne-esdeger" id="ik-esdeger">≈ —</div>
+        <div class="ibadet-karne-vakitler" id="ik-vakitler">
+          <div class="ik-vakit" data-vakit="imsak"><span class="ik-vakit-ikon">🌅</span><span class="ik-vakit-ad">Sabah</span><span class="ik-vakit-sayi" id="ik-imsak">0</span></div>
+          <div class="ik-vakit" data-vakit="ogle"><span class="ik-vakit-ikon">☀️</span><span class="ik-vakit-ad">Öğle</span><span class="ik-vakit-sayi" id="ik-ogle">0</span></div>
+          <div class="ik-vakit" data-vakit="ikindi"><span class="ik-vakit-ikon">🕐</span><span class="ik-vakit-ad">İkindi</span><span class="ik-vakit-sayi" id="ik-ikindi">0</span></div>
+          <div class="ik-vakit" data-vakit="aksam"><span class="ik-vakit-ikon">🌆</span><span class="ik-vakit-ad">Akşam</span><span class="ik-vakit-sayi" id="ik-aksam">0</span></div>
+          <div class="ik-vakit" data-vakit="yatsi"><span class="ik-vakit-ikon">🌙</span><span class="ik-vakit-ad">Yatsı</span><span class="ik-vakit-sayi" id="ik-yatsi">0</span></div>
+        </div>
+        <div class="ibadet-karne-not" id="ik-not">—</div>
       </div>
 
 
@@ -7974,7 +8524,16 @@ const ROZETLER = [
   // 🕋 KUR'AN — DEVAMLILIK & ÖZEL
   { id:'cs7',    ikon:'📚', ad:'Cüz Dostu',        kategori:'kuran', aciklama:'7 gün ardışık cüz aç',     hedef:7,    tip:'cuzStreak' },
   { id:'cgece',  ikon:'🌙', ad:'Geceyi Bekleyen',  kategori:'kuran', aciklama:'Teheccüd vaktinde (03:00-05:00) cüz aç', hedef:1, tip:'cuzGece' },
-  { id:'hatim2', ikon:'💎', ad:'İkinci Hatim',     kategori:'kuran', aciklama:'2 hatim tamamla',          hedef:2,    tip:'hatimSayisi', ozel:true }
+  { id:'hatim2', ikon:'💎', ad:'İkinci Hatim',     kategori:'kuran', aciklama:'2 hatim tamamla',          hedef:2,    tip:'hatimSayisi', ozel:true },
+
+  // ✨ KAZA VAKTİ TAMAMLAMA — Manevi kilometre taşları
+  { id:'vakit_imsak_tamam',  ikon:'🌅', ad:"Sabah'ın Hâkimi",    kategori:'kaza', aciklama:'Sabah kaza namazlarının tümünü tamamla', hedef:1, tip:'vakitTamam', vakit:'imsak', ozel:true },
+  { id:'vakit_ogle_tamam',   ikon:'☀️', ad:"Öğle'nin Fâtihi",    kategori:'kaza', aciklama:'Öğle kaza namazlarının tümünü tamamla', hedef:1, tip:'vakitTamam', vakit:'ogle', ozel:true },
+  { id:'vakit_ikindi_tamam', ikon:'🕐', ad:"İkindi'nin Sâbiri",  kategori:'kaza', aciklama:'İkindi kaza namazlarının tümünü tamamla', hedef:1, tip:'vakitTamam', vakit:'ikindi', ozel:true },
+  { id:'vakit_aksam_tamam',  ikon:'🌆', ad:"Akşam'ın Şükredeni", kategori:'kaza', aciklama:'Akşam kaza namazlarının tümünü tamamla', hedef:1, tip:'vakitTamam', vakit:'aksam', ozel:true },
+  { id:'vakit_yatsi_tamam',  ikon:'🌙', ad:"Yatsı'nın Uyanığı",  kategori:'kaza', aciklama:'Yatsı kaza namazlarının tümünü tamamla', hedef:1, tip:'vakitTamam', vakit:'yatsi', ozel:true },
+  // 🌟 EN YÜKSEK PRESTİJ — 5 vakit tamamlama
+  { id:'kaza_berati',        ikon:'🌟', ad:"Kaza Berâtı",        kategori:'kaza', aciklama:'Tüm 5 vaktin kaza namazlarını tamamla — efsanevi', hedef:5, tip:'kazaBerati', ozel:true }
 ];
 
 const STORAGE_KEY = 'kn_kayitlar_v1';
@@ -8365,6 +8924,22 @@ function rozetDurum(r) {
   else if (r.tip === 'esmaToplam') { mevcut = esmaToplamZikir(); }
   else if (r.tip === 'gorevTamam') { mevcut = gorevTamamlama; }
   else if (r.tip === 'streakRekor') { mevcut = streakRekoru; }
+  else if (r.tip === 'vakitTamam') {
+    // Belirli vaktin borcunun 0'a düşüp bitiş tarihi kaydedilmiş olması
+    try {
+      const bitis = (typeof vakitBitisOku === 'function') ? vakitBitisOku() : {};
+      mevcut = (bitis && bitis[r.vakit]) ? 1 : 0;
+    } catch(e) { mevcut = 0; }
+    format = (n) => n === 1 ? '✓ Tamamlandı' : 'Devam ediyor';
+  }
+  else if (r.tip === 'kazaBerati') {
+    // 5 vaktin hepsinin bitiş tarihi kayıtlı olmalı
+    try {
+      const bitis = (typeof vakitBitisOku === 'function') ? vakitBitisOku() : {};
+      mevcut = ['imsak','ogle','ikindi','aksam','yatsi'].filter(v => bitis && bitis[v]).length;
+    } catch(e) { mevcut = 0; }
+    format = (n) => n + ' / 5 vakit';
+  }
 
   return {
     kazanildi: kazanilanRozetler.has(r.id) || mevcut >= hedef,
@@ -8413,20 +8988,44 @@ function vakitleriCizdir() {
     const kalan = Math.max(0, v.borc - kildi);
     const yuzde = (kildi / v.borc) * 100;
     const bugunSayi = gunKaydi(bugun)[v.id] || 0;
+    // Vakit tamamlanmış mı kontrol et
+    let tamamlandi = false, tamamTarih = null;
+    try {
+      const bitis = (typeof vakitBitisOku === 'function') ? vakitBitisOku() : {};
+      if (bitis[v.id]) {
+        tamamlandi = true;
+        tamamTarih = new Date(bitis[v.id]).toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
+      }
+    } catch(e) {}
     const satir = document.createElement('div');
-    satir.className = `vakit-satir ${v.sinif}`;
-    satir.innerHTML = `
-      <div class="vakit-ikon">${v.ikon}</div>
-      <div class="vakit-bilgi">
-        <div class="vakit-ad">${v.isim}</div>
-        <div class="vakit-borc"><strong>${kalan.toLocaleString('tr-TR')}</strong> borç • ${kildi.toLocaleString('tr-TR')} kıldı (%${yuzde.toFixed(2)})</div>
-        <div class="vakit-progress"><div class="vakit-progress-dolgu" style="width:${Math.min(yuzde,100)}%"></div></div>
-        ${bugunSayi > 0 ? `<div class="vakit-bugun-rozeti">Bugün +${bugunSayi}</div>` : ''}
-      </div>
-      <div class="vakit-butonlar">
-        <button class="vakit-btn eksi" onclick="degistir('${v.id}', -1)" ${bugunSayi === 0 ? 'disabled' : ''} title="Azalt">−</button>
-        <button class="vakit-btn arti" onclick="degistir('${v.id}', 1)" title="Bir kıldım, ekle">+</button>
-      </div>`;
+    satir.className = `vakit-satir ${v.sinif}${tamamlandi ? ' vakit-karti tamamlandi' : ''}`;
+    if (tamamlandi) {
+      // Vakit tamamlanmış — özel görünüm
+      satir.innerHTML = `
+        <div class="vakit-ikon">${v.ikon}</div>
+        <div class="vakit-bilgi">
+          <div class="vakit-ad">${v.isim}</div>
+          <div class="vakit-borc" style="color:#1B5E20;font-weight:800;">✓ Tamamlandı · ${kildi.toLocaleString('tr-TR')} namaz</div>
+          <div class="vakit-progress"><div class="vakit-progress-dolgu" style="width:100%;background:linear-gradient(90deg,#66BB6A,#2E7D32)"></div></div>
+          <div class="vakit-bugun-rozeti" style="background:rgba(102,187,106,0.15);color:#1B5E20;">🎉 ${tamamTarih}</div>
+        </div>
+        <div class="vakit-butonlar">
+          <button class="vakit-btn arti" onclick="degistir('${v.id}', 1)" title="Ek namaz ekle" style="opacity:0.6">+</button>
+        </div>`;
+    } else {
+      satir.innerHTML = `
+        <div class="vakit-ikon">${v.ikon}</div>
+        <div class="vakit-bilgi">
+          <div class="vakit-ad">${v.isim}</div>
+          <div class="vakit-borc"><strong>${kalan.toLocaleString('tr-TR')}</strong> borç • ${kildi.toLocaleString('tr-TR')} kıldı (%${yuzde.toFixed(2)})</div>
+          <div class="vakit-progress"><div class="vakit-progress-dolgu" style="width:${Math.min(yuzde,100)}%"></div></div>
+          ${bugunSayi > 0 ? `<div class="vakit-bugun-rozeti">Bugün +${bugunSayi}</div>` : ''}
+        </div>
+        <div class="vakit-butonlar">
+          <button class="vakit-btn eksi" onclick="degistir('${v.id}', -1)" ${bugunSayi === 0 ? 'disabled' : ''} title="Azalt">−</button>
+          <button class="vakit-btn arti" onclick="degistir('${v.id}', 1)" title="Bir kıldım, ekle">+</button>
+        </div>`;
+    }
     grid.appendChild(satir);
   });
 }
@@ -10379,6 +10978,10 @@ function degistir(vakitId, miktar) {
   }
   herseyGuncelle();
   if (miktar > 0) rozetKontrol();
+  // ✨ Vakit tamamlandı mı? — kaza sayısı borç sınırına ulaştıysa kutlama
+  if (miktar > 0) {
+    try { vakitTamamlandiKontrol(vakitId); } catch(e) {}
+  }
   // Rozet popup'ından sonra mertebe ve diğer banner'lar tazelensin (XP artmış olabilir)
   setTimeout(() => { try { anlikSayacGuncelle(); } catch(e){} }, 300);
 }
@@ -14517,7 +15120,8 @@ function yedekIndir() {
     sonOkunanCuz: localStorage.getItem(SON_OKUNAN_CUZ_KEY),
     diyanetToken: localStorage.getItem(DIYANET_TOKEN_KEY),
     // Manevi Bahçe — hasat sistemi state (tamamlanan ağaçlar + snapshot)
-    bahceState: localStorage.getItem(BAHCE_STATE_KEY)
+    bahceState: localStorage.getItem(BAHCE_STATE_KEY),
+    vakitBitis: localStorage.getItem(VAKIT_BITIS_KEY)
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -14576,6 +15180,7 @@ function iceAktar(event) {
       if (v.sonOkunanCuz) localStorage.setItem(SON_OKUNAN_CUZ_KEY, v.sonOkunanCuz);
       if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
       if (v.bahceState) localStorage.setItem(BAHCE_STATE_KEY, v.bahceState);
+      if (v.vakitBitis) localStorage.setItem(VAKIT_BITIS_KEY, v.vakitBitis);
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
@@ -15534,52 +16139,437 @@ function mertebeBannerGuncelle() {
 }
 
 function yolculukHaritasiCizdir() {
-  const xp = toplamXP();
-  const mertebe = mertebeBul(xp);
-  const yolEl = document.getElementById('yh-yol');
-  if (!yolEl) return;
+  // Eski yolculuk haritası HTML'i kaldırıldı → yeni İbadet Karnem'e yönlendir
+  try { ibadetKarnemGuncelle(); } catch(e) {}
+  try { rehberKartiGuncelle(); } catch(e) {}
+}
 
-  // Her noktayı gez
-  yolEl.querySelectorAll('.yh-nokta').forEach((n, idx) => {
-    n.classList.remove('gecildi','aktif');
-    if (idx < mertebe.id) n.classList.add('gecildi');
-    else if (idx === mertebe.id) n.classList.add('aktif');
-  });
+// ─── 📿 İbadet Karnem: 5 vakit dağılımı + yıl/ay/gün eşdeğeri ───
+// ═══════════════════════════════════════════════════════════
+// ✨ VAKİT TAMAMLAMA SİSTEMİ (kutlama + rozet + tarih kaydı)
+// ═══════════════════════════════════════════════════════════
+const VAKIT_BITIS_KEY = 'kn_vakit_bitis_v1';
+const VAKIT_META = {
+  imsak:  { ad: 'Sabah',  ikon: '🌅', sira: 1,
+    ayet: '"Namaz kılındığı zaman ayakta iken, otururken ve yanınız üzerine yatarken de Allah\'ı anın." — Nisâ, 103' },
+  ogle:   { ad: 'Öğle',   ikon: '☀️', sira: 2,
+    ayet: '"Şüphesiz Allah, sabredenler ve namaz kılanlarla beraberdir." — Bakara, 153' },
+  ikindi: { ad: 'İkindi', ikon: '🕐', sira: 3,
+    ayet: '"Namazlara ve orta namaza (ikindiye) devam edin." — Bakara, 238' },
+  aksam:  { ad: 'Akşam',  ikon: '🌆', sira: 4,
+    ayet: '"Rabbini içinden yalvararak sabah-akşam an." — A\'râf, 205' },
+  yatsi:  { ad: 'Yatsı',  ikon: '🌙', sira: 5,
+    ayet: '"Gecenin bir kısmında ona secde et; onu uzun bir gecede tesbih et." — İnsân, 26' }
+};
 
-  // Çizgi dolgusu
-  const toplamNokta = MERTEBELER.length;
-  let dolguYuzde = 0;
-  if (mertebe.id < toplamNokta - 1) {
-    const sonraki = MERTEBELER[mertebe.id + 1];
-    const aralikXP = sonraki.xp_min - mertebe.xp_min;
-    const mevcutAralik = xp - mertebe.xp_min;
-    const yuzdeIciAralik = Math.min(1, mevcutAralik / aralikXP);
-    dolguYuzde = ((mertebe.id + yuzdeIciAralik) / (toplamNokta - 1)) * 100;
-  } else {
-    dolguYuzde = 100;
+function vakitBitisOku() {
+  try { return JSON.parse(localStorage.getItem(VAKIT_BITIS_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function vakitBitisYaz(o) {
+  try { localStorage.setItem(VAKIT_BITIS_KEY, JSON.stringify(o)); } catch(e) {}
+}
+
+// Bir vakit için kalan borcu hesapla
+function vakitKalanBorc(vakitId) {
+  try {
+    const vakit = VAKITLER.find(v => v.id === vakitId);
+    if (!vakit) return 0;
+    const kildi = vakitToplamKildi(vakitId);
+    return Math.max(0, vakit.borc - kildi);
+  } catch(e) { return 0; }
+}
+
+// Vakit tamamlandı mı kontrol et — hem geçmişte kaydedilmiş hem şu an 0'da mı
+function vakitTamamMi(vakitId) {
+  const kayit = vakitBitisOku();
+  return !!kayit[vakitId];
+}
+
+// Kritik: +/- basıldığında çağrılır — o vakit 0'a düştüyse tamamlama olayını tetikle
+function vakitTamamlandiKontrol(vakitId) {
+  const bitis = vakitBitisOku();
+  if (bitis[vakitId]) return; // Zaten tamamlanmış — tekrar tetikleme
+  const kalan = vakitKalanBorc(vakitId);
+  if (kalan > 0) return;
+  // Tamamlandı! Tarihi kaydet
+  bitis[vakitId] = new Date().toISOString();
+  vakitBitisYaz(bitis);
+  // Kutlama modal
+  setTimeout(() => vakitTamamlandiGoster(vakitId), 300);
+  // 5/5 tamamlandı mı?
+  const tumTamam = Object.keys(VAKIT_META).every(v => !!bitis[v]);
+  if (tumTamam) {
+    setTimeout(() => kazaBeratiGoster(), 4500); // Vakit modal kapandıktan sonra
   }
-  document.getElementById('yh-cizgi-dolgu').style.width = dolguYuzde + '%';
+}
 
-  // Açıklama
-  const acElEl = document.getElementById('yh-aciklama');
-  if (acElEl) {
-    if (mertebe.id < toplamNokta - 1) {
-      const sonraki = MERTEBELER[mertebe.id + 1];
-      const kalan = sonraki.xp_min - xp;
-      acElEl.innerHTML = `Şu an <strong>${mertebe.ad}</strong> mertebesindesin. <strong>${sonraki.ad}</strong>'e ${kalan.toLocaleString('tr-TR')} XP kaldı.`;
-    } else {
-      // Vâsıl'a ulaştı — alt seviyeyi ve yıldızı da göster
-      try {
-        const vasil = vasilSeviyesi(xp);
-        const yldzGorsel = vasil.aktif.yildiz > 0 ? ' ' + '⭐'.repeat(vasil.aktif.yildiz) : '';
-        if (vasil.sonraki) {
-          acElEl.innerHTML = `Mâşaallah! <strong>${vasil.aktif.ad}</strong>${yldzGorsel} mertebesindesin. <strong>${vasil.sonraki.ad}</strong>'e ${(vasil.sonraki.xp - xp).toLocaleString('tr-TR')} XP kaldı.`;
-        } else {
-          acElEl.innerHTML = `Mâşaallah! En yüce mertebe <strong>${vasil.aktif.ad}</strong>${yldzGorsel}'a ulaştın. Şükür ile devam.`;
-        }
-      } catch(e) {
-        acElEl.innerHTML = `Mâşaallah! En yüce mertebe <strong>Vâsıl</strong>'a ulaştın. Şükür ile devam.`;
+// Vakit tamamlandı → kutlama modal
+function vakitTamamlandiGoster(vakitId) {
+  const meta = VAKIT_META[vakitId];
+  if (!meta) return;
+  const bitis = vakitBitisOku();
+  const baslangicTarih = localStorage.getItem('kn_ilk_kullanim_v1') || Object.keys(kayitlar || {}).sort()[0] || null;
+  const toplamKildi = vakitToplamKildi(vakitId);
+  const streak = (typeof streakHesapla === 'function') ? streakHesapla() : 0;
+
+  // Süre hesap
+  let sureMetni = '';
+  if (baslangicTarih) {
+    const d1 = new Date(baslangicTarih);
+    const d2 = new Date();
+    const gun = Math.floor((d2 - d1) / (86400000));
+    const y = Math.floor(gun / 365);
+    const kalanG = gun - y*365;
+    const a = Math.floor(kalanG / 30);
+    const g = kalanG - a*30;
+    const parts = [];
+    if (y > 0) parts.push(`${y} yıl`);
+    if (a > 0) parts.push(`${a} ay`);
+    if (g > 0 || parts.length === 0) parts.push(`${g} gün`);
+    sureMetni = parts.join(' ');
+  }
+
+  // Eşdeğer süre (kılınan namaz üzerinden gün) — 1 namaz/gün varsayımı
+  let esdegerMetni = '';
+  const gunSayisi = toplamKildi; // her gün 1 vakit
+  const y2 = Math.floor(gunSayisi / 365);
+  const kalanG2 = gunSayisi - y2*365;
+  const a2 = Math.floor(kalanG2 / 30);
+  const g2 = kalanG2 - a2*30;
+  const parts2 = [];
+  if (y2 > 0) parts2.push(`${y2} yıl`);
+  if (a2 > 0) parts2.push(`${a2} ay`);
+  if (g2 > 0 || parts2.length === 0) parts2.push(`${g2} gün`);
+  esdegerMetni = parts2.join(' ');
+
+  // Sonraki hedef (sırayla henüz tamamlanmamış vakit)
+  let sonrakiMetni = '';
+  const sirali = Object.keys(VAKIT_META).sort((a,b) => VAKIT_META[a].sira - VAKIT_META[b].sira);
+  const sonraki = sirali.find(v => v !== vakitId && !bitis[v]);
+  if (sonraki) {
+    const kalan = vakitKalanBorc(sonraki);
+    sonrakiMetni = `🎯 Sonraki hedef: <strong>${VAKIT_META[sonraki].ad}</strong> Namazı (${kalan.toLocaleString('tr-TR')} kaldı)`;
+  }
+
+  // DOM'a yaz
+  const ikonEl = document.getElementById('vt-ikon');
+  const altEl = document.getElementById('vt-alt-baslik');
+  const istEl = document.getElementById('vt-istatistik');
+  const ayetEl = document.getElementById('vt-ayet');
+  const sonrakiEl = document.getElementById('vt-sonraki');
+  if (ikonEl) ikonEl.textContent = meta.ikon;
+  if (altEl) altEl.textContent = `${meta.ad} Kaza Namazın Tamamlandı`;
+  if (istEl) {
+    let html = '';
+    if (baslangicTarih) {
+      const gunGoster = new Date(baslangicTarih).toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
+      html += `<div class="vt-stat-satir"><span class="vt-stat-etiket">📅 Başladın</span><span class="vt-stat-deger">${gunGoster}</span></div>`;
+    }
+    html += `<div class="vt-stat-satir"><span class="vt-stat-etiket">${meta.ikon} Toplam kıldın</span><span class="vt-stat-deger">${toplamKildi.toLocaleString('tr-TR')}</span></div>`;
+    if (esdegerMetni) html += `<div class="vt-stat-satir"><span class="vt-stat-etiket">⏳ Eşdeğer</span><span class="vt-stat-deger">${esdegerMetni}</span></div>`;
+    if (streak > 0) html += `<div class="vt-stat-satir"><span class="vt-stat-etiket">🔥 Streak</span><span class="vt-stat-deger">${streak} gün</span></div>`;
+    if (sureMetni) html += `<div class="vt-stat-satir"><span class="vt-stat-etiket">🕰️ Süreç</span><span class="vt-stat-deger">${sureMetni}</span></div>`;
+    istEl.innerHTML = html;
+  }
+  if (ayetEl) ayetEl.textContent = meta.ayet;
+  if (sonrakiEl) sonrakiEl.innerHTML = sonrakiMetni;
+
+  // Modal aç
+  const modal = document.getElementById('vt-modal');
+  if (modal) {
+    modal.classList.add('acik');
+    document.body.style.overflow = 'hidden';
+  }
+  // Ses (varsa)
+  try { if (typeof sesCal === 'function') sesCal('seviye'); } catch(e) {}
+  // Rozet
+  // Rozet açılışı — rozetKontrol() ROZETLER array'ini tarar, vakitTamam tipi otomatik açılır
+  try { if (typeof rozetKontrol === 'function') rozetKontrol(); } catch(e) {}
+  // Bildirim izni varsa push
+  try {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('✨ Mâşaallah!', {
+        body: `${meta.ad} kaza namazın tamamlandı.`,
+        icon: 'icon-192.png'
+      });
+    }
+  } catch(e) {}
+}
+
+function vtModalKapat() {
+  const modal = document.getElementById('vt-modal');
+  if (modal) {
+    modal.classList.remove('acik');
+    modal.classList.remove('temiz-mod');
+    document.body.style.overflow = '';
+  }
+  // İbadet Karnem + rehber kartı tazelensin
+  try { ibadetKarnemGuncelle(); } catch(e) {}
+  try { rehberKartiGuncelle(); } catch(e) {}
+  try { herseyGuncelle(); } catch(e) {}
+}
+
+// 📸 Anıyı Sakla — modalı 4 sn "temiz mod"a alır, kullanıcı ekran görüntüsü alır
+function vtAniyiSakla() {
+  const modal = document.getElementById('vt-modal');
+  if (!modal) return;
+  modal.classList.add('temiz-mod');
+  // Hafif titreşim (destekleyen cihazlarda)
+  try { if (navigator.vibrate) navigator.vibrate([15, 30, 15]); } catch(e) {}
+  // 4 saniye sonra butonları geri getir
+  setTimeout(() => {
+    if (modal) modal.classList.remove('temiz-mod');
+  }, 4000);
+}
+
+// 🌟 Kaza Berâtı — 5/5 tamamlandığında
+function kazaBeratiGoster() {
+  const bitis = vakitBitisOku();
+  let toplamNamaz = 0;
+  try {
+    Object.keys(VAKIT_META).forEach(v => { toplamNamaz += vakitToplamKildi(v); });
+  } catch(e) {}
+  const baslangicTarih = localStorage.getItem('kn_ilk_kullanim_v1') || Object.keys(kayitlar || {}).sort()[0];
+  const istEl = document.getElementById('kb-istatistik');
+  if (istEl) {
+    let html = '';
+    if (baslangicTarih) {
+      html += `<strong>${new Date(baslangicTarih).toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'})}</strong>'de başladın<br>`;
+    }
+    html += `Toplam <strong>${toplamNamaz.toLocaleString('tr-TR')}</strong> kaza namazı kıldın<br>`;
+    // Bitiş tarihi
+    const sonBitis = Object.values(bitis).sort().reverse()[0];
+    if (sonBitis) {
+      html += `Son vakti <strong>${new Date(sonBitis).toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'})}</strong>'da tamamladın`;
+    }
+    istEl.innerHTML = html;
+  }
+  const modal = document.getElementById('kb-modal');
+  if (modal) {
+    modal.classList.add('acik');
+    document.body.style.overflow = 'hidden';
+  }
+  // Efsanevi Kaza Berâtı rozetini aç
+  try { if (typeof rozetKontrol === 'function') rozetKontrol(); } catch(e) {}
+  try { if (typeof sesCal === 'function') sesCal('rozet'); } catch(e) {}
+}
+
+function kbModalKapat() {
+  const modal = document.getElementById('kb-modal');
+  if (modal) { modal.classList.remove('acik'); modal.classList.remove('temiz-mod'); document.body.style.overflow = ''; }
+}
+
+// 📸 Kaza Berâtı anısını sakla — 5 saniye temiz mod
+function kbAniyiSakla() {
+  const modal = document.getElementById('kb-modal');
+  if (!modal) return;
+  modal.classList.add('temiz-mod');
+  try { if (navigator.vibrate) navigator.vibrate([20, 40, 20]); } catch(e) {}
+  setTimeout(() => {
+    if (modal) modal.classList.remove('temiz-mod');
+  }, 5000);
+}
+
+// 🕊️ YIL DÖNÜMÜ HATIRLATMA — vakit bitiş tarihlerinin yıl dönümünde bildir
+// vakitBitis: { imsak: "2027-03-15T14:22:00.000Z", ... }
+// Kayıt: kn_yildonumu_gosterildi_v1 = { "imsak_2028": true, ... } (yıl_id bazlı)
+function yilDonumuKontrol() {
+  try {
+    const bitis = vakitBitisOku();
+    const vakitler = Object.keys(bitis || {});
+    if (vakitler.length === 0) return;
+    const bugun = new Date();
+    const gosterildiKey = 'kn_yildonumu_gosterildi_v1';
+    let gosterildi = {};
+    try { gosterildi = JSON.parse(localStorage.getItem(gosterildiKey) || '{}'); } catch(e) { gosterildi = {}; }
+
+    const yeniYilDonumleri = []; // { vakitId, yil }
+    vakitler.forEach(v => {
+      if (!VAKIT_META[v]) return;
+      const bitisTarih = new Date(bitis[v]);
+      if (isNaN(bitisTarih.getTime())) return;
+      // Yıl farkı
+      const yilFark = bugun.getFullYear() - bitisTarih.getFullYear();
+      if (yilFark < 1) return;
+      // Ay + gün eşleşiyor mu? (± 3 gün tolerans — kullanıcı hemen açmadıysa da kaçırmasın)
+      const buYilAyni = new Date(bugun.getFullYear(), bitisTarih.getMonth(), bitisTarih.getDate());
+      const gunFark = Math.floor((bugun - buYilAyni) / 86400000);
+      if (gunFark < 0 || gunFark > 3) return;
+      // Bu yıl için gösterildi mi?
+      const anahtarBuYil = v + '_' + bugun.getFullYear();
+      if (gosterildi[anahtarBuYil]) return;
+      yeniYilDonumleri.push({ vakitId: v, yil: yilFark, meta: VAKIT_META[v] });
+      gosterildi[anahtarBuYil] = true;
+    });
+
+    if (yeniYilDonumleri.length === 0) return;
+    localStorage.setItem(gosterildiKey, JSON.stringify(gosterildi));
+
+    // İlkini toast + rehber kartı üstünde göster
+    yeniYilDonumleri.forEach((yd, idx) => {
+      const yilMetni = yd.yil === 1 ? '1 yıl' : yd.yil + ' yıl';
+      setTimeout(() => {
+        try {
+          if (typeof toast === 'function') {
+            toast('🕊️', `${yd.meta.ad} kaza namazını tamamlayalı ${yilMetni} oldu — Allah kabul buyursun`);
+          }
+          // Rehber kartına da yıl dönümü bandı ekle (bir kere)
+          yilDonumuBanniereEkle(yd);
+        } catch(e) {}
+      }, 800 + idx * 3500);
+    });
+  } catch(e) { /* sessizce yut */ }
+}
+
+// Rehber kart üstüne yıl dönümü bandı ekler
+function yilDonumuBanniereEkle(yd) {
+  const rehber = document.getElementById('rehber-kart');
+  if (!rehber) return;
+  const yilMetni = yd.yil === 1 ? '1. yıl' : yd.yil + '. yıl';
+  const banner = document.createElement('div');
+  banner.className = 'yildonumu-banner';
+  banner.style.cssText = 'background:linear-gradient(135deg,#D4AF37,#F4D03F);color:#1B4332;padding:12px 16px;border-radius:12px;margin-bottom:10px;font-weight:800;text-align:center;box-shadow:0 4px 15px rgba(212,175,55,0.35);animation:vt-parla 2s ease-in-out infinite alternate;';
+  banner.innerHTML = `🕊️ Bugün ${yd.meta.ikon} <strong>${yd.meta.ad}</strong> kaza namazını tamamlayalı ${yilMetni} — Elhamdülillâh`;
+  rehber.insertBefore(banner, rehber.firstChild);
+  // 30 saniye sonra otomatik kapansın (kaydediyoruz yıllık zaten)
+  setTimeout(() => {
+    banner.style.transition = 'opacity 0.5s, transform 0.5s';
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(-8px)';
+    setTimeout(() => { if (banner.parentNode) banner.parentNode.removeChild(banner); }, 500);
+  }, 30000);
+}
+
+// Sayfa yüklendiğinde yıl dönümü kontrolü (biraz gecikmeli, DOM hazır olsun)
+window.addEventListener('load', () => {
+  setTimeout(() => { try { yilDonumuKontrol(); } catch(e) {} }, 2500);
+});
+
+// 🧭 Rehber kartı — İbadet Karnem üstünde
+function rehberKartiGuncelle() {
+  const el = document.getElementById('rehber-kart');
+  if (!el) return;
+  const bitis = vakitBitisOku();
+  const tamamlananlar = Object.keys(VAKIT_META).filter(v => bitis[v]).sort((a,b) => VAKIT_META[a].sira - VAKIT_META[b].sira);
+  if (tamamlananlar.length === 0) { el.innerHTML = ''; return; }
+  // Sonraki hedef
+  const sirali = Object.keys(VAKIT_META).sort((a,b) => VAKIT_META[a].sira - VAKIT_META[b].sira);
+  const sonraki = sirali.find(v => !bitis[v]);
+  let html = '<div class="rehber-kart-baslik">🧭 Sonraki Adım</div>';
+  const tamamMetin = tamamlananlar.map(v => `${VAKIT_META[v].ikon} ${VAKIT_META[v].ad}`).join(', ');
+  html += `<div class="tamam-liste">✓ Tamamlanan: ${tamamMetin}</div>`;
+  if (sonraki) {
+    const kalan = vakitKalanBorc(sonraki);
+    html += `<div class="sonraki-hedef">🎯 Sıradaki: <strong>${VAKIT_META[sonraki].ad}</strong> Namazı — ${kalan.toLocaleString('tr-TR')} kaldı</div>`;
+    // Akıllı taktik
+    if (sonraki === 'ogle' || sonraki === 'ikindi') {
+      const digerYok = !bitis['ogle'] && !bitis['ikindi'];
+      if (digerYok) {
+        html += `<div class="rehber-taktik">💡 Öğle + İkindi ikisi de 4 rekat. Birlikte planlarsan tempo düşmez.</div>`;
+      } else {
+        html += `<div class="rehber-taktik">💡 Bu 4 rekatlık vakit — sabah/akşam ile aynı zamanda kılabilirsin.</div>`;
       }
+    } else if (sonraki === 'aksam') {
+      html += `<div class="rehber-taktik">💡 3 rekatlık, en kısa vakit. Günde birkaç tanesiyle hız artar.</div>`;
+    } else if (sonraki === 'yatsi') {
+      html += `<div class="rehber-taktik">💡 Son adımdasın! Gece kılınabilir, ev huzurunda güzel.</div>`;
+    }
+  } else {
+    html += `<div class="sonraki-hedef">🌟 Tüm vakitler tamamlandı — Kaza Berâtı senin!</div>`;
+  }
+  el.innerHTML = html;
+}
+
+function ibadetKarnemGuncelle() {
+  const el = document.getElementById('ibadet-karne');
+  if (!el) return;
+  // Vakit bitiş kayıtları — ✓ onayı için
+  const bitis = vakitBitisOku();
+  // 5 vakit toplamları (kayıtlardan hesapla)
+  const vakitler = { imsak: 0, ogle: 0, ikindi: 0, aksam: 0, yatsi: 0 };
+  try {
+    if (typeof kayitlar !== 'undefined') {
+      Object.values(kayitlar).forEach(g => {
+        Object.keys(vakitler).forEach(v => { vakitler[v] += (g[v] || 0); });
+      });
+    }
+  } catch(e) {}
+  const toplam = vakitler.imsak + vakitler.ogle + vakitler.ikindi + vakitler.aksam + vakitler.yatsi;
+
+  // Vakit sayılarını yaz + en çok kılınan vurgula + tamamlanan ✓ onayı
+  let enCokVakit = 'imsak', enCokSayi = 0;
+  Object.keys(vakitler).forEach(v => {
+    const rakamEl = document.getElementById('ik-' + v);
+    if (rakamEl) rakamEl.textContent = vakitler[v].toLocaleString('tr-TR');
+    const kartEl = el.querySelector(`.ik-vakit[data-vakit="${v}"]`);
+    if (kartEl) {
+      kartEl.classList.remove('en-cok');
+      // ✓ onay: vakit tamamlandıysa yeşil check ikonu
+      if (bitis[v]) {
+        kartEl.classList.add('tamam');
+        const tarih = new Date(bitis[v]).toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
+        kartEl.setAttribute('title', `${VAKIT_META[v].ad} tamamlandı — ${tarih}`);
+      } else {
+        kartEl.classList.remove('tamam');
+        kartEl.removeAttribute('title');
+      }
+    }
+    if (vakitler[v] > enCokSayi) { enCokSayi = vakitler[v]; enCokVakit = v; }
+  });
+  if (enCokSayi > 0) {
+    const enCokEl = el.querySelector(`.ik-vakit[data-vakit="${enCokVakit}"]`);
+    if (enCokEl) enCokEl.classList.add('en-cok');
+  }
+
+  // Toplam rakamı
+  const toplamEl = document.getElementById('ik-toplam');
+  if (toplamEl) toplamEl.textContent = toplam.toLocaleString('tr-TR');
+
+  // Eşdeğer hesap: 5 vakit × 365 = yıllık kişi başı hedef
+  // İki bilgi göster:
+  // 1) Sadece sabah üzerinden: kaç yıllık sabah namazı
+  // 2) Toplam üzerinden: 5-vakit yıl/ay/gün eşdeğeri
+  const esdegerEl = document.getElementById('ik-esdeger');
+  if (esdegerEl) {
+    if (toplam === 0) {
+      esdegerEl.textContent = 'İlk namazını kılınca burada özet görünür';
+    } else {
+      // 5 vakit gün eşdeğeri: (toplam/5) gün → yıl/ay/gün
+      const gunEs = toplam / 5;
+      const y = Math.floor(gunEs / 365);
+      const kalanGun = gunEs - y*365;
+      const a = Math.floor(kalanGun / 30);
+      const g = Math.round(kalanGun - a*30);
+      const parts = [];
+      if (y > 0) parts.push(`${y} yıl`);
+      if (a > 0) parts.push(`${a} ay`);
+      if (g > 0 || parts.length === 0) parts.push(`${g} gün`);
+      esdegerEl.innerHTML = `≈ <strong>${parts.join(' ')}</strong> boyunca 5 vakit namaz`;
+    }
+  }
+
+  // Alt not: en dikkat çeken bilgi (sabah ağırlıklı ise sabah bilgisi, dengeli ise başka)
+  const notEl = document.getElementById('ik-not');
+  if (notEl) {
+    if (toplam === 0) {
+      notEl.textContent = '—';
+    } else if (vakitler.imsak > (toplam - vakitler.imsak) * 3) {
+      // Sabah ağırlıklı — sabah eşdeğerini göster
+      const sabahYil = (vakitler.imsak / 365);
+      let sabahMetni;
+      if (sabahYil >= 1) {
+        const y = Math.floor(sabahYil);
+        const kalanGun = vakitler.imsak - y*365;
+        const a = Math.floor(kalanGun / 30);
+        sabahMetni = `${y} yıl${a > 0 ? ' ' + a + ' ay' : ''}`;
+      } else {
+        sabahMetni = `${vakitler.imsak} gün`;
+      }
+      notEl.innerHTML = `🌅 Sabah odaklısın — <strong>${sabahMetni}</strong> eşdeğeri sabah namazı`;
+    } else {
+      const enCokAd = { imsak:'sabaha', ogle:'öğleye', ikindi:'ikindiye', aksam:'akşama', yatsi:'yatsıya' }[enCokVakit];
+      notEl.innerHTML = `En çok <strong>${enCokAd}</strong> yönelmişsin (${enCokSayi.toLocaleString('tr-TR')})`;
     }
   }
 }
@@ -16666,6 +17656,7 @@ function setupYedekYukle(event) {
         if (v.sonOkunanCuz) localStorage.setItem(SON_OKUNAN_CUZ_KEY, v.sonOkunanCuz);
         if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
       if (v.bahceState) localStorage.setItem(BAHCE_STATE_KEY, v.bahceState);
+      if (v.vakitBitis) localStorage.setItem(VAKIT_BITIS_KEY, v.vakitBitis);
       } catch(e) { console.warn('setupYedekYukle ek alan:', e); }
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
@@ -19827,5 +20818,50 @@ window.addEventListener('load', () => {
      (JS'de yeni Audio() yerine bu tek instance kullanılır — lock screen'de kesilmez) -->
 <audio id="kuran-audio-el" playsinline webkit-playsinline preload="auto" style="display:none"></audio>
 <audio id="dua-audio-el" playsinline webkit-playsinline preload="auto" style="display:none"></audio>
+
+<!-- ✨ Vakit Tamamlama Kutlama Modal (sıcak-manevi tema) -->
+<div class="vt-modal" id="vt-modal" onclick="if(event.target.id==='vt-modal') vtModalKapat()">
+  <div class="vt-modal-icerik">
+    <div class="vt-nur-dalga"></div>
+    <div class="vt-parilti" id="vt-parilti"></div>
+    <div class="vt-ikon" id="vt-ikon">🌅</div>
+    <div class="vt-baslik">✨ MÂŞAALLAH!</div>
+    <div class="vt-alt-baslik" id="vt-alt-baslik">Sabah Kaza Namazın Tamamlandı</div>
+    <div class="vt-istatistik" id="vt-istatistik"></div>
+    <div class="vt-ayet" id="vt-ayet"></div>
+    <div class="vt-sonraki" id="vt-sonraki"></div>
+    <div class="vt-butonlar">
+      <button class="vt-buton" onclick="vtModalKapat()">Şükür ile Devam</button>
+      <button class="vt-buton-ikinci" onclick="vtAniyiSakla()">📸 Anıyı Sakla</button>
+    </div>
+    <div class="vt-ss-hint">📱 Şimdi ekran görüntüsü alın — 4 saniyeniz var</div>
+  </div>
+</div>
+
+<!-- 🌟 Kaza Berâtı — Tüm 5 Vakit Tamamlandığında Efsanevi Ekran -->
+<div class="kb-modal" id="kb-modal" onclick="if(event.target.id==='kb-modal') kbModalKapat()">
+  <div class="kb-modal-icerik">
+    <div class="kb-nur"></div>
+    <div class="kb-yildizlar"></div>
+    <div class="kb-ikon">🌟</div>
+    <div class="kb-baslik">KAZA BERÂTI</div>
+    <div class="kb-alt">Tüm kaza namazların tamamlandı</div>
+    <div class="kb-istatistik" id="kb-istatistik"></div>
+    <div class="kb-mesaj">
+      <em>"Kılmanız gereken namazı kıldığınız zaman, ayakta iken, otururken
+      ve yanınız üzerine yatarken de Allah'ı anın."</em><br>
+      — Nisâ Sûresi, 103
+    </div>
+    <div class="kb-tebrik">
+      Allah kabul buyursun. Kul olarak hakkını verdin — bundan sonra
+      artık her namazın <strong>şükrün ve sevdanın</strong> ifadesi.
+    </div>
+    <div class="kb-butonlar">
+      <button class="kb-buton" onclick="kbModalKapat()">Elhamdülillâh</button>
+      <button class="kb-buton-ikinci" onclick="kbAniyiSakla()">📸 Bu Anı Efsanedir — Sakla</button>
+    </div>
+    <div class="kb-ss-hint">📱 Şimdi ekran görüntüsü alın — 5 saniyeniz var</div>
+  </div>
+</div>
 
 </body>
