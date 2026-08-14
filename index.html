@@ -2845,6 +2845,93 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 }
 .streak-rekor-rakam { font-size: 14px; font-weight: 800; color: var(--vurgu); display: block; }
 
+/* 🛡️ STREAK KALKANI */
+.kalkan-mini {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+  border: 1px solid #64B5F6;
+  color: #0D47A1;
+  padding: 4px 8px; border-radius: 8px;
+  font-size: 11px; font-weight: 700;
+  margin-left: 6px; cursor: pointer;
+  transition: all 0.15s;
+}
+.kalkan-mini:hover { background: linear-gradient(135deg, #BBDEFB, #90CAF9); transform: translateY(-1px); }
+.kalkan-mini:active { transform: scale(0.95); }
+.kalkan-mini .kalkan-sayi { font-size: 13px; font-weight: 800; }
+.kalkan-mini.bos { opacity: 0.5; cursor: default; }
+.kalkan-mini.bos:hover { transform: none; background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+
+/* Kalkan modal */
+.kalkan-modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 10000;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+.kalkan-modal.acik { display: flex; }
+.kalkan-modal-icerik {
+  background: linear-gradient(135deg, #F5FBFF 0%, #E1F0FA 100%);
+  border-radius: 20px; padding: 24px 22px;
+  max-width: 380px; width: 100%;
+  box-shadow: 0 20px 60px rgba(13,71,161,0.4);
+  border: 2px solid #64B5F6;
+  text-align: center;
+  position: relative;
+  animation: kalkan-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes kalkan-in {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.kalkan-ikon-buyuk { font-size: 56px; margin-bottom: 8px; filter: drop-shadow(0 4px 12px rgba(13,71,161,0.3)); }
+.kalkan-baslik { font-size: 18px; font-weight: 800; color: #0D47A1; margin-bottom: 6px; }
+.kalkan-alt { font-size: 13px; color: #37474F; line-height: 1.55; margin-bottom: 14px; }
+.kalkan-stok-kutu {
+  background: rgba(255,255,255,0.7);
+  border-radius: 12px; padding: 10px 14px;
+  margin: 12px 0 14px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px;
+}
+.kalkan-stok-kutu strong { color: #0D47A1; font-size: 20px; }
+.kalkan-hadis {
+  font-size: 11px; color: #546E7A; font-style: italic;
+  background: rgba(255,255,255,0.5);
+  padding: 8px 12px; border-radius: 8px;
+  border-left: 3px solid #64B5F6;
+  margin-bottom: 14px; line-height: 1.5;
+}
+.kalkan-buton-grup { display: flex; gap: 8px; }
+.kalkan-buton {
+  flex: 1;
+  background: linear-gradient(135deg, #1976D2, #42A5F5);
+  color: white; border: none;
+  padding: 12px 16px; border-radius: 10px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 3px 10px rgba(25,118,210,0.35);
+  transition: transform 0.15s;
+}
+.kalkan-buton:hover { transform: translateY(-1px); }
+.kalkan-buton:active { transform: scale(0.97); }
+.kalkan-buton.iptal {
+  background: rgba(0,0,0,0.06); color: #37474F;
+  box-shadow: none;
+}
+.kalkan-buton:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Heatmap / kayıt kartına kalkan işareti */
+.kalkan-badge {
+  display: inline-block; font-size: 10px;
+  background: linear-gradient(135deg, #1976D2, #42A5F5);
+  color: white; padding: 2px 6px; border-radius: 6px;
+  font-weight: 700; margin-left: 4px;
+}
+
 /* Günlük Görev kartı */
 .gg-kart {
   background: linear-gradient(135deg, #FFF8E7 0%, #FCEFC8 100%);
@@ -7506,6 +7593,11 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
       <span class="streak-rekor-rakam" id="streak-rekor-rakam">0</span>
       <span>en uzun</span>
     </div>
+    <!-- 🛡️ Streak Kalkanı — tıklanabilir, stoktan az varsa açar -->
+    <div class="kalkan-mini" id="kalkan-mini" onclick="kalkanModalAc()" title="Streak Kalkanı — hastalık/mazeret günü için">
+      <span>🛡️</span>
+      <span class="kalkan-sayi" id="kalkan-sayi">0</span>
+    </div>
   </div>
 
   <!-- Vakit kaçırma uyarısı -->
@@ -8641,20 +8733,160 @@ function vakitToplamKildi(vid) {
 function genelToplamKildi() { return VAKITLER.reduce((s,v) => s + vakitToplamKildi(v.id), 0); }
 function genelToplamBorc() { return VAKITLER.reduce((s,v) => s + v.borc, 0); }
 
+// Bir günün "aktif" sayılıp sayılmadığı — namaz kılındı VEYA kalkan kullanıldı
+function gunAktifMi(tarih) {
+  if (gunToplam(tarih) > 0) return true;
+  // Kalkan flag'i kayıtlar içinde tutulur
+  try {
+    if (typeof kayitlar !== 'undefined' && kayitlar[tarih] && kayitlar[tarih].kalkan) return true;
+  } catch(e) {}
+  return false;
+}
+
 function streakHesapla() {
   let streak = 0;
   let t = bugunTarih();
   // Bug fix: Bugün henüz hiç kılmadıysa streak motivasyon kaybetmesin.
-  // Dün'den itibaren saymaya başla — kullanıcı gün içinde namaz kıldığında
-  // streak otomatik +1 olur (bugün de saydığı için).
-  if (gunToplam(t) === 0) t = nDays(t, -1);
+  if (!gunAktifMi(t)) t = nDays(t, -1);
   // Maks 10.000 gün = ~27 yıl (uzun vade için güvenli üst sınır)
-  while (gunToplam(t) > 0) {
+  while (gunAktifMi(t)) {
     streak++;
     t = nDays(t, -1);
     if (streak > 10000) break;
   }
   return streak;
+}
+
+// ═══════════════════════════════════════
+// 🛡️ STREAK KALKANI — Hastalık/Mazeret günü koruması
+// Kayıt yapısı:
+//   localStorage['kn_kalkan_v1'] = { stok: 3, sonAyVerildi: "2026-08" }
+//   kayitlar[tarih].kalkan = true → o gün kalkanla korundu
+// Aylık verilen: 2 kalkan (max 5 birikir)
+// ═══════════════════════════════════════
+const KALKAN_KEY = 'kn_kalkan_v1';
+const KALKAN_MAX = 5;
+const KALKAN_AYLIK = 2;
+
+function kalkanOku() {
+  try {
+    const raw = localStorage.getItem(KALKAN_KEY);
+    if (!raw) return { stok: 0, sonAyVerildi: null };
+    const d = JSON.parse(raw);
+    return { stok: parseInt(d.stok||0)||0, sonAyVerildi: d.sonAyVerildi || null };
+  } catch(e) { return { stok: 0, sonAyVerildi: null }; }
+}
+
+function kalkanYaz(d) {
+  try { localStorage.setItem(KALKAN_KEY, JSON.stringify(d)); } catch(e) {}
+}
+
+function kalkanAyAnahtari(tarih) {
+  const t = tarih ? new Date(tarih) : new Date();
+  return t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0');
+}
+
+// Aylık kalkan tahsisini yapar (birden fazla ay atlamış olsa da tek seferde toplar)
+function kalkanAylikVerKontrol() {
+  const d = kalkanOku();
+  const buAy = kalkanAyAnahtari();
+  // İlk kez — bu ayı işaretle, +2 ver
+  if (!d.sonAyVerildi) {
+    d.stok = Math.min(KALKAN_MAX, d.stok + KALKAN_AYLIK);
+    d.sonAyVerildi = buAy;
+    kalkanYaz(d);
+    return;
+  }
+  if (d.sonAyVerildi === buAy) return; // Bu ay zaten verildi
+  // Kaç ay atlamışız? En fazla 5 ay geri hesapla (kap max)
+  const [sy, sm] = d.sonAyVerildi.split('-').map(Number);
+  const simdi = new Date();
+  const ayFark = (simdi.getFullYear() - sy) * 12 + (simdi.getMonth() + 1 - sm);
+  if (ayFark <= 0) { d.sonAyVerildi = buAy; kalkanYaz(d); return; }
+  const eklenecek = Math.min(ayFark, 12) * KALKAN_AYLIK;
+  d.stok = Math.min(KALKAN_MAX, d.stok + eklenecek);
+  d.sonAyVerildi = buAy;
+  kalkanYaz(d);
+}
+
+// Bugün kalkan kullanılabilir mi? (Zaten bugün namaz kılınmışsa gerek yok)
+function kalkanBugunKullanilabilir() {
+  const bugun = bugunTarih();
+  if (gunToplam(bugun) > 0) return { uygun: false, sebep: 'Bugün zaten namaz kıldın, streak güvende.' };
+  try {
+    if (kayitlar[bugun] && kayitlar[bugun].kalkan) {
+      return { uygun: false, sebep: 'Bugün için kalkan zaten kullanıldı ✓' };
+    }
+  } catch(e) {}
+  const d = kalkanOku();
+  if (d.stok <= 0) return { uygun: false, sebep: 'Stoğun yok. Ayın 1\'inde +2 gelecek.' };
+  return { uygun: true, sebep: null };
+}
+
+// Modal aç
+function kalkanModalAc() {
+  kalkanAylikVerKontrol();
+  const d = kalkanOku();
+  const stokEl = document.getElementById('kalkan-modal-stok');
+  const btn = document.getElementById('kalkan-modal-kullan-btn');
+  const durumEl = document.getElementById('kalkan-modal-durum');
+  if (stokEl) stokEl.textContent = d.stok;
+  const durum = kalkanBugunKullanilabilir();
+  if (durumEl) {
+    if (durum.uygun) {
+      durumEl.innerHTML = '<div style="color:#0D47A1;font-size:12px;margin-bottom:10px;">💙 Bugün kılmakta zorlanıyorsan kalkan kullanabilirsin — streak korunur.</div>';
+    } else {
+      durumEl.innerHTML = '<div style="color:#546E7A;font-size:12px;margin-bottom:10px;font-style:italic;">' + durum.sebep + '</div>';
+    }
+  }
+  if (btn) {
+    btn.disabled = !durum.uygun;
+    btn.textContent = durum.uygun ? '🛡️ Bugün Kalkan Kullan' : '🛡️ Kalkan Kullanılamaz';
+  }
+  const modal = document.getElementById('kalkan-modal');
+  if (modal) { modal.classList.add('acik'); document.body.style.overflow = 'hidden'; }
+}
+
+function kalkanModalKapat() {
+  const modal = document.getElementById('kalkan-modal');
+  if (modal) { modal.classList.remove('acik'); document.body.style.overflow = ''; }
+}
+
+// Kalkanı kullan (bugüne uygula)
+function kalkanKullan() {
+  const durum = kalkanBugunKullanilabilir();
+  if (!durum.uygun) { try { toast('⚠️', durum.sebep); } catch(e) {} return; }
+  const bugun = bugunTarih();
+  // Kayıt oluştur/güncelle — flag koy
+  try {
+    if (!kayitlar[bugun]) kayitlar[bugun] = { imsak:0, ogle:0, ikindi:0, aksam:0, yatsi:0, vitir:0 };
+    kayitlar[bugun].kalkan = true;
+    if (typeof kaydet === 'function') kaydet();
+  } catch(e) {}
+  // Stoktan düş
+  const d = kalkanOku();
+  d.stok = Math.max(0, d.stok - 1);
+  kalkanYaz(d);
+  try { if (navigator.vibrate) navigator.vibrate([20, 40, 20]); } catch(e) {}
+  kalkanModalKapat();
+  // UI'yi tazele + toast
+  try { toast('🛡️', 'Kalkan aktif — geçmiş olsun, streak\'in korundu 💙'); } catch(e) {}
+  try { kalkanMiniGuncelle(); } catch(e) {}
+  try { herseyGuncelle(); } catch(e) {}
+}
+
+// Mini indikatörü güncelle (streak-kart içinde)
+function kalkanMiniGuncelle() {
+  kalkanAylikVerKontrol();
+  const d = kalkanOku();
+  const el = document.getElementById('kalkan-mini');
+  const sayiEl = document.getElementById('kalkan-sayi');
+  if (sayiEl) sayiEl.textContent = d.stok;
+  if (el) {
+    if (d.stok === 0) el.classList.add('bos');
+    else el.classList.remove('bos');
+    el.setAttribute('title', d.stok + ' kalkan var — tıkla, hastalık günü için kullan');
+  }
 }
 
 // ═══════════════════════════════════════
@@ -10678,6 +10910,7 @@ function herseyGuncelle() {
   try { kuranDevamKartCiz(); } catch(e){}
   try { mertebeBannerGuncelle(); } catch(e){}
   try { yolculukHaritasiCizdir(); } catch(e){}
+  try { kalkanMiniGuncelle(); } catch(e){}
   // İlk yüklemede zaten kazanılmış rozetleri sessizce işaretle (popup spam'ı önle)
   if (!ilkYuklemeBitti) {
     ROZETLER.forEach(r => {
@@ -15121,7 +15354,9 @@ function yedekIndir() {
     diyanetToken: localStorage.getItem(DIYANET_TOKEN_KEY),
     // Manevi Bahçe — hasat sistemi state (tamamlanan ağaçlar + snapshot)
     bahceState: localStorage.getItem(BAHCE_STATE_KEY),
-    vakitBitis: localStorage.getItem(VAKIT_BITIS_KEY)
+    vakitBitis: localStorage.getItem(VAKIT_BITIS_KEY),
+    kalkan: localStorage.getItem(KALKAN_KEY),
+    yildonumuGosterildi: localStorage.getItem('kn_yildonumu_gosterildi_v1')
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -15181,6 +15416,8 @@ function iceAktar(event) {
       if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
       if (v.bahceState) localStorage.setItem(BAHCE_STATE_KEY, v.bahceState);
       if (v.vakitBitis) localStorage.setItem(VAKIT_BITIS_KEY, v.vakitBitis);
+      if (v.kalkan) localStorage.setItem(KALKAN_KEY, v.kalkan);
+      if (v.yildonumuGosterildi) localStorage.setItem('kn_yildonumu_gosterildi_v1', v.yildonumuGosterildi);
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
@@ -15497,30 +15734,96 @@ function streakGuncelle() {
 // GÜNLÜK GÖREV — Random görev seçimi ve takibi
 // =========================================================
 const GOREV_HAVUZU = [
-  { id:'tum5', metin:'Bugün 5 vakitten her birinden en az 1 kaza kıl', hedef:5, tip:'tum5vakit' },
-  { id:'g10',  metin:'Bugün toplam 10 namaz kıl',                       hedef:10, tip:'bugunNamaz' },
-  { id:'g15',  metin:'Bugün toplam 15 namaz kıl',                       hedef:15, tip:'bugunNamaz' },
-  { id:'g20',  metin:'Bugün toplam 20 namaz kıl',                       hedef:20, tip:'bugunNamaz' },
-  { id:'z100', metin:'Bugün +100 Lâ İlâhe İllallâh zikri çek',          hedef:100, tip:'bugunZikir' },
-  { id:'z200', metin:'Bugün +200 Lâ İlâhe İllallâh zikri çek',          hedef:200, tip:'bugunZikir' },
-  { id:'i100', metin:'Bugün +100 İhlâs Sûresi oku',                     hedef:100, tip:'bugunIhlas' },
-  { id:'i50',  metin:'Bugün +50 İhlâs Sûresi oku',                      hedef:50, tip:'bugunIhlas' },
-  { id:'esma', metin:'Bugün bir Esmâü\'l-Hüsnâ tamamla',                hedef:1, tip:'bugunEsma' },
-  { id:'esmaz50',metin:'Bugün +50 Esmâ zikri çek (herhangi bir isim)',  hedef:50, tip:'bugunEsmaZ' },
-  { id:'sabah', metin:'Bugün 3 Sabah kazası kıl',                       hedef:3, tip:'bugunSabah' },
-  { id:'ogle',  metin:'Bugün 3 Öğle kazası kıl',                        hedef:3, tip:'bugunOgle' },
-  { id:'ikindi',metin:'Bugün 3 İkindi kazası kıl',                      hedef:3, tip:'bugunIkindi' },
-  { id:'aksam', metin:'Bugün 3 Akşam kazası kıl',                       hedef:3, tip:'bugunAksam' },
-  { id:'yatsi', metin:'Bugün 3 Yatsı kazası kıl',                       hedef:3, tip:'bugunYatsi' }
+  // ─── KAZA NAMAZI — Genel ───
+  { id:'tum5',   metin:'Bugün 5 vakitten her birinden en az 1 kaza kıl', hedef:5, tip:'tum5vakit', zorluk:3 },
+  { id:'g5',     metin:'Bugün toplam 5 kaza namazı kıl',                 hedef:5, tip:'bugunNamaz', zorluk:1 },
+  { id:'g10',    metin:'Bugün toplam 10 kaza namazı kıl',                hedef:10, tip:'bugunNamaz', zorluk:1 },
+  { id:'g15',    metin:'Bugün toplam 15 kaza namazı kıl',                hedef:15, tip:'bugunNamaz', zorluk:2 },
+  { id:'g20',    metin:'Bugün toplam 20 kaza namazı kıl',                hedef:20, tip:'bugunNamaz', zorluk:2 },
+  { id:'g30',    metin:'Bugün toplam 30 kaza namazı kıl',                hedef:30, tip:'bugunNamaz', zorluk:3 },
+  { id:'g50',    metin:'Bugün toplam 50 kaza namazı kıl',                hedef:50, tip:'bugunNamaz', zorluk:3 },
+  // ─── Vakit özel ───
+  { id:'sabah3', metin:'Bugün 3 Sabah kazası kıl',                       hedef:3, tip:'bugunSabah', zorluk:1 },
+  { id:'sabah10',metin:'Bugün 10 Sabah kazası kıl',                      hedef:10, tip:'bugunSabah', zorluk:2 },
+  { id:'ogle3',  metin:'🌟 Bugün 3 Öğle kazası kıl (zayıf noktan!)',     hedef:3, tip:'bugunOgle', zorluk:2 },
+  { id:'ogle1',  metin:'Bugün en az 1 Öğle kazası kıl',                  hedef:1, tip:'bugunOgle', zorluk:1 },
+  { id:'ikindi3',metin:'🌟 Bugün 3 İkindi kazası kıl',                    hedef:3, tip:'bugunIkindi', zorluk:2 },
+  { id:'ikindi1',metin:'Bugün en az 1 İkindi kazası kıl',                hedef:1, tip:'bugunIkindi', zorluk:1 },
+  { id:'aksam3', metin:'🌟 Bugün 3 Akşam kazası kıl (kısa vakit)',        hedef:3, tip:'bugunAksam', zorluk:2 },
+  { id:'aksam1', metin:'Bugün en az 1 Akşam kazası kıl',                 hedef:1, tip:'bugunAksam', zorluk:1 },
+  { id:'yatsi3', metin:'🌟 Bugün 3 Yatsı kazası kıl',                    hedef:3, tip:'bugunYatsi', zorluk:2 },
+  { id:'yatsi1', metin:'Bugün en az 1 Yatsı kazası kıl',                 hedef:1, tip:'bugunYatsi', zorluk:1 },
+  // ─── ZİKİR ───
+  { id:'z100',   metin:'Bugün +100 Lâ İlâhe İllallâh zikri çek',         hedef:100, tip:'bugunZikir', zorluk:1 },
+  { id:'z200',   metin:'Bugün +200 Lâ İlâhe İllallâh zikri çek',         hedef:200, tip:'bugunZikir', zorluk:2 },
+  { id:'z500',   metin:'Bugün +500 Lâ İlâhe İllallâh zikri çek',         hedef:500, tip:'bugunZikir', zorluk:3 },
+  { id:'i50',    metin:'Bugün +50 İhlâs Sûresi oku',                     hedef:50, tip:'bugunIhlas', zorluk:1 },
+  { id:'i100',   metin:'Bugün +100 İhlâs Sûresi oku',                    hedef:100, tip:'bugunIhlas', zorluk:2 },
+  // ─── SALAVAT (yeniydi, eksikti!) ───
+  { id:'s50',    metin:'Bugün +50 Salavât getir',                        hedef:50, tip:'bugunSalavat', zorluk:1 },
+  { id:'s100',   metin:'Bugün +100 Salavât getir',                       hedef:100, tip:'bugunSalavat', zorluk:2 },
+  { id:'s300',   metin:'Bugün +300 Salavât getir (Cuma özel)',           hedef:300, tip:'bugunSalavat', zorluk:3, cuma:true },
+  // ─── ESMÂ ───
+  { id:'esma',   metin:'Bugün bir Esmâü\'l-Hüsnâ tamamla',               hedef:1, tip:'bugunEsma', zorluk:3 },
+  { id:'esmaz50',metin:'Bugün +50 Esmâ zikri çek (herhangi bir isim)',   hedef:50, tip:'bugunEsmaZ', zorluk:1 },
+  { id:'esmaz200',metin:'Bugün +200 Esmâ zikri çek',                     hedef:200, tip:'bugunEsmaZ', zorluk:2 },
+  // ─── KUR'AN (yeniydi, eksikti!) ───
+  { id:'cuz1',   metin:'Bugün 1 cüz oku (Kur\'an sayfasından)',          hedef:1, tip:'bugunCuz', zorluk:2 },
+  { id:'ayet10', metin:'Bugün 10 ayet oku',                              hedef:10, tip:'bugunAyet', zorluk:1 },
+  { id:'ayet30', metin:'Bugün 30 ayet oku',                              hedef:30, tip:'bugunAyet', zorluk:2 }
 ];
+
+// Kullanıcının zayıf/güçlü vaktine göre akıllı görev sağlayıcı
+function gorevAkilliOner() {
+  try {
+    // Son 14 günde en az kılınan vakti bul
+    const bugun = bugunTarih();
+    const sayilar = { imsak:0, ogle:0, ikindi:0, aksam:0, yatsi:0 };
+    for (let i = 0; i < 14; i++) {
+      const t = nDays(bugun, -i);
+      const k = gunKaydi(t);
+      Object.keys(sayilar).forEach(v => { sayilar[v] += parseInt(k[v]||0); });
+    }
+    // Zayıf vakit ID'sini bul (0 sayısı hariç, en düşük)
+    let zayif = null; let min = Infinity;
+    Object.keys(sayilar).forEach(v => {
+      if (sayilar[v] < min) { min = sayilar[v]; zayif = v; }
+    });
+    // Bugün henüz o vakit kılınmadıysa nazikçe öner
+    if (!zayif) return null;
+    const bugunK = gunKaydi(bugun);
+    if ((parseInt(bugunK[zayif])||0) > 0) return null; // Zaten bugün kılınmış
+    // Vakit adı için mapping
+    const meta = { imsak:'Sabah', ogle:'Öğle', ikindi:'İkindi', aksam:'Akşam', yatsi:'Yatsı' };
+    return {
+      id: 'akilli_' + zayif,
+      metin: '💡 Bugün 1 ' + meta[zayif] + ' kazası dene — son 14 günde en az kıldığın vakit',
+      hedef: 1,
+      tip: 'bugun' + (zayif==='imsak'?'Sabah':(zayif.charAt(0).toUpperCase()+zayif.slice(1))),
+      zorluk: 1,
+      akilli: true
+    };
+  } catch(e) { return null; }
+}
 
 function gorevSnapshotAl() {
   // Görev başlangıcında "snapshot" — daha sonra delta hesaplamak için
+  let cuzAyet = 0;
+  try {
+    Object.values(kuranProgress || {}).forEach(p => {
+      if (p && typeof p.ayetIdx === 'number') cuzAyet += p.ayetIdx;
+    });
+  } catch(e) {}
+  let cuzOkundu = 0;
+  try { cuzOkundu = Object.values(kuranProgress || {}).filter(p => p && p.okundu).length; } catch(e) {}
   return {
     zikir: zikirSayisi,
     ihlas: ihlasSayisi,
+    salavat: (typeof salavatSayisi !== 'undefined') ? salavatSayisi : 0,
     esmaToplam: esmaToplamZikir(),
-    esmaTamamlanan: esmaTamamlananlar.size
+    esmaTamamlanan: esmaTamamlananlar.size,
+    cuzOkundu: cuzOkundu,
+    cuzAyet: cuzAyet
   };
 }
 
@@ -15528,10 +15831,37 @@ function gorevSec() {
   const bugun = bugunTarih();
   if (gunlukGorev && gunlukGorev.tarih === bugun) return; // zaten var
 
-  // Random pick
-  const sayilarDizisi = bugun.split('-').reduce((acc, n) => acc + parseInt(n), 0);
-  const idx = sayilarDizisi % GOREV_HAVUZU.length;
-  const secilen = GOREV_HAVUZU[idx];
+  // Cuma günü → Salavat özel görevi
+  const gunAd = new Date(bugun).getDay(); // 0=Paz, 5=Cuma
+  let secilen = null;
+  if (gunAd === 5) {
+    // Cuma: salavat/cuma özel görevleri arasından seç
+    const cumaGorevler = GOREV_HAVUZU.filter(g => g.tip === 'bugunSalavat' || g.cuma);
+    if (cumaGorevler.length > 0) {
+      const dt = new Date(bugun);
+      const idx = (dt.getDate() + dt.getMonth()) % cumaGorevler.length;
+      secilen = cumaGorevler[idx];
+    }
+  }
+
+  // Her 3. günde bir akıllı öneri dene (kullanıcı zayıf vakit farkındalığı)
+  if (!secilen) {
+    const dt = new Date(bugun);
+    const gunNo = Math.floor((dt - new Date(dt.getFullYear(), 0, 0)) / 86400000);
+    if (gunNo % 3 === 0) {
+      const akilli = gorevAkilliOner();
+      if (akilli) secilen = akilli;
+    }
+  }
+
+  // Rotasyon — havuzu determinstik ama daha çeşitli dolaş
+  if (!secilen) {
+    const dt = new Date(bugun);
+    const gunNo = Math.floor((dt - new Date(dt.getFullYear(), 0, 0)) / 86400000);
+    const idx = gunNo % GOREV_HAVUZU.length;
+    secilen = GOREV_HAVUZU[idx];
+  }
+
   gunlukGorev = {
     ...secilen,
     tarih: bugun,
@@ -15554,6 +15884,21 @@ function gorevIlerlemeHesapla() {
   if (t === 'bugunIhlas') return Math.max(0, ihlasSayisi - (gunlukGorev.snapshot?.ihlas || 0));
   if (t === 'bugunEsma') return Math.max(0, esmaTamamlananlar.size - (gunlukGorev.snapshot?.esmaTamamlanan || 0));
   if (t === 'bugunEsmaZ') return Math.max(0, esmaToplamZikir() - (gunlukGorev.snapshot?.esmaToplam || 0));
+  if (t === 'bugunSalavat') {
+    const sn = gunlukGorev.snapshot?.salavat || 0;
+    const s = (typeof salavatSayisi !== 'undefined') ? salavatSayisi : 0;
+    return Math.max(0, s - sn);
+  }
+  if (t === 'bugunCuz') {
+    let okundu = 0;
+    try { okundu = Object.values(kuranProgress || {}).filter(p => p && p.okundu).length; } catch(e) {}
+    return Math.max(0, okundu - (gunlukGorev.snapshot?.cuzOkundu || 0));
+  }
+  if (t === 'bugunAyet') {
+    let cuzAyet = 0;
+    try { Object.values(kuranProgress || {}).forEach(p => { if (p && typeof p.ayetIdx === 'number') cuzAyet += p.ayetIdx; }); } catch(e) {}
+    return Math.max(0, cuzAyet - (gunlukGorev.snapshot?.cuzAyet || 0));
+  }
   if (t === 'bugunSabah') return parseInt(k.imsak) || 0;
   if (t === 'bugunOgle') return parseInt(k.ogle) || 0;
   if (t === 'bugunIkindi') return parseInt(k.ikindi) || 0;
@@ -16170,15 +16515,7 @@ function vakitBitisYaz(o) {
   try { localStorage.setItem(VAKIT_BITIS_KEY, JSON.stringify(o)); } catch(e) {}
 }
 
-// Bir vakit için kalan borcu hesapla
-function vakitKalanBorc(vakitId) {
-  try {
-    const vakit = VAKITLER.find(v => v.id === vakitId);
-    if (!vakit) return 0;
-    const kildi = vakitToplamKildi(vakitId);
-    return Math.max(0, vakit.borc - kildi);
-  } catch(e) { return 0; }
-}
+// vakitKalanBorc — satır 10962'de tanımlı (toplam+bireysel), tekrarlanmıyor.
 
 // Vakit tamamlandı mı kontrol et — hem geçmişte kaydedilmiş hem şu an 0'da mı
 function vakitTamamMi(vakitId) {
@@ -16562,7 +16899,15 @@ function ibadetKarnemGuncelle() {
         const y = Math.floor(sabahYil);
         const kalanGun = vakitler.imsak - y*365;
         const a = Math.floor(kalanGun / 30);
-        sabahMetni = `${y} yıl${a > 0 ? ' ' + a + ' ay' : ''}`;
+        const g = Math.round(kalanGun - a*30);
+        const parts = [`${y} yıl`];
+        if (a > 0) parts.push(`${a} ay`);
+        if (g > 0) parts.push(`${g} gün`);
+        sabahMetni = parts.join(' ');
+      } else if (vakitler.imsak >= 30) {
+        const a = Math.floor(vakitler.imsak / 30);
+        const g = vakitler.imsak - a*30;
+        sabahMetni = `${a} ay${g > 0 ? ' ' + g + ' gün' : ''}`;
       } else {
         sabahMetni = `${vakitler.imsak} gün`;
       }
@@ -17657,6 +18002,8 @@ function setupYedekYukle(event) {
         if (v.diyanetToken) localStorage.setItem(DIYANET_TOKEN_KEY, v.diyanetToken);
       if (v.bahceState) localStorage.setItem(BAHCE_STATE_KEY, v.bahceState);
       if (v.vakitBitis) localStorage.setItem(VAKIT_BITIS_KEY, v.vakitBitis);
+      if (v.kalkan) localStorage.setItem(KALKAN_KEY, v.kalkan);
+      if (v.yildonumuGosterildi) localStorage.setItem('kn_yildonumu_gosterildi_v1', v.yildonumuGosterildi);
       } catch(e) { console.warn('setupYedekYukle ek alan:', e); }
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
@@ -20861,6 +21208,30 @@ window.addEventListener('load', () => {
       <button class="kb-buton-ikinci" onclick="kbAniyiSakla()">📸 Bu Anı Efsanedir — Sakla</button>
     </div>
     <div class="kb-ss-hint">📱 Şimdi ekran görüntüsü alın — 5 saniyeniz var</div>
+  </div>
+</div>
+
+<!-- 🛡️ Streak Kalkanı Modal -->
+<div class="kalkan-modal" id="kalkan-modal" onclick="if(event.target.id==='kalkan-modal') kalkanModalKapat()">
+  <div class="kalkan-modal-icerik">
+    <div class="kalkan-ikon-buyuk">🛡️</div>
+    <div class="kalkan-baslik">Streak Kalkanı</div>
+    <div class="kalkan-alt" id="kalkan-modal-alt">
+      Hastalık, yorgunluk veya yolculuk günlerinde streak'ini korur.<br>
+      Her ay 1'ine <strong>2 kalkan</strong> gelir, en fazla <strong>5</strong> biriktirebilirsin.
+    </div>
+    <div class="kalkan-stok-kutu">
+      <span>Stoğun</span>
+      <span><strong id="kalkan-modal-stok">0</strong> / 5</span>
+    </div>
+    <div class="kalkan-hadis">
+      "Amellerin Allah'a en sevimli olanı, az da olsa devamlı yapılanıdır." — Buhârî
+    </div>
+    <div id="kalkan-modal-durum"></div>
+    <div class="kalkan-buton-grup">
+      <button class="kalkan-buton iptal" onclick="kalkanModalKapat()">Kapat</button>
+      <button class="kalkan-buton" id="kalkan-modal-kullan-btn" onclick="kalkanKullan()">🛡️ Bugün Kalkan Kullan</button>
+    </div>
   </div>
 </div>
 
