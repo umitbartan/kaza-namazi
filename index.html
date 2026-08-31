@@ -15663,10 +15663,12 @@ function yaklasanMubarek() {
   const buYil = new Date().getFullYear();
   // Bu yıl + sonraki yıl (Aralık'ta Ocak'takini görebilmek için)
   const liste = [...mubarekGunleriHesapla(buYil), ...mubarekGunleriHesapla(buYil + 1)];
+  // Sınır kaldırıldı — en yakın mübarek gün ne kadar uzakta olursa olsun gösterilir
+  // (60 gün sınırı 2 mübarek gün arasındaki en uzun boşlukta kartı gizliyordu)
   for (const mg of liste) {
     if (mg.tarih >= bugun) {
       const kalan = Math.floor((new Date(mg.tarih) - new Date(bugun)) / (1000*60*60*24));
-      if (kalan <= 60) return { ...mg, kalan };
+      return { ...mg, kalan };
     }
   }
   return null;
