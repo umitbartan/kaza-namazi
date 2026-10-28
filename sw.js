@@ -1,5 +1,5 @@
 // İhyâ Service Worker — Offline destek
-const CACHE_NAME = 'ihya-v44';
+const CACHE_NAME = 'ihya-v45';
 const STATIK_DOSYALAR = [
   './',
   './index.html',

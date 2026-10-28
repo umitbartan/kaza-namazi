@@ -6198,10 +6198,94 @@ button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   color: var(--vurgu, #d4af37);
   text-shadow: 0 0 6px rgba(212,175,55,0.45);
   animation: zmYildizPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.3s, text-shadow 0.3s;
+  position: relative;
 }
+.zm-yildiz .yildiz:hover { transform: scale(1.2); }
+.zm-yildiz .yildiz:active { transform: scale(0.9); }
 .zm-yildiz .yildiz.yeni {
   animation: zmYildizPatla 0.9s ease;
 }
+/* 🕊️ Ruhuna hediye edilmiş yıldız — parlak altın parıltı + nabızlı aura */
+.zm-yildiz .yildiz.isimli {
+  color: #FFD700;
+  text-shadow:
+    0 0 8px rgba(255,215,0,0.9),
+    0 0 16px rgba(255,215,0,0.6),
+    0 0 28px rgba(255,215,0,0.35);
+  filter: drop-shadow(0 0 4px rgba(255,215,0,0.7));
+  animation: zmYildizRuhNabiz 2.6s ease-in-out infinite;
+}
+@keyframes zmYildizRuhNabiz {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255,215,0,0.7)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 10px rgba(255,215,0,1)); transform: scale(1.08); }
+}
+
+/* 🕊️ Ruhuna Hediye Modalı */
+.rh-modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 10000;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+.rh-modal.acik { display: flex; }
+.rh-modal-icerik {
+  background: linear-gradient(135deg, #FFF9E8 0%, #F5E9C6 100%);
+  border-radius: 20px; padding: 22px 20px;
+  max-width: 380px; width: 100%;
+  box-shadow: 0 20px 60px rgba(212,175,55,0.5);
+  border: 2px solid #D4AF37;
+  text-align: center;
+  position: relative;
+  animation: rhIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes rhIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.rh-ikon-buyuk { font-size: 48px; margin-bottom: 4px; filter: drop-shadow(0 4px 12px rgba(212,175,55,0.45)); }
+.rh-baslik { font-size: 17px; font-weight: 800; color: #4A3800; margin-bottom: 4px; }
+.rh-alt { font-size: 12px; color: #6B5500; line-height: 1.55; margin-bottom: 14px; font-style: italic; }
+.rh-input {
+  width: 100%; padding: 11px 14px;
+  border: 2px solid #D4AF37; border-radius: 10px;
+  background: #FFFEF5; font-size: 15px; font-family: inherit;
+  font-weight: 600; color: #4A3800;
+  text-align: center; margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.rh-input:focus { outline: none; border-color: #B8941F; background: #FFF; }
+.rh-hadis {
+  font-size: 11px; color: #6B5500; font-style: italic;
+  background: rgba(255,255,255,0.6); padding: 8px 12px;
+  border-radius: 8px; border-left: 3px solid #D4AF37;
+  margin-bottom: 12px; line-height: 1.5; text-align: left;
+}
+.rh-buton-grup { display: flex; gap: 6px; flex-wrap: wrap; }
+.rh-buton {
+  flex: 1; min-width: 90px;
+  background: linear-gradient(135deg, #D4AF37, #F4D03F);
+  color: #4A3800; border: none;
+  padding: 11px 12px; border-radius: 10px;
+  font-size: 12px; font-weight: 800;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 3px 10px rgba(212,175,55,0.4);
+  transition: transform 0.15s;
+}
+.rh-buton:hover { transform: translateY(-1px); }
+.rh-buton:active { transform: scale(0.97); }
+.rh-buton.iptal { background: rgba(0,0,0,0.08); color: #4A3800; box-shadow: none; }
+.rh-buton.kaldir { background: linear-gradient(135deg, #B71C1C, #D32F2F); color: #fff; }
+.rh-mevcut-isim {
+  background: rgba(255,255,255,0.7); padding: 10px 14px;
+  border-radius: 10px; margin-bottom: 12px;
+  font-size: 13px; color: #4A3800; font-weight: 700;
+}
+.rh-mevcut-isim .rh-nokta { font-size: 11px; color: #6B5500; font-weight: 500; display: block; margin-bottom: 2px; }
 @keyframes zmYildizPop {
   from { transform: scale(0); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -11064,6 +11148,104 @@ function ozelSliderGuncelle() {
   `;
 }
 
+// ═══════════════════════════════════════════════════════════
+// 🕊️ RUHUNA HEDİYE — Zikir yıldızlarını bir ruha ithaf etme sistemi
+// Her 70.000'lik yıldızı sevdiği birinin ruhuna hediye edebilir
+// Storage: kn_ruhuna_hediye_v1 = { laila: { "1": "...", "2": "..." }, ihlas: {...}, salavat: {...} }
+// ═══════════════════════════════════════════════════════════
+const RUH_HEDIYE_KEY = 'kn_ruhuna_hediye_v1';
+let _rhSecili = { tur: null, sira: null };
+
+function ruhunaHediyeTumunuOku() {
+  try {
+    const d = JSON.parse(localStorage.getItem(RUH_HEDIYE_KEY) || '{}');
+    return (d && typeof d === 'object') ? d : {};
+  } catch(e) { return {}; }
+}
+function ruhunaHediyeOku(tur) {
+  const tum = ruhunaHediyeTumunuOku();
+  return tum[tur] || {};
+}
+function ruhunaHediyeYaz(tur, sira, isim) {
+  const tum = ruhunaHediyeTumunuOku();
+  if (!tum[tur]) tum[tur] = {};
+  if (isim && isim.trim()) tum[tur][sira] = isim.trim();
+  else delete tum[tur][sira];
+  try { localStorage.setItem(RUH_HEDIYE_KEY, JSON.stringify(tum)); } catch(e) {}
+}
+
+function _rhTurAd(tur) {
+  if (tur === 'ihlas') return 'İhlâs';
+  if (tur === 'salavat') return 'Salavât';
+  return 'Lâ İlâhe İllallâh';
+}
+
+function ruhunaHediyeAc(tur, sira) {
+  _rhSecili = { tur, sira };
+  const mevcut = ruhunaHediyeOku(tur)[sira] || '';
+  const modal = document.getElementById('rh-modal');
+  if (!modal) return;
+  const baslikEl = document.getElementById('rh-baslik');
+  if (baslikEl) baslikEl.textContent = `⭐ ${sira}. Yıldız — Ruhuna Hediye Et`;
+  const altEl = document.getElementById('rh-alt');
+  if (altEl) altEl.innerHTML = `70.000 <strong>${_rhTurAd(tur)}</strong> zikrini bir sevdiğinin ruhuna ithaf et.<br>İsmini yaz — yıldız o ruha ışık olsun.`;
+  const inputEl = document.getElementById('rh-input');
+  if (inputEl) { inputEl.value = mevcut; setTimeout(() => inputEl.focus(), 100); }
+  const kaldirBtn = document.getElementById('rh-kaldir-btn');
+  if (kaldirBtn) kaldirBtn.style.display = mevcut ? '' : 'none';
+  const mevcutKutu = document.getElementById('rh-mevcut-kutu');
+  if (mevcutKutu) {
+    if (mevcut) {
+      mevcutKutu.style.display = '';
+      mevcutKutu.innerHTML = `<span class="rh-nokta">Şu an ithaf edildi</span>${mevcut}`;
+    } else {
+      mevcutKutu.style.display = 'none';
+    }
+  }
+  modal.classList.add('acik');
+  document.body.style.overflow = 'hidden';
+}
+
+function ruhunaHediyeKapat() {
+  const modal = document.getElementById('rh-modal');
+  if (modal) { modal.classList.remove('acik'); document.body.style.overflow = ''; }
+}
+
+function ruhunaHediyeKaydet() {
+  const inputEl = document.getElementById('rh-input');
+  const isim = inputEl ? inputEl.value.trim() : '';
+  if (!isim) {
+    try { toast('⚠️', 'Lütfen bir isim yaz'); } catch(e) {}
+    return;
+  }
+  if (isim.length > 60) {
+    try { toast('⚠️', 'İsim en fazla 60 karakter olabilir'); } catch(e) {}
+    return;
+  }
+  const { tur, sira } = _rhSecili;
+  if (!tur || !sira) return;
+  ruhunaHediyeYaz(tur, sira, isim);
+  ruhunaHediyeKapat();
+  try { toast('🕊️', `${sira}. yıldız, ${isim} ruhuna hediye edildi — Allah kabul eylesin`); } catch(e) {}
+  try { if (navigator.vibrate) navigator.vibrate([15, 30, 15]); } catch(e) {}
+  // Yıldızları yeniden çiz
+  try { zikirGuncelle(false); } catch(e) {}
+  try { if (typeof ihlasGuncelle === 'function') ihlasGuncelle(false); } catch(e) {}
+  try { if (typeof salavatGuncelle === 'function') salavatGuncelle(false); } catch(e) {}
+}
+
+function ruhunaHediyeKaldirBtn() {
+  const { tur, sira } = _rhSecili;
+  if (!tur || !sira) return;
+  if (!confirm('Bu yıldızdan ismi kaldırmak istediğine emin misin?')) return;
+  ruhunaHediyeYaz(tur, sira, '');
+  ruhunaHediyeKapat();
+  try { toast('✓', 'İsim kaldırıldı'); } catch(e) {}
+  try { zikirGuncelle(false); } catch(e) {}
+  try { if (typeof ihlasGuncelle === 'function') ihlasGuncelle(false); } catch(e) {}
+  try { if (typeof salavatGuncelle === 'function') salavatGuncelle(false); } catch(e) {}
+}
+
 // Vakit tabs
 document.querySelectorAll('.hvt-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -11115,10 +11297,18 @@ function yildizCizdir(elId, sayi, yeniMi) {
   const el = document.getElementById(elId);
   if (!el) return;
   if (sayi <= 0) { el.innerHTML = ''; return; }
+  // Yıldız türünü element ID'sinden türet (zm-laila → laila, zm-ihlas → ihlas, zm-salavat → salavat)
+  let tur = 'laila';
+  if (elId.includes('ihlas')) tur = 'ihlas';
+  else if (elId.includes('salavat')) tur = 'salavat';
+  const hediyeler = (typeof ruhunaHediyeOku === 'function') ? ruhunaHediyeOku(tur) : {};
   let html = '';
   for (let i = 0; i < sayi; i++) {
+    const sira = i + 1; // 1'den başla (localStorage anahtarları)
     const yeniSinif = (yeniMi && i === sayi - 1) ? ' yeni' : '';
-    html += `<span class="yildiz${yeniSinif}">⭐</span>`;
+    const isimli = hediyeler && hediyeler[sira] ? ' isimli' : '';
+    const unvan = hediyeler && hediyeler[sira] ? ` title="Ruhuna hediye: ${hediyeler[sira].replace(/"/g,'&quot;')}"` : ' title="Dokun — ruhuna hediye et"';
+    html += `<span class="yildiz${yeniSinif}${isimli}" data-tur="${tur}" data-sira="${sira}" onclick="ruhunaHediyeAc('${tur}',${sira})"${unvan}>⭐</span>`;
   }
   el.innerHTML = html;
 }
@@ -15345,7 +15535,8 @@ function yedekIndir() {
     bahceState: localStorage.getItem(BAHCE_STATE_KEY),
     vakitBitis: localStorage.getItem(VAKIT_BITIS_KEY),
     kalkan: localStorage.getItem(KALKAN_KEY),
-    yildonumuGosterildi: localStorage.getItem('kn_yildonumu_gosterildi_v1')
+    yildonumuGosterildi: localStorage.getItem('kn_yildonumu_gosterildi_v1'),
+    ruhunaHediye: localStorage.getItem(RUH_HEDIYE_KEY)
   };
   const blob = new Blob([JSON.stringify(veri, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -15407,6 +15598,7 @@ function iceAktar(event) {
       if (v.vakitBitis) localStorage.setItem(VAKIT_BITIS_KEY, v.vakitBitis);
       if (v.kalkan) localStorage.setItem(KALKAN_KEY, v.kalkan);
       if (v.yildonumuGosterildi) localStorage.setItem('kn_yildonumu_gosterildi_v1', v.yildonumuGosterildi);
+      if (v.ruhunaHediye) localStorage.setItem(RUH_HEDIYE_KEY, v.ruhunaHediye);
       kaydet();
       toast('📤', 'Yedek yüklendi');
       herseyGuncelle();
@@ -18064,6 +18256,7 @@ function setupYedekYukle(event) {
       if (v.vakitBitis) localStorage.setItem(VAKIT_BITIS_KEY, v.vakitBitis);
       if (v.kalkan) localStorage.setItem(KALKAN_KEY, v.kalkan);
       if (v.yildonumuGosterildi) localStorage.setItem('kn_yildonumu_gosterildi_v1', v.yildonumuGosterildi);
+      if (v.ruhunaHediye) localStorage.setItem(RUH_HEDIYE_KEY, v.ruhunaHediye);
       } catch(e) { console.warn('setupYedekYukle ek alan:', e); }
       kaydet();
       localStorage.setItem(SETUP_DONE_KEY, '1');
@@ -21291,6 +21484,25 @@ window.addEventListener('load', () => {
     <div class="kalkan-buton-grup">
       <button class="kalkan-buton iptal" onclick="kalkanModalKapat()">Kapat</button>
       <button class="kalkan-buton" id="kalkan-modal-kullan-btn" onclick="kalkanKullan()">🛡️ Bugün Kalkan Kullan</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🕊️ Ruhuna Hediye Modalı -->
+<div class="rh-modal" id="rh-modal" onclick="if(event.target.id==='rh-modal') ruhunaHediyeKapat()">
+  <div class="rh-modal-icerik">
+    <div class="rh-ikon-buyuk">🕊️</div>
+    <div class="rh-baslik" id="rh-baslik">Ruhuna Hediye Et</div>
+    <div class="rh-alt" id="rh-alt">70.000 zikri bir sevdiğinin ruhuna ithaf et.</div>
+    <div class="rh-mevcut-isim" id="rh-mevcut-kutu" style="display:none;"></div>
+    <input type="text" class="rh-input" id="rh-input" placeholder="İsim (örn. Rahmetli dedem Ahmet)" maxlength="60" onkeydown="if(event.key==='Enter')ruhunaHediyeKaydet()">
+    <div class="rh-hadis">
+      "İnsan öldüğü zaman üç şey hariç amel defteri kapanır: sadaka-i câriye, kendisinden faydalanılan ilim ve kendisine dua eden hayırlı evlât." — Müslim
+    </div>
+    <div class="rh-buton-grup">
+      <button class="rh-buton iptal" onclick="ruhunaHediyeKapat()">İptal</button>
+      <button class="rh-buton kaldir" id="rh-kaldir-btn" onclick="ruhunaHediyeKaldirBtn()" style="display:none;">Kaldır</button>
+      <button class="rh-buton" onclick="ruhunaHediyeKaydet()">💛 Kaydet</button>
     </div>
   </div>
 </div>
